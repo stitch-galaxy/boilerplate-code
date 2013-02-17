@@ -24,6 +24,8 @@
 		ECC232B516D1372100105066 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC2328D16D1372100105066 /* Foundation.framework */; };
 		ECC232BD16D1372100105066 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ECC232BB16D1372100105066 /* InfoPlist.strings */; };
 		ECC232C016D1372100105066 /* Cross_Stitch_LibraryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232BF16D1372100105066 /* Cross_Stitch_LibraryTests.m */; };
+		ECC232CC16D1525B00105066 /* StitchLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CB16D1525B00105066 /* StitchLibrary.m */; };
+		ECC232CF16D1579600105066 /* Stitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CE16D1579600105066 /* Stitch.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,10 @@
 		ECC232BC16D1372100105066 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ECC232BE16D1372100105066 /* Cross_Stitch_LibraryTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cross_Stitch_LibraryTests.h; sourceTree = "<group>"; };
 		ECC232BF16D1372100105066 /* Cross_Stitch_LibraryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cross_Stitch_LibraryTests.m; sourceTree = "<group>"; };
+		ECC232CA16D1525B00105066 /* StitchLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StitchLibrary.h; sourceTree = "<group>"; };
+		ECC232CB16D1525B00105066 /* StitchLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StitchLibrary.m; sourceTree = "<group>"; };
+		ECC232CD16D1579600105066 /* Stitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stitch.h; sourceTree = "<group>"; };
+		ECC232CE16D1579600105066 /* Stitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stitch.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +125,7 @@
 		ECC2329116D1372100105066 /* Cross Stitch Library */ = {
 			isa = PBXGroup;
 			children = (
+				ECC232C916D1520300105066 /* Model */,
 				ECC2329A16D1372100105066 /* AppDelegate.h */,
 				ECC2329B16D1372100105066 /* AppDelegate.m */,
 				ECC232A316D1372100105066 /* MainStoryboard_iPhone.storyboard */,
@@ -161,6 +168,17 @@
 				ECC232BB16D1372100105066 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ECC232C916D1520300105066 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ECC232CA16D1525B00105066 /* StitchLibrary.h */,
+				ECC232CB16D1525B00105066 /* StitchLibrary.m */,
+				ECC232CD16D1579600105066 /* Stitch.h */,
+				ECC232CE16D1579600105066 /* Stitch.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,6 +295,8 @@
 				ECC2329816D1372100105066 /* main.m in Sources */,
 				ECC2329C16D1372100105066 /* AppDelegate.m in Sources */,
 				ECC232AB16D1372100105066 /* ViewController.m in Sources */,
+				ECC232CC16D1525B00105066 /* StitchLibrary.m in Sources */,
+				ECC232CF16D1579600105066 /* Stitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
