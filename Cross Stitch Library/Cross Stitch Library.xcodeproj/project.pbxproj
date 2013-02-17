@@ -26,6 +26,8 @@
 		ECC232C016D1372100105066 /* Cross_Stitch_LibraryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232BF16D1372100105066 /* Cross_Stitch_LibraryTests.m */; };
 		ECC232CC16D1525B00105066 /* StitchLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CB16D1525B00105066 /* StitchLibrary.m */; };
 		ECC232CF16D1579600105066 /* Stitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CE16D1579600105066 /* Stitch.m */; };
+		ECC232D216D182AF00105066 /* Thread.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232D116D182AF00105066 /* Thread.m */; };
+		ECC232D516D189B700105066 /* Region.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232D416D189B700105066 /* Region.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,10 @@
 		ECC232CB16D1525B00105066 /* StitchLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StitchLibrary.m; sourceTree = "<group>"; };
 		ECC232CD16D1579600105066 /* Stitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stitch.h; sourceTree = "<group>"; };
 		ECC232CE16D1579600105066 /* Stitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stitch.m; sourceTree = "<group>"; };
+		ECC232D016D182AF00105066 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
+		ECC232D116D182AF00105066 /* Thread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thread.m; sourceTree = "<group>"; };
+		ECC232D316D189B700105066 /* Region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Region.h; sourceTree = "<group>"; };
+		ECC232D416D189B700105066 /* Region.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Region.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +183,10 @@
 				ECC232CB16D1525B00105066 /* StitchLibrary.m */,
 				ECC232CD16D1579600105066 /* Stitch.h */,
 				ECC232CE16D1579600105066 /* Stitch.m */,
+				ECC232D016D182AF00105066 /* Thread.h */,
+				ECC232D116D182AF00105066 /* Thread.m */,
+				ECC232D316D189B700105066 /* Region.h */,
+				ECC232D416D189B700105066 /* Region.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -297,6 +307,8 @@
 				ECC232AB16D1372100105066 /* ViewController.m in Sources */,
 				ECC232CC16D1525B00105066 /* StitchLibrary.m in Sources */,
 				ECC232CF16D1579600105066 /* Stitch.m in Sources */,
+				ECC232D216D182AF00105066 /* Thread.m in Sources */,
+				ECC232D516D189B700105066 /* Region.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
