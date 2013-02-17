@@ -11,7 +11,12 @@
 @protocol IStitch <NSObject>
 
 @property (copy, readonly) NSDate *date;
-@property (
+@property (readonly) NSInteger *rating;
+@property (readonly) NSDecimal *price;
+@property (readonly) NSInteger * complexity;
+
+@property (strong) NSArray *threads;
+@property (strong) NSArray *beads;
 
 @end
 

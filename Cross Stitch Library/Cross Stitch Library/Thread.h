@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol IThread <NSObject>
+
+@property (readonly) CGColorRef color;
+@property (readonly) NSInteger elements;
+
+@end
+
 @interface Thread : NSObject
 
 @end

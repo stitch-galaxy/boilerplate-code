@@ -8,6 +8,13 @@
 
 #import "Region.h"
 
+@protocol IRegion <NSObject>
+
+@property (nonatomic, readwrite) NSInteger column;
+
+
+@end
+
 @implementation Region
 
 @end
