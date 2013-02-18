@@ -7,7 +7,3 @@
 //
 
 #import "Thread.h"
-
-@implementation Thread
-
-@end
