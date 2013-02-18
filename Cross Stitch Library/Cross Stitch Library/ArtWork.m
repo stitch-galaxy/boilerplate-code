@@ -7,7 +7,3 @@
 //
 
 #import "ArtWork.h"
-
-@implementation ArtWork
-
-@end

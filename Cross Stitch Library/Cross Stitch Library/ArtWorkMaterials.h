@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Thread.h"
+#import "Bead.h"
 
-@interface ArtWorkMaterials : NSObject
+@protocol IArtWorkMaterials <NSObject>
+
+- (NSDictionary<IThread>*) ThreadMaterials;
+- (NSDictionary<IBead>*) BeadMaterials;
 
 @end

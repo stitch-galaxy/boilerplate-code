@@ -7,7 +7,3 @@
 //
 
 #import "ArtWorkMaterials.h"
-
-@implementation ArtWorkMaterials
-
-@end
