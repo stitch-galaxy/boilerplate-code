@@ -8,18 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Thread.h"
+#import "Bead.h"
+
 @protocol IStitch <NSObject>
 
-@property (copy, readonly) NSDate *date;
-@property (readonly) NSInteger *rating;
-@property (readonly) NSDecimal *price;
-@property (readonly) NSInteger * complexity;
+@property (nonatomic, strong) id <IThread> Thread;
+@property (nonatomic, strong) id <IBead> Bead;
 
-@property (strong) NSArray *threads;
-@property (strong) NSArray *beads;
-
-@end
-
-@interface Stitch : NSObject
+- (BOOL) HasLeftStitch;
+- (BOOL) HasRightStitch;
+- (BOOL) HasTopStitch;
+- (BOOL) HasBottomStitch;
+- (BOOL) HasDivideStitch;
+- (BOOL) HasBackslashStitch;
 
 @end
