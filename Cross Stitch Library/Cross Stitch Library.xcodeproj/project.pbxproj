@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ECBB913816D25AAD00D94C47 /* Bead.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBB913716D25AAD00D94C47 /* Bead.m */; };
+		ECBB913B16D281AA00D94C47 /* ArtWork.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBB913A16D281AA00D94C47 /* ArtWork.m */; };
+		ECBB913E16D293E100D94C47 /* StitchCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBB913D16D293E100D94C47 /* StitchCategory.m */; };
+		ECC1F19316D2C455005C847B /* ArtWorkMaterials.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */; };
+		ECC1F19616D2C892005C847B /* Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC1F19516D2C892005C847B /* Codec.m */; };
 		ECC2328C16D1372100105066 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC2328B16D1372100105066 /* UIKit.framework */; };
 		ECC2328E16D1372100105066 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC2328D16D1372100105066 /* Foundation.framework */; };
 		ECC2329016D1372100105066 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC2328F16D1372100105066 /* CoreGraphics.framework */; };
@@ -27,7 +32,6 @@
 		ECC232CC16D1525B00105066 /* StitchLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CB16D1525B00105066 /* StitchLibrary.m */; };
 		ECC232CF16D1579600105066 /* Stitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CE16D1579600105066 /* Stitch.m */; };
 		ECC232D216D182AF00105066 /* Thread.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232D116D182AF00105066 /* Thread.m */; };
-		ECC232D516D189B700105066 /* Region.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232D416D189B700105066 /* Region.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +45,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ECBB913616D25AAD00D94C47 /* Bead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bead.h; sourceTree = "<group>"; };
+		ECBB913716D25AAD00D94C47 /* Bead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bead.m; sourceTree = "<group>"; };
+		ECBB913916D281AA00D94C47 /* ArtWork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWork.h; sourceTree = "<group>"; };
+		ECBB913A16D281AA00D94C47 /* ArtWork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWork.m; sourceTree = "<group>"; };
+		ECBB913C16D293E100D94C47 /* StitchCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StitchCategory.h; sourceTree = "<group>"; };
+		ECBB913D16D293E100D94C47 /* StitchCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StitchCategory.m; sourceTree = "<group>"; };
+		ECC1F19116D2C455005C847B /* ArtWorkMaterials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWorkMaterials.h; sourceTree = "<group>"; };
+		ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWorkMaterials.m; sourceTree = "<group>"; };
+		ECC1F19416D2C891005C847B /* Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Codec.h; sourceTree = "<group>"; };
+		ECC1F19516D2C892005C847B /* Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Codec.m; sourceTree = "<group>"; };
 		ECC2328816D1372100105066 /* Cross Stitch Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cross Stitch Library.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC2328B16D1372100105066 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		ECC2328D16D1372100105066 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -70,8 +84,6 @@
 		ECC232CE16D1579600105066 /* Stitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stitch.m; sourceTree = "<group>"; };
 		ECC232D016D182AF00105066 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
 		ECC232D116D182AF00105066 /* Thread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thread.m; sourceTree = "<group>"; };
-		ECC232D316D189B700105066 /* Region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Region.h; sourceTree = "<group>"; };
-		ECC232D416D189B700105066 /* Region.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Region.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,8 +197,16 @@
 				ECC232CE16D1579600105066 /* Stitch.m */,
 				ECC232D016D182AF00105066 /* Thread.h */,
 				ECC232D116D182AF00105066 /* Thread.m */,
-				ECC232D316D189B700105066 /* Region.h */,
-				ECC232D416D189B700105066 /* Region.m */,
+				ECBB913616D25AAD00D94C47 /* Bead.h */,
+				ECBB913716D25AAD00D94C47 /* Bead.m */,
+				ECBB913916D281AA00D94C47 /* ArtWork.h */,
+				ECBB913A16D281AA00D94C47 /* ArtWork.m */,
+				ECBB913C16D293E100D94C47 /* StitchCategory.h */,
+				ECBB913D16D293E100D94C47 /* StitchCategory.m */,
+				ECC1F19116D2C455005C847B /* ArtWorkMaterials.h */,
+				ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */,
+				ECC1F19416D2C891005C847B /* Codec.h */,
+				ECC1F19516D2C892005C847B /* Codec.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -308,7 +328,11 @@
 				ECC232CC16D1525B00105066 /* StitchLibrary.m in Sources */,
 				ECC232CF16D1579600105066 /* Stitch.m in Sources */,
 				ECC232D216D182AF00105066 /* Thread.m in Sources */,
-				ECC232D516D189B700105066 /* Region.m in Sources */,
+				ECBB913816D25AAD00D94C47 /* Bead.m in Sources */,
+				ECBB913B16D281AA00D94C47 /* ArtWork.m in Sources */,
+				ECBB913E16D293E100D94C47 /* StitchCategory.m in Sources */,
+				ECC1F19316D2C455005C847B /* ArtWorkMaterials.m in Sources */,
+				ECC1F19616D2C892005C847B /* Codec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +523,7 @@
 				ECC232C516D1372100105066 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ECC232C616D1372100105066 /* Build configuration list for PBXNativeTarget "Cross Stitch LibraryTests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +532,7 @@
 				ECC232C816D1372100105066 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
