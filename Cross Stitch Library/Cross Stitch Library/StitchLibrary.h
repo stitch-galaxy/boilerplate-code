@@ -7,18 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "StitchCategory.h"
 
-@protocol StitchCategory <NSObject>
+@protocol IStitchLibrary <NSObject>
 
-@property (nonatomic, readonly) NSString *name;
-
-- (NSSet*) getSubCategories;
-
+- (NSArray<IStitchCategory>*) GetCategories;
+- (NSArray<IArtWork>*) GetMyArtWorks;
 
 @end
 
-@interface StitchLibrary : NSObject
+@interface StitchLibrary : NSObject<IStitchLibrary>
 
-- (NSSet*) getCategories;
++ (id<IStitchLibrary>) Instance;
 
 @end

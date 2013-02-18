@@ -8,6 +8,3 @@
 
 #import "StitchLibrary.h"
 
-@implementation StitchLibrary
-
-@end

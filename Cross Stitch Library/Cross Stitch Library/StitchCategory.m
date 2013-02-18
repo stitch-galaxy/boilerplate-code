@@ -7,7 +7,3 @@
 //
 
 #import "StitchCategory.h"
-
-@implementation StitchCategory
-
-@end
