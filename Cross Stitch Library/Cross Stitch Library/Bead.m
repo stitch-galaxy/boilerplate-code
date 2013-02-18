@@ -7,7 +7,3 @@
 //
 
 #import "Bead.h"
-
-@implementation Bead
-
-@end

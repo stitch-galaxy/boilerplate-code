@@ -6,8 +6,4 @@
 //  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
 //
 
-#import "ICodec.h"
-
-@implementation ICodec
-
-@end
+#import "Codec.h"

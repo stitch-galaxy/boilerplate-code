@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Bead : NSObject
+@protocol IBead <NSObject>
+
+@property (readonly) CGColorRef color;
 
 @end
