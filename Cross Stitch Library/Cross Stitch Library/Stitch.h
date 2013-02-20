@@ -8,19 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Thread.h"
-#import "Bead.h"
+#import "ThreadStitchElement.h"
+#import "BeadStitchElement.h"
 
 @protocol IStitch <NSObject>
 
-@property (nonatomic, strong) id <IThread> Thread;
-@property (nonatomic, strong) id <IBead> Bead;
+@property (nonatomic, assign) BOOL Done;
 
-- (BOOL) HasLeftStitch;
-- (BOOL) HasRightStitch;
-- (BOOL) HasTopStitch;
-- (BOOL) HasBottomStitch;
-- (BOOL) HasDivideStitch;
-- (BOOL) HasBackslashStitch;
+@property (nonatomic, strong) id <IThreadStitchElement> Thread;
+@property (nonatomic, strong) id <IBeadStitchElement> Bead;
+
+@end
+
+@interface Stitch : NSObject<IStitch>
 
 @end

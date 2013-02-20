@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Thread.h"
-#import "Bead.h"
 
-@protocol IArtWorkMaterials <NSObject>
+#import "ThreadMaterial.h"
+#import "BeadMaterial.h"
 
-- (NSDictionary<IThread>*) ThreadMaterials;
-- (NSDictionary<IBead>*) BeadMaterials;
+@protocol IArtWorkMaterialsCalulator <NSObject>
+
+- (float) GetThreadMaterialLenghtInMeters: (id<IThreadMaterial>) aThreadMaterial;
+- (int32_t) GetBeadElementsAmount: (id<IBeadMaterial>) aBeadMaterial;
 
 @end

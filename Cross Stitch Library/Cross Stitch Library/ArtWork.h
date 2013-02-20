@@ -14,13 +14,12 @@
 
 @protocol IArtWork <NSObject>
 
+@property (copy, readonly) NSUUID* Guid;
+@property (copy, readonly) NSString* Name;
 @property (copy, readonly) NSDate *Date;
 @property (readonly) int32_t Rating;
 @property (readonly) NSDecimal Price;
 @property (readonly) int32_t Complexity;
-
-@property (strong) NSSet<IThread> *Threads;
-@property (strong) NSSet<IBead> *Beads;
 
 - (NSString*) GetSmallPictureUrl;
 - (NSString*) GetLargePictureUrl;
@@ -30,6 +29,6 @@
 @property (readonly) int32_t Width;
 @property (readonly) int32_t Height;
 
--(id<IArtWorkMaterials>) GetMaterials;
+-(id<IArtWorkMaterialsCalulator>) GetMaterials;
 
 @end
