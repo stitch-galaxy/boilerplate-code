@@ -7,3 +7,13 @@
 //
 
 #import "Stitch.h"
+
+@implementation Stitch
+
+@synthesize ThreadStitchElement;
+
+@synthesize BeadStitchElement;
+
+@synthesize Done;
+
+@end

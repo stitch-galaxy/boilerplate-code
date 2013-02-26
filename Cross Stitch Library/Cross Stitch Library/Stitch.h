@@ -15,8 +15,8 @@
 
 @property (nonatomic, assign) BOOL Done;
 
-@property (nonatomic, strong) id <IThreadStitchElement> Thread;
-@property (nonatomic, strong) id <IBeadStitchElement> Bead;
+@property (nonatomic, strong) id <IThreadStitchElement> ThreadStitchElement;
+@property (nonatomic, strong) id <IBeadStitchElement> BeadStitchElement;
 
 @end
 

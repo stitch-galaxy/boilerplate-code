@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */; };
+		EC0F6BC516DCC974007FF7CF /* ArtWork.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0F6BC416DCC973007FF7CF /* ArtWork.m */; };
 		ECBB913816D25AAD00D94C47 /* BeadStitchElement.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBB913716D25AAD00D94C47 /* BeadStitchElement.m */; };
-		ECBB913B16D281AA00D94C47 /* ArtWork.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBB913A16D281AA00D94C47 /* ArtWork.m */; };
+		ECBB913B16D281AA00D94C47 /* ArtWorkDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBB913A16D281AA00D94C47 /* ArtWorkDesign.m */; };
 		ECBB913E16D293E100D94C47 /* StitchCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBB913D16D293E100D94C47 /* StitchCategory.m */; };
 		ECC1F19316D2C455005C847B /* ArtWorkMaterials.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */; };
 		ECC1F19616D2C892005C847B /* Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC1F19516D2C892005C847B /* Codec.m */; };
@@ -49,10 +51,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EC0F6BC016DCC6E8007FF7CF /* ArtWorkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWorkInfo.h; sourceTree = "<group>"; };
+		EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWorkInfo.m; sourceTree = "<group>"; };
+		EC0F6BC316DCC973007FF7CF /* ArtWork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWork.h; sourceTree = "<group>"; };
+		EC0F6BC416DCC973007FF7CF /* ArtWork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWork.m; sourceTree = "<group>"; };
+		EC0F6BC616DCEB27007FF7CF /* SerializableElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerializableElement.h; sourceTree = "<group>"; };
 		ECBB913616D25AAD00D94C47 /* BeadStitchElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeadStitchElement.h; sourceTree = "<group>"; };
 		ECBB913716D25AAD00D94C47 /* BeadStitchElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeadStitchElement.m; sourceTree = "<group>"; };
-		ECBB913916D281AA00D94C47 /* ArtWork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWork.h; sourceTree = "<group>"; };
-		ECBB913A16D281AA00D94C47 /* ArtWork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWork.m; sourceTree = "<group>"; };
+		ECBB913916D281AA00D94C47 /* ArtWorkDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWorkDesign.h; sourceTree = "<group>"; };
+		ECBB913A16D281AA00D94C47 /* ArtWorkDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWorkDesign.m; sourceTree = "<group>"; };
 		ECBB913C16D293E100D94C47 /* StitchCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StitchCategory.h; sourceTree = "<group>"; };
 		ECBB913D16D293E100D94C47 /* StitchCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StitchCategory.m; sourceTree = "<group>"; };
 		ECC1F19116D2C455005C847B /* ArtWorkMaterials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWorkMaterials.h; sourceTree = "<group>"; };
@@ -205,9 +212,9 @@
 			children = (
 				ECCB3BA016D4CEF0002C4033 /* Ver1.0 */,
 				ECC1F19416D2C891005C847B /* Codec.h */,
-				ECC1F19516D2C892005C847B /* Codec.m */,
 				ECE0F40116D3857F0012D909 /* CodecFactory.h */,
 				ECE0F40216D3857F0012D909 /* CodecFactory.m */,
+				EC0F6BC616DCEB27007FF7CF /* SerializableElement.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -215,26 +222,31 @@
 		ECCB3BA016D4CEF0002C4033 /* Ver1.0 */ = {
 			isa = PBXGroup;
 			children = (
-				ECC232CA16D1525B00105066 /* StitchLibrary.h */,
-				ECC232CB16D1525B00105066 /* StitchLibrary.m */,
-				ECC232CD16D1579600105066 /* Stitch.h */,
-				ECC232CE16D1579600105066 /* Stitch.m */,
-				ECC232D016D182AF00105066 /* ThreadStitchElement.h */,
-				ECC232D116D182AF00105066 /* ThreadStitchElement.m */,
-				ECBB913616D25AAD00D94C47 /* BeadStitchElement.h */,
-				ECBB913716D25AAD00D94C47 /* BeadStitchElement.m */,
-				ECBB913916D281AA00D94C47 /* ArtWork.h */,
-				ECBB913A16D281AA00D94C47 /* ArtWork.m */,
-				ECBB913C16D293E100D94C47 /* StitchCategory.h */,
-				ECBB913D16D293E100D94C47 /* StitchCategory.m */,
+				EC0F6BC316DCC973007FF7CF /* ArtWork.h */,
+				EC0F6BC416DCC973007FF7CF /* ArtWork.m */,
+				ECBB913916D281AA00D94C47 /* ArtWorkDesign.h */,
+				ECBB913A16D281AA00D94C47 /* ArtWorkDesign.m */,
+				EC0F6BC016DCC6E8007FF7CF /* ArtWorkInfo.h */,
+				EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */,
 				ECC1F19116D2C455005C847B /* ArtWorkMaterials.h */,
 				ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */,
-				ECCB3BA116D4DDFD002C4033 /* StitchElement.h */,
-				ECCB3BA216D4DDFD002C4033 /* StitchElement.m */,
-				ECCB3BA416D50348002C4033 /* ThreadMaterial.h */,
-				ECCB3BA516D50348002C4033 /* ThreadMaterial.m */,
 				ECCB3BA716D50912002C4033 /* BeadMaterial.h */,
 				ECCB3BA816D50912002C4033 /* BeadMaterial.m */,
+				ECBB913616D25AAD00D94C47 /* BeadStitchElement.h */,
+				ECBB913716D25AAD00D94C47 /* BeadStitchElement.m */,
+				ECC1F19516D2C892005C847B /* Codec.m */,
+				ECC232CD16D1579600105066 /* Stitch.h */,
+				ECC232CE16D1579600105066 /* Stitch.m */,
+				ECBB913C16D293E100D94C47 /* StitchCategory.h */,
+				ECBB913D16D293E100D94C47 /* StitchCategory.m */,
+				ECCB3BA116D4DDFD002C4033 /* StitchElement.h */,
+				ECCB3BA216D4DDFD002C4033 /* StitchElement.m */,
+				ECC232CA16D1525B00105066 /* StitchLibrary.h */,
+				ECC232CB16D1525B00105066 /* StitchLibrary.m */,
+				ECCB3BA416D50348002C4033 /* ThreadMaterial.h */,
+				ECCB3BA516D50348002C4033 /* ThreadMaterial.m */,
+				ECC232D016D182AF00105066 /* ThreadStitchElement.h */,
+				ECC232D116D182AF00105066 /* ThreadStitchElement.m */,
 			);
 			name = Ver1.0;
 			sourceTree = "<group>";
@@ -357,7 +369,7 @@
 				ECC232CF16D1579600105066 /* Stitch.m in Sources */,
 				ECC232D216D182AF00105066 /* ThreadStitchElement.m in Sources */,
 				ECBB913816D25AAD00D94C47 /* BeadStitchElement.m in Sources */,
-				ECBB913B16D281AA00D94C47 /* ArtWork.m in Sources */,
+				ECBB913B16D281AA00D94C47 /* ArtWorkDesign.m in Sources */,
 				ECBB913E16D293E100D94C47 /* StitchCategory.m in Sources */,
 				ECC1F19316D2C455005C847B /* ArtWorkMaterials.m in Sources */,
 				ECC1F19616D2C892005C847B /* Codec.m in Sources */,
@@ -365,6 +377,8 @@
 				ECCB3BA316D4DDFD002C4033 /* StitchElement.m in Sources */,
 				ECCB3BA616D50348002C4033 /* ThreadMaterial.m in Sources */,
 				ECCB3BA916D50912002C4033 /* BeadMaterial.m in Sources */,
+				EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */,
+				EC0F6BC516DCC974007FF7CF /* ArtWork.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

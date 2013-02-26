@@ -8,14 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol IBeadMaterial <NSObject>
+#import "SerializableElement.h"
+
+@protocol IBeadMaterial <ISerializableElement>
 
 @property (nonatomic, strong) UIColor* Color;
+@property (nonatomic, copy) NSDecimalNumber* Size;
 
 @end
 
 @interface BeadMaterial : NSObject<IBeadMaterial>
 
 - (id) initWithColor: (UIColor*) aColor;
+
+- (BOOL) isEqual: (id) object;
+- (BOOL) isEqualToBeadMaterial: (BeadMaterial*) aBeadMaterial;
+- (NSUInteger) hash;
+
 
 @end

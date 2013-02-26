@@ -12,6 +12,7 @@
 
 @interface CodecFactory : NSObject
 
-+ (id<ICodec>) GetCodecForVersion: (int32_t) version;
++ (id<ICodec>) GetCodec: (int32_t) codecVersion;
++ (id<ICodec>) GetLatesetCodec;
 
 @end

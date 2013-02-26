@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ArtWork.h"
+#import "ArtWorkDesign.h"
 
 @protocol ICodec <NSObject>
 
-- (void) Encode:(id<IArtWork>) artWork ToFile: (NSString*) fileUrl;
-- (id<IArtWork>) Decode:(NSString*) fileUrl;
+- (NSData*) Encode:(id<IArtWorkDesign>) anArtWork;
+- (id<IArtWorkDesign>) Decode:(NSData*) aFileUrl;
 
 @end

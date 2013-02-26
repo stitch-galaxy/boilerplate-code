@@ -2,33 +2,26 @@
 //  ArtWork.h
 //  Cross Stitch Library
 //
-//  Created by 123 on 18.02.13.
+//  Created by 123 on 26.02.13.
 //  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <stdint.h>
 
-#import "Stitch.h"
+#import "ArtWorkInfo.h"
+#import "ArtWorkDesign.h"
 #import "ArtWorkMaterials.h"
 
 @protocol IArtWork <NSObject>
 
-@property (copy, readonly) NSUUID* Guid;
-@property (copy, readonly) NSString* Name;
-@property (copy, readonly) NSDate *Date;
-@property (readonly) int32_t Rating;
-@property (readonly) NSDecimal Price;
-@property (readonly) int32_t Complexity;
+@property (nonatomic, strong) id<IArtWorkInfo> Info;
 
-- (NSString*) GetSmallPictureUrl;
-- (NSString*) GetLargePictureUrl;
+@property (nonatomic, strong) id<IArtWorkDesign> Design;
 
--(NSArray<IStitch>*) GetPicture;
+-(id<IArtWorkMaterialsCalulator>) GetMaterialsCalculator;
 
-@property (readonly) int32_t Width;
-@property (readonly) int32_t Height;
+@end
 
--(id<IArtWorkMaterialsCalulator>) GetMaterials;
+@interface ArtWork : NSObject
 
 @end

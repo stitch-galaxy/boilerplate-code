@@ -43,4 +43,22 @@
     return self;
 }
 
+- (size_t) GetSerializedLength
+{
+    //Stitch type + //Thread material index, or thread material???
+    return sizeof(int8_t) + ;
+}
+
+- (void) SerializeToBuffer: (void*) buffer
+{
+}
+
++ (id) DeserializeFromBuffer: (void*) buffer
+{
+}
+
+
+
+
+
 @end
