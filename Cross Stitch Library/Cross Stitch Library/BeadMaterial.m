@@ -56,11 +56,12 @@
     return hash;
 }
 
-- (id) initWithColor: (UIColor*) aColor
+- (id) initWithColor: (UIColor*) aColor AndSize: (NSDecimalNumber*) aSize
 {
     if (self = [super init])
     {
         self.Color = aColor;
+        self.Size = aSize;
     }
     return self;
 }
@@ -69,10 +70,10 @@
 {
     size_t aSize = sizeof(uint8_t) * 4;
     
-    
     NSString* sSize;
     
     NSUInteger bytesLength = [sSize lengthOfBytesUsingEncoding: NSASCIIStringEncoding];
+    bytesLength += 1;
     
     aSize += bytesLength;
     
@@ -94,16 +95,13 @@
     *(buf + 2) = blue;
     *(buf + 3) = alpha;
     
-    uint8_t *sBuf = buf + 4;
+    char *sBuf = (char *) (buf + 4);
     
     NSString* sSize;
     
     NSUInteger bytesLength = [sSize lengthOfBytesUsingEncoding: NSASCIIStringEncoding];
-    NSUInteger usedLength = 0;
-    NSRange range = NSMakeRange(0, [sSize length]);
     
-    [sSize getBytes: sBuf maxLength: bytesLength usedLength: &usedLength encoding: NSASCIIStringEncoding options: 0 range: range remainingRange: NULL];
-    
+    [sSize getCString: sBuf maxLength: bytesLength + 1 encoding: NSASCIIStringEncoding];
 }
 
 + (id) DeserializeFromBuffer: (void*) buffer
@@ -121,7 +119,17 @@
     CGFloat blue = (CGFloat) iBlue / 255.0;
     CGFloat alpha = (CGFloat) iAlpha / 255.0;
     UIColor* color = [[UIColor alloc] initWithRed: red green: green blue: blue alpha: alpha];
-    BeadMaterial* material = [[BeadMaterial alloc] initWithColor: color];
+    
+    const char *sBuf = (const char *) (buf + 4);
+    
+    NSString* sSize = [[NSString alloc] initWithCString: sBuf encoding: NSASCIIStringEncoding];
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [formatter setGeneratesDecimalNumbers:YES];
+    NSDecimalNumber *aSize = [formatter numberFromString: sSize];
+    
+    BeadMaterial* material = [[BeadMaterial alloc] initWithColor: color AndSize: aSize];
     return material;
 }
 

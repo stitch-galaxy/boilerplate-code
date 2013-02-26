@@ -18,8 +18,11 @@
 @end
 
 @interface BeadMaterial : NSObject<IBeadMaterial>
+{
+    NSDecimal
+}
 
-- (id) initWithColor: (UIColor*) aColor;
+- (id) initWithColor: (UIColor*) aColor AndSize: (NSDecimalNumber*) aSize;
 
 - (BOOL) isEqual: (id) object;
 - (BOOL) isEqualToBeadMaterial: (BeadMaterial*) aBeadMaterial;
