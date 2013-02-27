@@ -39,7 +39,8 @@
     {
         return NO;
     }
-    if (![size isEqual: aBeadMaterial.Size ])
+    
+    if (![size isEqual: aBeadMaterial.Size])
     {
         return NO;
     }
@@ -56,7 +57,7 @@
     return hash;
 }
 
-- (id) initWithColor: (UIColor*) aColor AndSize: (NSDecimalNumber*) aSize
+- (id) initWithColor: (UIColor *) aColor AndSize: (NSDecimalNumber *) aSize
 {
     if (self = [super init])
     {
@@ -66,18 +67,13 @@
     return self;
 }
 
+@end
+
+@implementation BeadMaterial (Serialization)
+
 - (size_t) GetSerializedLength
 {
-    size_t aSize = sizeof(uint8_t) * 4;
-    
-    NSString* sSize;
-    
-    NSUInteger bytesLength = [sSize lengthOfBytesUsingEncoding: NSASCIIStringEncoding];
-    bytesLength += 1;
-    
-    aSize += bytesLength;
-    
-    return aSize;
+    return sizeof(uint8_t) * 4 + sizeof(NSDecimal);
 }
 
 - (void) SerializeToBuffer: (void*) buffer
@@ -95,13 +91,8 @@
     *(buf + 2) = blue;
     *(buf + 3) = alpha;
     
-    char *sBuf = (char *) (buf + 4);
-    
-    NSString* sSize;
-    
-    NSUInteger bytesLength = [sSize lengthOfBytesUsingEncoding: NSASCIIStringEncoding];
-    
-    [sSize getCString: sBuf maxLength: bytesLength + 1 encoding: NSASCIIStringEncoding];
+    NSDecimal *dBuf = (NSDecimal *) (buf + 4);
+    *dBuf = size.decimalValue;
 }
 
 + (id) DeserializeFromBuffer: (void*) buffer
@@ -120,19 +111,12 @@
     CGFloat alpha = (CGFloat) iAlpha / 255.0;
     UIColor* color = [[UIColor alloc] initWithRed: red green: green blue: blue alpha: alpha];
     
-    const char *sBuf = (const char *) (buf + 4);
-    
-    NSString* sSize = [[NSString alloc] initWithCString: sBuf encoding: NSASCIIStringEncoding];
-    
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
-    [formatter setGeneratesDecimalNumbers:YES];
-    NSDecimalNumber *aSize = [formatter numberFromString: sSize];
+    const NSDecimal *sBuf = (const NSDecimal *) (buf + 4);
+    NSDecimalNumber *aSize = [[NSDecimalNumber alloc] initWithDecimal: *sBuf];
     
     BeadMaterial* material = [[BeadMaterial alloc] initWithColor: color AndSize: aSize];
     return material;
 }
-
 
 @end
 

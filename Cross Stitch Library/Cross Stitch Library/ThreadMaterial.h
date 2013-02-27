@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SerializableElement.h"
-
-@protocol IThreadMaterial <ISerializableElement>
+@protocol IThreadMaterial <NSObject>
 
 @property (nonatomic, strong) UIColor* Color;
 
@@ -23,5 +21,14 @@
 - (BOOL) isEqual: (id) object;
 - (BOOL) isEqualToThreadMaterial: (ThreadMaterial*) aBeadMaterial;
 - (NSUInteger) hash;
+
+@end
+
+
+@interface ThreadMaterial (Serialization)
+
+- (size_t) GetSerializedLength;
+- (void) SerializeToBuffer: (void*) buffer;
++ (id) DeserializeFromBuffer: (void*) buffer;
 
 @end

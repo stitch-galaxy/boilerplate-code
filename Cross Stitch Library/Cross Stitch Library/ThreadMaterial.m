@@ -32,7 +32,7 @@
         return NO;
     }
     
-    return [self isEqualToThreadMaterial:object];
+    return [self isEqualToThreadMaterial: object];
 }
 
 - (BOOL) isEqualToThreadMaterial: (ThreadMaterial*) aThreadMaterial
@@ -57,6 +57,9 @@
     return hash;
 }
 
+@end
+
+@implementation ThreadMaterial (Serialization)
 
 - (size_t) GetSerializedLength
 {
