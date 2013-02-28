@@ -16,7 +16,7 @@
     NSHashTable* threadMaterials;
     NSMapTable* threadMaterialsToIndexMap;
     NSMapTable* indexToThreadMaterialMap;
-    uint32_t maxIndex;
+    uint32_t freeIndex;
 }
 
 - (ThreadMaterial *) GetThreadMaterialByColor: (UIColor *) color;

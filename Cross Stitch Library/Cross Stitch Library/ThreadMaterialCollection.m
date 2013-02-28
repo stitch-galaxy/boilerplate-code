@@ -17,7 +17,7 @@
       threadMaterials = [[NSHashTable alloc] initWithOptions:NSPointerFunctionsStrongMemory capacity:aCapacity];
       threadMaterialsToIndexMap = [[NSMapTable alloc] initWithKeyOptions: NSMapTableWeakMemory  valueOptions: NSMapTableWeakMemory capacity:aCapacity];
       indexToThreadMaterialMap = [[NSMapTable alloc] initWithKeyOptions: NSMapTableWeakMemory  valueOptions: NSMapTableWeakMemory capacity:aCapacity];
-      maxIndex = 0;
+      freeIndex = 0;
   }
     return self;
 }
@@ -35,8 +35,7 @@
             }
         }
     }
-    [self AddThreadMaterial:aThreadMaterial WithIndex:maxIndex];
-    ++maxIndex;
+    [self AddThreadMaterial:aThreadMaterial WithIndex:freeIndex];
     
     return aThreadMaterial;
 }
@@ -48,6 +47,11 @@
     NSNumber* nIndex = [NSNumber numberWithUnsignedInteger:index];
     [threadMaterialsToIndexMap setObject: nIndex forKey:aThreadMaterial];
     [indexToThreadMaterialMap setObject:aThreadMaterial forKey:nIndex];
+    
+    if (index >= freeIndex)
+    {
+        freeIndex = (index + 1);
+    }
 }
 
 
