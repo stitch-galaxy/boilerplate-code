@@ -13,8 +13,7 @@
 
 
 @protocol IArtWorkDesign <NSObject>
-
-- (NSSet<IThreadMaterial>*) GetThreads; 
+ 
 - (int32_t) GetWidth;
 - (int32_t) GetHeight;
 
@@ -24,8 +23,6 @@
 
 @interface ArtWorkDesign : NSObject<IArtWorkDesign>
 {
-    NSMutableSet<IThreadMaterial>* threads;
-    NSMutableSet<IBeadMaterial>* beads;
     NSMutableArray<IStitch>* picture;
 }
 
