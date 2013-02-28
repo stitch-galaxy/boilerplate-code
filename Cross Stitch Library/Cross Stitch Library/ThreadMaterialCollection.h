@@ -13,12 +13,14 @@
 
 @interface ThreadMaterialCollection : NSObject
 {
-    NSMutableSet* threadMaterials;
-    NSMutableDictionary* threadMeterialsWithIndices;
+    NSHashTable* threadMaterials;
+    NSMapTable* threadMaterialsToIndexMap;
+    NSMapTable* indexToThreadMaterialMap;
     uint32_t maxIndex;
 }
 
 - (ThreadMaterial *) GetThreadMaterialByColor: (UIColor *) color;
+
 - (id) initWithCapacity: (NSUInteger) capacity;
 
 @end
