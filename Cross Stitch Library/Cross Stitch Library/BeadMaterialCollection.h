@@ -13,17 +13,21 @@
 
 @interface BeadMaterialCollection : NSObject
 {
-    NSSet<IBeadMaterial>* beadMaterials;
-    NSDictionary<IBeadMaterial>* beadMeterialsWithIndices;
+    NSHashTable* beadMaterials;
+    NSMapTable* beadMaterialsToIndexMap;
+    NSMapTable* indexToBeadMaterialMap;
+    uint32_t freeIndex;
 }
 
-- (BeadMaterial *) GetThreadMaterialByColor: (UIColor *) color AndSize: (NSDecimalNumber*) size;
+- (BeadMaterial *) GetBeadMaterialByColor: (UIColor *) color AndSize: (NSDecimalNumber*) aSize;
+
+- (id) initWithCapacity: (NSUInteger) capacity;
 
 @end
 
 @interface BeadMaterialCollection (Serialization)
 
-- (uint32_t) GetBeadMaterialIndex: (BeadMaterial *) aThreadMaterial;
+- (uint32_t) GetBeadMaterialIndex: (BeadMaterial *) aBeadMaterial;
 - (BeadMaterial *) GetBeadMaterialByIndex: (uint32_t) anIndex;
 
 - (size_t) GetSerializedLength;
