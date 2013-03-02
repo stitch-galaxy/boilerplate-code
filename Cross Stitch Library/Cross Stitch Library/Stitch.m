@@ -86,7 +86,8 @@
 
 - (size_t) GetSerializedLength
 {
-    return sizeof(int8_t) + sizeof(int8_t) + sizeof(uint32_t) + sizeof(uint32_t) + sizeof(BOOL);
+    size_t size = sizeof(int8_t) + sizeof(int8_t) + sizeof(uint32_t) + sizeof(uint32_t) + sizeof(BOOL);
+    return size;
 }
 
 - (void) SerializeToBuffer: (void*) buffer WithThreadsCollection: (ThreadMaterialCollection*) threads AndBeadsCollection: (BeadMaterialCollection*) beads

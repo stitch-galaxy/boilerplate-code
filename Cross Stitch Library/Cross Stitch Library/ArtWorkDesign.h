@@ -10,20 +10,41 @@
 #import <stdint.h>
 
 #import "Stitch.h"
-
+#import "ThreadMaterialCollection.h"
+#import "BeadMaterialCollection.h"
 
 @protocol IArtWorkDesign <NSObject>
- 
-- (int32_t) GetWidth;
-- (int32_t) GetHeight;
 
--(id<IStitch>) GetStitchAtColum: (int32_t) column AndRow: (int32_t) row;
+@property (nonatomic, strong) ThreadMaterialCollection* Threads;
+
+@property (nonatomic, strong) BeadMaterialCollection* Beads;
+
+- (uint32_t) GetWidth;
+- (uint32_t) GetHeight;
+
+-(id<IStitch>) GetStitchAtRow: (uint32_t) row AndColumn: (uint32_t) column;
+- (void) SetSticth: (id<IStitch>) stitch AtRow: (uint32_t) row AndColumn: (uint32_t) column;
 
 @end
 
-@interface ArtWorkDesign : NSObject<IArtWorkDesign>
+@interface ArtWorkDesign : NSObject<IArtWorkDesign, NSCoding>
 {
-    NSMutableArray<IStitch>* picture;
+    uint32_t width;
+    uint32_t height;
+    NSPointerArray* picture;
 }
+
+- (id) initWithWidth: (uint32_t) aWidth AndHeight: (uint32_t) anHeight Threads: (ThreadMaterialCollection *) aThreads AndBeads: (BeadMaterialCollection *) aBeads;
+
+- (void)encodeWithCoder:(NSCoder *)aCoder;
+- (id)initWithCoder:(NSCoder *)aDecoder;
+
+@end
+
+@interface ArtWorkDesign(Serialization)
+
+- (size_t) GetSerializedLength;
+- (void) SerializeToBuffer: (void*) buffer;
++ (id) DeserializeFromBuffer: (const void*) buffer;
 
 @end
