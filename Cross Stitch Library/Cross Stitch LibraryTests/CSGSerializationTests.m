@@ -153,40 +153,43 @@
 - (void) testThreadSerialization
 {
     CSGThread* thread = [[CSGThread alloc] initWithColor:[testhelper randomThreadColor]];
-    NSMutableData* data = [[NSMutableData alloc] initWithCapacity:[thread serializedLength]];
+    
+    NSMutableData* data = [[NSMutableData alloc] initWithLength:[thread serializedLength]];
     [thread serializeToBuffer: [data mutableBytes]];
     
     CSGThread* thread1 = [CSGThread deserializeFromBuffer:[data bytes]];
-    NSMutableData* data1 = [[NSMutableData alloc] initWithCapacity:[thread1 serializedLength]];
+    NSMutableData* data1 = [[NSMutableData alloc] initWithLength:[thread1 serializedLength]];
     [thread1 serializeToBuffer: [data1 mutableBytes]];
     
-    if (![CSGSerializationTests CompareSerializedViewForData:data Data1:data1])
+    if (![CSGSerializationTests IsSerializedViewEqualForData:data Data1:data1])
     {
         STFail(@"Serialization deserialization works incorrectly for threads");
     }
 }
 
-+ (BOOL) CompareSerializedViewForData: (NSData*) data1 Data1: (NSData*) data2
++ (BOOL) IsSerializedViewEqualForData: (NSData*) data1 Data1: (NSData*) data2
 {
     if (data1.length != data2.length)
     {
         return NO;
     }
     
-    return memcmp(data1.bytes, data2.bytes, data1.length);
+    NSUInteger length = data1.length;
+    
+    return (memcmp(data1.bytes, data2.bytes, length) == 0);
 }
 
 - (void) testThreadPeletteSerialization
 {
     CSGThreadsPalette* palette = [testhelper threadsPalette];
-    NSMutableData* data = [[NSMutableData alloc] initWithCapacity:[palette serializedLength]];
+    NSMutableData* data = [[NSMutableData alloc] initWithLength:[palette serializedLength]];
     [palette serializeToBuffer: [data mutableBytes]];
     
     CSGThreadsPalette* palette1 = [CSGThreadsPalette deserializeFromBuffer:[data bytes]];
-    NSMutableData* data1 = [[NSMutableData alloc] initWithCapacity:[palette1 serializedLength]];
+    NSMutableData* data1 = [[NSMutableData alloc] initWithLength:[palette1 serializedLength]];
     [palette1 serializeToBuffer: [data1 mutableBytes]];
     
-    if (![CSGSerializationTests CompareSerializedViewForData:data Data1:data1])
+    if (![CSGSerializationTests IsSerializedViewEqualForData:data Data1:data1])
     {
         STFail(@"Serialization deserialization works incorrectly for threads palette");
     }

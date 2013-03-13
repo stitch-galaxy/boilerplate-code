@@ -74,7 +74,7 @@
 
 - (size_t) serializedLength
 {
-    return BYTE_SIZE * 3;
+    return sizeof(uint8_t) * 3;
 }
 
 - (void) serializeToBuffer: (void*) buffer
@@ -98,9 +98,6 @@
     uint8_t iRed = *buf;
     uint8_t iGreen = *(buf + 1);
     uint8_t iBlue = *(buf + 2);
-    iRed += 10;
-    
-    
     
     CGFloat red = (CGFloat) iRed / 255.0;
     CGFloat green = (CGFloat) iGreen / 255.0;
