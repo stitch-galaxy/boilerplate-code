@@ -6,9 +6,28 @@
 //  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
 //
 
-#import "ThreadMaterialCollection.h"
+#import "CSGThreadsPalette.h"
 
-@implementation ThreadMaterialCollection
+@interface CSGThreadsPalette ()
+{
+    NSHashTable* threadMaterials;
+    NSMapTable* threadMaterialsToIndexMap;
+    NSMapTable* indexToThreadMaterialMap;
+    uint32_t freeIndex;
+}
+
+@end
+
+@implementation CSGThreadsPalette
+
+- (id) init
+{
+    if (self = [super init])
+    {
+        return [self initWithCapacity: 0];
+    }
+    return self;
+}
 
 - (id) initWithCapacity: (NSUInteger) aCapacity
 {
@@ -22,12 +41,17 @@
     return self;
 }
 
-- (ThreadMaterial *) GetThreadMaterialByColor: (UIColor *) color
+- (uint32_t) size
 {
-    ThreadMaterial* aThreadMaterial = [[ThreadMaterial alloc] initWithColor:color];
+    return [threadMaterials count];
+}
+
+- (CSGThread *) threadMaterialByColor: (UIColor *) color
+{
+    CSGThread* aThreadMaterial = [[CSGThread alloc] initWithColor:color];
     if ([threadMaterials containsObject:aThreadMaterial])
     {
-        for(ThreadMaterial* aThMat in threadMaterials)
+        for(CSGThread* aThMat in threadMaterials)
         {
             if ([aThMat isEqual:aThreadMaterial])
             {
@@ -40,7 +64,7 @@
     return aThreadMaterial;
 }
 
-- (void) AddThreadMaterial: (ThreadMaterial *) aThreadMaterial WithIndex: (uint32_t) index
+- (void) AddThreadMaterial: (CSGThread *) aThreadMaterial WithIndex: (uint32_t) index
 {
     [threadMaterials addObject:aThreadMaterial];
     
@@ -57,9 +81,9 @@
 
 @end
 
-@implementation ThreadMaterialCollection (Serialization)
+@implementation CSGThreadsPalette (Serialization)
 
-- (uint32_t) GetThreadMaterialIndex: (ThreadMaterial *) aThreadMaterial
+- (uint32_t) threadIndex: (CSGThread *) aThreadMaterial
 {
     NSNumber* nIndex = [threadMaterialsToIndexMap objectForKey:aThreadMaterial];
     if (nIndex)
@@ -70,10 +94,10 @@
     return 0;
 }
 
-- (ThreadMaterial *) GetThreadMaterialByIndex: (uint32_t) anIndex
+- (CSGThread *) threadByIndex: (uint32_t) anIndex
 {
     NSNumber* nIndex = [NSNumber numberWithUnsignedInteger:anIndex];
-    ThreadMaterial* ret = [indexToThreadMaterialMap objectForKey:nIndex];
+    CSGThread* ret = [indexToThreadMaterialMap objectForKey:nIndex];
     if (ret)
     {
         return ret;
@@ -82,48 +106,48 @@
     return nil;
 }
 
-- (size_t) GetSerializedLength
+- (size_t) serializedLength
 {
     size_t size = sizeof(uint32_t);
-    for(ThreadMaterial* aThMat in threadMaterials)
+    for(CSGThread* aThMat in threadMaterials)
     {
-        size += [aThMat GetSerializedLength];
+        size += [aThMat serializedLength];
         size += sizeof(uint32_t);
     }
     return size;
 }
 
-- (void) SerializeToBuffer: (void*) buffer
+- (void) serializeToBuffer: (void*) buffer
 {
     uint32_t *buf = (uint32_t *) buffer;
     *buf = threadMaterials.count;
     ++buf;
     uint32_t *indexBuf = (uint32_t *)buf;
-    for(ThreadMaterial *tMat in threadMaterials)
+    for(CSGThread *tMat in threadMaterials)
     {
-        *indexBuf = [self GetThreadMaterialIndex: tMat];
+        *indexBuf = [self threadIndex: tMat];
         ++indexBuf;
         void *voidBuf = (void *)indexBuf;
-        size_t size = [tMat GetSerializedLength];
-        [tMat SerializeToBuffer:voidBuf];
+        size_t size = [tMat serializedLength];
+        [tMat serializeToBuffer:voidBuf];
         voidBuf += size;
         indexBuf = (uint32_t *)voidBuf;
     }
 }
 
-+ (id) DeserializeFromBuffer: (void*) buffer
++ (id) deserializeFromBuffer: (const void*) buffer
 {
     uint32_t *buf = (uint32_t *) buffer;
     uint32_t length = *buf;
     ++buf;
-    ThreadMaterialCollection* threads = [[ThreadMaterialCollection alloc] initWithCapacity:length];
+    CSGThreadsPalette* threads = [[CSGThreadsPalette alloc] initWithCapacity:length];
     for (uint32_t i = 0; i < length; ++i)
     {
         uint32_t index = *buf;
         ++buf;
         void *voidBuf = (void *) buf;
-        ThreadMaterial* tMat = [ThreadMaterial DeserializeFromBuffer:voidBuf];
-        voidBuf += [tMat GetSerializedLength];
+        CSGThread* tMat = [CSGThread deserializeFromBuffer:voidBuf];
+        voidBuf += [tMat serializedLength];
         buf = (uint32_t *) voidBuf;
         
         [threads AddThreadMaterial:tMat WithIndex:index];

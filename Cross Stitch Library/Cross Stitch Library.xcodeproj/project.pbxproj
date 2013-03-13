@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */; };
 		EC0F6BC516DCC974007FF7CF /* ArtWork.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0F6BC416DCC973007FF7CF /* ArtWork.m */; };
-		EC92082316DE2F6B000B14A4 /* ThreadMaterialCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = EC92082216DE2F6B000B14A4 /* ThreadMaterialCollection.m */; };
-		EC92082616DE3645000B14A4 /* BeadMaterialCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = EC92082516DE3645000B14A4 /* BeadMaterialCollection.m */; };
+		EC92082316DE2F6B000B14A4 /* CSGThreadsPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = EC92082216DE2F6B000B14A4 /* CSGThreadsPalette.m */; };
 		ECBB913B16D281AA00D94C47 /* ArtWorkDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBB913A16D281AA00D94C47 /* ArtWorkDesign.m */; };
 		ECBB913E16D293E100D94C47 /* StitchCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBB913D16D293E100D94C47 /* StitchCategory.m */; };
 		ECC1F19316D2C455005C847B /* ArtWorkMaterials.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */; };
@@ -31,12 +30,12 @@
 		ECC232B416D1372100105066 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC2328B16D1372100105066 /* UIKit.framework */; };
 		ECC232B516D1372100105066 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC2328D16D1372100105066 /* Foundation.framework */; };
 		ECC232BD16D1372100105066 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ECC232BB16D1372100105066 /* InfoPlist.strings */; };
-		ECC232C016D1372100105066 /* Cross_Stitch_LibraryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232BF16D1372100105066 /* Cross_Stitch_LibraryTests.m */; };
+		ECC232C016D1372100105066 /* CSGSerializationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232BF16D1372100105066 /* CSGSerializationTests.m */; };
 		ECC232CC16D1525B00105066 /* StitchLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CB16D1525B00105066 /* StitchLibrary.m */; };
 		ECC232CF16D1579600105066 /* Stitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CE16D1579600105066 /* Stitch.m */; };
 		ECCB3BA316D4DDFD002C4033 /* StitchElement.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB3BA216D4DDFD002C4033 /* StitchElement.m */; };
-		ECCB3BA616D50348002C4033 /* ThreadMaterial.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB3BA516D50348002C4033 /* ThreadMaterial.m */; };
-		ECCB3BA916D50912002C4033 /* BeadMaterial.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB3BA816D50912002C4033 /* BeadMaterial.m */; };
+		ECCB3BA616D50348002C4033 /* CSGThread.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB3BA516D50348002C4033 /* CSGThread.m */; };
+		ECCFD9EE16F08D02004FE762 /* ThreadsBlend.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFD9ED16F08D02004FE762 /* ThreadsBlend.m */; };
 		ECE0F40316D3857F0012D909 /* CodecFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE0F40216D3857F0012D909 /* CodecFactory.m */; };
 /* End PBXBuildFile section */
 
@@ -56,10 +55,8 @@
 		EC0F6BC316DCC973007FF7CF /* ArtWork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWork.h; sourceTree = "<group>"; };
 		EC0F6BC416DCC973007FF7CF /* ArtWork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWork.m; sourceTree = "<group>"; };
 		EC0F6BC616DCEB27007FF7CF /* SerializableElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerializableElement.h; sourceTree = "<group>"; };
-		EC92082116DE2F6B000B14A4 /* ThreadMaterialCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMaterialCollection.h; sourceTree = "<group>"; };
-		EC92082216DE2F6B000B14A4 /* ThreadMaterialCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadMaterialCollection.m; sourceTree = "<group>"; };
-		EC92082416DE3645000B14A4 /* BeadMaterialCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeadMaterialCollection.h; sourceTree = "<group>"; };
-		EC92082516DE3645000B14A4 /* BeadMaterialCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeadMaterialCollection.m; sourceTree = "<group>"; };
+		EC92082116DE2F6B000B14A4 /* CSGThreadsPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGThreadsPalette.h; sourceTree = "<group>"; };
+		EC92082216DE2F6B000B14A4 /* CSGThreadsPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGThreadsPalette.m; sourceTree = "<group>"; };
 		ECBB913916D281AA00D94C47 /* ArtWorkDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWorkDesign.h; sourceTree = "<group>"; };
 		ECBB913A16D281AA00D94C47 /* ArtWorkDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWorkDesign.m; sourceTree = "<group>"; };
 		ECBB913C16D293E100D94C47 /* StitchCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StitchCategory.h; sourceTree = "<group>"; };
@@ -89,18 +86,19 @@
 		ECC232B216D1372100105066 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		ECC232BA16D1372100105066 /* Cross Stitch LibraryTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cross Stitch LibraryTests-Info.plist"; sourceTree = "<group>"; };
 		ECC232BC16D1372100105066 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		ECC232BE16D1372100105066 /* Cross_Stitch_LibraryTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cross_Stitch_LibraryTests.h; sourceTree = "<group>"; };
-		ECC232BF16D1372100105066 /* Cross_Stitch_LibraryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cross_Stitch_LibraryTests.m; sourceTree = "<group>"; };
+		ECC232BE16D1372100105066 /* CSGSerializationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSGSerializationTests.h; sourceTree = "<group>"; };
+		ECC232BF16D1372100105066 /* CSGSerializationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSGSerializationTests.m; sourceTree = "<group>"; };
 		ECC232CA16D1525B00105066 /* StitchLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StitchLibrary.h; sourceTree = "<group>"; };
 		ECC232CB16D1525B00105066 /* StitchLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StitchLibrary.m; sourceTree = "<group>"; };
 		ECC232CD16D1579600105066 /* Stitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stitch.h; sourceTree = "<group>"; };
 		ECC232CE16D1579600105066 /* Stitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stitch.m; sourceTree = "<group>"; };
 		ECCB3BA116D4DDFD002C4033 /* StitchElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StitchElement.h; sourceTree = "<group>"; };
 		ECCB3BA216D4DDFD002C4033 /* StitchElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StitchElement.m; sourceTree = "<group>"; };
-		ECCB3BA416D50348002C4033 /* ThreadMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMaterial.h; sourceTree = "<group>"; };
-		ECCB3BA516D50348002C4033 /* ThreadMaterial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadMaterial.m; sourceTree = "<group>"; };
-		ECCB3BA716D50912002C4033 /* BeadMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeadMaterial.h; sourceTree = "<group>"; };
-		ECCB3BA816D50912002C4033 /* BeadMaterial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeadMaterial.m; sourceTree = "<group>"; };
+		ECCB3BA416D50348002C4033 /* CSGThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGThread.h; sourceTree = "<group>"; };
+		ECCB3BA516D50348002C4033 /* CSGThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGThread.m; sourceTree = "<group>"; };
+		ECCFD9EC16F08D02004FE762 /* ThreadsBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadsBlend.h; sourceTree = "<group>"; };
+		ECCFD9ED16F08D02004FE762 /* ThreadsBlend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadsBlend.m; sourceTree = "<group>"; };
+		ECCFD9EF16F09A6A004FE762 /* Cross Stitch Library.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Cross Stitch Library.entitlements"; sourceTree = "<group>"; };
 		ECE0F40116D3857F0012D909 /* CodecFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodecFactory.h; sourceTree = "<group>"; };
 		ECE0F40216D3857F0012D909 /* CodecFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodecFactory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,6 +127,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ECB71DE216E7E77A000FC6F4 /* Embrodiery */ = {
+			isa = PBXGroup;
+			children = (
+				ECB71DE516E7EB24000FC6F4 /* Stitches */,
+				ECB71DE316E7E794000FC6F4 /* Materials */,
+			);
+			name = Embrodiery;
+			sourceTree = "<group>";
+		};
+		ECB71DE316E7E794000FC6F4 /* Materials */ = {
+			isa = PBXGroup;
+			children = (
+				ECCB3BA416D50348002C4033 /* CSGThread.h */,
+				ECCB3BA516D50348002C4033 /* CSGThread.m */,
+				EC92082116DE2F6B000B14A4 /* CSGThreadsPalette.h */,
+				EC92082216DE2F6B000B14A4 /* CSGThreadsPalette.m */,
+			);
+			name = Materials;
+			sourceTree = "<group>";
+		};
+		ECB71DE516E7EB24000FC6F4 /* Stitches */ = {
+			isa = PBXGroup;
+			children = (
+				ECB71DE616E7EB56000FC6F4 /* Thread */,
+			);
+			name = Stitches;
+			sourceTree = "<group>";
+		};
+		ECB71DE616E7EB56000FC6F4 /* Thread */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFD9EC16F08D02004FE762 /* ThreadsBlend.h */,
+				ECCFD9ED16F08D02004FE762 /* ThreadsBlend.m */,
+			);
+			name = Thread;
+			sourceTree = "<group>";
+		};
 		ECC2327F16D1372100105066 = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +197,7 @@
 		ECC2329116D1372100105066 /* Cross Stitch Library */ = {
 			isa = PBXGroup;
 			children = (
+				ECCFD9EF16F09A6A004FE762 /* Cross Stitch Library.entitlements */,
 				ECC232C916D1520300105066 /* Model */,
 				ECC2329A16D1372100105066 /* AppDelegate.h */,
 				ECC2329B16D1372100105066 /* AppDelegate.m */,
@@ -191,8 +227,8 @@
 		ECC232B816D1372100105066 /* Cross Stitch LibraryTests */ = {
 			isa = PBXGroup;
 			children = (
-				ECC232BE16D1372100105066 /* Cross_Stitch_LibraryTests.h */,
-				ECC232BF16D1372100105066 /* Cross_Stitch_LibraryTests.m */,
+				ECC232BE16D1372100105066 /* CSGSerializationTests.h */,
+				ECC232BF16D1372100105066 /* CSGSerializationTests.m */,
 				ECC232B916D1372100105066 /* Supporting Files */,
 			);
 			path = "Cross Stitch LibraryTests";
@@ -222,6 +258,7 @@
 		ECCB3BA016D4CEF0002C4033 /* Ver1.0 */ = {
 			isa = PBXGroup;
 			children = (
+				ECB71DE216E7E77A000FC6F4 /* Embrodiery */,
 				EC0F6BC316DCC973007FF7CF /* ArtWork.h */,
 				EC0F6BC416DCC973007FF7CF /* ArtWork.m */,
 				ECBB913916D281AA00D94C47 /* ArtWorkDesign.h */,
@@ -230,8 +267,6 @@
 				EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */,
 				ECC1F19116D2C455005C847B /* ArtWorkMaterials.h */,
 				ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */,
-				ECCB3BA716D50912002C4033 /* BeadMaterial.h */,
-				ECCB3BA816D50912002C4033 /* BeadMaterial.m */,
 				ECC1F19516D2C892005C847B /* Codec.m */,
 				ECC232CD16D1579600105066 /* Stitch.h */,
 				ECC232CE16D1579600105066 /* Stitch.m */,
@@ -241,12 +276,6 @@
 				ECCB3BA216D4DDFD002C4033 /* StitchElement.m */,
 				ECC232CA16D1525B00105066 /* StitchLibrary.h */,
 				ECC232CB16D1525B00105066 /* StitchLibrary.m */,
-				ECCB3BA416D50348002C4033 /* ThreadMaterial.h */,
-				ECCB3BA516D50348002C4033 /* ThreadMaterial.m */,
-				EC92082116DE2F6B000B14A4 /* ThreadMaterialCollection.h */,
-				EC92082216DE2F6B000B14A4 /* ThreadMaterialCollection.m */,
-				EC92082416DE3645000B14A4 /* BeadMaterialCollection.h */,
-				EC92082516DE3645000B14A4 /* BeadMaterialCollection.m */,
 			);
 			name = Ver1.0;
 			sourceTree = "<group>";
@@ -373,12 +402,11 @@
 				ECC1F19616D2C892005C847B /* Codec.m in Sources */,
 				ECE0F40316D3857F0012D909 /* CodecFactory.m in Sources */,
 				ECCB3BA316D4DDFD002C4033 /* StitchElement.m in Sources */,
-				ECCB3BA616D50348002C4033 /* ThreadMaterial.m in Sources */,
-				ECCB3BA916D50912002C4033 /* BeadMaterial.m in Sources */,
+				ECCB3BA616D50348002C4033 /* CSGThread.m in Sources */,
 				EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */,
 				EC0F6BC516DCC974007FF7CF /* ArtWork.m in Sources */,
-				EC92082316DE2F6B000B14A4 /* ThreadMaterialCollection.m in Sources */,
-				EC92082616DE3645000B14A4 /* BeadMaterialCollection.m in Sources */,
+				EC92082316DE2F6B000B14A4 /* CSGThreadsPalette.m in Sources */,
+				ECCFD9EE16F08D02004FE762 /* ThreadsBlend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +414,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ECC232C016D1372100105066 /* Cross_Stitch_LibraryTests.m in Sources */,
+				ECC232C016D1372100105066 /* CSGSerializationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

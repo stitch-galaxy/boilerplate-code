@@ -6,17 +6,28 @@
 //  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
 //
 
-#import "ThreadMaterial.h"
+#import "CSGThread.h"
 
-@implementation ThreadMaterial
+@interface CSGThread ()
 
-@synthesize Color = color;
+@property (nonatomic, retain) UIColor * CSG_color;
+
+@end
+
+@implementation CSGThread
+
+@synthesize CSG_color;
+
+- (UIColor*) color
+{
+    return CSG_color;
+}
 
 - (id) initWithColor: (UIColor*) aColor
 {
     if (self = [super init])
     {
-        self.Color = aColor;
+        self.CSG_color = aColor;
     }
     return self;
 }
@@ -32,16 +43,16 @@
         return NO;
     }
     
-    return [self isEqualToThreadMaterial: object];
+    return [self isEqualToCSGThread: object];
 }
 
-- (BOOL) isEqualToThreadMaterial: (ThreadMaterial*) aThreadMaterial
+- (BOOL) isEqualToCSGThread: (CSGThread*) aThread
 {
-    if (self == aThreadMaterial)
+    if (self == aThread)
     {
         return YES;
     }
-    if (![color isEqual: aThreadMaterial.Color])
+    if (![CSG_color isEqual: [aThread color]])
     {
         return NO;
     }
@@ -52,25 +63,25 @@
 - (NSUInteger)hash
 {
     NSUInteger hash = 17;
-    hash = hash*31 + color.hash;
+    hash = hash*31 + CSG_color.hash;
     
     return hash;
 }
 
 @end
 
-@implementation ThreadMaterial (Serialization)
+@implementation CSGThread (Serialization)
 
-- (size_t) GetSerializedLength
+- (size_t) serializedLength
 {
     return BYTE_SIZE * 3;
 }
 
-- (void) SerializeToBuffer: (void*) buffer
+- (void) serializeToBuffer: (void*) buffer
 {
     uint8_t *buf = (uint8_t*) buffer;
     
-    const CGFloat *components = CGColorGetComponents(color.CGColor);
+    const CGFloat *components = CGColorGetComponents(CSG_color.CGColor);
     uint8_t red = lroundf(components[0] * 255.0);
     uint8_t green = lround(components[1] * 255.0);
     uint8_t blue = lround(components[2] * 255.0);
@@ -80,20 +91,22 @@
     *(buf + 2) = blue;    
 }
 
-+ (id) DeserializeFromBuffer: (void*) buffer
++ (id) deserializeFromBuffer: (const void*) buffer
 {
     uint8_t *buf = (uint8_t*) buffer;
     
     uint8_t iRed = *buf;
     uint8_t iGreen = *(buf + 1);
     uint8_t iBlue = *(buf + 2);
+    iRed += 10;
+    
     
     
     CGFloat red = (CGFloat) iRed / 255.0;
     CGFloat green = (CGFloat) iGreen / 255.0;
     CGFloat blue = (CGFloat) iBlue / 255.0;
     UIColor* color = [[UIColor alloc] initWithRed: red green: green blue: blue alpha: 1.0];
-    ThreadMaterial* material = [[ThreadMaterial alloc] initWithColor: color];
+    CSGThread* material = [[CSGThread alloc] initWithColor: color];
     return material;
 }
 

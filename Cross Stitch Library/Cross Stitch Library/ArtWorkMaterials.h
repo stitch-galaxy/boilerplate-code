@@ -8,12 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ThreadMaterial.h"
-#import "BeadMaterial.h"
+#import "CSGThread.h"
 
 @protocol IArtWorkMaterialsCalulator <NSObject>
 
-- (float) GetThreadMaterialLenghtInMeters: (id<IThreadMaterial>) aThreadMaterial;
-- (int32_t) GetBeadElementsAmount: (id<IBeadMaterial>) aBeadMaterial;
+- (float) GetThreadMaterialLenghtInMeters: (id<CSGThread>) aThreadMaterial;
 
 @end

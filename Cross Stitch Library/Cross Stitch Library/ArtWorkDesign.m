@@ -12,7 +12,7 @@
 
 @synthesize Threads = threads;
 
-@synthesize Beads = beads;
+
 
 
 - (uint32_t) GetWidth
@@ -41,7 +41,7 @@
     [picture replacePointerAtIndex:[self GetIndexForRow: row AndColumn:column] withPointer:(__bridge void *)(stitch)];
 }
 
-- (id) initWithWidth: (uint32_t) aWidth AndHeight: (uint32_t) anHeight Threads: (ThreadMaterialCollection *) aThreads AndBeads: (BeadMaterialCollection *) aBeads
+- (id) initWithWidth: (uint32_t) aWidth AndHeight: (uint32_t) anHeight Threads: (CSGThreadsPalette *) aThreads
 {
     if (self = [super init])
     {
@@ -51,7 +51,6 @@
         picture = [[NSPointerArray alloc] initWithOptions: options];
         [picture setCount:aWidth * anHeight];
         threads = aThreads;
-        beads = aBeads;
     }
     return self;
 }
@@ -73,7 +72,7 @@
 
 - (size_t) GetSerializedLength
 {
-    size_t size =  /*version*/sizeof(uint32_t) +  [threads GetSerializedLength] + [beads GetSerializedLength] + /*width and height*/sizeof(uint32_t) * 2;
+    size_t size =  /*version*/sizeof(uint32_t) +  [threads serializedLength] + /*width and height*/sizeof(uint32_t) * 2;
     for(Stitch* stitch in picture)
     {
         size += [stitch GetSerializedLength];
@@ -88,12 +87,9 @@
     version++;
     
     void *buf = (void *) version;
-    size_t length = [threads GetSerializedLength];
-    [threads SerializeToBuffer:buf];
+    size_t length = [threads serializedLength];
+    [threads serializeToBuffer:buf];
     buf += length;
-    length = [beads GetSerializedLength];
-    [beads SerializeToBuffer:buf];
-    buf+= length;
     
     uint32_t* wAndH = (uint32_t *) buf;
     *wAndH = width;
@@ -104,7 +100,7 @@
     for(Stitch* stitch in picture)
     {
         length = [stitch GetSerializedLength];
-        [stitch SerializeToBuffer:buf WithThreadsCollection:threads AndBeadsCollection:beads];
+        [stitch SerializeToBuffer:buf WithThreadsCollection:threads];
         buf+= length;
     }
 }
@@ -117,10 +113,8 @@
     if (iVersion == 1)
     {
         void *buf = (void *) version;
-        ThreadMaterialCollection *aThreads = [ThreadMaterialCollection DeserializeFromBuffer:buf];
-        buf += [aThreads GetSerializedLength];
-        BeadMaterialCollection *aBeads = [BeadMaterialCollection DeserializeFromBuffer:buf];
-        buf += [aBeads GetSerializedLength];
+        CSGThreadsPalette *aThreads = [CSGThreadsPalette deserializeFromBuffer:buf];
+        buf += [aThreads serializedLength];
         
         uint32_t* wAndH = (uint32_t *) buf;
         uint32_t aWidth = *wAndH;
@@ -129,11 +123,11 @@
         ++wAndH;
         buf = (void *) wAndH;
         
-        ArtWorkDesign* design = [[ArtWorkDesign alloc] initWithWidth:aWidth AndHeight:anHeight Threads:aThreads AndBeads:aBeads];
+        ArtWorkDesign* design = [[ArtWorkDesign alloc] initWithWidth:aWidth AndHeight:anHeight Threads:aThreads];
         
         for(int i = 0; i < aWidth * anHeight; ++i)
         {
-            Stitch* stitch = [Stitch DeserializeFromBuffer:buf WithThreadsCollection:aThreads AndBeadsCollection:aBeads];
+            Stitch* stitch = [Stitch DeserializeFromBuffer:buf WithThreadsCollection:aThreads];
             uint32_t row = i / aWidth;
             uint32_t column = i - row * aWidth;
             [design SetSticth: stitch AtRow:row AndColumn:column];
@@ -144,5 +138,5 @@
 
 }
 
-@end
+@end 
 

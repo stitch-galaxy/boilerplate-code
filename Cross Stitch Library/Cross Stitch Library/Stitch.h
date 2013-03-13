@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ThreadMaterial.h"
-#import "BeadMaterial.h"
-#import "ThreadMaterialCollection.h"
-#import "BeadMaterialCollection.h"
+#import "CSGThread.h"
+#import "CSGThreadsPalette.h"
 
 typedef enum
 {
@@ -23,30 +21,19 @@ typedef enum
     THREAD_STITCH_BACKSLASH = 0X20,
 } THREAD_STITCHES;
 
-typedef enum
-{
-    BEAD_STITCH_NONE = 0x00,
-    BEAD_STITCH_TYPE_DIVIDE = 0x01,
-    BEAD_STITCH_TYPE_BACKSLASH = 0x02,
-    BEAD_STITCH_TYPE_CENTER = 0x04,
-} BEAD_STITCH_TYPE;
-
 
 @protocol IStitch <NSObject>
 
 @property (nonatomic, assign) BOOL Done;
 
-@property (nonatomic, strong) ThreadMaterial* ThreadMaterial;
+@property (nonatomic, strong) CSGThread* ThreadMaterial;
 @property (nonatomic, assign) int8_t ThreadStitchType;
-
-@property (nonatomic, strong) BeadMaterial* BeadMaterial;
-@property (nonatomic, assign) int8_t BeadStitchType;
 
 @end
 
 @interface Stitch : NSObject<IStitch>
 
-- (id) initWithThreadMaterial: (ThreadMaterial*) aThreadMaterail ThreadStitchType: (int8_t) aThreadStitchType BeadMaterial: (BeadMaterial*) aBeadMaterial BeadStitchType: (int8_t) aBeadStitchType;
+- (id) initWithThreadMaterial: (CSGThread*) aThreadMaterail ThreadStitchType: (int8_t) aThreadStitchType;
 
 
 - (BOOL) isEqual: (id) object;
@@ -58,6 +45,6 @@ typedef enum
 @interface Stitch (Serialization)
 
 - (size_t) GetSerializedLength;
-- (void) SerializeToBuffer: (void*) buffer WithThreadsCollection: (ThreadMaterialCollection*) threads AndBeadsCollection: (BeadMaterialCollection*) beads;
-+ (id) DeserializeFromBuffer: (void*) buffer WithThreadsCollection: (ThreadMaterialCollection*) threads AndBeadsCollection: (BeadMaterialCollection*) beads;
+- (void) SerializeToBuffer: (void*) buffer WithThreadsCollection: (CSGThreadsPalette*) threads;
++ (id) DeserializeFromBuffer: (void*) buffer WithThreadsCollection: (CSGThreadsPalette*) threads;
 @end

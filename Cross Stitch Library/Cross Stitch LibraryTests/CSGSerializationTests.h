@@ -8,7 +8,7 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface Cross_Stitch_LibraryTests : SenTestCase
+@interface CSGSerializationTests : SenTestCase
 
 @end
 

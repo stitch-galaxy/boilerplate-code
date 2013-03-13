@@ -15,17 +15,13 @@
 @synthesize ThreadMaterial = threadMaterial;
 @synthesize ThreadStitchType = threadStitchType;
 
-@synthesize BeadMaterial = beadMaterial;
-@synthesize BeadStitchType = beadStitchType;
 
-- (id) initWithThreadMaterial: (ThreadMaterial*) aThreadMaterial ThreadStitchType: (int8_t) aThreadStitchType BeadMaterial: (BeadMaterial*) aBeadMaterial BeadStitchType: (int8_t) aBeadStitchType
+- (id) initWithThreadMaterial: (CSGThread*) aThreadMaterial ThreadStitchType: (int8_t) aThreadStitchType
 {
     if (self = [super init])
     {
         self.ThreadMaterial = aThreadMaterial;
         self.ThreadStitchType = aThreadStitchType;
-        self.BeadMaterial = aBeadMaterial;
-        self.BeadStitchType = aBeadStitchType;
     }
     return self;
 }
@@ -62,10 +58,6 @@
     {
         return NO;
     }
-    if (beadStitchType != aStitch.BeadStitchType)
-    {
-        return NO;
-    }
     return YES;
 }
 
@@ -74,8 +66,6 @@
     NSUInteger hash = 17;
     hash = 31 * hash + threadMaterial.hash;
     hash = 31 * hash + threadStitchType;
-    hash = 31 * hash + beadMaterial.hash;
-    hash = 31 * hash + beadStitchType;
     return hash;
 }
 
@@ -90,25 +80,18 @@
     return size;
 }
 
-- (void) SerializeToBuffer: (void*) buffer WithThreadsCollection: (ThreadMaterialCollection*) threads AndBeadsCollection: (BeadMaterialCollection*) beads
+- (void) SerializeToBuffer: (void*) buffer WithThreadsCollection: (CSGThreadsPalette*) threads
 {
     uint8_t *buf = (uint8_t*) buffer;
     *buf = threadStitchType;
     
     ++buf;
-    *buf = beadStitchType;
-    
-    ++buf;
     uint32_t *iBuf = (uint32_t *) buf;
-    uint32_t threadMaterialsIndex = [threads GetThreadMaterialIndex: self.ThreadMaterial];
+    uint32_t threadMaterialsIndex = [threads threadIndex: self.ThreadMaterial];
     *iBuf = threadMaterialsIndex;
-    
-    uint32_t beadMaterialsIndex = [beads GetBeadMaterialIndex: self.BeadMaterial];
-    ++iBuf;
-    *iBuf = beadMaterialsIndex;
 }
 
-+ (id) DeserializeFromBuffer: (void*) buffer WithThreadsCollection: (ThreadMaterialCollection*) threads AndBeadsCollection: (BeadMaterialCollection*) beads
++ (id) DeserializeFromBuffer: (void*) buffer WithThreadsCollection: (CSGThreadsPalette*) threads
 {
     uint8_t *buf = (uint8_t*) buffer;
     int8_t aThreadStitchType = *buf;
@@ -119,13 +102,11 @@
     ++buf;
     uint32_t *iBuf = (uint32_t *) buf;
     uint32_t threadMaterialsIndex = *iBuf;
-    ThreadMaterial* aThreadMaterial = [threads GetThreadMaterialByIndex:threadMaterialsIndex];
+    CSGThread* aThreadMaterial = [threads threadByIndex:threadMaterialsIndex];
     
-    ++iBuf;
-    uint32_t beadMaterialsIndex = *iBuf;
-    BeadMaterial* beadMaterial = [beads GetBeadMaterialByIndex:beadMaterialsIndex];
+    ++iBuf;    uint32_t beadMaterialsIndex = *iBuf;
+
     
-    return [[Stitch alloc] initWithThreadMaterial:aThreadMaterial ThreadStitchType:aThreadStitchType BeadMaterial:beadMaterial BeadStitchType:aBeadStitchType];
 }
 
 @end

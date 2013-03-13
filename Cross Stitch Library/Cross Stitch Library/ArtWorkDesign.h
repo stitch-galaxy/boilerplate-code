@@ -10,14 +10,11 @@
 #import <stdint.h>
 
 #import "Stitch.h"
-#import "ThreadMaterialCollection.h"
-#import "BeadMaterialCollection.h"
+#import "CSGThreadsPalette.h"
 
 @protocol IArtWorkDesign <NSObject>
 
-@property (nonatomic, strong) ThreadMaterialCollection* Threads;
-
-@property (nonatomic, strong) BeadMaterialCollection* Beads;
+@property (nonatomic, strong) CSGThreadsPalette* Threads;
 
 - (uint32_t) GetWidth;
 - (uint32_t) GetHeight;
@@ -34,7 +31,7 @@
     NSPointerArray* picture;
 }
 
-- (id) initWithWidth: (uint32_t) aWidth AndHeight: (uint32_t) anHeight Threads: (ThreadMaterialCollection *) aThreads AndBeads: (BeadMaterialCollection *) aBeads;
+- (id) initWithWidth: (uint32_t) aWidth AndHeight: (uint32_t) anHeight Threads: (CSGThreadsPalette *) aThreads;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 - (id)initWithCoder:(NSCoder *)aDecoder;
