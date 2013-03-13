@@ -108,7 +108,7 @@
 
 - (UIColor*) randomThreadColor
 {
-    return [[threadsPalette threadByIndex: [CSGSerializationTestHelper randomIndexFor:[threadsPalette size]]] color];
+    return [[threadsPalette threadAtIndex: [CSGSerializationTestHelper randomIndexFor:[threadsPalette size]]] color];
 }
 
 - (id) init

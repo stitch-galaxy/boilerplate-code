@@ -23,7 +23,7 @@
 @interface CSGThreadsPalette (Serialization)
 
 - (uint32_t) threadIndex: (CSGThread *) aThreadMaterial;
-- (CSGThread *) threadByIndex: (uint32_t) anIndex;
+- (CSGThread *) threadAtIndex: (uint32_t) anIndex;
 
 - (size_t) serializedLength;
 - (void) serializeToBuffer: (void*) buffer;

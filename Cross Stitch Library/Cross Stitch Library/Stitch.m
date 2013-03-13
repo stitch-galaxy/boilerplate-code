@@ -102,7 +102,7 @@
     ++buf;
     uint32_t *iBuf = (uint32_t *) buf;
     uint32_t threadMaterialsIndex = *iBuf;
-    CSGThread* aThreadMaterial = [threads threadByIndex:threadMaterialsIndex];
+    CSGThread* aThreadMaterial = [threads threadAtIndex:threadMaterialsIndex];
     
     ++iBuf;    uint32_t beadMaterialsIndex = *iBuf;
 

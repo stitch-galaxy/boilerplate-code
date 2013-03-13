@@ -94,7 +94,7 @@
     return 0;
 }
 
-- (CSGThread *) threadByIndex: (uint32_t) anIndex
+- (CSGThread *) threadAtIndex: (uint32_t) anIndex
 {
     NSNumber* nIndex = [NSNumber numberWithUnsignedInteger:anIndex];
     CSGThread* ret = [indexToThreadMaterialMap objectForKey:nIndex];

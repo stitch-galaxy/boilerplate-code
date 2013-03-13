@@ -7,7 +7,45 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <stdint.h>
 
-@interface ThreadsBlend : NSObject
+#import "CSGThreadsPalette.h"
+#import "CSGThread.h"
+
+@protocol CSGThreadInBlend <NSObject>
+
+- (CSGThread*) thread;
+- (uint8_t) flossCount;
+
+@end
+
+@interface CSGThreadInBlend : NSObject<CSGThreadInBlend>
+
+@end
+
+@interface CSGThreadInBlend (Serialization)
+
+- (size_t) serializedLength;
+- (void) serializeToBuffer: (void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
++ (id) deserializeFromBuffer: (const void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
+
+@end
+
+
+@protocol CSGThreadsBlend
+
+- (NSEnumerator*) threadsInBlend;
+
+@end
+
+@interface CSGThreadsBlend : NSObject<CSGThreadsBlend>
+
+@end
+
+@interface CSGThreadsBlend (Serialization)
+
+- (size_t) serializedLength;
+- (void) serializeToBuffer: (void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
++ (id) deserializeFromBuffer: (const void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
 
 @end

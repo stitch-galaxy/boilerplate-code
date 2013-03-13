@@ -35,7 +35,7 @@
 		ECC232CF16D1579600105066 /* Stitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CE16D1579600105066 /* Stitch.m */; };
 		ECCB3BA316D4DDFD002C4033 /* StitchElement.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB3BA216D4DDFD002C4033 /* StitchElement.m */; };
 		ECCB3BA616D50348002C4033 /* CSGThread.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB3BA516D50348002C4033 /* CSGThread.m */; };
-		ECCFD9EE16F08D02004FE762 /* ThreadsBlend.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFD9ED16F08D02004FE762 /* ThreadsBlend.m */; };
+		ECCFD9F216F0F903004FE762 /* CSGThreadsBlend.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */; };
 		ECE0F40316D3857F0012D909 /* CodecFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE0F40216D3857F0012D909 /* CodecFactory.m */; };
 /* End PBXBuildFile section */
 
@@ -96,9 +96,9 @@
 		ECCB3BA216D4DDFD002C4033 /* StitchElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StitchElement.m; sourceTree = "<group>"; };
 		ECCB3BA416D50348002C4033 /* CSGThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGThread.h; sourceTree = "<group>"; };
 		ECCB3BA516D50348002C4033 /* CSGThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGThread.m; sourceTree = "<group>"; };
-		ECCFD9EC16F08D02004FE762 /* ThreadsBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadsBlend.h; sourceTree = "<group>"; };
-		ECCFD9ED16F08D02004FE762 /* ThreadsBlend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadsBlend.m; sourceTree = "<group>"; };
 		ECCFD9EF16F09A6A004FE762 /* Cross Stitch Library.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Cross Stitch Library.entitlements"; sourceTree = "<group>"; };
+		ECCFD9F016F0F903004FE762 /* CSGThreadsBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGThreadsBlend.h; sourceTree = "<group>"; };
+		ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGThreadsBlend.m; sourceTree = "<group>"; };
 		ECE0F40116D3857F0012D909 /* CodecFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodecFactory.h; sourceTree = "<group>"; };
 		ECE0F40216D3857F0012D909 /* CodecFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodecFactory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,8 +158,8 @@
 		ECB71DE616E7EB56000FC6F4 /* Thread */ = {
 			isa = PBXGroup;
 			children = (
-				ECCFD9EC16F08D02004FE762 /* ThreadsBlend.h */,
-				ECCFD9ED16F08D02004FE762 /* ThreadsBlend.m */,
+				ECCFD9F016F0F903004FE762 /* CSGThreadsBlend.h */,
+				ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */,
 			);
 			name = Thread;
 			sourceTree = "<group>";
@@ -406,7 +406,7 @@
 				EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */,
 				EC0F6BC516DCC974007FF7CF /* ArtWork.m in Sources */,
 				EC92082316DE2F6B000B14A4 /* CSGThreadsPalette.m in Sources */,
-				ECCFD9EE16F08D02004FE762 /* ThreadsBlend.m in Sources */,
+				ECCFD9F216F0F903004FE762 /* CSGThreadsBlend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
