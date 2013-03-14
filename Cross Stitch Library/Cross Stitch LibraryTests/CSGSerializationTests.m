@@ -48,6 +48,38 @@
     return [[threadsPalette threadAtIndex: [CSGSerializationTestHelper randomIndexFor:[threadsPalette size]]] color];
 }
 
+- (CSGThread*) randomThread
+{
+    return [threadsPalette threadMaterialByColor: self.randomThreadColor];
+}
+
+#define CSG_MAX_FLOSSES_OF_THREAD 4
+
+- (CSGThreadInBlend*) randomThreadInBlend
+{
+    uint32_t flossesCount = [CSGSerializationTestHelper randomIndexFor: CSG_MAX_FLOSSES_OF_THREAD];
+    CSGThread* thread = self.randomThread;
+    CSGThreadInBlend *threadInBlend = [[CSGThreadInBlend alloc] initWithThread:thread FlossCount: flossesCount];
+    return threadInBlend;
+
+}
+
+#define CSG_MAX_THREADS_IN_BLEND 4
+
+- (CSGThreadsBlend*) randomThreadsBlend
+{
+    NSMutableArray *threads = [[NSMutableArray alloc] init];
+    
+    int threadsCount = [CSGSerializationTestHelper randomIndexFor: CSG_MAX_THREADS_IN_BLEND] + 1;
+    for (int i = 0; i < threadsCount; ++i)
+    {
+        CSGThreadInBlend* threadInBlend = self.randomThreadInBlend;
+        [threads addObject:threadInBlend];
+    }
+    CSGThreadsBlend* blend = [[CSGThreadsBlend alloc] initWithThreadsInBlend: threads];
+    return blend;
+}
+
 - (id) init
 {
     if (self = [super init])
@@ -89,15 +121,7 @@
 
 -(void) testThreadsBlendSerializationAndEquality
 {
-    NSMutableArray *threads = [[NSMutableArray alloc] init];
-    CSGThreadInBlend* thread1 = [[CSGThreadInBlend alloc] initWithThread: [testhelper.threadsPalette threadMaterialByColor: testhelper.randomThreadColor] FlossCount: 1];
-    CSGThreadInBlend* thread2 = [[CSGThreadInBlend alloc] initWithThread: [testhelper.threadsPalette threadMaterialByColor: testhelper.randomThreadColor] FlossCount: 2];
-    CSGThreadInBlend* thread3 = [[CSGThreadInBlend alloc] initWithThread: [testhelper.threadsPalette threadMaterialByColor: testhelper.randomThreadColor] FlossCount: 3];
-    [threads addObject:thread1];
-    [threads addObject:thread2];
-    [threads addObject:thread3];
-    
-    CSGThreadsBlend* blend = [[CSGThreadsBlend alloc] initWithThreadsInBlend: threads];
+    CSGThreadsBlend* blend = testhelper.randomThreadsBlend;
     NSMutableData* data = [[NSMutableData alloc] initWithLength:[blend serializedLength]];
     [blend serializeToBuffer: [data mutableBytes] WithThreadsPalette:testhelper.threadsPalette];
     
@@ -117,7 +141,7 @@
 
 - (void) testThreadInBlendSerializationAndEquality
 {
-    CSGThreadInBlend* thread = [[CSGThreadInBlend alloc] initWithThread: [testhelper.threadsPalette threadMaterialByColor: testhelper.randomThreadColor] FlossCount: 3];
+    CSGThreadInBlend* thread = testhelper.randomThreadInBlend;
     
     NSMutableData* data = [[NSMutableData alloc] initWithLength:[thread serializedLength]];
     [thread serializeToBuffer: [data mutableBytes] WithThreadsPalette:testhelper.threadsPalette];
@@ -138,7 +162,7 @@
 
 - (void) testThreadSerializationAndEquality
 {
-    CSGThread* thread = [[CSGThread alloc] initWithColor:[testhelper randomThreadColor]];
+    CSGThread* thread = testhelper.randomThread;
     
     NSMutableData* data = [[NSMutableData alloc] initWithLength:[thread serializedLength]];
     [thread serializeToBuffer: [data mutableBytes]];
