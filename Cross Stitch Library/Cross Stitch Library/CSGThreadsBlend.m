@@ -131,14 +131,18 @@
 
 @synthesize CSG_threads;
 
-- (NSEnumerator*) threadsInBlend
+- (NSArray*) threadsInBlend
 {
-    return [CSG_threads objectEnumerator];
+    return CSG_threads;
 }
 
-- (id) initWithThreadsInBlend: NSArray* threadsInBlend
+- (id) initWithThreadsInBlend: (NSArray* ) threadsInBlend
 {
-    CSG_threads = threadsInBlend;
+    if (self = [super init])
+    {
+        CSG_threads = threadsInBlend;
+    }
+    return self;
 }
 
 - (BOOL) isEqual: (id) object
@@ -155,24 +159,41 @@
     return [self isEqualToCSGThreadsBlend: object];
 }
 
-- (BOOL) isEqualToCSGThreadsBlend: (CSGThreadInBlend*) aBlend
+- (BOOL) isEqualToCSGThreadsBlend: (CSGThreadsBlend*) aBlend
 {
     if (self == aBlend)
     {
         return YES;
     }
     
-    //TODO: very interesting code
-    // We need to add sorting (add some order) or make "smart comparison"
+    //Smart comparison
+    if (CSG_threads.count != aBlend.threadsInBlend.count)
+    {
+        return NO;
+    }
+    
+    for (CSGThreadInBlend *threadInBlend in CSG_threads)
+    {
+        if (![aBlend.threadsInBlend containsObject:threadInBlend])
+        {
+            return NO;
+        }
+    }
     
     return YES;
 }
 
 - (NSUInteger)hash
 {
-    NSUInteger hash = 17;
-    hash = hash * 31 + CSG_thread.hash;
-    hash = hash * 31 + CSG_flossCount;
+    //Smart hash
+    NSUInteger hash = 0;
+    
+    
+    //Multiple by constant factor and XOR
+    for (CSGThreadInBlend *threadInBlend in CSG_threads)
+    {
+        hash ^= threadInBlend.hash * 31;
+    }
     
     return hash;
 }
@@ -185,7 +206,7 @@
 - (size_t) serializedLength
 {
     size_t result = sizeof(uint8_t);
-    for(CSGThreadInBlend thread in CSG_threads)
+    for(CSGThreadInBlend *thread in CSG_threads)
     {
         result += [thread serializedLength];
     }
@@ -195,14 +216,14 @@
 - (void) serializeToBuffer: (void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette
 {
     uint8_t* buf = (uint8_t *) buffer;
-    *buf = [CSG_threads length];
+    *buf = [CSG_threads count];
     
     ++buf;
     
-    for(CSGThreadInBlend thread in CSG_threads)
+    for(CSGThreadInBlend *thread in CSG_threads)
     {
         size_t length = [thread serializedLength];
-        [thread serializeToBuffer: (void *) buf];
+        [thread serializeToBuffer:(void *) buf WithThreadsPalette:palette];
         
         buf+= length;
     }
@@ -214,11 +235,11 @@
     uint8_t length = *buf;
     ++buf;
     
-    NSArray* threadsInBlend = [[NSArray alloc] init];
+    NSMutableArray* threadsInBlend = [[NSMutableArray alloc] init];
     for(int i = 0; i < length; ++i)
     {
-        CSGThreadInBlend* threadInBlend = [CSGThreadInBlend deserializeFromBuffer: (void *) buf];
-        [threadInBlend addObject: threadInBlend];
+        CSGThreadInBlend* threadInBlend = [CSGThreadInBlend deserializeFromBuffer:(const void *) buf WithThreadsPalette:palette];
+        [threadsInBlend addObject: threadInBlend];
         buf += [threadInBlend serializedLength];
     }
     CSGThreadsBlend *blend = [[CSGThreadsBlend alloc] initWithThreadsInBlend: threadsInBlend];

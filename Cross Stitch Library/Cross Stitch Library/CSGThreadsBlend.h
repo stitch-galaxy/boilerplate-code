@@ -21,6 +21,8 @@
 
 @interface CSGThreadInBlend : NSObject<CSGThreadInBlend>
 
+-(id) initWithThread: (CSGThread*) aThread FlossCount: (uint8_t) aFlossCount;
+
 @end
 
 @interface CSGThreadInBlend (Serialization)
@@ -34,11 +36,13 @@
 
 @protocol CSGThreadsBlend
 
-- (NSEnumerator*) threadsInBlend;
+- (NSArray*) threadsInBlend;
 
 @end
 
 @interface CSGThreadsBlend : NSObject<CSGThreadsBlend>
+
+- (id) initWithThreadsInBlend: (NSArray* ) threadsInBlend;
 
 @end
 
