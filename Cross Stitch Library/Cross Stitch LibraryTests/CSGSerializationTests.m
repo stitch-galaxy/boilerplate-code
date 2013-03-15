@@ -14,6 +14,7 @@
 #import "CSGThreadsPalette.h"
 #import "CSGThreadsBlend.h"
 #import "CSGBinaryCoding.h"
+#import "CSGStitchInCell.h"
 
 #define CSG_TEST_THREAD_COLORS_PALETTE_LENGTH 10
 
@@ -47,6 +48,11 @@
 - (UIColor*) randomThreadColor
 {
     return [[threadsPalette threadAtIndex: [CSGSerializationTestHelper randomIndexFor:[threadsPalette size]]] color];
+}
+
+- (CSGStitchInCell*) randomStitchInCell
+{
+    return [[CSGStitchInCell alloc] initWithThreadsBlend:self.randomThreadsBlend];
 }
 
 - (CSGThread*) randomThread
@@ -186,7 +192,6 @@
 
 - (void) testThreadPeletteSerialization
 {
-
     CSGThreadsPalette* palette = [testhelper threadsPalette];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:palette.serializedLength];
@@ -204,6 +209,23 @@
     if (![CSGSerializationTests IsSerializedViewEqualForData:anEncoder.data Data1:anEncoder1.data])
     {
         STFail(@"Threads palette serilization");
+    }
+}
+
+-(void) testStitchInCellSerialization
+{
+    CSGStitchInCell* stitch = testhelper.randomStitchInCell;
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
+    [stitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGStitchInCell* stitch1 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    
+    if (stitch.hash != stitch.hash || ![stitch isEqual:stitch1])
+    {
+        STFail(@"StitchInCell serialization and equality");
     }
 }
 

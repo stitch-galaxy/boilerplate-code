@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
 //
 
-#import "CSGCrossStitch.h"
+#import "CSGStitchInCell.h"
 
-@implementation CSGCrossStitch
+@implementation CSGStitchInCell
 
 - (id) initWithThreadsBlend: (CSGThreadsBlend *) aThreadsBlend
 {
@@ -29,7 +29,7 @@
     return [self isEqualToCSGCrossStitch: object];
 }
 
-- (BOOL) isEqualToCSGCrossStitch: (CSGCrossStitch*) aStitch
+- (BOOL) isEqualToCSGCrossStitch: (CSGStitchInCell*) aStitch
 {
     if (self == aStitch)
     {
