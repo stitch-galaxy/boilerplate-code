@@ -40,7 +40,7 @@ typedef enum
     CSG_STITCH_IN_CELL_FRENCH_KNOT_20,
     CSG_STITCH_IN_CELL_FRENCH_KNOT_21,
     CSG_STITCH_IN_CELL_FRENCH_KNOT_22,
-} CSG_STITCH_IN_CELL_MASK;
+} CSG_STITCH_IN_CELL_TYPE;
 
 @implementation CSGDesignCell
 
@@ -213,6 +213,8 @@ typedef enum
         length += sizeof(uint8_t);
         length += self.frenchKnot22.serializedLength;
     }
+    //TERMINAL 0
+    length += sizeof(uint8_t);
     return length;
 }
 
@@ -228,182 +230,246 @@ typedef enum
     if(self.leftUpPetiteStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_LEFT_UP_PETITE;
         [leftUpPetiteStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.leftDownPetiteStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_LEFT_DOWN_PETITE;
         [leftDownPetiteStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.rightUpPetiteStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_RIGHT_UP_PETITE;
         [rightUpPetiteStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.rightDownPetiteStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_RIGHT_DOWN_PETITE;
         [rightDownPetiteStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     //Quarter
     if(self.leftUpQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_LEFT_UP_QUARTER;
         [leftUpQuarterStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.leftDownQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_LEFT_DOWN_QUARTER;
         [leftDownQuarterStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.rightUpQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_RIGHT_UP_QUARTER;
         [rightUpQuarterStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.rightDownQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_RIGHT_DOWN_QUARTER;
         [rightDownQuarterStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     //ThreeQuarter stitches
     if(self.leftUpThreeQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_LEFT_UP_THREE_QUARTER;
         [leftUpThreeQuarterStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.leftDownThreeQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_LEFT_DOWN_THREE_QUARTER;
         [leftDownThreeQuarterStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.rightUpThreeQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_RIGHT_UP_THREE_QUARTER;
         [rightUpThreeQuarterStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.rightDownThreeQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_RIGHT_DOWN_THREE_QUARTER;
         [rightDownThreeQuarterStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     //HalfStitches
     if(self.slashHalfStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_SLASH_HALF;
         [slashHalfStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.backslashHalfStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_BACKSLASH_HALF;
         [backslashHalfStitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     //French knots
     if(self.frenchKnot00)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_00;
         [frenchKnot00 serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.frenchKnot01)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_01;
         [frenchKnot01 serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.frenchKnot02)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_02;
         [frenchKnot02 serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.frenchKnot10)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_10;
         [frenchKnot10 serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.frenchKnot11)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_11;
         [frenchKnot11 serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.frenchKnot12)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_12;
         [frenchKnot12 serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.frenchKnot20)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_20;
         [frenchKnot20 serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.frenchKnot21)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_21;
         [frenchKnot21 serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
     if(self.frenchKnot22)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-        *buf = CSG_STITCH_IN_CELL_CROSS;
+        *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_22;
         [frenchKnot22 serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
+    //Encode terminal 0
+    uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
+    *buf = 0;
 }
-
-//    crossStitch;
-//    //Petites
-//    leftUpPetiteStitch;
-//    leftDownPetiteStitch;
-//    rightUpPetiteStitch;
-//    rightDownPetiteStitch;
-//    //Quarter stitches
-//    leftUpQuarterStitch;
-//    leftDownQuarterStitch;
-//    rightUpQuarterStitch;
-//    rightDownQuarterStitch;
-//    //ThreeQuarter stitches
-//    leftUpThreeQuarterStitch;
-//    leftDownThreeQuarterStitch;
-//    rightUpThreeQuarterStitch;
-//    rightDownThreeQuarterStitch;
-//    //HalfStitches
-//    slashHalfStitch;
-//    backslashHalfStitch;
-//    //French knots
-//    frenchKnot00;
-//    frenchKnot01;
-//    frenchKnot02;
-//    frenchKnot10;
-//    frenchKnot11;
-//    frenchKnot12;
-//    frenchKnot20;
-//    frenchKnot21;
-//    frenchKnot22;
-
-
-
 
 - (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette
 {
+    if (self = [self init])
+    {
+        const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
+        uint8_t stitchType = *buf;
+        while (stitchType)
+        {
+            switch (stitchType) {
+                    //CROSS
+                case CSG_STITCH_IN_CELL_CROSS:
+                    crossStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                    //PETITE
+                case CSG_STITCH_IN_CELL_LEFT_UP_PETITE:
+                    leftUpPetiteStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_LEFT_DOWN_PETITE:
+                    leftDownPetiteStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_RIGHT_UP_PETITE:
+                    rightUpPetiteStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_RIGHT_DOWN_PETITE:
+                    rightDownPetiteStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                    //QUARTER
+                case CSG_STITCH_IN_CELL_LEFT_UP_QUARTER:
+                    leftUpQuarterStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_LEFT_DOWN_QUARTER:
+                    leftDownQuarterStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_RIGHT_UP_QUARTER:
+                    rightUpQuarterStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_RIGHT_DOWN_QUARTER:
+                    rightDownQuarterStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                    //THREE QUARTER
+                case CSG_STITCH_IN_CELL_LEFT_UP_THREE_QUARTER:
+                    leftUpThreeQuarterStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_LEFT_DOWN_THREE_QUARTER:
+                    leftDownThreeQuarterStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_RIGHT_UP_THREE_QUARTER:
+                    rightUpThreeQuarterStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_RIGHT_DOWN_THREE_QUARTER:
+                    rightDownThreeQuarterStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                    //HALF_STITCHES
+                case CSG_STITCH_IN_CELL_SLASH_HALF:
+                    slashHalfStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_BACKSLASH_HALF:
+                    backslashHalfStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    //FRENCH KNOTS
+                case CSG_STITCH_IN_CELL_FRENCH_KNOT_00:
+                    frenchKnot00 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_FRENCH_KNOT_01:
+                    frenchKnot01 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_FRENCH_KNOT_02:
+                    frenchKnot02 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_FRENCH_KNOT_10:
+                    frenchKnot10 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_FRENCH_KNOT_11:
+                    frenchKnot11 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_FRENCH_KNOT_12:
+                    frenchKnot12 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_FRENCH_KNOT_20:
+                    frenchKnot20 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_FRENCH_KNOT_21:
+                    frenchKnot21 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                case CSG_STITCH_IN_CELL_FRENCH_KNOT_22:
+                    frenchKnot22 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
+                default:
+                    break;
+            }
+            
+            //Read next stitch or terminal byte
+            buf = [anDecoder readBytes:sizeof(uint8_t)];
+            stitchType = *buf;
+        }
+    }
+    return self;
 }
 
 @end
