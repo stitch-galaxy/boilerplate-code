@@ -15,6 +15,7 @@
 #import "CSGThreadsBlend.h"
 #import "CSGBinaryCoding.h"
 #import "CSGStitchInCell.h"
+#import "CSGDesignCell.h"
 
 #define CSG_TEST_THREAD_COLORS_PALETTE_LENGTH 10
 
@@ -48,6 +49,120 @@
 - (UIColor*) randomThreadColor
 {
     return [[threadsPalette threadAtIndex: [CSGSerializationTestHelper randomIndexFor:[threadsPalette size]]] color];
+}
+
++ (BOOL) randomBool
+{
+    return [CSGSerializationTestHelper randomIndexFor:2];
+}
+
+- (CSGDesignCell*) randomDesignCell
+{
+    CSGDesignCell* designCell = [[CSGDesignCell alloc] init];
+    //Cross
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.crossStitch = self.randomStitchInCell;
+    }
+    //Petites
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.leftUpPetiteStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.leftDownPetiteStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.rightUpPetiteStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.rightDownPetiteStitch = self.randomStitchInCell;
+    }
+    //Quarter stitches
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.leftUpQuarterStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.leftDownQuarterStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.rightUpQuarterStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.rightDownQuarterStitch = self.randomStitchInCell;
+    }
+    //ThreeQuarter stitches
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.leftUpThreeQuarterStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.leftDownThreeQuarterStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.rightUpThreeQuarterStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.rightDownThreeQuarterStitch = self.randomStitchInCell;
+    }
+    //HalfStitches
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.slashHalfStitch = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.backslashHalfStitch = self.randomStitchInCell;
+    }
+    //French knots
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.frenchKnot00 = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.frenchKnot01 = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.frenchKnot02 = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.frenchKnot10 = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.frenchKnot11 = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.frenchKnot12 = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.frenchKnot20 = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.frenchKnot21 = self.randomStitchInCell;
+    }
+    if (CSGSerializationTestHelper.randomBool)
+    {
+        designCell.frenchKnot22 = self.randomStitchInCell;
+    }
+    
+    return designCell;
 }
 
 - (CSGStitchInCell*) randomStitchInCell
@@ -228,5 +343,26 @@
         STFail(@"StitchInCell serialization and equality");
     }
 }
+
+
+-(void) testDesignCellSerialization
+{
+    CSGDesignCell* cell = testhelper.randomDesignCell;
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:cell.serializedLength];
+    [cell serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGDesignCell* cell1 = [[CSGDesignCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    
+    if (cell.hash != cell1.hash || ![cell isEqual:cell1])
+    {
+        STFail(@"Design cell serialization and equality");
+    }
+}
+
+
+
 
 @end
