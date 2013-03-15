@@ -10,6 +10,7 @@
 #import <stdint.h>
 
 #import "CSGThread.h"
+#import "CSGBinaryCoding.h"
 
 @interface CSGThreadsPalette : NSObject
 
@@ -26,7 +27,7 @@
 - (CSGThread *) threadAtIndex: (uint32_t) anIndex;
 
 - (size_t) serializedLength;
-- (void) serializeToBuffer: (void*) buffer;
-+ (id) deserializeFromBuffer: (const void*) buffer;
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder;
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder;
 
 @end

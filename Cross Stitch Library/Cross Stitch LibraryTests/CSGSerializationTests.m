@@ -190,20 +190,22 @@
 
 - (void) testThreadPeletteSerialization
 {
+
     CSGThreadsPalette* palette = [testhelper threadsPalette];
-    NSMutableData* data = [[NSMutableData alloc] initWithLength:[palette serializedLength]];
-    [palette serializeToBuffer: [data mutableBytes]];
     
-    CSGThreadsPalette* palette1 = [CSGThreadsPalette deserializeFromBuffer:[data bytes]];
-//    if (palette.hash != palette1.hash || ![palette isEqual:palette1])
-//    {
-//        STFail(@"Thread palette equality");
-//    }
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:palette.serializedLength];
+    [palette serializeWithBinaryEncoder:anEncoder];
     
-    NSMutableData* data1 = [[NSMutableData alloc] initWithLength:[palette1 serializedLength]];
-    [palette1 serializeToBuffer: [data1 mutableBytes]];
     
-    if (![CSGSerializationTests IsSerializedViewEqualForData:data Data1:data1])
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGThreadsPalette* palette1 = [[CSGThreadsPalette alloc] initWithBinaryDecoder:anDecoder];
+
+    //NO EQUALITY TEST - TEST IF (SERIALIZATION == SERIALIZATION(DESERIALIZATION))
+    CSGBinaryEncoder* anEncoder1 = [[CSGBinaryEncoder alloc] initWithLength:palette1.serializedLength];
+    [palette1 serializeWithBinaryEncoder:anEncoder1];
+    
+    if (![CSGSerializationTests IsSerializedViewEqualForData:anEncoder.data Data1:anEncoder1.data])
     {
         STFail(@"Threads palette serilization");
     }

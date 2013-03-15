@@ -88,7 +88,7 @@
     
     void *buf = (void *) version;
     size_t length = [threads serializedLength];
-    [threads serializeToBuffer:buf];
+//    [threads serializeToBuffer:buf];
     buf += length;
     
     uint32_t* wAndH = (uint32_t *) buf;
@@ -113,7 +113,8 @@
     if (iVersion == 1)
     {
         void *buf = (void *) version;
-        CSGThreadsPalette *aThreads = [CSGThreadsPalette deserializeFromBuffer:buf];
+        CSGThreadsPalette *aThreads;
+//        CSGThreadsPalette *aThreads = [CSGThreadsPalette deserializeFromBuffer:buf];
         buf += [aThreads serializedLength];
         
         uint32_t* wAndH = (uint32_t *) buf;

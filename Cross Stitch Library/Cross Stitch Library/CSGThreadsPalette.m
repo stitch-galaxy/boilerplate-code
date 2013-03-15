@@ -117,43 +117,49 @@
     return size;
 }
 
-- (void) serializeToBuffer: (void*) buffer
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
 {
-    uint32_t *buf = (uint32_t *) buffer;
+    uint32_t *buf = [anEncoder modifyBytes:sizeof(uint32_t)];
     *buf = threadMaterials.count;
-    ++buf;
-    uint32_t *indexBuf = (uint32_t *)buf;
+    
     for(CSGThread *tMat in threadMaterials)
     {
+        uint32_t *indexBuf = [anEncoder modifyBytes:sizeof(uint32_t)];
         *indexBuf = [self threadIndex: tMat];
+        
         ++indexBuf;
         void *voidBuf = (void *)indexBuf;
-        size_t size = [tMat serializedLength];
+        
         [tMat serializeToBuffer:voidBuf];
-        voidBuf += size;
-        indexBuf = (uint32_t *)voidBuf;
+        [anEncoder modifyBytes:[tMat serializedLength]];
     }
 }
 
-+ (id) deserializeFromBuffer: (const void*) buffer
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder
 {
-    uint32_t *buf = (uint32_t *) buffer;
-    uint32_t length = *buf;
-    ++buf;
-    CSGThreadsPalette* threads = [[CSGThreadsPalette alloc] initWithCapacity:length];
-    for (uint32_t i = 0; i < length; ++i)
+    if (self = [super init])
     {
-        uint32_t index = *buf;
-        ++buf;
-        void *voidBuf = (void *) buf;
-        CSGThread* tMat = [CSGThread deserializeFromBuffer:voidBuf];
-        voidBuf += [tMat serializedLength];
-        buf = (uint32_t *) voidBuf;
+        const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
+        uint32_t length = *buf;
         
-        [threads AddThreadMaterial:tMat WithIndex:index];
+        self = [self initWithCapacity:length];
         
+        for (uint32_t i = 0; i < length; ++i)
+        {
+            buf = [anDecoder readBytes:sizeof(uint32_t)];
+            uint32_t index = *buf;
+            
+            ++buf;
+            void *voidBuf = (void *) buf;
+            CSGThread* tMat = [CSGThread deserializeFromBuffer:voidBuf];
+            
+            [anDecoder readBytes:[tMat serializedLength]];
+            
+            [self AddThreadMaterial:tMat WithIndex:index];
+        }
+
     }
-    return threads;
+    return self;
 }
 
 @end
