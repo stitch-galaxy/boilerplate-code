@@ -314,7 +314,36 @@ typedef enum
 - (NSUInteger)hash
 {
     NSUInteger hash = 17;
-//  hash = hash*31 + self.threadsBlend.hash;
+    //cross
+    hash = hash*31 + crossStitch.hash;
+    //Petites
+    hash = hash*31 + leftUpPetiteStitch.hash;
+    hash = hash*31 + leftDownPetiteStitch.hash;
+    hash = hash*31 + rightUpPetiteStitch.hash;
+    hash = hash*31 + rightDownPetiteStitch.hash;
+    //Quarter stitches
+    hash = hash*31 + leftUpQuarterStitch.hash;
+    hash = hash*31 + leftDownQuarterStitch.hash;
+    hash = hash*31 + rightUpQuarterStitch.hash;
+    hash = hash*31 + rightDownQuarterStitch.hash;
+    //ThreeQuarter stitches
+    hash = hash*31 + leftUpThreeQuarterStitch.hash;
+    hash = hash*31 + leftDownThreeQuarterStitch.hash;
+    hash = hash*31 + rightUpThreeQuarterStitch.hash;
+    hash = hash*31 + rightDownThreeQuarterStitch.hash;
+    //HalfStitches
+    hash = hash*31 + slashHalfStitch.hash;
+    hash = hash*31 + backslashHalfStitch.hash;
+    //French knots
+    hash = hash*31 + frenchKnot00.hash;
+    hash = hash*31 + frenchKnot01.hash;
+    hash = hash*31 + frenchKnot02.hash;
+    hash = hash*31 + frenchKnot10.hash;
+    hash = hash*31 + frenchKnot11.hash;
+    hash = hash*31 + frenchKnot12.hash;
+    hash = hash*31 + frenchKnot20.hash;
+    hash = hash*31 + frenchKnot21.hash;
+    hash = hash*31 + frenchKnot22.hash;
     
     return hash;
 }
