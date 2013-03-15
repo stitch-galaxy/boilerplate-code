@@ -127,11 +127,7 @@
         uint32_t *indexBuf = [anEncoder modifyBytes:sizeof(uint32_t)];
         *indexBuf = [self threadIndex: tMat];
         
-        ++indexBuf;
-        void *voidBuf = (void *)indexBuf;
-        
-        [tMat serializeToBuffer:voidBuf];
-        [anEncoder modifyBytes:[tMat serializedLength]];
+        [tMat serializeWithBinaryEncoder:anEncoder];
     }
 }
 
@@ -149,11 +145,7 @@
             buf = [anDecoder readBytes:sizeof(uint32_t)];
             uint32_t index = *buf;
             
-            ++buf;
-            void *voidBuf = (void *) buf;
-            CSGThread* tMat = [CSGThread deserializeFromBuffer:voidBuf];
-            
-            [anDecoder readBytes:[tMat serializedLength]];
+            CSGThread* tMat = [[CSGThread alloc] initWithBinaryDecoder:anDecoder];
             
             [self AddThreadMaterial:tMat WithIndex:index];
         }

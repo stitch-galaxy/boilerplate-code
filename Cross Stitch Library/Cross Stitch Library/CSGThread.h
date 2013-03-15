@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CSGBinaryCoding.h"
+
 @protocol CSGThread <NSObject>
 
 - (UIColor*) color;
@@ -28,7 +30,7 @@
 @interface CSGThread (Serialization)
 
 - (size_t) serializedLength;
-- (void) serializeToBuffer: (void*) buffer;
-+ (id) deserializeFromBuffer: (const void*) buffer;
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder;
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder;
 
 @end

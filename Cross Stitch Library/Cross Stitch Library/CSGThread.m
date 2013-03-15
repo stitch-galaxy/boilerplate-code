@@ -77,34 +77,42 @@
     return sizeof(uint8_t) * 3;
 }
 
-- (void) serializeToBuffer: (void*) buffer
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
 {
-    uint8_t *buf = (uint8_t*) buffer;
-    
     const CGFloat *components = CGColorGetComponents(CSG_color.CGColor);
     uint8_t red = lroundf(components[0] * 255.0);
     uint8_t green = lround(components[1] * 255.0);
     uint8_t blue = lround(components[2] * 255.0);
     
+    uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
     *buf = red;
-    *(buf + 1) = green;
-    *(buf + 2) = blue;    
+    buf = [anEncoder modifyBytes:sizeof(uint8_t)];
+    *buf = green;
+    buf = [anEncoder modifyBytes:sizeof(uint8_t)];
+    *buf = blue;
 }
 
-+ (id) deserializeFromBuffer: (const void*) buffer
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder
 {
-    uint8_t *buf = (uint8_t*) buffer;
-    
-    uint8_t iRed = *buf;
-    uint8_t iGreen = *(buf + 1);
-    uint8_t iBlue = *(buf + 2);
-    
-    CGFloat red = (CGFloat) iRed / 255.0;
-    CGFloat green = (CGFloat) iGreen / 255.0;
-    CGFloat blue = (CGFloat) iBlue / 255.0;
-    UIColor* color = [[UIColor alloc] initWithRed: red green: green blue: blue alpha: 1.0];
-    CSGThread* material = [[CSGThread alloc] initWithColor: color];
-    return material;
+    if (self = [super init])
+    {
+        const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
+        uint8_t iRed = *buf;
+        
+        buf = [anDecoder readBytes:sizeof(uint8_t)];
+        uint8_t iGreen = *buf;
+        
+        buf = [anDecoder readBytes:sizeof(uint8_t)];
+        uint8_t iBlue = *buf;
+
+        
+        CGFloat red = (CGFloat) iRed / 255.0;
+        CGFloat green = (CGFloat) iGreen / 255.0;
+        CGFloat blue = (CGFloat) iBlue / 255.0;
+        UIColor* color = [[UIColor alloc] initWithRed: red green: green blue: blue alpha: 1.0];
+        return [self initWithColor: color];
+    }
+    return self;
 }
 
 @end

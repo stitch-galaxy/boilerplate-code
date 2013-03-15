@@ -159,20 +159,16 @@
 {
     CSGThread* thread = testhelper.randomThread;
     
-    NSMutableData* data = [[NSMutableData alloc] initWithLength:[thread serializedLength]];
-    [thread serializeToBuffer: [data mutableBytes]];
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
+    [thread serializeWithBinaryEncoder:anEncoder];
     
-    CSGThread* thread1 = [CSGThread deserializeFromBuffer:[data bytes]];
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGThread* thread1 = [[CSGThread alloc] initWithBinaryDecoder:anDecoder];
+    
     if (thread.hash != thread1.hash || ![thread isEqual:thread1])
     {
-        STFail(@"Thread equality");
-    }
-    NSMutableData* data1 = [[NSMutableData alloc] initWithLength:[thread1 serializedLength]];
-    [thread1 serializeToBuffer: [data1 mutableBytes]];
-    
-    if (![CSGSerializationTests IsSerializedViewEqualForData:data Data1:data1])
-    {
-        STFail(@"Thread serialization");
+        STFail(@"Thread serialization and equality");
     }
 }
 
