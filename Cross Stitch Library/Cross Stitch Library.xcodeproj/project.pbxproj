@@ -41,6 +41,7 @@
 		ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7670E16F3297D00D5A67A /* CSGBinaryEncoder.m */; };
 		ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671116F332F100D5A67A /* CSGBinaryDecoder.m */; };
 		ECE7671616F3719300D5A67A /* CSGStitchInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671516F3719300D5A67A /* CSGStitchInCell.m */; };
+		ECE7671A16F3B85F00D5A67A /* CSGDesignCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671916F3B85F00D5A67A /* CSGDesignCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,8 @@
 		ECE7671316F3347A00D5A67A /* CSGBinaryCoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSGBinaryCoding.h; sourceTree = "<group>"; };
 		ECE7671416F3719200D5A67A /* CSGStitchInCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGStitchInCell.h; sourceTree = "<group>"; };
 		ECE7671516F3719300D5A67A /* CSGStitchInCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGStitchInCell.m; sourceTree = "<group>"; };
+		ECE7671816F3B85F00D5A67A /* CSGDesignCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignCell.h; sourceTree = "<group>"; };
+		ECE7671916F3B85F00D5A67A /* CSGDesignCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesignCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,8 @@
 			isa = PBXGroup;
 			children = (
 				ECB71DE616E7EB56000FC6F4 /* Thread */,
+				ECE7671816F3B85F00D5A67A /* CSGDesignCell.h */,
+				ECE7671916F3B85F00D5A67A /* CSGDesignCell.m */,
 			);
 			name = Stitches;
 			sourceTree = "<group>";
@@ -441,6 +446,7 @@
 				ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */,
 				ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */,
 				ECE7671616F3719300D5A67A /* CSGStitchInCell.m in Sources */,
+				ECE7671A16F3B85F00D5A67A /* CSGDesignCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,10 @@
 
 #import "CSGBaseThreadStitch.h"
 
-@interface CSGStitchInCell : CSGBaseThreadStitch
+@protocol CSGStitchInCell <CSGBaseThreadStitch>
+@end
+
+@interface CSGStitchInCell : CSGBaseThreadStitch<CSGStitchInCell>
 
 - (id) initWithThreadsBlend: (CSGThreadsBlend *) aThreadsBlend;
 
