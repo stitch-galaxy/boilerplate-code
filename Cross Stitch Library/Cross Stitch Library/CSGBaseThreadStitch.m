@@ -10,4 +10,30 @@
 
 @implementation CSGBaseThreadStitch
 
+@synthesize threadsBlend;
+
+- (id) initWithThreadsBlend: (CSGThreadsBlend *) aThreadsBlend
+{
+    if (self = [super init])
+    {
+        threadsBlend = aThreadsBlend;
+    }
+    return self;
+}
+
+
+- (size_t) serializedLength
+{
+    return threadsBlend.serializedLength;
+}
+
+- (void) serializeToBuffer: (void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette
+{
+}
+
++ (id) deserializeFromBuffer: (const void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette
+{
+}
+
+
 @end

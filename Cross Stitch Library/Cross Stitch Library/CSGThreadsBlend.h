@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <stdint.h>
 
+#import "CSGBinaryCoding.h"
 #import "CSGThreadsPalette.h"
 #import "CSGThread.h"
 
@@ -28,8 +29,8 @@
 @interface CSGThreadInBlend (Serialization)
 
 - (size_t) serializedLength;
-- (void) serializeToBuffer: (void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
-+ (id) deserializeFromBuffer: (const void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) palette;
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette;
 
 @end
 
@@ -49,7 +50,7 @@
 @interface CSGThreadsBlend (Serialization)
 
 - (size_t) serializedLength;
-- (void) serializeToBuffer: (void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
-+ (id) deserializeFromBuffer: (const void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) palette;
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette;
 
 @end

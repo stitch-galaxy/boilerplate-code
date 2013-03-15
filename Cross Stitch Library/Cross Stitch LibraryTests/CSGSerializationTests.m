@@ -13,6 +13,7 @@
 #import "CSGThread.h"
 #import "CSGThreadsPalette.h"
 #import "CSGThreadsBlend.h"
+#import "CSGBinaryCoding.h"
 
 #define CSG_TEST_THREAD_COLORS_PALETTE_LENGTH 10
 
@@ -122,20 +123,17 @@
 -(void) testThreadsBlendSerializationAndEquality
 {
     CSGThreadsBlend* blend = testhelper.randomThreadsBlend;
-    NSMutableData* data = [[NSMutableData alloc] initWithLength:[blend serializedLength]];
-    [blend serializeToBuffer: [data mutableBytes] WithThreadsPalette:testhelper.threadsPalette];
     
-    CSGThreadInBlend* blend1 = [CSGThreadsBlend deserializeFromBuffer:data.bytes WithThreadsPalette:testhelper.threadsPalette];
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:blend.serializedLength];
+    [blend serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGThreadsBlend* blend1 = [[CSGThreadsBlend alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    
     if (blend.hash != blend1.hash || ![blend isEqual:blend1])
     {
-        STFail(@"ThreadsBlend equality");
-    }
-    NSMutableData* data1 = [[NSMutableData alloc] initWithLength:[blend1 serializedLength]];
-    [blend1 serializeToBuffer: data1.mutableBytes WithThreadsPalette:testhelper.threadsPalette];
-    
-    if (![CSGSerializationTests IsSerializedViewEqualForData:data Data1:data1])
-    {
-        STFail(@"ThreadsBlend serialization");
+        STFail(@"ThreadsBlend serialization and equality");
     }
 }
 
@@ -143,20 +141,17 @@
 {
     CSGThreadInBlend* thread = testhelper.randomThreadInBlend;
     
-    NSMutableData* data = [[NSMutableData alloc] initWithLength:[thread serializedLength]];
-    [thread serializeToBuffer: [data mutableBytes] WithThreadsPalette:testhelper.threadsPalette];
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
+    [thread serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
     
-    CSGThreadInBlend* thread1 = [CSGThreadInBlend deserializeFromBuffer:data.bytes WithThreadsPalette:testhelper.threadsPalette];
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGThreadInBlend* thread1 = [[CSGThreadInBlend alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+
     if (thread.hash != thread1.hash || ![thread isEqual:thread1])
     {
-        STFail(@"ThreadInBlend equality");
-    }
-    NSMutableData* data1 = [[NSMutableData alloc] initWithLength:[thread1 serializedLength]];
-    [thread1 serializeToBuffer: data1.mutableBytes WithThreadsPalette:testhelper.threadsPalette];
-    
-    if (![CSGSerializationTests IsSerializedViewEqualForData:data Data1:data1])
-    {
-        STFail(@"ThreadInBlend serialization");
+        STFail(@"ThreadInBlend serialization and equality");
     }
 }
 

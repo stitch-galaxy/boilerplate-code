@@ -38,6 +38,8 @@
 		ECCCD7DB16F25B9800A99E70 /* CSGBaseThreadStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCCD7DA16F25B9800A99E70 /* CSGBaseThreadStitch.m */; };
 		ECCFD9F216F0F903004FE762 /* CSGThreadsBlend.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */; };
 		ECE0F40316D3857F0012D909 /* CodecFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE0F40216D3857F0012D909 /* CodecFactory.m */; };
+		ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7670E16F3297D00D5A67A /* CSGBinaryEncoder.m */; };
+		ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671116F332F100D5A67A /* CSGBinaryDecoder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +106,11 @@
 		ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGThreadsBlend.m; sourceTree = "<group>"; };
 		ECE0F40116D3857F0012D909 /* CodecFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodecFactory.h; sourceTree = "<group>"; };
 		ECE0F40216D3857F0012D909 /* CodecFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodecFactory.m; sourceTree = "<group>"; };
+		ECE7670D16F3297D00D5A67A /* CSGBinaryEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGBinaryEncoder.h; sourceTree = "<group>"; };
+		ECE7670E16F3297D00D5A67A /* CSGBinaryEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGBinaryEncoder.m; sourceTree = "<group>"; };
+		ECE7671016F332F100D5A67A /* CSGBinaryDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGBinaryDecoder.h; sourceTree = "<group>"; };
+		ECE7671116F332F100D5A67A /* CSGBinaryDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGBinaryDecoder.m; sourceTree = "<group>"; };
+		ECE7671316F3347A00D5A67A /* CSGBinaryCoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSGBinaryCoding.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +140,7 @@
 		ECB71DE216E7E77A000FC6F4 /* Embrodiery */ = {
 			isa = PBXGroup;
 			children = (
+				ECE7670C16F3295A00D5A67A /* Serialization */,
 				ECB71DE516E7EB24000FC6F4 /* Stitches */,
 				ECB71DE316E7E794000FC6F4 /* Materials */,
 			);
@@ -285,6 +293,18 @@
 			name = Ver1.0;
 			sourceTree = "<group>";
 		};
+		ECE7670C16F3295A00D5A67A /* Serialization */ = {
+			isa = PBXGroup;
+			children = (
+				ECE7670D16F3297D00D5A67A /* CSGBinaryEncoder.h */,
+				ECE7670E16F3297D00D5A67A /* CSGBinaryEncoder.m */,
+				ECE7671016F332F100D5A67A /* CSGBinaryDecoder.h */,
+				ECE7671116F332F100D5A67A /* CSGBinaryDecoder.m */,
+				ECE7671316F3347A00D5A67A /* CSGBinaryCoding.h */,
+			);
+			name = Serialization;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -413,6 +433,8 @@
 				EC92082316DE2F6B000B14A4 /* CSGThreadsPalette.m in Sources */,
 				ECCFD9F216F0F903004FE762 /* CSGThreadsBlend.m in Sources */,
 				ECCCD7DB16F25B9800A99E70 /* CSGBaseThreadStitch.m in Sources */,
+				ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */,
+				ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

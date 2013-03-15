@@ -18,9 +18,15 @@
 
 @interface CSGBaseThreadStitch : NSObject<CSGBaseThreadStitch>
 
+- (id) initWithThreadsBlend: (CSGThreadsBlend *) aThreadsBlend;
+
 @end
 
 
 @interface CSGBaseThreadStitch (Serialization)
+
+- (size_t) serializedLength;
+- (void) serializeToBuffer: (void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
++ (id) deserializeFromBuffer: (const void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette;
 
 @end

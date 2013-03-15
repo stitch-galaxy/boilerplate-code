@@ -92,31 +92,30 @@
     return sizeof(uint32_t) + sizeof(uint8_t);
 }
 
-- (void) serializeToBuffer: (void*) aBuffer WithThreadsPalette: (CSGThreadsPalette*) aPalette
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) aPalette
 {
-    uint32_t *buf = (uint32_t *) aBuffer;
+    uint32_t *buf = [anEncoder modifyBytes: sizeof(uint32_t)];
     *buf = [aPalette threadIndex: CSG_thread];
-    ++buf;
     
-    uint8_t *buf1 = (uint8_t *)buf;
+    uint8_t *buf1 = [anEncoder modifyBytes: sizeof(uint8_t)];
     *buf1 = CSG_flossCount;
 }
 
-+ (id) deserializeFromBuffer: (const void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette
 {
-    
-    uint32_t *buf = (uint32_t *) buffer;
-    uint32_t threadIndex = *buf;
-    ++buf;
-    
-    uint8_t *buf1 = (uint8_t *)buf;
-    uint8_t flossCount = *buf1;
-    
-    CSGThread *thread = [palette threadAtIndex: threadIndex];
-    
-    CSGThreadInBlend *threadInBlend = [[CSGThreadInBlend alloc] initWithThread: thread FlossCount: flossCount];
-    
-    return threadInBlend;
+    if (self = [super init])
+    {
+        const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
+        uint32_t threadIndex = *buf;
+        
+        const uint8_t *buf1 = [anDecoder readBytes:sizeof(uint8_t)];
+        uint8_t flossCount = *buf1;
+        
+        CSGThread *thread = [palette threadAtIndex: threadIndex];
+        
+        return [self initWithThread: thread FlossCount: flossCount];
+    }
+    return self;
 }
 
 @end
@@ -213,37 +212,35 @@
     return result;
 }
 
-- (void) serializeToBuffer: (void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette
+
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) palette
 {
-    uint8_t* buf = (uint8_t *) buffer;
+    uint8_t* buf = [anEncoder modifyBytes:sizeof(uint8_t)];
     *buf = [CSG_threads count];
-    
-    ++buf;
     
     for(CSGThreadInBlend *thread in CSG_threads)
     {
-        size_t length = [thread serializedLength];
-        [thread serializeToBuffer:(void *) buf WithThreadsPalette:palette];
-        
-        buf+= length;
+        [thread serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
     }
 }
 
-+ (id) deserializeFromBuffer: (const void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette
 {
-    uint8_t *buf = (uint8_t *) buffer;
-    uint8_t length = *buf;
-    ++buf;
-    
-    NSMutableArray* threadsInBlend = [[NSMutableArray alloc] init];
-    for(int i = 0; i < length; ++i)
+    if (self = [super init])
     {
-        CSGThreadInBlend* threadInBlend = [CSGThreadInBlend deserializeFromBuffer:(const void *) buf WithThreadsPalette:palette];
-        [threadsInBlend addObject: threadInBlend];
-        buf += [threadInBlend serializedLength];
+        const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
+        uint8_t length = *buf;
+        ++buf;
+        
+        NSMutableArray* threadsInBlend = [[NSMutableArray alloc] init];
+        for(int i = 0; i < length; ++i)
+        {
+            CSGThreadInBlend* threadInBlend = [[CSGThreadInBlend alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+            [threadsInBlend addObject:threadInBlend];
+        }
+        return [self initWithThreadsInBlend: threadsInBlend];
     }
-    CSGThreadsBlend *blend = [[CSGThreadsBlend alloc] initWithThreadsInBlend: threadsInBlend];
-    return blend;
+    return self;
 }
 
 @end
