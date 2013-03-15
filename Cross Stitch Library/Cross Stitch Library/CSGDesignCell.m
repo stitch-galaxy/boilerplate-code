@@ -80,6 +80,245 @@ typedef enum
     return self = [super init];
 }
 
+- (BOOL) isEqual: (id) object
+{
+    if (object == self)
+    {
+        return YES;
+    }
+    if (!object || ![object isKindOfClass:[self class]])
+    {
+        return NO;
+    }
+    
+    return [self isEqualToCSGDesignCell: object];
+}
+
+- (BOOL) isEqualToCSGDesignCell: (CSGDesignCell*) aCell
+{
+    if (self == aCell)
+    {
+        return YES;
+    }
+    //CROSS
+    if (crossStitch != NULL)
+    {
+        if (![crossStitch isEqual:aCell.crossStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.crossStitch) return NO;
+    }
+    //Petites
+    if (leftUpPetiteStitch != NULL)
+    {
+        if (![leftUpPetiteStitch isEqual:aCell.leftUpPetiteStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.leftUpPetiteStitch) return NO;
+    }
+    
+    if (leftDownPetiteStitch != NULL)
+    {
+        if (![leftDownPetiteStitch isEqual:aCell.leftDownPetiteStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.leftDownPetiteStitch) return NO;
+    }
+    
+    if (rightUpPetiteStitch != NULL)
+    {
+        if (![rightUpPetiteStitch isEqual:aCell.rightUpPetiteStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.rightUpPetiteStitch) return NO;
+    }
+    
+    if (rightDownPetiteStitch != NULL)
+    {
+        if (![rightDownPetiteStitch isEqual:aCell.rightDownPetiteStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.rightDownPetiteStitch) return NO;
+    }
+    //Quarter stitches
+    if (leftUpQuarterStitch != NULL)
+    {
+        if (![leftUpQuarterStitch isEqual:aCell.leftUpQuarterStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.leftUpQuarterStitch) return NO;
+    }
+    
+    if (leftDownQuarterStitch != NULL)
+    {
+        if (![leftDownQuarterStitch isEqual:aCell.leftDownQuarterStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.leftDownQuarterStitch) return NO;
+    }
+    
+    if (rightUpQuarterStitch != NULL)
+    {
+        if (![rightUpQuarterStitch isEqual:aCell.rightUpQuarterStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.rightUpQuarterStitch) return NO;
+    }
+    
+    if (rightDownQuarterStitch != NULL)
+    {
+        if (![rightDownQuarterStitch isEqual:aCell.rightDownQuarterStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.rightDownQuarterStitch) return NO;
+    }
+    //ThreeQuarter stitches
+    if (leftUpThreeQuarterStitch != NULL)
+    {
+        if (![leftUpThreeQuarterStitch isEqual:aCell.leftUpThreeQuarterStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.leftUpThreeQuarterStitch) return NO;
+    }
+    
+    if (leftDownThreeQuarterStitch != NULL)
+    {
+        if (![leftDownThreeQuarterStitch isEqual:aCell.leftDownThreeQuarterStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.leftDownThreeQuarterStitch) return NO;
+    }
+    
+    if (rightUpThreeQuarterStitch != NULL)
+    {
+        if (![rightUpThreeQuarterStitch isEqual:aCell.rightUpThreeQuarterStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.rightUpThreeQuarterStitch) return NO;
+    }
+    
+    if (rightDownThreeQuarterStitch != NULL)
+    {
+        if (![rightDownThreeQuarterStitch isEqual:aCell.rightDownThreeQuarterStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.rightDownThreeQuarterStitch) return NO;
+    }
+    //HalfStitches
+    if (slashHalfStitch != NULL)
+    {
+        if (![slashHalfStitch isEqual:aCell.slashHalfStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.slashHalfStitch) return NO;
+    }
+    if (backslashHalfStitch != NULL)
+    {
+        if (![backslashHalfStitch isEqual:aCell.backslashHalfStitch]) return NO;
+    }
+    else
+    {
+        if (aCell.backslashHalfStitch) return NO;
+    }
+    //French knots
+    if (frenchKnot00 != NULL)
+    {
+        if (![frenchKnot00 isEqual:aCell.frenchKnot00]) return NO;
+    }
+    else
+    {
+        if (aCell.frenchKnot00) return NO;
+    }
+    if (frenchKnot01 != NULL)
+    {
+        if (![frenchKnot01 isEqual:aCell.frenchKnot01]) return NO;
+    }
+    else
+    {
+        if (aCell.frenchKnot01) return NO;
+    }
+    if (frenchKnot02 != NULL)
+    {
+        if (![frenchKnot02 isEqual:aCell.frenchKnot02]) return NO;
+    }
+    else
+    {
+        if (aCell.frenchKnot02) return NO;
+    }
+    if (frenchKnot10 != NULL)
+    {
+        if (![frenchKnot10 isEqual:aCell.frenchKnot10]) return NO;
+    }
+    else
+    {
+        if (aCell.frenchKnot10) return NO;
+    }
+    if (frenchKnot11 != NULL)
+    {
+        if (![frenchKnot11 isEqual:aCell.frenchKnot11]) return NO;
+    }
+    else
+    {
+        if (aCell.frenchKnot11) return NO;
+    }
+    if (frenchKnot12 != NULL)
+    {
+        if (![frenchKnot12 isEqual:aCell.frenchKnot12]) return NO;
+    }
+    else
+    {
+        if (aCell.frenchKnot12) return NO;
+    }
+    if (frenchKnot20 != NULL)
+    {
+        if (![frenchKnot20 isEqual:aCell.frenchKnot20]) return NO;
+    }
+    else
+    {
+        if (aCell.frenchKnot20) return NO;
+    }
+    if (frenchKnot21 != NULL)
+    {
+        if (![frenchKnot21 isEqual:aCell.frenchKnot21]) return NO;
+    }
+    else
+    {
+        if (aCell.frenchKnot21) return NO;
+    }
+    if (frenchKnot22 != NULL)
+    {
+        if (![frenchKnot22 isEqual:aCell.frenchKnot22]) return NO;
+    }
+    else
+    {
+        if (aCell.frenchKnot22) return NO;
+    }
+    
+    return YES;
+}
+
+- (NSUInteger)hash
+{
+    NSUInteger hash = 17;
+//  hash = hash*31 + self.threadsBlend.hash;
+    
+    return hash;
+}
+
 @end
 
 @implementation CSGDesignCell (Serialization)
