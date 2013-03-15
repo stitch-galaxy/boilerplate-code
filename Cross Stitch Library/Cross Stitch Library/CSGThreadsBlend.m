@@ -20,6 +20,14 @@
 @synthesize CSG_thread;
 @synthesize CSG_flossCount;
 
+
+- (id) init
+{
+    NSAssert( false, @"Please use designated initializer" );
+    
+    return nil;
+}
+
 -(id) initWithThread: (CSGThread*) aThread FlossCount: (uint8_t) aFlossCount
 {
     if (self = [super init])
@@ -103,19 +111,15 @@
 
 - (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette
 {
-    if (self = [super init])
-    {
-        const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
-        uint32_t threadIndex = *buf;
-        
-        const uint8_t *buf1 = [anDecoder readBytes:sizeof(uint8_t)];
-        uint8_t flossCount = *buf1;
-        
-        CSGThread *thread = [palette threadAtIndex: threadIndex];
-        
-        return [self initWithThread: thread FlossCount: flossCount];
-    }
-    return self;
+    const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t threadIndex = *buf;
+    
+    const uint8_t *buf1 = [anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t flossCount = *buf1;
+    
+    CSGThread *thread = [palette threadAtIndex: threadIndex];
+    
+    return [self initWithThread: thread FlossCount: flossCount];
 }
 
 @end
@@ -211,7 +215,6 @@
     }
     return result;
 }
-
 
 - (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) palette
 {

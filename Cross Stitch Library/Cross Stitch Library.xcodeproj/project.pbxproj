@@ -40,6 +40,7 @@
 		ECE0F40316D3857F0012D909 /* CodecFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE0F40216D3857F0012D909 /* CodecFactory.m */; };
 		ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7670E16F3297D00D5A67A /* CSGBinaryEncoder.m */; };
 		ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671116F332F100D5A67A /* CSGBinaryDecoder.m */; };
+		ECE7671616F3719300D5A67A /* CSGCrossStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671516F3719300D5A67A /* CSGCrossStitch.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,8 @@
 		ECE7671016F332F100D5A67A /* CSGBinaryDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGBinaryDecoder.h; sourceTree = "<group>"; };
 		ECE7671116F332F100D5A67A /* CSGBinaryDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGBinaryDecoder.m; sourceTree = "<group>"; };
 		ECE7671316F3347A00D5A67A /* CSGBinaryCoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSGBinaryCoding.h; sourceTree = "<group>"; };
+		ECE7671416F3719200D5A67A /* CSGCrossStitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGCrossStitch.h; sourceTree = "<group>"; };
+		ECE7671516F3719300D5A67A /* CSGCrossStitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGCrossStitch.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +176,8 @@
 				ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */,
 				ECCCD7D916F25B9800A99E70 /* CSGBaseThreadStitch.h */,
 				ECCCD7DA16F25B9800A99E70 /* CSGBaseThreadStitch.m */,
+				ECE7671416F3719200D5A67A /* CSGCrossStitch.h */,
+				ECE7671516F3719300D5A67A /* CSGCrossStitch.m */,
 			);
 			name = Thread;
 			sourceTree = "<group>";
@@ -435,6 +440,7 @@
 				ECCCD7DB16F25B9800A99E70 /* CSGBaseThreadStitch.m in Sources */,
 				ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */,
 				ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */,
+				ECE7671616F3719300D5A67A /* CSGCrossStitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

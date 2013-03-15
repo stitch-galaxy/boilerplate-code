@@ -23,6 +23,13 @@
     return CSG_color;
 }
 
+- (id) init
+{
+    NSAssert( false, @"Please use designated initializer" );
+    
+    return nil;
+}
+
 - (id) initWithColor: (UIColor*) aColor
 {
     if (self = [super init])
@@ -94,25 +101,21 @@
 
 - (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder
 {
-    if (self = [super init])
-    {
-        const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
-        uint8_t iRed = *buf;
-        
-        buf = [anDecoder readBytes:sizeof(uint8_t)];
-        uint8_t iGreen = *buf;
-        
-        buf = [anDecoder readBytes:sizeof(uint8_t)];
-        uint8_t iBlue = *buf;
-
-        
-        CGFloat red = (CGFloat) iRed / 255.0;
-        CGFloat green = (CGFloat) iGreen / 255.0;
-        CGFloat blue = (CGFloat) iBlue / 255.0;
-        UIColor* color = [[UIColor alloc] initWithRed: red green: green blue: blue alpha: 1.0];
-        return [self initWithColor: color];
-    }
-    return self;
+    const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t iRed = *buf;
+    
+    buf = [anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t iGreen = *buf;
+    
+    buf = [anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t iBlue = *buf;
+    
+    
+    CGFloat red = (CGFloat) iRed / 255.0;
+    CGFloat green = (CGFloat) iGreen / 255.0;
+    CGFloat blue = (CGFloat) iBlue / 255.0;
+    UIColor* color = [[UIColor alloc] initWithRed: red green: green blue: blue alpha: 1.0];
+    return [self initWithColor: color];
 }
 
 @end

@@ -22,11 +22,7 @@
 
 - (id) init
 {
-    if (self = [super init])
-    {
-        return [self initWithCapacity: 0];
-    }
-    return self;
+    return [self initWithCapacity: 0];
 }
 
 - (id) initWithCapacity: (NSUInteger) aCapacity
@@ -133,13 +129,11 @@
 
 - (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder
 {
-    if (self = [super init])
+    const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t length = *buf;
+    
+    if (self = [self initWithCapacity:length])
     {
-        const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
-        uint32_t length = *buf;
-        
-        self = [self initWithCapacity:length];
-        
         for (uint32_t i = 0; i < length; ++i)
         {
             buf = [anDecoder readBytes:sizeof(uint32_t)];
@@ -149,7 +143,6 @@
             
             [self AddThreadMaterial:tMat WithIndex:index];
         }
-
     }
     return self;
 }

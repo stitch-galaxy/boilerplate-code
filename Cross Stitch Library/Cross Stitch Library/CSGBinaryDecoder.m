@@ -21,6 +21,13 @@
 
 @synthesize data;
 
+- (id) init
+{
+    NSAssert( false, @"Please use designated initializer" );
+    
+    return nil;
+}
+
 - (id) initWithData: (NSData *) aData
 {
     if (self = [super init])

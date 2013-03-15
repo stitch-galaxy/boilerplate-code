@@ -21,18 +21,19 @@
     return self;
 }
 
-
 - (size_t) serializedLength
 {
     return threadsBlend.serializedLength;
 }
 
-- (void) serializeToBuffer: (void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) palette
 {
+    [threadsBlend serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
 }
-
-+ (id) deserializeFromBuffer: (const void*) buffer WithThreadsPalette: (CSGThreadsPalette*) palette
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette
 {
+    CSGThreadsBlend *aThreadsBlend = [[CSGThreadsBlend alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+    return [self initWithThreadsBlend:aThreadsBlend];
 }
 
 
