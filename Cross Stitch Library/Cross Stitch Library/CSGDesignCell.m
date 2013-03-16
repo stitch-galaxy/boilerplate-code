@@ -700,6 +700,7 @@ typedef enum
                     break;
                 case CSG_STITCH_IN_CELL_BACKSLASH_HALF:
                     backslashHalfStitch = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+                    break;
                     //FRENCH KNOTS
                 case CSG_STITCH_IN_CELL_FRENCH_KNOT_00:
                     frenchKnot00 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
