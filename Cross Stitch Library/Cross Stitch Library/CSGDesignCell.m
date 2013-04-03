@@ -644,7 +644,7 @@ typedef enum
 
 - (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette
 {
-    if (self = [self init])
+    if (self = [super init])
     {
         const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
         uint8_t stitchType = *buf;
