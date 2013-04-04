@@ -16,6 +16,7 @@
 #import "CSGBinaryCoding.h"
 #import "CSGStitchInCell.h"
 #import "CSGDesignCell.h"
+#import "CSGDesignCoordinate.h"
 
 #define CSG_TEST_THREAD_COLORS_PALETTE_LENGTH 10
 
@@ -54,6 +55,15 @@
 + (BOOL) randomBool
 {
     return [CSGSerializationTestHelper randomIndexFor:2];
+}
+
+#define CSG_TEST_DESIGN_SIZE 100
+#define CSG_TEST_DESIGN_CELL_GRANULARITY 2
+
+- (CSGDesignCoordinate*) randomDesignCoordinate
+{
+    CSGDesignCoordinate *coordinate = [[CSGDesignCoordinate alloc] initWithX:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_SIZE] Y:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_SIZE] CellX:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_CELL_GRANULARITY] CellY:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_CELL_GRANULARITY] CellDenominator:CSG_TEST_DESIGN_CELL_GRANULARITY];
+    return coordinate;
 }
 
 - (CSGDesignCell*) randomDesignCell
@@ -360,6 +370,24 @@
     {
         STFail(@"Design cell serialization and equality");
     }
+}
+
+- (void) testDesignCellCoordinateSerialization
+{
+    CSGDesignCoordinate *coordinate = testhelper.randomDesignCoordinate;
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:coordinate.serializedLength];
+    [coordinate serializeWithBinaryEncoder:anEncoder];
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGDesignCoordinate* coordinate1 = [[CSGDesignCoordinate alloc]initWithBinaryDecoder:anDecoder];
+    
+    if (coordinate.hash != coordinate1.hash || ![coordinate isEqual:coordinate1])
+    {
+        STFail(@"DesignCoordinate serialization and equality");
+    }
+
 }
 
 

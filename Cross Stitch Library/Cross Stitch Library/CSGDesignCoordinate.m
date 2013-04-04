@@ -59,6 +59,47 @@
     return self;
 }
 
+- (BOOL) isEqual: (id) object
+{
+    if (object == self)
+    {
+        return YES;
+    }
+    if (!object || ![object isKindOfClass:[self class]])
+    {
+        return NO;
+    }
+    
+    return [self isEqualToCSGDesignCoordinate: object];
+}
+
+- (BOOL) isEqualToCSGDesignCoordinate: (CSGDesignCoordinate*) aCoordinate
+{
+    if (self == aCoordinate)
+    {
+        return YES;
+    }
+    if (x != aCoordinate.x || y != aCoordinate.y || cellX != aCoordinate.cellX || cellY != aCoordinate.cellY || cellDenominator != aCoordinate.cellDenominator)
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (NSUInteger)hash
+{
+    NSUInteger hash = 17;
+    hash = hash*31 + x;
+    hash = hash*31 + y;
+    hash = hash*31 + cellX;
+    hash = hash*31 + cellY;
+    hash = hash*31 + cellDenominator;
+    
+    return hash;
+}
+
+
 @end
 
 @implementation CSGDesignCoordinate (Serialization)
@@ -88,15 +129,23 @@
 
 - (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder
 {
-    
     const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
     uint32_t aX = *buf;
     
-    const uint8_t *buf1 = [anDecoder readBytes:sizeof(uint32_t)];
+    const uint32_t *buf1 = [anDecoder readBytes:sizeof(uint32_t)];
     uint32_t anY = *buf1;
     
+    const uint8_t *buf2 =[anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t aCellX = *buf2;
     
+    const uint8_t *buf3 =[anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t aCellY = *buf3;
+
     
+    const uint8_t *buf4 =[anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t aCellDenominator = *buf4;
+
+    return [self initWithX:aX Y:anY CellX:aCellX CellY:aCellY CellDenominator:aCellDenominator];
 }
 
 @end
