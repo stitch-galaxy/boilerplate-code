@@ -10,9 +10,15 @@
 
 @implementation CSGStitchInCell
 
+@synthesize threadsBlend;
+
 - (id) initWithThreadsBlend: (CSGThreadsBlend *) aThreadsBlend
 {
-    return self = [super initWithThreadsBlend: aThreadsBlend];
+    if (self = [super init])
+    {
+        threadsBlend = aThreadsBlend;
+    }
+    return self;
 }
 
 - (BOOL) isEqual: (id) object
@@ -26,10 +32,10 @@
         return NO;
     }
     
-    return [self isEqualToCSGCrossStitch: object];
+    return [self isEqualToCSGStitchInCell: object];
 }
 
-- (BOOL) isEqualToCSGCrossStitch: (CSGStitchInCell*) aStitch
+- (BOOL) isEqualToCSGStitchInCell: (CSGStitchInCell*) aStitch
 {
     if (self == aStitch)
     {
@@ -49,6 +55,26 @@
     hash = hash*31 + self.threadsBlend.hash;
     
     return hash;
+}
+
+
+@end
+
+@implementation CSGStitchInCell (Serialization)
+
+- (size_t) serializedLength
+{
+    return threadsBlend.serializedLength;
+}
+
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) palette
+{
+    [threadsBlend serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
+}
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette
+{
+    CSGThreadsBlend *aThreadsBlend = [[CSGThreadsBlend alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
+    return [self initWithThreadsBlend:aThreadsBlend];
 }
 
 

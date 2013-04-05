@@ -16,7 +16,7 @@
 #import "CSGBinaryCoding.h"
 #import "CSGStitchInCell.h"
 #import "CSGDesignCell.h"
-#import "CSGDesignCoordinate.h"
+#import "CSGDesignPoint.h"
 
 #define CSG_TEST_THREAD_COLORS_PALETTE_LENGTH 10
 
@@ -60,9 +60,9 @@
 #define CSG_TEST_DESIGN_SIZE 100
 #define CSG_TEST_DESIGN_CELL_GRANULARITY 2
 
-- (CSGDesignCoordinate*) randomDesignCoordinate
+- (CSGDesignPoint*) randomDesignCoordinate
 {
-    CSGDesignCoordinate *coordinate = [[CSGDesignCoordinate alloc] initWithX:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_SIZE] Y:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_SIZE] CellX:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_CELL_GRANULARITY] CellY:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_CELL_GRANULARITY] CellDenominator:CSG_TEST_DESIGN_CELL_GRANULARITY];
+    CSGDesignPoint *coordinate = [[CSGDesignPoint alloc] initWithX:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_SIZE] Y:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_SIZE] CellX:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_CELL_GRANULARITY] CellY:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_CELL_GRANULARITY] CellDenominator:CSG_TEST_DESIGN_CELL_GRANULARITY];
     return coordinate;
 }
 
@@ -374,14 +374,14 @@
 
 - (void) testDesignCellCoordinateSerialization
 {
-    CSGDesignCoordinate *coordinate = testhelper.randomDesignCoordinate;
+    CSGDesignPoint *coordinate = testhelper.randomDesignCoordinate;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:coordinate.serializedLength];
     [coordinate serializeWithBinaryEncoder:anEncoder];
     
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGDesignCoordinate* coordinate1 = [[CSGDesignCoordinate alloc]initWithBinaryDecoder:anDecoder];
+    CSGDesignPoint* coordinate1 = [[CSGDesignPoint alloc]initWithBinaryDecoder:anDecoder];
     
     if (coordinate.hash != coordinate1.hash || ![coordinate isEqual:coordinate1])
     {

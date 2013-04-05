@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
 //
 
-#import "CSGDesignCoordinate.h"
+#import "CSGDesignPoint.h"
 
-@interface CSGDesignCoordinate ()
+@interface CSGDesignPoint ()
 {
     uint32_t x;
     uint32_t y;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation CSGDesignCoordinate
+@implementation CSGDesignPoint
 
 -(uint32_t) x
 {
@@ -73,7 +73,7 @@
     return [self isEqualToCSGDesignCoordinate: object];
 }
 
-- (BOOL) isEqualToCSGDesignCoordinate: (CSGDesignCoordinate*) aCoordinate
+- (BOOL) isEqualToCSGDesignCoordinate: (CSGDesignPoint*) aCoordinate
 {
     if (self == aCoordinate)
     {
@@ -102,7 +102,7 @@
 
 @end
 
-@implementation CSGDesignCoordinate (Serialization)
+@implementation CSGDesignPoint (Serialization)
 
 - (size_t) serializedLength
 {

@@ -11,7 +11,7 @@
 #import "CSGBinaryEncoder.h"
 #import "CSGBinaryDecoder.h"
 
-@protocol CSGDesignCoordinate <NSObject>
+@protocol CSGDesignPoint <NSObject>
 
 -(uint32_t) x;
 -(uint32_t) y;
@@ -21,14 +21,14 @@
 
 @end
 
-@interface CSGDesignCoordinate : NSObject<CSGDesignCoordinate>
+@interface CSGDesignPoint : NSObject<CSGDesignPoint>
 
 - (id) initWithX: (uint32_t) aX Y: (uint32_t) anY CellX: (uint8_t) aCellX CellY: (uint8_t) aCellY CellDenominator: (uint8_t) aCellDenominator;
 
 @end
 
 
-@interface CSGDesignCoordinate (Serialization)
+@interface CSGDesignPoint (Serialization)
 
 - (size_t) serializedLength;
 - (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder;

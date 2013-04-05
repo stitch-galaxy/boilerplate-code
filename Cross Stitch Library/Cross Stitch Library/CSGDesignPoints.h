@@ -8,24 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-#import "CSGThreadsBlend.h"
+#import "CSGDesignPoint.h"
 
-@protocol CSGLinearStitch <NSObject>
+@protocol CSGDesignPoints <NSObject>
 
-@property (nonatomic, retain) CSGThreadsBlend *threadsBlend;
-
-@end
-
-@interface CSGLinearStitch : NSObject<CSGLinearStitch>
-
-- (id) initWithThreadsBlend: (CSGThreadsBlend *) aThreadsBlend;
+@property (nonatomic, retain) NSArray* points;
 
 @end
 
-@interface CSGLinearStitch (Serialization)
+@interface CSGDesignPoints : NSObject<CSGDesignPoints>
+
+- (id) initWithPoints: (NSArray*) aPoints;
+
+@end
+
+@interface CSGDesignPoints (Serialization)
 
 - (size_t) serializedLength;
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) palette;
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette;
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder;
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder;
 
 @end
