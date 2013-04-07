@@ -35,6 +35,7 @@
 		ECC232CF16D1579600105066 /* Stitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232CE16D1579600105066 /* Stitch.m */; };
 		ECC91923170CAF3000CA4077 /* CSGDesignPoints.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC91922170CAF2F00CA4077 /* CSGDesignPoints.m */; };
 		ECC91926170CB19300CA4077 /* CSGDesignPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC91925170CB19200CA4077 /* CSGDesignPoint.m */; };
+		ECC919291710AEDE00CA4077 /* CSGBackStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC919281710AEDE00CA4077 /* CSGBackStitch.m */; };
 		ECCB3BA316D4DDFD002C4033 /* StitchElement.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB3BA216D4DDFD002C4033 /* StitchElement.m */; };
 		ECCB3BA616D50348002C4033 /* CSGThread.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB3BA516D50348002C4033 /* CSGThread.m */; };
 		ECCFD9F216F0F903004FE762 /* CSGThreadsBlend.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */; };
@@ -102,6 +103,8 @@
 		ECC91922170CAF2F00CA4077 /* CSGDesignPoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesignPoints.m; sourceTree = "<group>"; };
 		ECC91924170CB19200CA4077 /* CSGDesignPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignPoint.h; sourceTree = "<group>"; };
 		ECC91925170CB19200CA4077 /* CSGDesignPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesignPoint.m; sourceTree = "<group>"; };
+		ECC919271710AEDE00CA4077 /* CSGBackStitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGBackStitch.h; sourceTree = "<group>"; };
+		ECC919281710AEDE00CA4077 /* CSGBackStitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGBackStitch.m; sourceTree = "<group>"; };
 		ECCB3BA116D4DDFD002C4033 /* StitchElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StitchElement.h; sourceTree = "<group>"; };
 		ECCB3BA216D4DDFD002C4033 /* StitchElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StitchElement.m; sourceTree = "<group>"; };
 		ECCB3BA416D50348002C4033 /* CSGThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGThread.h; sourceTree = "<group>"; };
@@ -188,6 +191,8 @@
 				ECC91922170CAF2F00CA4077 /* CSGDesignPoints.m */,
 				ECC91924170CB19200CA4077 /* CSGDesignPoint.h */,
 				ECC91925170CB19200CA4077 /* CSGDesignPoint.m */,
+				ECC919271710AEDE00CA4077 /* CSGBackStitch.h */,
+				ECC919281710AEDE00CA4077 /* CSGBackStitch.m */,
 			);
 			name = Thread;
 			sourceTree = "<group>";
@@ -453,6 +458,7 @@
 				ECE7671A16F3B85F00D5A67A /* CSGDesignCell.m in Sources */,
 				ECC91923170CAF3000CA4077 /* CSGDesignPoints.m in Sources */,
 				ECC91926170CB19300CA4077 /* CSGDesignPoint.m in Sources */,
+				ECC919291710AEDE00CA4077 /* CSGBackStitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

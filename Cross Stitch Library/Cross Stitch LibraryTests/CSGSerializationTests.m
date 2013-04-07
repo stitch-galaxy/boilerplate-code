@@ -18,6 +18,7 @@
 #import "CSGDesignCell.h"
 #import "CSGDesignPoint.h"
 #import "CSGDesignPoints.h"
+#import "CSGBackStitch.h"
 
 #define CSG_TEST_THREAD_COLORS_PALETTE_LENGTH 10
 
@@ -68,6 +69,13 @@
 }
 
 #define MAX_DESIGN_POINTS 10
+
+-(CSGBackStitch*) randomBackStitch
+{
+    CSGThreadsBlend* blend = [self randomThreadsBlend];
+    CSGDesignPoints* curve = [self randomDesignPoints];
+    return [[CSGBackStitch alloc] initWithThreadsBlend:blend Curve:curve];
+}
 
 -(CSGDesignPoints*) randomDesignPoints
 {
@@ -422,6 +430,23 @@
 
 }
 
+
+-(void) testBackStitchSerialization
+{
+    CSGBackStitch* stitch = testhelper.randomBackStitch;
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
+    [stitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGBackStitch* stitch1 = [[CSGBackStitch alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    
+    if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
+    {
+        STFail(@"BackStitch serialization and equality");
+    }
+}
 
 
 
