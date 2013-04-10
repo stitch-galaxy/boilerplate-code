@@ -15,7 +15,6 @@
 
 @protocol CSGDesign <NSObject>
 
-//Cross stitch
 @property (nonatomic, retain) CSGThreadsPalette* palette;
 @property (nonatomic, assign) uint32_t width;
 @property (nonatomic, assign) uint32_t height;
@@ -25,7 +24,9 @@
 
 @end
 
-@interface CSGDesignCell : NSObject<CSGDesign>
+@interface CSGDesign : NSObject<CSGDesign>
+
+-(id) initWithPalette: (CSGThreadsPalette*) aPalette Width: (uint32_t) aWidth Height: (uint32_t) aHeight Cells: (NSArray*) aCells BackStitches: (NSArray*) aBackStitches StraightStitches: (NSArray*) aStraightStitches;
 
 @end
 

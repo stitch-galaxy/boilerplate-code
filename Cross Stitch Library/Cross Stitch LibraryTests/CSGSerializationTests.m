@@ -78,6 +78,13 @@
     return [[CSGBackStitch alloc] initWithThreadsBlend:blend Curve:curve];
 }
 
+-(CSGStraightStitch*) randomStraightStitch
+{
+    CSGThreadsBlend* blend = [self randomThreadsBlend];
+    CSGDesignPoints* curve = [self randomDesignPoints];
+    return [[CSGStraightStitch alloc] initWithThreadsBlend:blend Curve:curve];
+}
+
 -(CSGDesignPoints*) randomDesignPoints
 {
     NSMutableArray* points = [[NSMutableArray alloc] init];
