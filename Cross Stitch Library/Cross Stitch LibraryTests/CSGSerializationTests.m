@@ -19,6 +19,7 @@
 #import "CSGDesignPoint.h"
 #import "CSGDesignPoints.h"
 #import "CSGBackStitch.h"
+#import "CSGStraightStitch.h"
 
 #define CSG_TEST_THREAD_COLORS_PALETTE_LENGTH 10
 
@@ -445,6 +446,24 @@
     if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
     {
         STFail(@"BackStitch serialization and equality");
+    }
+}
+
+
+-(void) testStraightStitchSerialization
+{
+    CSGStraightStitch* stitch = testhelper.randomStraightStitch;
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
+    [stitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGStraightStitch* stitch1 = [[CSGStraightStitch alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    
+    if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
+    {
+        STFail(@"StraightStitch serialization and equality");
     }
 }
 
