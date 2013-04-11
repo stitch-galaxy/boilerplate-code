@@ -22,7 +22,7 @@
 #import "CSGStraightStitch.h"
 #import "CSGDesign.h"
 
-#define DESIGN_WIDTH 200
+#define DESIGN_WIDTH 100
 #define DESIGN_STRAIGTH_STITCHES 2
 #define DESIGN_BACK_STITCHES 2
 #define DESIGN_COLORS_NUMBER 50
