@@ -20,8 +20,16 @@
 #import "CSGDesignPoints.h"
 #import "CSGBackStitch.h"
 #import "CSGStraightStitch.h"
+#import "CSGDesign.h"
 
-#define CSG_TEST_THREAD_COLORS_PALETTE_LENGTH 10
+#define DESIGN_WIDTH 200
+#define DESIGN_STRAIGTH_STITCHES 2
+#define DESIGN_BACK_STITCHES 2
+#define DESIGN_COLORS_NUMBER 50
+#define DESIGN_CELL_GRANULARITY 2
+#define DESIGN_POINTS_MAX_NUMBER 10
+#define DESIGN_MAX_FLOSSES_OF_THREAD 4
+#define DESIGN_THREADS_IN_BLEND_MAX_NUMBER 4
 
 @interface CSGSerializationTestHelper : NSObject
 {
@@ -34,6 +42,27 @@
 
 
 @implementation CSGSerializationTestHelper
+
+-(CSGDesign*) randomDesign
+{
+    NSMutableArray *aBackStitches = [[NSMutableArray alloc] init];
+    for(uint32_t i = 0; i < DESIGN_BACK_STITCHES; ++i)
+    {
+        [aBackStitches addObject: [self randomBackStitch]];
+    }
+    NSMutableArray *aStraightStitches = [[NSMutableArray alloc] init];
+    for(uint32_t i = 0; i < DESIGN_STRAIGTH_STITCHES; ++i)
+    {
+        [aStraightStitches addObject: [self randomStraightStitch]];
+    }
+    NSMutableArray *aCells = [[NSMutableArray alloc] init];
+    for(uint32_t i = 0; i < DESIGN_WIDTH * DESIGN_WIDTH; ++i)
+    {
+        [aCells addObject: [self randomDesignCell]];
+    }
+    CSGDesign* design = [[CSGDesign alloc] initWithWidth:DESIGN_WIDTH Height:DESIGN_WIDTH Cells:aCells BackStitches:aBackStitches StraightStitches:aStraightStitches];
+    return design;
+}
 
 + (CGFloat) randomColorComponent
 {
@@ -50,16 +79,14 @@
     return [CSGSerializationTestHelper randomIndexFor:2];
 }
 
-#define CSG_TEST_DESIGN_SIZE 100
-#define CSG_TEST_DESIGN_CELL_GRANULARITY 2
 
 - (CSGDesignPoint*) randomDesignCoordinate
 {
-    CSGDesignPoint *coordinate = [[CSGDesignPoint alloc] initWithX:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_SIZE] Y:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_SIZE] CellX:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_CELL_GRANULARITY] CellY:[CSGSerializationTestHelper randomIndexFor: CSG_TEST_DESIGN_CELL_GRANULARITY] CellDenominator:CSG_TEST_DESIGN_CELL_GRANULARITY];
+    CSGDesignPoint *coordinate = [[CSGDesignPoint alloc] initWithX:[CSGSerializationTestHelper randomIndexFor: DESIGN_WIDTH] Y:[CSGSerializationTestHelper randomIndexFor: DESIGN_WIDTH] CellX:[CSGSerializationTestHelper randomIndexFor: DESIGN_CELL_GRANULARITY] CellY:[CSGSerializationTestHelper randomIndexFor: DESIGN_CELL_GRANULARITY] CellDenominator:DESIGN_CELL_GRANULARITY];
     return coordinate;
 }
 
-#define MAX_DESIGN_POINTS 10
+
 
 -(CSGBackStitch*) randomBackStitch
 {
@@ -78,7 +105,7 @@
 -(CSGDesignPoints*) randomDesignPoints
 {
     NSMutableArray* points = [[NSMutableArray alloc] init];
-    uint32_t numPoints = [CSGSerializationTestHelper randomIndexFor: MAX_DESIGN_POINTS];
+    uint32_t numPoints = [CSGSerializationTestHelper randomIndexFor: DESIGN_POINTS_MAX_NUMBER];
     for(int i = 0; i < numPoints; ++i)
     {
         [points addObject:[self randomDesignCoordinate]];
@@ -202,27 +229,27 @@
 
 - (CSGThread*) randomThread
 {
-    return [threads objectAtIndex:[CSGSerializationTestHelper randomIndexFor:CSG_TEST_THREAD_COLORS_PALETTE_LENGTH]];    
+    return [threads objectAtIndex:[CSGSerializationTestHelper randomIndexFor:DESIGN_COLORS_NUMBER]];
 }
 
-#define CSG_MAX_FLOSSES_OF_THREAD 4
+
 
 - (CSGThreadInBlend*) randomThreadInBlend
 {
-    uint32_t flossesCount = [CSGSerializationTestHelper randomIndexFor: CSG_MAX_FLOSSES_OF_THREAD];
+    uint32_t flossesCount = [CSGSerializationTestHelper randomIndexFor: DESIGN_MAX_FLOSSES_OF_THREAD];
     CSGThread* thread = self.randomThread;
     CSGThreadInBlend *threadInBlend = [[CSGThreadInBlend alloc] initWithThread:thread FlossCount: flossesCount];
     return threadInBlend;
 
 }
 
-#define CSG_MAX_THREADS_IN_BLEND 4
+
 
 - (CSGThreadsBlend*) randomThreadsBlend
 {
     NSMutableArray *aThreads = [[NSMutableArray alloc] init];
     
-    int threadsCount = [CSGSerializationTestHelper randomIndexFor: CSG_MAX_THREADS_IN_BLEND] + 1;
+    int threadsCount = [CSGSerializationTestHelper randomIndexFor: DESIGN_THREADS_IN_BLEND_MAX_NUMBER] + 1;
     for (int i = 0; i < threadsCount; ++i)
     {
         CSGThreadInBlend* threadInBlend = self.randomThreadInBlend;
@@ -238,7 +265,7 @@
     {
         threads = [[NSMutableArray alloc] init];
         
-        for(int i =0; i < CSG_TEST_THREAD_COLORS_PALETTE_LENGTH; ++i)
+        for(int i =0; i < DESIGN_COLORS_NUMBER; ++i)
         {
             CGFloat red = [CSGSerializationTestHelper randomColorComponent];
             CGFloat green = [CSGSerializationTestHelper randomColorComponent];
@@ -446,6 +473,25 @@
     if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
     {
         STFail(@"StraightStitch serialization and equality");
+    }
+}
+
+
+-(void) testDesignSerialization
+{
+    CSGDesign* design = testhelper.randomDesign;
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:design.serializedLength];
+    [design serializeWithBinaryEncoder:anEncoder];
+    
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGDesign* design1 = [CSGDesign deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    
+    if (design.hash != design1.hash || ![design isEqual:design1])
+    {
+        STFail(@"Design serialization and equality");
     }
 }
 

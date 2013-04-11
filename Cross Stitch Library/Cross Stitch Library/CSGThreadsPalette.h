@@ -28,6 +28,6 @@
 
 - (size_t) serializedLength;
 - (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder;
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder;
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectRegistry: (CSGObjectsRegistry*) registry;
 
 @end
