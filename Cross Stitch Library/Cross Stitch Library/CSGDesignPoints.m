@@ -113,8 +113,8 @@
         [aPoints addObject:coord];
     }
     
-    CSGDesignPoints* aPoints =  [[CSGDesignPoints alloc] initWithPoints:aPoints];
-    return [registry getDesignPoints: aPoints];
+    CSGDesignPoints* aRet = [[CSGDesignPoints alloc] initWithPoints:aPoints];
+    return [registry getDesignPoints: aRet];
 }
 
 

@@ -25,7 +25,7 @@
 
 @interface CSGSerializationTestHelper : NSObject
 {
-    CSGThreadsPalette* threadsPalette;
+    NSMutableArray *threads;
 }
 
 - (id) init;
@@ -35,11 +35,6 @@
 
 @implementation CSGSerializationTestHelper
 
-- (CSGThreadsPalette*) threadsPalette
-{
-    return threadsPalette;
-}
-
 + (CGFloat) randomColorComponent
 {
     return ((CGFloat)(arc4random() % 265)) / 255.0;
@@ -48,11 +43,6 @@
 + (uint32_t) randomIndexFor: (uint32_t) seed
 {
     return arc4random() % seed;
-}
-
-- (UIColor*) randomThreadColor
-{
-    return [[threadsPalette threadAtIndex: [CSGSerializationTestHelper randomIndexFor:[threadsPalette size]]] color];
 }
 
 + (BOOL) randomBool
@@ -212,7 +202,7 @@
 
 - (CSGThread*) randomThread
 {
-    return [threadsPalette threadMaterialByColor: self.randomThreadColor];
+    return [threads objectAtIndex:[CSGSerializationTestHelper randomIndexFor:CSG_TEST_THREAD_COLORS_PALETTE_LENGTH]];    
 }
 
 #define CSG_MAX_FLOSSES_OF_THREAD 4
@@ -230,15 +220,15 @@
 
 - (CSGThreadsBlend*) randomThreadsBlend
 {
-    NSMutableArray *threads = [[NSMutableArray alloc] init];
+    NSMutableArray *aThreads = [[NSMutableArray alloc] init];
     
     int threadsCount = [CSGSerializationTestHelper randomIndexFor: CSG_MAX_THREADS_IN_BLEND] + 1;
     for (int i = 0; i < threadsCount; ++i)
     {
         CSGThreadInBlend* threadInBlend = self.randomThreadInBlend;
-        [threads addObject:threadInBlend];
+        [aThreads addObject:threadInBlend];
     }
-    CSGThreadsBlend* blend = [[CSGThreadsBlend alloc] initWithThreadsInBlend: threads];
+    CSGThreadsBlend* blend = [[CSGThreadsBlend alloc] initWithThreadsInBlend: aThreads];
     return blend;
 }
 
@@ -246,7 +236,7 @@
 {
     if (self = [super init])
     {
-        threadsPalette = [[CSGThreadsPalette alloc] init];
+        threads = [[NSMutableArray alloc] init];
         
         for(int i =0; i < CSG_TEST_THREAD_COLORS_PALETTE_LENGTH; ++i)
         {
@@ -256,7 +246,7 @@
             
             UIColor *color = [[UIColor alloc] initWithRed:red green:green blue:blue alpha:1.0];
             
-            [threadsPalette threadMaterialByColor:color];
+            [threads addObject: [[CSGThread alloc] initWithColor: color]];
         }
     }
     return self;
@@ -286,11 +276,12 @@
     CSGThreadsBlend* blend = testhelper.randomThreadsBlend;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:blend.serializedLength];
-    [blend serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    [blend serializeWithBinaryEncoder:anEncoder];
     
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGThreadsBlend* blend1 = [[CSGThreadsBlend alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGThreadsBlend* blend1 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
     
     if (blend.hash != blend1.hash || ![blend isEqual:blend1])
     {
@@ -303,12 +294,13 @@
     CSGThreadInBlend* thread = testhelper.randomThreadInBlend;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
-    [thread serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    [thread serializeWithBinaryEncoder:anEncoder];
     
     
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGThreadInBlend* thread1 = [[CSGThreadInBlend alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    CSGThreadInBlend* thread1 = [CSGThreadInBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 
     if (thread.hash != thread1.hash || ![thread isEqual:thread1])
     {
@@ -323,9 +315,10 @@
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
     [thread serializeWithBinaryEncoder:anEncoder];
     
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGThread* thread1 = [[CSGThread alloc] initWithBinaryDecoder:anDecoder];
+    CSGThread* thread1 = [CSGThread deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
     
     if (thread.hash != thread1.hash || ![thread isEqual:thread1])
     {
@@ -345,38 +338,17 @@
     return (memcmp(data1.bytes, data2.bytes, length) == 0);
 }
 
-- (void) testThreadPeletteSerialization
-{
-    CSGThreadsPalette* palette = [testhelper threadsPalette];
-    
-    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:palette.serializedLength];
-    [palette serializeWithBinaryEncoder:anEncoder];
-    
-    
-    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
-    
-    CSGThreadsPalette* palette1 = [[CSGThreadsPalette alloc] initWithBinaryDecoder:anDecoder];
-
-    //NO EQUALITY TEST - TEST IF (SERIALIZATION == SERIALIZATION(DESERIALIZATION))
-    CSGBinaryEncoder* anEncoder1 = [[CSGBinaryEncoder alloc] initWithLength:palette1.serializedLength];
-    [palette1 serializeWithBinaryEncoder:anEncoder1];
-    
-    if (![CSGSerializationTests IsSerializedViewEqualForData:anEncoder.data Data1:anEncoder1.data])
-    {
-        STFail(@"Threads palette serilization");
-    }
-}
-
 -(void) testStitchInCellSerialization
 {
     CSGStitchInCell* stitch = testhelper.randomStitchInCell;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
-    [stitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    [stitch serializeWithBinaryEncoder:anEncoder];
     
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGStitchInCell* stitch1 = [[CSGStitchInCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    CSGStitchInCell* stitch1 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
     
     if (stitch.hash != stitch.hash || ![stitch isEqual:stitch1])
     {
@@ -390,11 +362,12 @@
     CSGDesignCell* cell = testhelper.randomDesignCell;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:cell.serializedLength];
-    [cell serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    [cell serializeWithBinaryEncoder:anEncoder];
     
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGDesignCell* cell1 = [[CSGDesignCell alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    CSGDesignCell* cell1 = [CSGDesignCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
     
     if (cell.hash != cell1.hash || ![cell isEqual:cell1])
     {
@@ -409,10 +382,10 @@
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:coordinate.serializedLength];
     [coordinate serializeWithBinaryEncoder:anEncoder];
     
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGDesignPoint* coordinate1 = [[CSGDesignPoint alloc]initWithBinaryDecoder:anDecoder];
-    
+    CSGDesignPoint* coordinate1 = [CSGDesignPoint deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];    
     if (coordinate.hash != coordinate1.hash || ![coordinate isEqual:coordinate1])
     {
         STFail(@"DesignCoordinate serialization and equality");
@@ -427,10 +400,10 @@
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:points.serializedLength];
     [points serializeWithBinaryEncoder:anEncoder];
     
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGDesignPoints* points1 = [[CSGDesignPoints alloc]initWithBinaryDecoder:anDecoder];
-    
+    CSGDesignPoints* points1 = [CSGDesignPoints deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];    
     if (points.hash != points1.hash || ![points isEqual:points1])
     {
         STFail(@"DesignCoordinate serialization and equality");
@@ -444,11 +417,12 @@
     CSGBackStitch* stitch = testhelper.randomBackStitch;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
-    [stitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    [stitch serializeWithBinaryEncoder:anEncoder];
     
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGBackStitch* stitch1 = [[CSGBackStitch alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    CSGBackStitch* stitch1 = [CSGBackStitch deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
     
     if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
     {
@@ -462,11 +436,12 @@
     CSGStraightStitch* stitch = testhelper.randomStraightStitch;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
-    [stitch serializeWithBinaryEncoder:anEncoder ThreadsPalette:testhelper.threadsPalette];
+    [stitch serializeWithBinaryEncoder:anEncoder];
     
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGStraightStitch* stitch1 = [[CSGStraightStitch alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:testhelper.threadsPalette];
+    CSGStraightStitch* stitch1 = [CSGStraightStitch deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
     
     if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
     {

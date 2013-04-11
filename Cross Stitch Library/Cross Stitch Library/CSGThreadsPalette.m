@@ -127,7 +127,7 @@
     }
 }
 
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder
+- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectRegistry: (CSGObjectsRegistry*) registry
 {
     const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
     uint32_t length = *buf;
@@ -139,7 +139,7 @@
             buf = [anDecoder readBytes:sizeof(uint32_t)];
             uint32_t index = *buf;
             
-            CSGThread* tMat = [[CSGThread alloc] initWithBinaryDecoder:anDecoder];
+            CSGThread* tMat = [CSGThread deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
             
             [self AddThreadMaterial:tMat WithIndex:index];
         }

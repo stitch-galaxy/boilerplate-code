@@ -10,6 +10,7 @@
 
 #import "CSGBinaryEncoder.h"
 #import "CSGBinaryDecoder.h"
+#import "CSGObjectsRegistry.h"
 
 @protocol CSGDesignPoint <NSObject>
 
