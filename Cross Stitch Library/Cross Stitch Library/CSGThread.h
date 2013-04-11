@@ -1,14 +1,7 @@
-//
-//  ThreadMaterial.h
-//  Cross Stitch Library
-//
-//  Created by 123 on 20.02.13.
-//  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 #import "CSGBinaryCoding.h"
+#import "CSGObjectsRegistry.h"
 
 @protocol CSGThread <NSObject>
 
@@ -31,6 +24,6 @@
 
 - (size_t) serializedLength;
 - (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder;
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder;
++ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 
 @end

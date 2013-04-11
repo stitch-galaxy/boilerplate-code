@@ -12,6 +12,14 @@
 
 @synthesize threadsBlend;
 
+- (id) init
+{
+    NSAssert( false, @"Please use designated initializer" );
+    
+    return nil;
+}
+
+
 - (id) initWithThreadsBlend: (CSGThreadsBlend *) aThreadsBlend
 {
     if (self = [super init])
@@ -67,14 +75,17 @@
     return threadsBlend.serializedLength;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) palette
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
 {
-    [threadsBlend serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
+    [threadsBlend serializeWithBinaryEncoder:anEncoder];
 }
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette
+
++ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 {
-    CSGThreadsBlend *aThreadsBlend = [[CSGThreadsBlend alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
-    return [self initWithThreadsBlend:aThreadsBlend];
+    CSGThreadsBlend *aThreadsBlend = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+
+    CSGStitchInCell *aStitch = [[CSGStitchInCell alloc] initWithThreadsBlend:aThreadsBlend];
+    return [registry getStitchInCell: aStitch];
 }
 
 

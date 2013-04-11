@@ -15,7 +15,6 @@
 
 @protocol CSGDesign <NSObject>
 
-@property (nonatomic, retain) CSGThreadsPalette* palette;
 @property (nonatomic, assign) uint32_t width;
 @property (nonatomic, assign) uint32_t height;
 @property (nonatomic, retain) NSArray* cells;
@@ -26,7 +25,7 @@
 
 @interface CSGDesign : NSObject<CSGDesign>
 
--(id) initWithPalette: (CSGThreadsPalette*) aPalette Width: (uint32_t) aWidth Height: (uint32_t) aHeight Cells: (NSArray*) aCells BackStitches: (NSArray*) aBackStitches StraightStitches: (NSArray*) aStraightStitches;
+-(id) initWithWidth: (uint32_t) aWidth Height: (uint32_t) aHeight Cells: (NSArray*) aCells BackStitches: (NSArray*) aBackStitches StraightStitches: (NSArray*) aStraightStitches;
 
 @end
 
@@ -34,6 +33,6 @@
 
 - (size_t) serializedLength;
 - (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder;
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder;
++ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 
 @end

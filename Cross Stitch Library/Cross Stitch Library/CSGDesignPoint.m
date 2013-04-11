@@ -46,6 +46,14 @@
     return cellDenominator;
 }
 
+- (id) init
+{
+    NSAssert( false, @"Please use designated initializer" );
+    
+    return nil;
+}
+
+
 - (id) initWithX: (uint32_t) aX Y: (uint32_t) anY CellX: (uint8_t) aCellX CellY: (uint8_t) aCellY CellDenominator: (uint8_t) aCellDenominator
 {
     if (self = [super init])
@@ -127,8 +135,9 @@
     *buf4 = cellDenominator;
 }
 
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder
++ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 {
+
     const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
     uint32_t aX = *buf;
     
@@ -145,7 +154,9 @@
     const uint8_t *buf4 =[anDecoder readBytes:sizeof(uint8_t)];
     uint8_t aCellDenominator = *buf4;
 
-    return [self initWithX:aX Y:anY CellX:aCellX CellY:aCellY CellDenominator:aCellDenominator];
+    CSGDesignPoint *point = [[CSGDesignPoint alloc] initWithX:aX Y:anY CellX:aCellX CellY:aCellY CellDenominator:aCellDenominator];
+
+    return [registry getDesignPoint: point];
 }
 
 @end

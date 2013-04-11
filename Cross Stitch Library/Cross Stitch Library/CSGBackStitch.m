@@ -14,6 +14,13 @@
 
 @synthesize curve;
 
+- (id) init
+{
+    NSAssert( false, @"Please use designated initializer" );
+    
+    return nil;
+}
+
 -(id) initWithThreadsBlend: (CSGThreadsBlend*) aThreadBlend Curve:(CSGDesignPoints*) aCurve
 {
     if (self = [super init])
@@ -72,18 +79,19 @@
     return threadBlend.serializedLength + curve.serializedLength;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ThreadsPalette: (CSGThreadsPalette*) palette
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
 {
-    [threadBlend serializeWithBinaryEncoder:anEncoder ThreadsPalette:palette];
+    [threadBlend serializeWithBinaryEncoder:anEncoder];
     [curve serializeWithBinaryEncoder:anEncoder];
 }
 
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ThreadsPalette: (CSGThreadsPalette*) palette
++ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 {
-    CSGThreadsBlend *aThreadsBlend = [[CSGThreadsBlend alloc] initWithBinaryDecoder:anDecoder ThreadsPalette:palette];
-    CSGDesignPoints *aCurve = [[CSGDesignPoints alloc] initWithBinaryDecoder:anDecoder];
+    CSGThreadsBlend *aThreadsBlend = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    CSGDesignPoints *aCurve = [CSGDesignPoints deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
     
-    return [self initWithThreadsBlend:aThreadsBlend Curve:aCurve];
+    CSGBackStitch *aStitch = [[CSGBackStitch alloc] initWithThreadsBlend:aThreadsBlend Curve:aCurve];
+    return [registry getBackStitch: aStitch];
 }
 
 @end

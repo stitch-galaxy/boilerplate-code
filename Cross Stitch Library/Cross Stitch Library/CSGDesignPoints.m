@@ -12,6 +12,14 @@
 
 @synthesize points;
 
+- (id) init
+{
+    NSAssert( false, @"Please use designated initializer" );
+    
+    return nil;
+}
+
+
 - (id) initWithPoints: (NSArray*) aPoints
 {
     if (self = [super init])
@@ -94,18 +102,19 @@
     }
 }
 
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder
++ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 {
     NSMutableArray *aPoints = [[NSMutableArray alloc] init];
     const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
     uint32_t numPoints = *buf;
     for(uint32_t i = 0; i < numPoints; ++i)
     {
-        CSGDesignPoint *coord = [[CSGDesignPoint alloc] initWithBinaryDecoder:anDecoder];
+        CSGDesignPoint *coord = [CSGDesignPoint deserializeWithBinaryDecoder: anDecoder ObjectsRegistry: registry];
         [aPoints addObject:coord];
     }
     
-    return [self initWithPoints:aPoints];
+    CSGDesignPoints* aPoints =  [[CSGDesignPoints alloc] initWithPoints:aPoints];
+    return [registry getDesignPoints: aPoints];
 }
 
 

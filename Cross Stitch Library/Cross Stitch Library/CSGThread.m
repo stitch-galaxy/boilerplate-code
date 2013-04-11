@@ -1,11 +1,3 @@
-//
-//  ThreadMaterial.m
-//  Cross Stitch Library
-//
-//  Created by 123 on 20.02.13.
-//  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
-//
-
 #import "CSGThread.h"
 
 @interface CSGThread ()
@@ -99,7 +91,7 @@
     *buf = blue;
 }
 
-- (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder
++ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 {
     const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
     uint8_t iRed = *buf;
@@ -115,7 +107,8 @@
     CGFloat green = (CGFloat) iGreen / 255.0;
     CGFloat blue = (CGFloat) iBlue / 255.0;
     UIColor* color = [[UIColor alloc] initWithRed: red green: green blue: blue alpha: 1.0];
-    return [self initWithColor: color];
+    CSGThread* thread = [[CSGThread alloc] initWithColor: color];
+    return [registry getThread: thread];
 }
 
 @end
