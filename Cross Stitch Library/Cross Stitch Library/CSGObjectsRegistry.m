@@ -1,19 +1,45 @@
 #import "CSGObjectsRegistry.h"
 
+#import "CSGThread.h"
+#import "CSGObjectsSetInMemory.h"
+
+
+
 @interface CSGObjectsRegistry ()
 {
 }
+
+@property (nonatomic, retain) CSGThread *tmpThread;
+@property (nonatomic, retain) CSGObjectsSetInMemory *threadsSet;
 
 @end
 
 @implementation CSGObjectsRegistry
 
+@synthesize tmpThread;
+@synthesize threadsSet;
+
 - (id) init
 {
     if (self = [super init])
     {
+        tmpThread = [CSGThread alloc];
+        threadsSet = [[CSGObjectsSetInMemory alloc] init];
     }
     return self;
+}
+
+
+- (CSGThread*) buildThreadWithColor: (UIColor*) aColor
+{
+    tmpThread = [tmpThread initWithColor:aColor];
+    CSGThread* aThread = [threadsSet member:tmpThread];
+    if (!aThread)
+    {
+        aThread = [[CSGThread alloc] initWithColor:aColor];
+        [threadsSet putObject:aThread];
+    }
+    return aThread;
 }
 
 - (CSGThread*) getThread: (CSGThread*) anInstance

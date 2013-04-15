@@ -23,6 +23,7 @@
 @interface CSGObjectsRegistry : NSObject
 
 - (CSGThread*) getThread: (CSGThread*) anInstance;
+
 - (CSGThreadInBlend*) getThreadInBlend: (CSGThreadInBlend*) anInstance;
 - (CSGThreadsBlend*) getThreadsBlend: (CSGThreadsBlend*) anInstance;
 - (CSGStitchInCell*) getStitchInCell: (CSGStitchInCell*) anInstance;
