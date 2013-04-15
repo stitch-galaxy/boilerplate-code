@@ -31,7 +31,7 @@
 
 -(void) testThreadsBlendSerializationAndEquality
 {
-    CSGThreadsBlend* blend = testhelper.randomThreadsBlend;
+    CSGThreadsBlend* blend = testhelper.generateThreadsBlend;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:blend.serializedLength];
     [blend serializeWithBinaryEncoder:anEncoder];
@@ -49,7 +49,7 @@
 
 - (void) testThreadInBlendSerializationAndEquality
 {
-    CSGThreadInBlend* thread = testhelper.randomThreadInBlend;
+    CSGThreadInBlend* thread = testhelper.generateThreadInBlend;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
     [thread serializeWithBinaryEncoder:anEncoder];
@@ -68,7 +68,7 @@
 
 - (void) testThreadSerializationAndEquality
 {
-    CSGThread* thread = testhelper.randomThread;
+    CSGThread* thread = testhelper.generateThread;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
     [thread serializeWithBinaryEncoder:anEncoder];
@@ -117,7 +117,7 @@
 
 -(void) testDesignCellSerialization
 {
-    CSGDesignCell* cell = testhelper.randomDesignCell;
+    CSGDesignCell* cell = testhelper.generateDesignCell;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:cell.serializedLength];
     [cell serializeWithBinaryEncoder:anEncoder];
@@ -135,7 +135,7 @@
 
 - (void) testDesignCellCoordinateSerialization
 {
-    CSGDesignPoint *coordinate = testhelper.randomDesignCoordinate;
+    CSGDesignPoint *coordinate = testhelper.generateDesignCoordinate;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:coordinate.serializedLength];
     [coordinate serializeWithBinaryEncoder:anEncoder];
@@ -153,7 +153,7 @@
 
 -(void) testDesignPointsSerialization
 {
-    CSGDesignPoints *points = testhelper.randomDesignPoints;
+    CSGDesignPoints *points = testhelper.generateDesignPoints;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:points.serializedLength];
     [points serializeWithBinaryEncoder:anEncoder];
@@ -172,7 +172,7 @@
 
 -(void) testBackStitchSerialization
 {
-    CSGBackStitch* stitch = testhelper.randomBackStitch;
+    CSGBackStitch* stitch = testhelper.generateBackStitch;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
     [stitch serializeWithBinaryEncoder:anEncoder];
@@ -191,7 +191,7 @@
 
 -(void) testStraightStitchSerialization
 {
-    CSGStraightStitch* stitch = testhelper.randomStraightStitch;
+    CSGStraightStitch* stitch = testhelper.generateStraightStitch;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
     [stitch serializeWithBinaryEncoder:anEncoder];
@@ -210,7 +210,7 @@
 
 -(void) testDesignSerialization
 {
-    CSGDesign* design = testhelper.randomDesign;
+    CSGDesign* design = testhelper.generateDesign;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:design.serializedLength];
     [design serializeWithBinaryEncoder:anEncoder];

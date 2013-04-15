@@ -27,15 +27,15 @@
 }
 
 - (id) init;
-- (CSGThread*) randomThread;
-- (CSGThreadInBlend*) randomThreadInBlend;
+- (CSGThread*) generateThread;
+- (CSGThreadInBlend*) generateThreadInBlend;
 - (CSGStitchInCell*) randomStitchInCell;
-- (CSGDesignCell*) randomDesignCell;
-- (CSGThreadsBlend*) randomThreadsBlend;
-- (CSGDesignPoint*) randomDesignCoordinate;
-- (CSGDesignPoints*) randomDesignPoints;
-- (CSGBackStitch*) randomBackStitch;
-- (CSGStraightStitch*) randomStraightStitch;
-- (CSGDesign*) randomDesign;
+- (CSGDesignCell*) generateDesignCell;
+- (CSGThreadsBlend*) generateThreadsBlend;
+- (CSGDesignPoint*) generateDesignCoordinate;
+- (CSGDesignPoints*) generateDesignPoints;
+- (CSGBackStitch*) generateBackStitch;
+- (CSGStraightStitch*) generateStraightStitch;
+- (CSGDesign*) generateDesign;
 
 @end
