@@ -217,15 +217,18 @@
 
 -(void) testDesignSerialization
 {
+    NSLog(@"------------------------");
+    NSDate *tStart = [NSDate date];
+    
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGDesign* design = [testhelper generateDesign: registry];
-    
-    NSDate *tStart = [NSDate date];
+    NSDate *tStartSerialization = [NSDate date];
+    NSLog(@"%f seconds to generate design", [tStartSerialization timeIntervalSinceDate:tStart]);
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:design.serializedLength];
     
     NSDate *tBufferPrepared = [NSDate date];
-    NSLog(@"%f seconds to prepare buffer", [tBufferPrepared timeIntervalSinceDate:tStart]);
+    NSLog(@"%f seconds to prepare buffer", [tBufferPrepared timeIntervalSinceDate:tStartSerialization]);
     
     [design serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
@@ -243,16 +246,21 @@
     NSDate *tDeserialized = [NSDate date];
     NSLog(@"%f seconds to deserialize", [tDeserialized timeIntervalSinceDate:tBufferCopied]);
     
-    if (design.hash != design1.hash || ![design isEqual:design1])
+    if (design.hash != design1.hash)
     {
         STFail(@"Design serialization and equality");
     }
     
+    NSDate *tHashCompared = [NSDate date];
+    NSLog(@"%f seconds to compare hash", [tHashCompared timeIntervalSinceDate:tDeserialized]);
+    
+    if (![design isEqual:design1])
+    {
+        STFail(@"Design serialization and equality");
+    }
     NSDate *tCompared = [NSDate date];
-    NSLog(@"%f seconds to compare", [tCompared timeIntervalSinceDate:tDeserialized]);
-
-    int i = 0;
-    ++i;
+    NSLog(@"%f seconds to check equality", [tCompared timeIntervalSinceDate:tHashCompared]);
+    NSLog(@"------------------------");
 }
 
 
