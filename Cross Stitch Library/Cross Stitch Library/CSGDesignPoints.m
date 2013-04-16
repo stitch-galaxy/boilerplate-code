@@ -92,13 +92,13 @@
     return size;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
 {
     uint32_t* buf = [anEncoder modifyBytes:sizeof(uint32_t)];
     *buf = points.count;
     for(CSGDesignPoint *coord in points)
     {
-        [coord serializeWithBinaryEncoder:anEncoder];
+        [coord serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
 }
 

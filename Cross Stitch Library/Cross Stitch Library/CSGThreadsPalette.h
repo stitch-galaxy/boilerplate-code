@@ -27,7 +27,7 @@
 - (CSGThread *) threadAtIndex: (uint32_t) anIndex;
 
 - (size_t) serializedLength;
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder;
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 - (id) initWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectRegistry: (CSGObjectsRegistry*) registry;
 
 @end

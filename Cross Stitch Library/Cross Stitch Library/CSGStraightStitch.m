@@ -80,10 +80,10 @@
     return threadBlend.serializedLength + curve.serializedLength;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
 {
-    [threadBlend serializeWithBinaryEncoder:anEncoder];
-    [curve serializeWithBinaryEncoder:anEncoder];
+    [threadBlend serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    [curve serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
 }
 
 + (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;

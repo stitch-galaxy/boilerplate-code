@@ -113,7 +113,7 @@
     return size;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
 {
     uint32_t *buf = [anEncoder modifyBytes:sizeof(uint32_t)];
     *buf = threadMaterials.count;
@@ -123,7 +123,7 @@
         uint32_t *indexBuf = [anEncoder modifyBytes:sizeof(uint32_t)];
         *indexBuf = [self threadIndex: tMat];
         
-        [tMat serializeWithBinaryEncoder:anEncoder];
+        [tMat serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
 }
 

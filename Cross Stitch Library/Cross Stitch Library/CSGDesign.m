@@ -143,7 +143,7 @@
     return size;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
 {
     uint32_t *pWidth = [anEncoder modifyBytes:sizeof(uint32_t)];
     *pWidth = width;
@@ -151,21 +151,21 @@
     *pHeight = height;
     for(CSGDesignCell* cell in cells)
     {
-        [cell serializeWithBinaryEncoder:anEncoder];
+        [cell serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     
     uint32_t *pBackStitchesNum = [anEncoder modifyBytes:sizeof(uint32_t)];
     *pBackStitchesNum = (uint32_t) backStitches.count;
     for(CSGBackStitch* stitch in backStitches)
     {
-        [stitch serializeWithBinaryEncoder:anEncoder];
+        [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     
     uint32_t *pStraightStitchesNum = [anEncoder modifyBytes:sizeof(uint32_t)];
     *pStraightStitchesNum = (uint32_t) straightStitches.count;
     for(CSGStraightStitch* stitch in straightStitches)
     {
-        [stitch serializeWithBinaryEncoder:anEncoder];
+        [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
 }
 

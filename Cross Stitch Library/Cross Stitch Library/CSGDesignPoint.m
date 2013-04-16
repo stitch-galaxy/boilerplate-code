@@ -117,7 +117,7 @@
     return sizeof(uint32_t) * 2 + sizeof(uint8_t) * 3;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
 {
     uint32_t* buf = [anEncoder modifyBytes:sizeof(uint32_t)];
     *buf = x;

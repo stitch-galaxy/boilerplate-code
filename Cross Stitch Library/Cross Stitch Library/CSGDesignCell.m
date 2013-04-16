@@ -485,156 +485,156 @@ typedef enum
     return length;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
 {
     if(self.crossStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_CROSS;
-        [crossStitch serializeWithBinaryEncoder:anEncoder];
+        [crossStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     //Petite
     if(self.leftUpPetiteStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_LEFT_UP_PETITE;
-        [leftUpPetiteStitch serializeWithBinaryEncoder:anEncoder];
+        [leftUpPetiteStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.leftDownPetiteStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_LEFT_DOWN_PETITE;
-        [leftDownPetiteStitch serializeWithBinaryEncoder:anEncoder];
+        [leftDownPetiteStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.rightUpPetiteStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_RIGHT_UP_PETITE;
-        [rightUpPetiteStitch serializeWithBinaryEncoder:anEncoder];
+        [rightUpPetiteStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.rightDownPetiteStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_RIGHT_DOWN_PETITE;
-        [rightDownPetiteStitch serializeWithBinaryEncoder:anEncoder];
+        [rightDownPetiteStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     //Quarter
     if(self.leftUpQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_LEFT_UP_QUARTER;
-        [leftUpQuarterStitch serializeWithBinaryEncoder:anEncoder];
+        [leftUpQuarterStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.leftDownQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_LEFT_DOWN_QUARTER;
-        [leftDownQuarterStitch serializeWithBinaryEncoder:anEncoder];
+        [leftDownQuarterStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.rightUpQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_RIGHT_UP_QUARTER;
-        [rightUpQuarterStitch serializeWithBinaryEncoder:anEncoder];
+        [rightUpQuarterStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.rightDownQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_RIGHT_DOWN_QUARTER;
-        [rightDownQuarterStitch serializeWithBinaryEncoder:anEncoder];
+        [rightDownQuarterStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     //ThreeQuarter stitches
     if(self.leftUpThreeQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_LEFT_UP_THREE_QUARTER;
-        [leftUpThreeQuarterStitch serializeWithBinaryEncoder:anEncoder];
+        [leftUpThreeQuarterStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.leftDownThreeQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_LEFT_DOWN_THREE_QUARTER;
-        [leftDownThreeQuarterStitch serializeWithBinaryEncoder:anEncoder];
+        [leftDownThreeQuarterStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.rightUpThreeQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_RIGHT_UP_THREE_QUARTER;
-        [rightUpThreeQuarterStitch serializeWithBinaryEncoder:anEncoder];
+        [rightUpThreeQuarterStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.rightDownThreeQuarterStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_RIGHT_DOWN_THREE_QUARTER;
-        [rightDownThreeQuarterStitch serializeWithBinaryEncoder:anEncoder];
+        [rightDownThreeQuarterStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     //HalfStitches
     if(self.slashHalfStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_SLASH_HALF;
-        [slashHalfStitch serializeWithBinaryEncoder:anEncoder];
+        [slashHalfStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.backslashHalfStitch)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_BACKSLASH_HALF;
-        [backslashHalfStitch serializeWithBinaryEncoder:anEncoder];
+        [backslashHalfStitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     //French knots
     if(self.frenchKnot00)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_00;
-        [frenchKnot00 serializeWithBinaryEncoder:anEncoder];
+        [frenchKnot00 serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.frenchKnot01)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_01;
-        [frenchKnot01 serializeWithBinaryEncoder:anEncoder];
+        [frenchKnot01 serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.frenchKnot02)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_02;
-        [frenchKnot02 serializeWithBinaryEncoder:anEncoder];
+        [frenchKnot02 serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.frenchKnot10)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_10;
-        [frenchKnot10 serializeWithBinaryEncoder:anEncoder];
+        [frenchKnot10 serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.frenchKnot11)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_11;
-        [frenchKnot11 serializeWithBinaryEncoder:anEncoder];
+        [frenchKnot11 serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.frenchKnot12)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_12;
-        [frenchKnot12 serializeWithBinaryEncoder:anEncoder];
+        [frenchKnot12 serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.frenchKnot20)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_20;
-        [frenchKnot20 serializeWithBinaryEncoder:anEncoder];
+        [frenchKnot20 serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.frenchKnot21)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_21;
-        [frenchKnot21 serializeWithBinaryEncoder:anEncoder];
+        [frenchKnot21 serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     if(self.frenchKnot22)
     {
         uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];
         *buf = CSG_STITCH_IN_CELL_FRENCH_KNOT_22;
-        [frenchKnot22 serializeWithBinaryEncoder:anEncoder];
+        [frenchKnot22 serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     //Encode terminal 0
     uint8_t *buf = [anEncoder modifyBytes:sizeof(uint8_t)];

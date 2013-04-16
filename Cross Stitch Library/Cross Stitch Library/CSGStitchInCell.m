@@ -75,9 +75,9 @@
     return threadsBlend.serializedLength;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
 {
-    [threadsBlend serializeWithBinaryEncoder:anEncoder];
+    [threadsBlend serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
 }
 
 + (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;

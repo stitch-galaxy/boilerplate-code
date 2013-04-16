@@ -76,7 +76,7 @@
     return sizeof(uint8_t) * 3;
 }
 
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder
+- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
 {
     const CGFloat *components = CGColorGetComponents(CSG_color.CGColor);
     uint8_t red = lroundf(components[0] * 255.0);

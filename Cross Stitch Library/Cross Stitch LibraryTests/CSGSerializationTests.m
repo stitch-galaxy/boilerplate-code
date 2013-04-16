@@ -31,14 +31,16 @@
 
 -(void) testThreadsBlendSerializationAndEquality
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    
     CSGThreadsBlend* blend = testhelper.generateThreadsBlend;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:blend.serializedLength];
-    [blend serializeWithBinaryEncoder:anEncoder];
+    [blend serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    
     CSGThreadsBlend* blend1 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
     
     if (blend.hash != blend1.hash || ![blend isEqual:blend1])
@@ -49,13 +51,13 @@
 
 - (void) testThreadInBlendSerializationAndEquality
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    
     CSGThreadInBlend* thread = testhelper.generateThreadInBlend;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
-    [thread serializeWithBinaryEncoder:anEncoder];
+    [thread serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
-    
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
     CSGThreadInBlend* thread1 = [CSGThreadInBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
@@ -68,12 +70,13 @@
 
 - (void) testThreadSerializationAndEquality
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGThread* thread = testhelper.generateThread;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
-    [thread serializeWithBinaryEncoder:anEncoder];
+    [thread serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
     CSGThread* thread1 = [CSGThread deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
@@ -98,12 +101,12 @@
 
 -(void) testStitchInCellSerialization
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGStitchInCell* stitch = testhelper.randomStitchInCell;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
-    [stitch serializeWithBinaryEncoder:anEncoder];
+    [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
     CSGStitchInCell* stitch1 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
@@ -117,12 +120,13 @@
 
 -(void) testDesignCellSerialization
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGDesignCell* cell = testhelper.generateDesignCell;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:cell.serializedLength];
-    [cell serializeWithBinaryEncoder:anEncoder];
+    [cell serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
     CSGDesignCell* cell1 = [CSGDesignCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
@@ -135,12 +139,13 @@
 
 - (void) testDesignCellCoordinateSerialization
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGDesignPoint *coordinate = testhelper.generateDesignCoordinate;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:coordinate.serializedLength];
-    [coordinate serializeWithBinaryEncoder:anEncoder];
+    [coordinate serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
     CSGDesignPoint* coordinate1 = [CSGDesignPoint deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];    
@@ -153,12 +158,13 @@
 
 -(void) testDesignPointsSerialization
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGDesignPoints *points = testhelper.generateDesignPoints;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:points.serializedLength];
-    [points serializeWithBinaryEncoder:anEncoder];
+    [points serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
     CSGDesignPoints* points1 = [CSGDesignPoints deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];    
@@ -172,12 +178,13 @@
 
 -(void) testBackStitchSerialization
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBackStitch* stitch = testhelper.generateBackStitch;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
-    [stitch serializeWithBinaryEncoder:anEncoder];
+    [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
     CSGBackStitch* stitch1 = [CSGBackStitch deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
@@ -191,12 +198,12 @@
 
 -(void) testStraightStitchSerialization
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGStraightStitch* stitch = testhelper.generateStraightStitch;
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
-    [stitch serializeWithBinaryEncoder:anEncoder];
+    [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
     CSGStraightStitch* stitch1 = [CSGStraightStitch deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
@@ -210,6 +217,7 @@
 
 -(void) testDesignSerialization
 {
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGDesign* design = testhelper.generateDesign;
     
     NSDate *tStart = [NSDate date];
@@ -219,13 +227,12 @@
     NSDate *tBufferPrepared = [NSDate date];
     NSLog(@"%f seconds to prepare buffer", [tBufferPrepared timeIntervalSinceDate:tStart]);
     
-    [design serializeWithBinaryEncoder:anEncoder];
+    [design serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     
     NSDate *tSerialized = [NSDate date];
     
     NSLog(@"%f seconds to serilize", [tSerialized timeIntervalSinceDate:tBufferPrepared]);
-    
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+     
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
     NSDate *tBufferCopied = [NSDate date];
