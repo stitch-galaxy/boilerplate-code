@@ -59,27 +59,27 @@
     return self;
 }
 
-- (CSGThread*) generateThread
+- (CSGThread*) generateThread: (CSGObjectsRegistry*) registry;
 {
     return [threads objectAtIndex:[CSGDesignGenerator randomIndexFor:DESIGN_COLORS_NUMBER]];
 }
 
-- (CSGThreadInBlend*) generateThreadInBlend
+- (CSGThreadInBlend*) generateThreadInBlend: (CSGObjectsRegistry*) registry;
 {
     uint32_t flossesCount = [CSGDesignGenerator randomIndexFor: DESIGN_MAX_FLOSSES_OF_THREAD] + 1;
-    CSGThread* thread = self.generateThread;
+    CSGThread* thread = [self generateThread: registry];
     CSGThreadInBlend *threadInBlend = [[CSGThreadInBlend alloc] initWithThread:thread FlossCount: flossesCount];
     return threadInBlend;
 }
 
-- (CSGThreadsBlend*) generateThreadsBlend
+- (CSGThreadsBlend*) generateThreadsBlend: (CSGObjectsRegistry*) registry;
 {
     NSMutableArray *aThreads = [[NSMutableArray alloc] init];
     
     int threadsCount = [CSGDesignGenerator randomIndexFor: DESIGN_THREADS_IN_BLEND_MAX_NUMBER] + 1;
     for (int i = 0; i < threadsCount; ++i)
     {
-        CSGThreadInBlend* threadInBlend = self.generateThreadInBlend;
+        CSGThreadInBlend* threadInBlend = [self generateThreadInBlend: registry];
         [aThreads addObject:threadInBlend];
     }
     CSGThreadsBlend* blend = [[CSGThreadsBlend alloc] initWithThreadsInBlend: aThreads];
@@ -87,167 +87,167 @@
 }
 
 
-- (CSGStitchInCell*) randomStitchInCell
+- (CSGStitchInCell*) generateStitchInCell: (CSGObjectsRegistry*) registry;
 {
-    return [[CSGStitchInCell alloc] initWithThreadsBlend:self.generateThreadsBlend];
+    return [[CSGStitchInCell alloc] initWithThreadsBlend:[self generateThreadsBlend: registry]];
 }
 
-- (CSGDesignCell*) generateDesignCell
+- (CSGDesignCell*) generateDesignCell: (CSGObjectsRegistry*) registry;
 {
     CSGDesignCell* designCell = [[CSGDesignCell alloc] init];
     //Cross
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.crossStitch = self.randomStitchInCell;
+        designCell.crossStitch = [self generateStitchInCell: registry];
     }
     //Petites
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.leftUpPetiteStitch = self.randomStitchInCell;
+        designCell.leftUpPetiteStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.leftDownPetiteStitch = self.randomStitchInCell;
+        designCell.leftDownPetiteStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.rightUpPetiteStitch = self.randomStitchInCell;
+        designCell.rightUpPetiteStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.rightDownPetiteStitch = self.randomStitchInCell;
+        designCell.rightDownPetiteStitch = [self generateStitchInCell: registry];
     }
     //Quarter stitches
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.leftUpQuarterStitch = self.randomStitchInCell;
+        designCell.leftUpQuarterStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.leftDownQuarterStitch = self.randomStitchInCell;
+        designCell.leftDownQuarterStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.rightUpQuarterStitch = self.randomStitchInCell;
+        designCell.rightUpQuarterStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.rightDownQuarterStitch = self.randomStitchInCell;
+        designCell.rightDownQuarterStitch = [self generateStitchInCell: registry];
     }
     //ThreeQuarter stitches
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.leftUpThreeQuarterStitch = self.randomStitchInCell;
+        designCell.leftUpThreeQuarterStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.leftDownThreeQuarterStitch = self.randomStitchInCell;
+        designCell.leftDownThreeQuarterStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.rightUpThreeQuarterStitch = self.randomStitchInCell;
+        designCell.rightUpThreeQuarterStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.rightDownThreeQuarterStitch = self.randomStitchInCell;
+        designCell.rightDownThreeQuarterStitch = [self generateStitchInCell: registry];
     }
     //HalfStitches
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.slashHalfStitch = self.randomStitchInCell;
+        designCell.slashHalfStitch = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.backslashHalfStitch = self.randomStitchInCell;
+        designCell.backslashHalfStitch = [self generateStitchInCell: registry];
     }
     //French knots
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.frenchKnot00 = self.randomStitchInCell;
+        designCell.frenchKnot00 = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.frenchKnot01 = self.randomStitchInCell;
+        designCell.frenchKnot01 = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.frenchKnot02 = self.randomStitchInCell;
+        designCell.frenchKnot02 = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.frenchKnot10 = self.randomStitchInCell;
+        designCell.frenchKnot10 = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.frenchKnot11 = self.randomStitchInCell;
+        designCell.frenchKnot11 = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.frenchKnot12 = self.randomStitchInCell;
+        designCell.frenchKnot12 = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.frenchKnot20 = self.randomStitchInCell;
+        designCell.frenchKnot20 = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.frenchKnot21 = self.randomStitchInCell;
+        designCell.frenchKnot21 = [self generateStitchInCell: registry];
     }
     if (CSGDesignGenerator.randomBool)
     {
-        designCell.frenchKnot22 = self.randomStitchInCell;
+        designCell.frenchKnot22 = [self generateStitchInCell: registry];
     }
     
     return designCell;
 }
 
-- (CSGDesignPoint*) generateDesignCoordinate
+- (CSGDesignPoint*) generateDesignCoordinate: (CSGObjectsRegistry*) registry;
 {
     CSGDesignPoint *coordinate = [[CSGDesignPoint alloc] initWithX:[CSGDesignGenerator randomIndexFor: DESIGN_WIDTH] Y:[CSGDesignGenerator randomIndexFor: DESIGN_HEIGHT] CellX:[CSGDesignGenerator randomIndexFor: DESIGN_CELL_GRANULARITY] CellY:[CSGDesignGenerator randomIndexFor: DESIGN_CELL_GRANULARITY] CellDenominator:DESIGN_CELL_GRANULARITY];
     return coordinate;
 }
 
--(CSGDesignPoints*) generateDesignPoints
+-(CSGDesignPoints*) generateDesignPoints: (CSGObjectsRegistry*) registry;
 {
     NSMutableArray* points = [[NSMutableArray alloc] init];
     uint32_t numPoints = [CSGDesignGenerator randomIndexFor: DESIGN_POINTS_MAX_NUMBER] + 1;
     for(int i = 0; i < numPoints; ++i)
     {
-        [points addObject:[self generateDesignCoordinate]];
+        [points addObject:[self generateDesignCoordinate: registry]];
     }
     return [[CSGDesignPoints alloc] initWithPoints:points];
 }
 
-- (CSGBackStitch*) generateBackStitch
+- (CSGBackStitch*) generateBackStitch: (CSGObjectsRegistry*) registry;
 {
-    CSGThreadsBlend* blend = [self generateThreadsBlend];
-    CSGDesignPoints* curve = [self generateDesignPoints];
+    CSGThreadsBlend* blend = [self generateThreadsBlend:registry];
+    CSGDesignPoints* curve = [self generateDesignPoints:registry];
     return [[CSGBackStitch alloc] initWithThreadsBlend:blend Curve:curve];
 }
 
-- (CSGStraightStitch*) generateStraightStitch
+- (CSGStraightStitch*) generateStraightStitch: (CSGObjectsRegistry*) registry;
 {
-    CSGThreadsBlend* blend = [self generateThreadsBlend];
-    CSGDesignPoints* curve = [self generateDesignPoints];
+    CSGThreadsBlend* blend = [self generateThreadsBlend:registry];
+    CSGDesignPoints* curve = [self generateDesignPoints:registry];
     return [[CSGStraightStitch alloc] initWithThreadsBlend:blend Curve:curve];
 }
 
-- (CSGDesign*) generateDesign
+- (CSGDesign*) generateDesign: (CSGObjectsRegistry*) registry;
 {
     NSMutableArray *aBackStitches = [[NSMutableArray alloc] init];
     for(uint32_t i = 0; i < DESIGN_BACK_STITCHES; ++i)
     {
-        [aBackStitches addObject: [self generateBackStitch]];
+        [aBackStitches addObject: [self generateBackStitch:registry]];
     }
     NSMutableArray *aStraightStitches = [[NSMutableArray alloc] init];
     for(uint32_t i = 0; i < DESIGN_STRAIGTH_STITCHES; ++i)
     {
-        [aStraightStitches addObject: [self generateStraightStitch]];
+        [aStraightStitches addObject: [self generateStraightStitch:registry]];
     }
     NSMutableArray *aCells = [[NSMutableArray alloc] init];
     for(uint32_t i = 0; i < DESIGN_WIDTH * DESIGN_HEIGHT; ++i)
     {
-        [aCells addObject: [self generateDesignCell]];
+        [aCells addObject: [self generateDesignCell:registry]];
     }
     CSGDesign* design = [[CSGDesign alloc] initWithWidth:DESIGN_WIDTH Height:DESIGN_HEIGHT Cells:aCells BackStitches:aBackStitches StraightStitches:aStraightStitches];
     return design;

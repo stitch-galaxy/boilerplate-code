@@ -11,7 +11,6 @@
 #import "CSGBackStitch.h"
 #import "CSGStraightStitch.h"
 #import "CSGDesignCell.h"
-#import "CSGThreadsPalette.h"
 
 @protocol CSGDesign <NSObject>
 

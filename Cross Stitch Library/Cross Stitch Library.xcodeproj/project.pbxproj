@@ -11,7 +11,6 @@
 		EC2F4CA017172EB800A6EB93 /* CSGObjectsRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2F4C9F17172EB800A6EB93 /* CSGObjectsRegistry.m */; };
 		EC869B93171BE7F000DA8AE4 /* CSGObjectsSetInMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = EC869B92171BE7F000DA8AE4 /* CSGObjectsSetInMemory.m */; };
 		EC869B96171BEACD00DA8AE4 /* CSGDesignGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = EC869B95171BEACD00DA8AE4 /* CSGDesignGenerator.m */; };
-		EC92082316DE2F6B000B14A4 /* CSGThreadsPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = EC92082216DE2F6B000B14A4 /* CSGThreadsPalette.m */; };
 		ECB42D7D1715ECF1000C8037 /* CSGStraightStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB42D7C1715ECF1000C8037 /* CSGStraightStitch.m */; };
 		ECB42D801715ED90000C8037 /* CSGDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB42D7F1715ED90000C8037 /* CSGDesign.m */; };
 		ECC1F19316D2C455005C847B /* ArtWorkMaterials.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */; };
@@ -62,8 +61,6 @@
 		EC869B92171BE7F000DA8AE4 /* CSGObjectsSetInMemory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGObjectsSetInMemory.m; sourceTree = "<group>"; };
 		EC869B94171BEACD00DA8AE4 /* CSGDesignGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignGenerator.h; sourceTree = "<group>"; };
 		EC869B95171BEACD00DA8AE4 /* CSGDesignGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesignGenerator.m; sourceTree = "<group>"; };
-		EC92082116DE2F6B000B14A4 /* CSGThreadsPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGThreadsPalette.h; sourceTree = "<group>"; };
-		EC92082216DE2F6B000B14A4 /* CSGThreadsPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGThreadsPalette.m; sourceTree = "<group>"; };
 		ECB42D7B1715ECF1000C8037 /* CSGStraightStitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGStraightStitch.h; sourceTree = "<group>"; };
 		ECB42D7C1715ECF1000C8037 /* CSGStraightStitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGStraightStitch.m; sourceTree = "<group>"; };
 		ECB42D7E1715ED90000C8037 /* CSGDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesign.h; sourceTree = "<group>"; };
@@ -158,8 +155,6 @@
 			children = (
 				ECCB3BA416D50348002C4033 /* CSGThread.h */,
 				ECCB3BA516D50348002C4033 /* CSGThread.m */,
-				EC92082116DE2F6B000B14A4 /* CSGThreadsPalette.h */,
-				EC92082216DE2F6B000B14A4 /* CSGThreadsPalette.m */,
 			);
 			name = Materials;
 			sourceTree = "<group>";
@@ -425,7 +420,6 @@
 				ECC1F19316D2C455005C847B /* ArtWorkMaterials.m in Sources */,
 				ECCB3BA616D50348002C4033 /* CSGThread.m in Sources */,
 				EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */,
-				EC92082316DE2F6B000B14A4 /* CSGThreadsPalette.m in Sources */,
 				ECCFD9F216F0F903004FE762 /* CSGThreadsBlend.m in Sources */,
 				ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */,
 				ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */,

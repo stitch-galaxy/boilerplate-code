@@ -10,7 +10,6 @@
 #import <stdint.h>
 
 #import "CSGBinaryCoding.h"
-#import "CSGThreadsPalette.h"
 #import "CSGThread.h"
 
 @protocol CSGThreadInBlend <NSObject>

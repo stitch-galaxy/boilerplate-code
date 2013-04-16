@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
 #import "CSGThread.h"
-#import "CSGThreadsPalette.h"
 #import "CSGThreadsBlend.h"
 #import "CSGBinaryCoding.h"
 #import "CSGStitchInCell.h"
@@ -27,15 +25,15 @@
 }
 
 - (id) init;
-- (CSGThread*) generateThread;
-- (CSGThreadInBlend*) generateThreadInBlend;
-- (CSGStitchInCell*) randomStitchInCell;
-- (CSGDesignCell*) generateDesignCell;
-- (CSGThreadsBlend*) generateThreadsBlend;
-- (CSGDesignPoint*) generateDesignCoordinate;
-- (CSGDesignPoints*) generateDesignPoints;
-- (CSGBackStitch*) generateBackStitch;
-- (CSGStraightStitch*) generateStraightStitch;
-- (CSGDesign*) generateDesign;
+- (CSGThread*) generateThread: (CSGObjectsRegistry*) registry;
+- (CSGThreadInBlend*) generateThreadInBlend: (CSGObjectsRegistry*) registry;
+- (CSGStitchInCell*) generateStitchInCell: (CSGObjectsRegistry*) registry;
+- (CSGDesignCell*) generateDesignCell: (CSGObjectsRegistry*) registry;
+- (CSGThreadsBlend*) generateThreadsBlend: (CSGObjectsRegistry*) registry;
+- (CSGDesignPoint*) generateDesignCoordinate: (CSGObjectsRegistry*) registry;
+- (CSGDesignPoints*) generateDesignPoints: (CSGObjectsRegistry*) registry;
+- (CSGBackStitch*) generateBackStitch: (CSGObjectsRegistry*) registry;
+- (CSGStraightStitch*) generateStraightStitch: (CSGObjectsRegistry*) registry;
+- (CSGDesign*) generateDesign: (CSGObjectsRegistry*) registry;
 
 @end

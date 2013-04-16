@@ -33,7 +33,7 @@
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     
-    CSGThreadsBlend* blend = testhelper.generateThreadsBlend;
+    CSGThreadsBlend* blend = [testhelper generateThreadsBlend: registry];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:blend.serializedLength];
     [blend serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
@@ -53,7 +53,7 @@
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     
-    CSGThreadInBlend* thread = testhelper.generateThreadInBlend;
+    CSGThreadInBlend* thread = [testhelper generateThreadInBlend: registry];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
     [thread serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
@@ -71,7 +71,7 @@
 - (void) testThreadSerializationAndEquality
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGThread* thread = testhelper.generateThread;
+    CSGThread* thread = [testhelper generateThread:registry];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
     [thread serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
@@ -102,7 +102,7 @@
 -(void) testStitchInCellSerialization
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGStitchInCell* stitch = testhelper.randomStitchInCell;
+    CSGStitchInCell* stitch = [testhelper generateStitchInCell:registry];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
     [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
@@ -121,7 +121,7 @@
 -(void) testDesignCellSerialization
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGDesignCell* cell = testhelper.generateDesignCell;
+    CSGDesignCell* cell = [testhelper generateDesignCell:registry];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:cell.serializedLength];
     [cell serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
@@ -140,7 +140,7 @@
 - (void) testDesignCellCoordinateSerialization
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGDesignPoint *coordinate = testhelper.generateDesignCoordinate;
+    CSGDesignPoint *coordinate = [testhelper generateDesignCoordinate: registry];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:coordinate.serializedLength];
     [coordinate serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
@@ -159,7 +159,7 @@
 -(void) testDesignPointsSerialization
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGDesignPoints *points = testhelper.generateDesignPoints;
+    CSGDesignPoints *points = [testhelper generateDesignPoints: registry];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:points.serializedLength];
     [points serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
@@ -179,7 +179,7 @@
 -(void) testBackStitchSerialization
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGBackStitch* stitch = testhelper.generateBackStitch;
+    CSGBackStitch* stitch = [testhelper generateBackStitch: registry];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
     [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
@@ -199,7 +199,7 @@
 -(void) testStraightStitchSerialization
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGStraightStitch* stitch = testhelper.generateStraightStitch;
+    CSGStraightStitch* stitch = [testhelper generateStraightStitch: registry];
     
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
     [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
@@ -218,7 +218,7 @@
 -(void) testDesignSerialization
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGDesign* design = testhelper.generateDesign;
+    CSGDesign* design = [testhelper generateDesign: registry];
     
     NSDate *tStart = [NSDate date];
     
