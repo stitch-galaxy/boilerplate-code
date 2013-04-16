@@ -30,7 +30,7 @@
 }
 
 
-- (CSGThread*) buildThreadWithColor: (UIColor*) aColor
+- (CSGThread*) getThreadWithColor: (UIColor*) aColor
 {
     tmpThread = [tmpThread initWithColor:aColor];
     CSGThread* aThread = [threadsSet member:tmpThread];

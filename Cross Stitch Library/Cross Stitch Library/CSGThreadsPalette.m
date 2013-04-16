@@ -50,7 +50,7 @@
         for(CSGThread* aThMat in threadMaterials)
         {
             if ([aThMat isEqual:aThreadMaterial])
-            {
+            {                                                                                                   
                 return aThMat;
             }
         }

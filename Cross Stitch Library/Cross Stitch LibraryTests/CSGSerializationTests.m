@@ -212,17 +212,40 @@
 {
     CSGDesign* design = testhelper.generateDesign;
     
+    NSDate *tStart = [NSDate date];
+    
     CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:design.serializedLength];
+    
+    NSDate *tBufferPrepared = [NSDate date];
+    NSLog(@"%f seconds to prepare buffer", [tBufferPrepared timeIntervalSinceDate:tStart]);
+    
     [design serializeWithBinaryEncoder:anEncoder];
+    
+    NSDate *tSerialized = [NSDate date];
+    
+    NSLog(@"%f seconds to serilize", [tSerialized timeIntervalSinceDate:tBufferPrepared]);
     
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
     
+    NSDate *tBufferCopied = [NSDate date];
+    NSLog(@"%f seconds to copy buffer", [tBufferCopied timeIntervalSinceDate:tSerialized]);
+    
     CSGDesign* design1 = [CSGDesign deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    
+    NSDate *tDeserialized = [NSDate date];
+    NSLog(@"%f seconds to deserialize", [tDeserialized timeIntervalSinceDate:tBufferCopied]);
+    
     if (design.hash != design1.hash || ![design isEqual:design1])
     {
         STFail(@"Design serialization and equality");
     }
+    
+    NSDate *tCompared = [NSDate date];
+    NSLog(@"%f seconds to compare", [tCompared timeIntervalSinceDate:tDeserialized]);
+
+    int i = 0;
+    ++i;
 }
 
 

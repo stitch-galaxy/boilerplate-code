@@ -107,8 +107,8 @@
     CGFloat green = (CGFloat) iGreen / 255.0;
     CGFloat blue = (CGFloat) iBlue / 255.0;
     UIColor* color = [[UIColor alloc] initWithRed: red green: green blue: blue alpha: 1.0];
-    CSGThread* thread = [[CSGThread alloc] initWithColor: color];
-    return [registry getThread: thread];
+    
+    return [registry getThreadWithColor: color];
 }
 
 @end
