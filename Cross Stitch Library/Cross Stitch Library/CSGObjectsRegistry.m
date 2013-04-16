@@ -42,10 +42,16 @@
     return aThread;
 }
 
-- (CSGThread*) getThread: (CSGThread*) anInstance
+- (CSGThread*) getThreadByIndex: (uint32_t) anIndex
 {
-    return anInstance;
+    return [threadsSet getObjectByIndex: anIndex];
 }
+
+- (uint32_t) getThreadIndex: (CSGThread*) aThread
+{
+    return [threadsSet getIndexByObject: aThread];
+}
+
 
 - (CSGThreadInBlend*) getThreadInBlend: (CSGThreadInBlend*) anInstance
 {

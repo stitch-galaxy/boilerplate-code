@@ -215,6 +215,7 @@
 - (size_t) serializedLength
 {
     size_t result = sizeof(uint8_t);
+    
     for(CSGThreadInBlend *thread in CSG_threads)
     {
         result += [thread serializedLength];
@@ -238,7 +239,6 @@
     const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
     uint8_t length = *buf;
     
-        
     NSMutableArray* threadsInBlend = [[NSMutableArray alloc] init];
     for(int i = 0; i < length; ++i)
     {

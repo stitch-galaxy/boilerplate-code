@@ -53,7 +53,7 @@
             
             UIColor *color = [[UIColor alloc] initWithRed:red green:green blue:blue alpha:1.0];
             
-            [threads addObject: [[CSGThread alloc] initWithColor: color]];
+            [threads addObject: color];
         }
     }
     return self;
@@ -61,7 +61,7 @@
 
 - (CSGThread*) generateThread: (CSGObjectsRegistry*) registry;
 {
-    return [threads objectAtIndex:[CSGDesignGenerator randomIndexFor:DESIGN_COLORS_NUMBER]];
+    return [registry getThreadWithColor:[threads objectAtIndex:[CSGDesignGenerator randomIndexFor:DESIGN_COLORS_NUMBER]]];
 }
 
 - (CSGThreadInBlend*) generateThreadInBlend: (CSGObjectsRegistry*) registry;

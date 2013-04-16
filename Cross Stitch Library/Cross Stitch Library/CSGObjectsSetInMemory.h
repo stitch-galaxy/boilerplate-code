@@ -14,6 +14,12 @@
 
 - (void) putObject: (id) anObject;
 
+- (id) getObjectByIndex: (uint32_t) anIndex;
+
+-(uint32_t) getIndexByObject: (id) anObject;
+
 @property (nonatomic, retain) NSHashTable* objectsSet;
+@property (nonatomic, retain) NSMutableArray* objectsArray;
+@property (nonatomic, retain) NSMapTable* objectToIndexMap;
 
 @end
