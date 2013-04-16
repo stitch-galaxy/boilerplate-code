@@ -97,12 +97,15 @@
 
 - (size_t) serializedLength
 {
-    return CSG_thread.serializedLength + sizeof(uint8_t);
+    return sizeof(uint32_t) + sizeof(uint8_t);
+    //return CSG_thread.serializedLength + sizeof(uint8_t);
 }
 
 - (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
 {
-    [CSG_thread serializeWithBinaryEncoder: anEncoder ObjectsRegistry:registry];
+    uint32_t *tIndex = [anEncoder modifyBytes: sizeof(uint32_t)];
+    *tIndex = [registry getThreadIndex:CSG_thread];
+    //[CSG_thread serializeWithBinaryEncoder: anEncoder ObjectsRegistry:registry];
         
     uint8_t *buf = [anEncoder modifyBytes: sizeof(uint8_t)];
     *buf = CSG_flossCount;
@@ -110,7 +113,9 @@
 
 + (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 {
-    CSGThread *thread = [CSGThread deserializeWithBinaryDecoder: anDecoder ObjectsRegistry: registry];
+    //CSGThread *thread = [CSGThread deserializeWithBinaryDecoder: anDecoder ObjectsRegistry: registry];
+    const uint32_t *tIndex = [anDecoder readBytes:sizeof(uint32_t)];
+    CSGThread *thread = [registry getThreadByIndex: *tIndex];
     
     const uint8_t *buf1 = [anDecoder readBytes:sizeof(uint8_t)];
     uint8_t flossCount = *buf1;

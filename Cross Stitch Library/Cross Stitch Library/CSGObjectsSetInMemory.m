@@ -30,7 +30,7 @@
         uint32_t aCapacity = 1;
         objectsSet = [[NSHashTable alloc] initWithOptions:NSPointerFunctionsStrongMemory capacity:aCapacity];
         objectsArray = [[NSMutableArray alloc] initWithCapacity:aCapacity];
-        objectToIndexMap = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsWeakMemory valueOptions:NSMapTableCopyIn capacity:aCapacity];
+        objectToIndexMap = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsWeakMemory valueOptions:NSMapTableStrongMemory capacity:aCapacity];
     }
     return self;
 }
