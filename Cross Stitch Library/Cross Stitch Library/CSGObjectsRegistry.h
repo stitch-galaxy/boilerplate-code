@@ -25,8 +25,14 @@
 - (CSGThread*) getThreadWithColor: (UIColor*) aColor;
 -(CSGThreadInBlend*) getThreadInBlendWithThread: (CSGThread*) aThread FlossCount: (uint8_t) aFlossCount;
 - (CSGThreadsBlend*) getThreadsBlendWithThreadsInBlend: (NSArray* ) threadsInBlend;
+//TODO: Prototype->Builder
+- (CSGDesignCell*) getDesignCellPrototype;
+- (CSGDesignCell*) getDesignCellByPrototype: (CSGDesignCell*) anPrototype;
+- (uint32_t) getDesignCellIndex: (CSGDesignCell*) aCell;
+- (CSGDesignCell*) getDesignCellByIndex: (uint32_t) anIndex;
 
-- (CSGDesignCell*) getDesignCell: (CSGDesignCell*) anInstance;
+
+
 - (CSGDesignPoint*) getDesignPoint: (CSGDesignPoint*) anInstance;
 - (CSGDesignPoints*) getDesignPoints: (CSGDesignPoints*) anInstance;
 - (CSGBackStitch*) getBackStitch: (CSGBackStitch*) anInstance;

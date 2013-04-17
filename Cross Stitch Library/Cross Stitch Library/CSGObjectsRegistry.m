@@ -2,6 +2,8 @@
 
 #import "CSGThread.h"
 #import "CSGThreadsBlend.h"
+#import "CSGDesignCell.h"
+
 #import "CSGMemorySetWithIndex.h"
 #import "CSGMemorySet.h"
 
@@ -19,6 +21,8 @@
 @property (nonatomic, retain) CSGThreadsBlend *tmpThreadsBlend;
 @property (nonatomic, retain) CSGMemorySet *threadBlendsSet;
 
+@property (nonatomic, retain) CSGDesignCell *tmpCell;
+@property (nonatomic, retain) CSGMemorySetWithIndex *cellsSet;
 
 @end
 
@@ -30,6 +34,8 @@
 @synthesize threadInBlendsSet;
 @synthesize tmpThreadsBlend;
 @synthesize threadBlendsSet;
+@synthesize tmpCell;
+@synthesize cellsSet;
 
 - (id) init
 {
@@ -43,9 +49,30 @@
         
         tmpThreadsBlend = [CSGThreadsBlend alloc];
         threadBlendsSet = [[CSGMemorySet alloc] init];
+        
+        tmpCell = [CSGDesignCell alloc];
+        cellsSet = [[CSGMemorySetWithIndex alloc] init];
+        
     }
     return self;
 }
+
+- (CSGDesignCell*) getDesignCellPrototype
+{
+}
+
+- (CSGDesignCell*) getDesignCellByPrototype: (CSGDesignCell*) anPrototype
+{
+}
+
+- (uint32_t) getDesignCellIndex: (CSGDesignCell*) aCell
+{
+}
+
+- (CSGDesignCell*) getDesignCellByIndex: (uint32_t) anIndex
+{
+}
+
 
 - (CSGThreadsBlend*) getThreadsBlendWithThreadsInBlend: (NSArray* ) threadsInBlend
 {
@@ -82,16 +109,6 @@
         [threadsSet putObject:aThread];
     }
     return aThread;
-}
-
-- (CSGStitchInCell*) getStitchInCell: (CSGStitchInCell*) anInstance
-{
-    return anInstance;
-}
-
-- (CSGDesignCell*) getDesignCell: (CSGDesignCell*) anInstance
-{
-    return anInstance;
 }
 
 - (CSGDesignPoint*) getDesignPoint: (CSGDesignPoint*) anInstance
