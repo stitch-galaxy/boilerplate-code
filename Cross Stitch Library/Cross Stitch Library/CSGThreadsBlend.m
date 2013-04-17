@@ -120,9 +120,7 @@
     const uint8_t *buf1 = [anDecoder readBytes:sizeof(uint8_t)];
     uint8_t flossCount = *buf1;
     
-    CSGThreadInBlend* threadInBlend = [[CSGThreadInBlend alloc] initWithThread: thread FlossCount: flossCount];
-    
-    return [registry getThreadInBlend: threadInBlend];
+    return [registry getThreadInBlendWithThread:thread FlossCount:flossCount];
 }
 
 @end
@@ -250,9 +248,7 @@
         CSGThreadInBlend* threadInBlend = [CSGThreadInBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
         [threadsInBlend addObject:threadInBlend];
     }
-    CSGThreadsBlend* blend = [[CSGThreadsBlend alloc] initWithThreadsInBlend: threadsInBlend];
-
-    return [registry getThreadsBlend: blend];
+    return [registry getThreadsBlendWithThreadsInBlend:threadsInBlend];
 }
 
 @end

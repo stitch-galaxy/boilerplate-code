@@ -68,7 +68,7 @@
 {
     uint32_t flossesCount = [CSGDesignGenerator randomIndexFor: DESIGN_MAX_FLOSSES_OF_THREAD] + 1;
     CSGThread* thread = [self generateThread: registry];
-    CSGThreadInBlend *threadInBlend = [[CSGThreadInBlend alloc] initWithThread:thread FlossCount: flossesCount];
+    CSGThreadInBlend *threadInBlend = [registry getThreadInBlendWithThread:thread FlossCount:flossesCount];
     return threadInBlend;
 }
 
@@ -82,8 +82,7 @@
         CSGThreadInBlend* threadInBlend = [self generateThreadInBlend: registry];
         [aThreads addObject:threadInBlend];
     }
-    CSGThreadsBlend* blend = [[CSGThreadsBlend alloc] initWithThreadsInBlend: aThreads];
-    return blend;
+    return [registry getThreadsBlendWithThreadsInBlend:aThreads];
 }
 
 
