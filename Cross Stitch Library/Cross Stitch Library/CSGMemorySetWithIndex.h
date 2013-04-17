@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CSGObjectsSetInMemory : NSObject
+@interface CSGMemorySetWithIndex : NSObject
 
 - (id) member: (id) anObject;
 

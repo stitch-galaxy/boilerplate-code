@@ -6,16 +6,16 @@
 //  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
 //
 
-#import "CSGObjectsSetInMemory.h"
+#import "CSGMemorySetWithIndex.h"
 
-@interface CSGObjectsSetInMemory()
+@interface CSGMemorySetWithIndex()
 {
     uint32_t freeIndex;
 }
 
 @end
 
-@implementation CSGObjectsSetInMemory
+@implementation CSGMemorySetWithIndex
 
 @synthesize objectsSet;
 @synthesize objectsArray;

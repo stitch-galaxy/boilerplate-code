@@ -1,8 +1,8 @@
 #import "CSGObjectsRegistry.h"
 
 #import "CSGThread.h"
-#import "CSGObjectsSetInMemory.h"
-
+#import "CSGMemorySetWithIndex.h"
+#import "CSGMemorySet.h"
 
 
 @interface CSGObjectsRegistry ()
@@ -10,7 +10,8 @@
 }
 
 @property (nonatomic, retain) CSGThread *tmpThread;
-@property (nonatomic, retain) CSGObjectsSetInMemory *threadsSet;
+
+@property (nonatomic, retain) CSGMemorySet *threadsSet;
 
 @end
 
@@ -24,7 +25,7 @@
     if (self = [super init])
     {
         tmpThread = [CSGThread alloc];
-        threadsSet = [[CSGObjectsSetInMemory alloc] init];
+        threadsSet = [[CSGMemorySet alloc] init];
     }
     return self;
 }
@@ -42,15 +43,15 @@
     return aThread;
 }
 
-- (CSGThread*) getThreadByIndex: (uint32_t) anIndex
-{
-    return [threadsSet getObjectByIndex: anIndex];
-}
-
-- (uint32_t) getThreadIndex: (CSGThread*) aThread
-{
-    return [threadsSet getIndexByObject: aThread];
-}
+//- (CSGThread*) getThreadByIndex: (uint32_t) anIndex
+//{
+//    return [threadsSet getObjectByIndex: anIndex];
+//}
+//
+//- (uint32_t) getThreadIndex: (CSGThread*) aThread
+//{
+//    return [threadsSet getIndexByObject: aThread];
+//}
 
 
 - (CSGThreadInBlend*) getThreadInBlend: (CSGThreadInBlend*) anInstance

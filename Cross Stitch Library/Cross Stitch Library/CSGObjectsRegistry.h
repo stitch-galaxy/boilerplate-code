@@ -23,8 +23,14 @@
 @interface CSGObjectsRegistry : NSObject
 
 - (CSGThread*) getThreadWithColor: (UIColor*) aColor;
-- (CSGThread*) getThreadByIndex: (uint32_t) anIndex;
-- (uint32_t) getThreadIndex: (CSGThread*) aThread;
+//- (CSGThread*) getThreadByIndex: (uint32_t) anIndex;
+//- (uint32_t) getThreadIndex: (CSGThread*) aThread;
+
+
+
+
+
+//-(CSGThreadInBlend*) getThreadInBlendWithThread: (CSGThread*) aThread FlossCount: (uint8_t) aFlossCount;
 
 - (CSGThreadInBlend*) getThreadInBlend: (CSGThreadInBlend*) anInstance;
 - (CSGThreadsBlend*) getThreadsBlend: (CSGThreadsBlend*) anInstance;
