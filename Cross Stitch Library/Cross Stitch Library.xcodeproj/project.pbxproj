@@ -39,7 +39,6 @@
 		ECDE8A4A171EE73D00EE1B6F /* CSGMemorySet.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDE8A49171EE73D00EE1B6F /* CSGMemorySet.m */; };
 		ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7670E16F3297D00D5A67A /* CSGBinaryEncoder.m */; };
 		ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671116F332F100D5A67A /* CSGBinaryDecoder.m */; };
-		ECE7671616F3719300D5A67A /* CSGStitchInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671516F3719300D5A67A /* CSGStitchInCell.m */; };
 		ECE7671A16F3B85F00D5A67A /* CSGDesignCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671916F3B85F00D5A67A /* CSGDesignCell.m */; };
 /* End PBXBuildFile section */
 
@@ -109,8 +108,6 @@
 		ECE7671016F332F100D5A67A /* CSGBinaryDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGBinaryDecoder.h; sourceTree = "<group>"; };
 		ECE7671116F332F100D5A67A /* CSGBinaryDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGBinaryDecoder.m; sourceTree = "<group>"; };
 		ECE7671316F3347A00D5A67A /* CSGBinaryCoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSGBinaryCoding.h; sourceTree = "<group>"; };
-		ECE7671416F3719200D5A67A /* CSGStitchInCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGStitchInCell.h; sourceTree = "<group>"; };
-		ECE7671516F3719300D5A67A /* CSGStitchInCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGStitchInCell.m; sourceTree = "<group>"; };
 		ECE7671816F3B85F00D5A67A /* CSGDesignCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignCell.h; sourceTree = "<group>"; };
 		ECE7671916F3B85F00D5A67A /* CSGDesignCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesignCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -179,8 +176,6 @@
 				ECB42D7C1715ECF1000C8037 /* CSGStraightStitch.m */,
 				ECCFD9F016F0F903004FE762 /* CSGThreadsBlend.h */,
 				ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */,
-				ECE7671416F3719200D5A67A /* CSGStitchInCell.h */,
-				ECE7671516F3719300D5A67A /* CSGStitchInCell.m */,
 				ECC91921170CAF2F00CA4077 /* CSGDesignPoints.h */,
 				ECC91922170CAF2F00CA4077 /* CSGDesignPoints.m */,
 				ECC91924170CB19200CA4077 /* CSGDesignPoint.h */,
@@ -428,7 +423,6 @@
 				ECCFD9F216F0F903004FE762 /* CSGThreadsBlend.m in Sources */,
 				ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */,
 				ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */,
-				ECE7671616F3719300D5A67A /* CSGStitchInCell.m in Sources */,
 				ECE7671A16F3B85F00D5A67A /* CSGDesignCell.m in Sources */,
 				ECC91923170CAF3000CA4077 /* CSGDesignPoints.m in Sources */,
 				ECC91926170CB19300CA4077 /* CSGDesignPoint.m in Sources */,

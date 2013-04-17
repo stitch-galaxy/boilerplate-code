@@ -99,25 +99,6 @@
     return (memcmp(data1.bytes, data2.bytes, length) == 0);
 }
 
--(void) testStitchInCellSerialization
-{
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGStitchInCell* stitch = [testhelper generateStitchInCell:registry];
-    
-    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
-    [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
-    
-    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
-    
-    CSGStitchInCell* stitch1 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
-    
-    if (stitch.hash != stitch.hash || ![stitch isEqual:stitch1])
-    {
-        STFail(@"StitchInCell serialization and equality");
-    }
-}
-
-
 -(void) testDesignCellSerialization
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];

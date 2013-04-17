@@ -651,81 +651,81 @@ typedef enum
 		switch (stitchType) {
 				//CROSS
 			case CSG_STITCH_IN_CELL_CROSS:
-				aCell.crossStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.crossStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 				//PETITE
 			case CSG_STITCH_IN_CELL_LEFT_UP_PETITE:
-				aCell.leftUpPetiteStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.leftUpPetiteStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_LEFT_DOWN_PETITE:
-				aCell.leftDownPetiteStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.leftDownPetiteStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_RIGHT_UP_PETITE:
-				aCell.rightUpPetiteStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.rightUpPetiteStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_RIGHT_DOWN_PETITE:
-				aCell.rightDownPetiteStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.rightDownPetiteStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 				//QUARTER
 			case CSG_STITCH_IN_CELL_LEFT_UP_QUARTER:
-				aCell.leftUpQuarterStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.leftUpQuarterStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_LEFT_DOWN_QUARTER:
-				aCell.leftDownQuarterStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.leftDownQuarterStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_RIGHT_UP_QUARTER:
-				aCell.rightUpQuarterStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.rightUpQuarterStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_RIGHT_DOWN_QUARTER:
-				aCell.rightDownQuarterStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.rightDownQuarterStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 				//THREE QUARTER
 			case CSG_STITCH_IN_CELL_LEFT_UP_THREE_QUARTER:
-				aCell.leftUpThreeQuarterStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.leftUpThreeQuarterStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_LEFT_DOWN_THREE_QUARTER:
-				aCell.leftDownThreeQuarterStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.leftDownThreeQuarterStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_RIGHT_UP_THREE_QUARTER:
-				aCell.rightUpThreeQuarterStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.rightUpThreeQuarterStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_RIGHT_DOWN_THREE_QUARTER:
-				aCell.rightDownThreeQuarterStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.rightDownThreeQuarterStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 				//HALF_STITCHES
 			case CSG_STITCH_IN_CELL_SLASH_HALF:
-				aCell.slashHalfStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.slashHalfStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_BACKSLASH_HALF:
-				aCell.backslashHalfStitch = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.backslashHalfStitch = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 				//FRENCH KNOTS
 			case CSG_STITCH_IN_CELL_FRENCH_KNOT_00:
-				aCell.frenchKnot00 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.frenchKnot00 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_FRENCH_KNOT_01:
-				aCell.frenchKnot01 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.frenchKnot01 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_FRENCH_KNOT_02:
-				aCell.frenchKnot02 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.frenchKnot02 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_FRENCH_KNOT_10:
-				aCell.frenchKnot10 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.frenchKnot10 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_FRENCH_KNOT_11:
-				aCell.frenchKnot11 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.frenchKnot11 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_FRENCH_KNOT_12:
-				aCell.frenchKnot12 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.frenchKnot12 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_FRENCH_KNOT_20:
-				aCell.frenchKnot20 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.frenchKnot20 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_FRENCH_KNOT_21:
-				aCell.frenchKnot21 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.frenchKnot21 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			case CSG_STITCH_IN_CELL_FRENCH_KNOT_22:
-				aCell.frenchKnot22 = [CSGStitchInCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+				aCell.frenchKnot22 = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
 				break;
 			default:
 				break;

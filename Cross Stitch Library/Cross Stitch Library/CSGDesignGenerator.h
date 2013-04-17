@@ -11,7 +11,6 @@
 #import "CSGThread.h"
 #import "CSGThreadsBlend.h"
 #import "CSGBinaryCoding.h"
-#import "CSGStitchInCell.h"
 #import "CSGDesignCell.h"
 #import "CSGDesignPoint.h"
 #import "CSGDesignPoints.h"
@@ -27,7 +26,6 @@
 - (id) init;
 - (CSGThread*) generateThread: (CSGObjectsRegistry*) registry;
 - (CSGThreadInBlend*) generateThreadInBlend: (CSGObjectsRegistry*) registry;
-- (CSGStitchInCell*) generateStitchInCell: (CSGObjectsRegistry*) registry;
 - (CSGDesignCell*) generateDesignCell: (CSGObjectsRegistry*) registry;
 - (CSGThreadsBlend*) generateThreadsBlend: (CSGObjectsRegistry*) registry;
 - (CSGDesignPoint*) generateDesignCoordinate: (CSGObjectsRegistry*) registry;

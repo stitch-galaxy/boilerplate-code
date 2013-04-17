@@ -8,40 +8,40 @@
 
 #import <Foundation/Foundation.h>
 
-#import "CSGStitchInCell.h"
+#import "CSGThreadsBlend.h"
 
 @protocol CSGDesignCell <NSObject>
 
 //Cross stitch
-@property (nonatomic, retain) CSGStitchInCell* crossStitch;
+@property (nonatomic, retain) CSGThreadsBlend* crossStitch;
 //Petites
-@property (nonatomic, retain) CSGStitchInCell* leftUpPetiteStitch;
-@property (nonatomic, retain) CSGStitchInCell* leftDownPetiteStitch;
-@property (nonatomic, retain) CSGStitchInCell* rightUpPetiteStitch;
-@property (nonatomic, retain) CSGStitchInCell* rightDownPetiteStitch;
+@property (nonatomic, retain) CSGThreadsBlend* leftUpPetiteStitch;
+@property (nonatomic, retain) CSGThreadsBlend* leftDownPetiteStitch;
+@property (nonatomic, retain) CSGThreadsBlend* rightUpPetiteStitch;
+@property (nonatomic, retain) CSGThreadsBlend* rightDownPetiteStitch;
 //Quarter stitches
-@property (nonatomic, retain) CSGStitchInCell* leftUpQuarterStitch;
-@property (nonatomic, retain) CSGStitchInCell* leftDownQuarterStitch;
-@property (nonatomic, retain) CSGStitchInCell* rightUpQuarterStitch;
-@property (nonatomic, retain) CSGStitchInCell* rightDownQuarterStitch;
+@property (nonatomic, retain) CSGThreadsBlend* leftUpQuarterStitch;
+@property (nonatomic, retain) CSGThreadsBlend* leftDownQuarterStitch;
+@property (nonatomic, retain) CSGThreadsBlend* rightUpQuarterStitch;
+@property (nonatomic, retain) CSGThreadsBlend* rightDownQuarterStitch;
 //ThreeQuarter stitches
-@property (nonatomic, retain) CSGStitchInCell* leftUpThreeQuarterStitch;
-@property (nonatomic, retain) CSGStitchInCell* leftDownThreeQuarterStitch;
-@property (nonatomic, retain) CSGStitchInCell* rightUpThreeQuarterStitch;
-@property (nonatomic, retain) CSGStitchInCell* rightDownThreeQuarterStitch;
+@property (nonatomic, retain) CSGThreadsBlend* leftUpThreeQuarterStitch;
+@property (nonatomic, retain) CSGThreadsBlend* leftDownThreeQuarterStitch;
+@property (nonatomic, retain) CSGThreadsBlend* rightUpThreeQuarterStitch;
+@property (nonatomic, retain) CSGThreadsBlend* rightDownThreeQuarterStitch;
 //HalfStitches
-@property (nonatomic, retain) CSGStitchInCell* slashHalfStitch;
-@property (nonatomic, retain) CSGStitchInCell* backslashHalfStitch;
+@property (nonatomic, retain) CSGThreadsBlend* slashHalfStitch;
+@property (nonatomic, retain) CSGThreadsBlend* backslashHalfStitch;
 //French knots
-@property (nonatomic, retain) CSGStitchInCell* frenchKnot00;
-@property (nonatomic, retain) CSGStitchInCell* frenchKnot01;
-@property (nonatomic, retain) CSGStitchInCell* frenchKnot02;
-@property (nonatomic, retain) CSGStitchInCell* frenchKnot10;
-@property (nonatomic, retain) CSGStitchInCell* frenchKnot11;
-@property (nonatomic, retain) CSGStitchInCell* frenchKnot12;
-@property (nonatomic, retain) CSGStitchInCell* frenchKnot20;
-@property (nonatomic, retain) CSGStitchInCell* frenchKnot21;
-@property (nonatomic, retain) CSGStitchInCell* frenchKnot22;
+@property (nonatomic, retain) CSGThreadsBlend* frenchKnot00;
+@property (nonatomic, retain) CSGThreadsBlend* frenchKnot01;
+@property (nonatomic, retain) CSGThreadsBlend* frenchKnot02;
+@property (nonatomic, retain) CSGThreadsBlend* frenchKnot10;
+@property (nonatomic, retain) CSGThreadsBlend* frenchKnot11;
+@property (nonatomic, retain) CSGThreadsBlend* frenchKnot12;
+@property (nonatomic, retain) CSGThreadsBlend* frenchKnot20;
+@property (nonatomic, retain) CSGThreadsBlend* frenchKnot21;
+@property (nonatomic, retain) CSGThreadsBlend* frenchKnot22;
 
 @end
 

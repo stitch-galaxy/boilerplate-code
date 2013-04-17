@@ -24,11 +24,8 @@
 
 - (CSGThread*) getThreadWithColor: (UIColor*) aColor;
 -(CSGThreadInBlend*) getThreadInBlendWithThread: (CSGThread*) aThread FlossCount: (uint8_t) aFlossCount;
-
-//- (CSGThreadsBlend*) getThreadsBlend: (CSGThreadsBlend*) anInstance;
 - (CSGThreadsBlend*) getThreadsBlendWithThreadsInBlend: (NSArray* ) threadsInBlend;
 
-- (CSGStitchInCell*) getStitchInCell: (CSGStitchInCell*) anInstance;
 - (CSGDesignCell*) getDesignCell: (CSGDesignCell*) anInstance;
 - (CSGDesignPoint*) getDesignPoint: (CSGDesignPoint*) anInstance;
 - (CSGDesignPoints*) getDesignPoints: (CSGDesignPoints*) anInstance;
