@@ -87,7 +87,7 @@
 
 - (CSGDesignCell*) generateDesignCell: (CSGObjectsRegistry*) registry;
 {
-    CSGDesignCell* designCell = [[CSGDesignCell alloc] init];
+    CSGDesignCell* designCell = [registry getDesignCellPrototype];
     //Cross
     if (CSGDesignGenerator.randomBool)
     {
@@ -191,7 +191,7 @@
         designCell.frenchKnot22 = [self generateThreadsBlend: registry];
     }
     
-    return designCell;
+    return [registry getDesignCellByPrototype: designCell];
 }
 
 - (CSGDesignPoint*) generateDesignCoordinate: (CSGObjectsRegistry*) registry;

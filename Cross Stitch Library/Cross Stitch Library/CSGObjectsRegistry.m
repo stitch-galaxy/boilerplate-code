@@ -59,18 +59,29 @@
 
 - (CSGDesignCell*) getDesignCellPrototype
 {
+    [tmpCell cleanup];
+    return tmpCell;
 }
 
 - (CSGDesignCell*) getDesignCellByPrototype: (CSGDesignCell*) anPrototype
 {
+    CSGDesignCell* aCell = [cellsSet member:anPrototype];
+    if (!aCell)
+    {
+        aCell = anPrototype.copy;
+        [cellsSet putObject:aCell];
+    }
+    return aCell;
 }
 
 - (uint32_t) getDesignCellIndex: (CSGDesignCell*) aCell
 {
+    return [cellsSet getIndexByObject:aCell];
 }
 
 - (CSGDesignCell*) getDesignCellByIndex: (uint32_t) anIndex
 {
+    return [cellsSet getObjectByIndex:anIndex];
 }
 
 

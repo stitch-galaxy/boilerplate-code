@@ -126,10 +126,11 @@
 - (size_t) serializedLength
 {
     size_t size = sizeof(uint32_t) * 2;
-    for(CSGDesignCell* cell in cells)
-    {
-        size += cell.serializedLength;
-    }
+    size += sizeof(uint32_t) * height * width;
+//    for(CSGDesignCell* cell in cells)
+//    {
+//        size += cell.serializedLength;
+//    }
     size += sizeof(uint32_t);
     for(CSGBackStitch* stitch in backStitches)
     {
@@ -149,9 +150,14 @@
     *pWidth = width;
     uint32_t *pHeight = [anEncoder modifyBytes:sizeof(uint32_t)];
     *pHeight = height;
+    
+    
+    uint32_t *pCellIndex = nil;
     for(CSGDesignCell* cell in cells)
     {
-        [cell serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+        pCellIndex = [anEncoder modifyBytes:sizeof(uint32_t)];
+        *pCellIndex = [registry getDesignCellIndex:cell];
+        //[cell serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
     }
     
     uint32_t *pBackStitchesNum = [anEncoder modifyBytes:sizeof(uint32_t)];
@@ -176,9 +182,14 @@
     const uint32_t *pHeight = [anDecoder readBytes:sizeof(uint32_t)];
     uint32_t aHeight = *pHeight;
     NSMutableArray *aCells = [[NSMutableArray alloc] initWithCapacity:aWidth * aHeight];
+    
+    
+    const uint32_t *pCellIndex = nil;
     for(uint32_t i = 0; i < aWidth * aHeight; ++i)
     {
-        CSGDesignCell* cell = [CSGDesignCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+        pCellIndex = [anDecoder readBytes:sizeof(uint32_t)];
+        CSGDesignCell* cell = [registry getDesignCellByIndex:*pCellIndex];
+        //CSGDesignCell* cell = [CSGDesignCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
         [aCells addObject:cell];
     }
     

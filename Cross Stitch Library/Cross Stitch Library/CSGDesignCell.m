@@ -75,6 +75,74 @@ typedef enum
 @synthesize frenchKnot21;
 @synthesize frenchKnot22;
 
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    CSGDesignCell* copy = [[CSGDesignCell alloc] init];
+    
+    if (copy)
+    {
+        // DeepCopy example: NSObject subclasses
+        //[copy setVendorID:[[self.vendorID copyWithZone:zone] autorelease]];
+        
+        // Reference copying
+        copy.crossStitch = self.crossStitch;
+        copy.leftUpPetiteStitch = self.leftUpPetiteStitch;
+        copy.leftDownPetiteStitch = self.leftDownPetiteStitch;
+        copy.rightUpPetiteStitch = self.rightUpPetiteStitch;
+        copy.rightDownPetiteStitch = self.rightDownPetiteStitch;
+        copy.leftUpQuarterStitch = self.leftUpQuarterStitch;
+        copy.leftDownQuarterStitch = self.leftDownQuarterStitch;
+        copy.rightUpQuarterStitch = self.rightUpQuarterStitch;
+        copy.rightDownQuarterStitch = self.rightDownQuarterStitch;
+        copy.leftUpThreeQuarterStitch = self.leftUpThreeQuarterStitch;
+        copy.leftDownThreeQuarterStitch = self.leftDownThreeQuarterStitch;
+        copy.rightUpThreeQuarterStitch = self.rightUpThreeQuarterStitch;
+        copy.rightDownThreeQuarterStitch = self.rightDownThreeQuarterStitch;
+        copy.slashHalfStitch = self.slashHalfStitch;
+        copy.backslashHalfStitch = self.backslashHalfStitch;
+        copy.frenchKnot00 = self.frenchKnot00;
+        copy.frenchKnot01 = self.frenchKnot01;
+        copy.frenchKnot02 = self.frenchKnot02;
+        copy.frenchKnot10 = self.frenchKnot10;
+        copy.frenchKnot11 = self.frenchKnot11;
+        copy.frenchKnot12 = self.frenchKnot12;
+        copy.frenchKnot20 = self.frenchKnot20;
+        copy.frenchKnot21 = self.frenchKnot21;
+        copy.frenchKnot22 = self.frenchKnot22;
+    }
+    
+    return copy;
+}
+
+-(void) cleanup
+{
+    self.crossStitch = nil;
+    self.leftUpPetiteStitch = nil;
+    self.leftDownPetiteStitch = nil;
+    self.rightUpPetiteStitch = nil;
+    self.rightDownPetiteStitch = nil;
+    self.leftUpQuarterStitch = nil;
+    self.leftDownQuarterStitch = nil;
+    self.rightUpQuarterStitch = nil;
+    self.rightDownQuarterStitch = nil;
+    self.leftUpThreeQuarterStitch = nil;
+    self.leftDownThreeQuarterStitch = nil;
+    self.rightUpThreeQuarterStitch = nil;
+    self.rightDownThreeQuarterStitch = nil;
+    self.slashHalfStitch = nil;
+    self.backslashHalfStitch = nil;
+    self.frenchKnot00 = nil;
+    self.frenchKnot01 = nil;
+    self.frenchKnot02 = nil;
+    self.frenchKnot10 = nil;
+    self.frenchKnot11 = nil;
+    self.frenchKnot12 = nil;
+    self.frenchKnot20 = nil;
+    self.frenchKnot21 = nil;
+    self.frenchKnot22 = nil;
+}
+
 - (id) init
 {
     return self = [super init];
@@ -643,7 +711,7 @@ typedef enum
 
 + (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 {	
-	CSGDesignCell* aCell = [[CSGDesignCell alloc] init];
+	CSGDesignCell* aCell = [registry getDesignCellPrototype];
 	const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
 	uint8_t stitchType = *buf;
 	while (stitchType)
@@ -735,7 +803,7 @@ typedef enum
 		buf = [anDecoder readBytes:sizeof(uint8_t)];
 		stitchType = *buf;
 	}
-	return [registry getDesignCell: aCell];
+	return [registry getDesignCellByPrototype:aCell];
 }
 
 @end

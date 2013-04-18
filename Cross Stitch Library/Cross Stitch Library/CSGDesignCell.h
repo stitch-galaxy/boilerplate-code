@@ -47,6 +47,8 @@
 
 @interface CSGDesignCell : NSObject<CSGDesignCell>
 
+-(void) cleanup;
+
 @end
 
 @interface CSGDesignCell (Serialization)
