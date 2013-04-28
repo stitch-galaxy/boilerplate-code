@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */; };
-		EC2F4CA017172EB800A6EB93 /* CSGObjectsRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2F4C9F17172EB800A6EB93 /* CSGObjectsRegistry.m */; };
 		EC869B93171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = EC869B92171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m */; };
 		EC869B96171BEACD00DA8AE4 /* CSGDesignGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = EC869B95171BEACD00DA8AE4 /* CSGDesignGenerator.m */; };
 		ECB42D7D1715ECF1000C8037 /* CSGStraightStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB42D7C1715ECF1000C8037 /* CSGStraightStitch.m */; };
@@ -31,6 +30,9 @@
 		ECC232B516D1372100105066 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC2328D16D1372100105066 /* Foundation.framework */; };
 		ECC232BD16D1372100105066 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ECC232BB16D1372100105066 /* InfoPlist.strings */; };
 		ECC232C016D1372100105066 /* CSGSerializationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC232BF16D1372100105066 /* CSGSerializationTests.m */; };
+		ECC584B7172D3E1500732EC1 /* CSGObjectsRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC584B6172D3E1500732EC1 /* CSGObjectsRegistry.m */; };
+		ECC584BA172D3E9700732EC1 /* CSGCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC584B9172D3E9700732EC1 /* CSGCodec.m */; };
+		ECC584BD172D490100732EC1 /* CSGDecodec.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC584BC172D490000732EC1 /* CSGDecodec.m */; };
 		ECC91923170CAF3000CA4077 /* CSGDesignPoints.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC91922170CAF2F00CA4077 /* CSGDesignPoints.m */; };
 		ECC91926170CB19300CA4077 /* CSGDesignPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC91925170CB19200CA4077 /* CSGDesignPoint.m */; };
 		ECC919291710AEDE00CA4077 /* CSGBackStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC919281710AEDE00CA4077 /* CSGBackStitch.m */; };
@@ -55,8 +57,6 @@
 /* Begin PBXFileReference section */
 		EC0F6BC016DCC6E8007FF7CF /* ArtWorkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWorkInfo.h; sourceTree = "<group>"; };
 		EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWorkInfo.m; sourceTree = "<group>"; };
-		EC2F4C9E17172EB800A6EB93 /* CSGObjectsRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGObjectsRegistry.h; sourceTree = "<group>"; };
-		EC2F4C9F17172EB800A6EB93 /* CSGObjectsRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGObjectsRegistry.m; sourceTree = "<group>"; };
 		EC869B91171BE7F000DA8AE4 /* CSGMemorySetWithIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGMemorySetWithIndex.h; sourceTree = "<group>"; };
 		EC869B92171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGMemorySetWithIndex.m; sourceTree = "<group>"; };
 		EC869B94171BEACD00DA8AE4 /* CSGDesignGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignGenerator.h; sourceTree = "<group>"; };
@@ -90,6 +90,12 @@
 		ECC232BC16D1372100105066 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ECC232BE16D1372100105066 /* CSGSerializationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSGSerializationTests.h; sourceTree = "<group>"; };
 		ECC232BF16D1372100105066 /* CSGSerializationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSGSerializationTests.m; sourceTree = "<group>"; };
+		ECC584B5172D3E1500732EC1 /* CSGObjectsRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGObjectsRegistry.h; sourceTree = "<group>"; };
+		ECC584B6172D3E1500732EC1 /* CSGObjectsRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGObjectsRegistry.m; sourceTree = "<group>"; };
+		ECC584B8172D3E9700732EC1 /* CSGCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGCodec.h; sourceTree = "<group>"; };
+		ECC584B9172D3E9700732EC1 /* CSGCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGCodec.m; sourceTree = "<group>"; };
+		ECC584BB172D490000732EC1 /* CSGDecodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDecodec.h; sourceTree = "<group>"; };
+		ECC584BC172D490000732EC1 /* CSGDecodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDecodec.m; sourceTree = "<group>"; };
 		ECC91921170CAF2F00CA4077 /* CSGDesignPoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignPoints.h; sourceTree = "<group>"; };
 		ECC91922170CAF2F00CA4077 /* CSGDesignPoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesignPoints.m; sourceTree = "<group>"; };
 		ECC91924170CB19200CA4077 /* CSGDesignPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignPoint.h; sourceTree = "<group>"; };
@@ -288,8 +294,10 @@
 		ECE7670C16F3295A00D5A67A /* Serialization */ = {
 			isa = PBXGroup;
 			children = (
-				EC2F4C9E17172EB800A6EB93 /* CSGObjectsRegistry.h */,
-				EC2F4C9F17172EB800A6EB93 /* CSGObjectsRegistry.m */,
+				ECC584B8172D3E9700732EC1 /* CSGCodec.h */,
+				ECC584B9172D3E9700732EC1 /* CSGCodec.m */,
+				ECC584B5172D3E1500732EC1 /* CSGObjectsRegistry.h */,
+				ECC584B6172D3E1500732EC1 /* CSGObjectsRegistry.m */,
 				ECE7670D16F3297D00D5A67A /* CSGBinaryEncoder.h */,
 				ECE7670E16F3297D00D5A67A /* CSGBinaryEncoder.m */,
 				ECE7671016F332F100D5A67A /* CSGBinaryDecoder.h */,
@@ -299,6 +307,8 @@
 				EC869B92171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m */,
 				ECDE8A48171EE73D00EE1B6F /* CSGMemorySet.h */,
 				ECDE8A49171EE73D00EE1B6F /* CSGMemorySet.m */,
+				ECC584BB172D490000732EC1 /* CSGDecodec.h */,
+				ECC584BC172D490000732EC1 /* CSGDecodec.m */,
 			);
 			name = Serialization;
 			sourceTree = "<group>";
@@ -429,10 +439,12 @@
 				ECC919291710AEDE00CA4077 /* CSGBackStitch.m in Sources */,
 				ECB42D7D1715ECF1000C8037 /* CSGStraightStitch.m in Sources */,
 				ECB42D801715ED90000C8037 /* CSGDesign.m in Sources */,
-				EC2F4CA017172EB800A6EB93 /* CSGObjectsRegistry.m in Sources */,
 				EC869B93171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m in Sources */,
 				EC869B96171BEACD00DA8AE4 /* CSGDesignGenerator.m in Sources */,
 				ECDE8A4A171EE73D00EE1B6F /* CSGMemorySet.m in Sources */,
+				ECC584B7172D3E1500732EC1 /* CSGObjectsRegistry.m in Sources */,
+				ECC584BA172D3E9700732EC1 /* CSGCodec.m in Sources */,
+				ECC584BD172D490100732EC1 /* CSGDecodec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

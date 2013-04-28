@@ -12,6 +12,9 @@
 
 #import "CSGDesignGenerator.h"
 
+#import "CSGCodec.h"
+#import "CSGDecodec.h"
+
 
 @implementation CSGSerializationTests
 {
@@ -29,7 +32,45 @@
     [super tearDown];
 }
 
--(void) testThreadsBlendSerializationAndEquality
+- (void) testThreadSerializationAndEqualityLegacy
+{
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGThread* thread = [testhelper generateThread:registry];
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
+    [thread serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGThread* thread1 = [CSGThread deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    
+    if (thread.hash != thread1.hash || ![thread isEqual:thread1])
+    {
+        STFail(@"Thread serialization and equality");
+    }
+}
+
+- (void) testThreadInBlendSerializationAndEqualityLegacy
+{
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    
+    CSGThreadInBlend* thread = [testhelper generateThreadInBlend: registry];
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
+    [thread serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGThreadInBlend* thread1 = [CSGThreadInBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    
+    if (thread.hash != thread1.hash || ![thread isEqual:thread1])
+    {
+        STFail(@"ThreadInBlend serialization and equality");
+    }
+}
+
+-(void) testThreadsBlendSerializationAndEqualityLegacy
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     
@@ -49,41 +90,54 @@
     }
 }
 
+
+
+- (void) testThreadSerializationAndEquality
+{
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
+    CSGThread* thread = [testhelper generateThread:registry];
+    [codec serializeThread:thread];
+    
+    CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
+    CSGThread* thread1 = [decodec deserializeThread];
+    
+    if (thread.hash != thread1.hash || ![thread isEqual:thread1])
+    {
+        STFail(@"Thread serialization and equality");
+    }
+}
+
+
 - (void) testThreadInBlendSerializationAndEquality
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    
+    CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
     CSGThreadInBlend* thread = [testhelper generateThreadInBlend: registry];
+    [codec serializeThreadInBlend:thread];
     
-    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
-    [thread serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
+    CSGThreadInBlend* thread1 = [decodec deserializeThreadInBlend];
     
-    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
-    
-    CSGThreadInBlend* thread1 = [CSGThreadInBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
-
     if (thread.hash != thread1.hash || ![thread isEqual:thread1])
     {
         STFail(@"ThreadInBlend serialization and equality");
     }
 }
 
-- (void) testThreadSerializationAndEquality
+- (void) testThreadsBlendSerializationAndEquality
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGThread* thread = [testhelper generateThread:registry];
+    CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
+    CSGThreadsBlend* blend = [testhelper generateThreadsBlend: registry];
+    [codec serializeThreadsBlend:blend];
     
-    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:thread.serializedLength];
-    [thread serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
+    CSGThreadsBlend* blend1 = [decodec deserializeThreadsBlend];
     
-    
-    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
-    
-    CSGThread* thread1 = [CSGThread deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
-    
-    if (thread.hash != thread1.hash || ![thread isEqual:thread1])
+    if (blend.hash != blend1.hash || ![blend isEqual:blend1])
     {
-        STFail(@"Thread serialization and equality");
+        STFail(@"ThreadBlends serialization and equality");
     }
 }
 
