@@ -16,6 +16,8 @@
 #import "CSGDesignCell.h"
 #import "CSGDesignPoint.h"
 #import "CSGDesignPoints.h"
+#import "CSGBackStitch.h"
+#import "CSGStraightStitch.h"
 
 @interface CSGDecodec()
 
@@ -258,6 +260,36 @@
     
     CSGDesignPoints* aRet = [[CSGDesignPoints alloc] initWithPoints:aPoints];
     return [registry getDesignPoints: aRet];
+}
+
+- (CSGBackStitch*) deserializeBackStitch
+{
+    [self deserilizeObjectsRegistry];
+    return [self deserializeBackStitchImpl];
+}
+
+- (CSGBackStitch*) deserializeBackStitchImpl
+{
+    CSGThreadsBlend *aThreadsBlend = [self deserializeThreadsBlendImpl];
+    CSGDesignPoints *aCurve = [self deserializeDesignPointsImpl];
+    
+    CSGBackStitch *aStitch = [[CSGBackStitch alloc] initWithThreadsBlend:aThreadsBlend Curve:aCurve];
+    return [registry getBackStitch: aStitch];
+}
+
+- (CSGStraightStitch*) deserializeStraightStitch
+{
+    [self deserilizeObjectsRegistry];
+    return [self deserializeStraightStitchImpl];
+}
+
+- (CSGStraightStitch*) deserializeStraightStitchImpl
+{
+    CSGThreadsBlend *aThreadsBlend = [self deserializeThreadsBlendImpl];
+    CSGDesignPoints *aCurve = [self deserializeDesignPointsImpl];
+    
+    CSGStraightStitch *aStitch = [[CSGStraightStitch alloc] initWithThreadsBlend:aThreadsBlend Curve:aCurve];
+    return [registry getStraightStitch: aStitch];
 }
 
 @end

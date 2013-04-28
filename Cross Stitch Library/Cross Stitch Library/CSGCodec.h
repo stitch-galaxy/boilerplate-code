@@ -15,6 +15,8 @@
 @class CSGDesignCell;
 @class CSGDesignPoint;
 @class CSGDesignPoints;
+@class CSGBackStitch;
+@class CSGStraightStitch;
 
 @interface CSGCodec : NSObject
 
@@ -30,5 +32,7 @@
 - (void) serializeDesignCell: (CSGDesignCell*) aCell;
 - (void) serializeDesignPoint: (CSGDesignPoint*) aPoint;
 - (void) serializeDesignPoints: (CSGDesignPoints*) aPoints;
+- (void) serializeCSGBackStitch: (CSGBackStitch*) aStitch;
+- (void) serializeCSGStraightStitch: (CSGStraightStitch*) aStitch;
 
 @end

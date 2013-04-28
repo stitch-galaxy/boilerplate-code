@@ -16,6 +16,8 @@
 #import "CSGDesignCell.h"
 #import "CSGDesignPoint.h"
 #import "CSGDesignPoints.h"
+#import "CSGBackStitch.h"
+#import "CSGStraightStitch.h"
 
 @interface CSGCodec()
 
@@ -502,6 +504,48 @@
     {
         [self serializeDesignPointImpl:coord];
     }
+}
+
+- (void) serializeCSGBackStitch: (CSGBackStitch*) aStitch
+{
+    size_t anSize =  self.serializedObjectsRegistryLength;
+    anSize += [self serializedCSGBackStitchLength: aStitch];
+    anEncoder = [[CSGBinaryEncoder alloc] initWithLength: anSize];
+    
+    [self serializeObjectsRegistry];
+    [self serializeCSGBackStitchImpl:aStitch];
+}
+
+- (size_t) serializedCSGBackStitchLength: (CSGBackStitch*) aStitch
+{
+    return [self serializedThreadsBlendLength:aStitch.threadBlend] + [self serializedDesignPointsLength:aStitch.curve];
+}
+
+- (void) serializeCSGBackStitchImpl: (CSGBackStitch*) aStitch
+{
+    [self serializeThreadsBlendImpl:aStitch.threadBlend];
+    [self serializeDesignPointsImpl:aStitch.curve];
+}
+
+- (void) serializeCSGStraightStitch: (CSGStraightStitch*) aStitch
+{
+    size_t anSize =  self.serializedObjectsRegistryLength;
+    anSize += [self serializedCSGStraightStitchLength: aStitch];
+    anEncoder = [[CSGBinaryEncoder alloc] initWithLength: anSize];
+    
+    [self serializeObjectsRegistry];
+    [self serializeCSGStraightStitchImpl:aStitch];
+}
+
+- (size_t) serializedCSGStraightStitchLength: (CSGStraightStitch*) aStitch
+{
+    return [self serializedThreadsBlendLength:aStitch.threadBlend] + [self serializedDesignPointsLength:aStitch.curve];
+}
+
+- (void) serializeCSGStraightStitchImpl: (CSGStraightStitch*) aStitch
+{
+    [self serializeThreadsBlendImpl:aStitch.threadBlend];
+    [self serializeDesignPointsImpl:aStitch.curve];
 }
 
 

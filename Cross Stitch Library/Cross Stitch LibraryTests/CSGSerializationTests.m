@@ -128,6 +128,63 @@
     
 }
 
+-(void) testDesignPointsSerializationLegacy
+{
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGDesignPoints *points = [testhelper generateDesignPoints: registry];
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:points.serializedLength];
+    [points serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGDesignPoints* points1 = [CSGDesignPoints deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    if (points.hash != points1.hash || ![points isEqual:points1])
+    {
+        STFail(@"DesignCoordinate serialization and equality");
+    }
+    
+}
+-(void) testBackStitchSerializationLegacy
+{
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGBackStitch* stitch = [testhelper generateBackStitch: registry];
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
+    [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGBackStitch* stitch1 = [CSGBackStitch deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    
+    if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
+    {
+        STFail(@"BackStitch serialization and equality");
+    }
+}
+
+
+-(void) testStraightStitchSerializationLegacy
+{
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGStraightStitch* stitch = [testhelper generateStraightStitch: registry];
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
+    [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGStraightStitch* stitch1 = [CSGStraightStitch deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    
+    if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
+    {
+        STFail(@"StraightStitch serialization and equality");
+    }
+}
+
+
 - (void) testThreadSerializationAndEquality
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
@@ -221,42 +278,35 @@
     
     if (points.hash != points1.hash || ![points isEqual:points1])
     {
-        STFail(@"DesignPoint serialization and equality");
+        STFail(@"DesignPoints serialization and equality");
     }
 }
 
--(void) testDesignPointsSerialization
+- (void) testBackStitchSerializationAndEquality
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGDesignPoints *points = [testhelper generateDesignPoints: registry];
+    CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
+    CSGBackStitch* stitch = [testhelper generateBackStitch:registry];
+    [codec serializeCSGBackStitch:stitch];
     
-    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:points.serializedLength];
-    [points serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
+    CSGBackStitch* stitch1 = [decodec deserializeBackStitch];
     
-    
-    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
-    
-    CSGDesignPoints* points1 = [CSGDesignPoints deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];    
-    if (points.hash != points1.hash || ![points isEqual:points1])
+    if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
     {
-        STFail(@"DesignCoordinate serialization and equality");
+        STFail(@"BackStitch serialization and equality");
     }
-
 }
 
-
--(void) testBackStitchSerialization
+- (void) testStraightStitchSerializationAndEquality
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGBackStitch* stitch = [testhelper generateBackStitch: registry];
+    CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
+    CSGStraightStitch* stitch = [testhelper generateStraightStitch:registry];
+    [codec serializeCSGStraightStitch:stitch];
     
-    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
-    [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
-    
-    
-    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
-    
-    CSGBackStitch* stitch1 = [CSGBackStitch deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
+    CSGStraightStitch* stitch1 = [decodec deserializeStraightStitch];
     
     if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
     {
@@ -265,23 +315,7 @@
 }
 
 
--(void) testStraightStitchSerialization
-{
-    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGStraightStitch* stitch = [testhelper generateStraightStitch: registry];
-    
-    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:stitch.serializedLength];
-    [stitch serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
-    
-    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
-    
-    CSGStraightStitch* stitch1 = [CSGStraightStitch deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
-    
-    if (stitch.hash != stitch1.hash || ![stitch isEqual:stitch1])
-    {
-        STFail(@"StraightStitch serialization and equality");
-    }
-}
+
 
 
 -(void) testDesignSerialization
