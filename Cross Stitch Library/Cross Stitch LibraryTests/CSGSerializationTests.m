@@ -90,6 +90,25 @@
     }
 }
 
+-(void) testDesignCellSerializationLegacy
+{
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGDesignCell* cell = [testhelper generateDesignCell:registry];
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:cell.serializedLength];
+    [cell serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGDesignCell* cell1 = [CSGDesignCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    
+    if (cell.hash != cell1.hash || ![cell isEqual:cell1])
+    {
+        STFail(@"Design cell serialization and equality");
+    }
+}
+
 
 
 - (void) testThreadSerializationAndEquality
@@ -141,34 +160,19 @@
     }
 }
 
-+ (BOOL) IsSerializedViewEqualForData: (NSData*) data1 Data1: (NSData*) data2
-{
-    if (data1.length != data2.length)
-    {
-        return NO;
-    }
-    
-    NSUInteger length = data1.length;
-    
-    return (memcmp(data1.bytes, data2.bytes, length) == 0);
-}
-
--(void) testDesignCellSerialization
+- (void) testDesignCellSerializationAndEquality
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGDesignCell* cell = [testhelper generateDesignCell:registry];
+    CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
+    CSGDesignCell* cell = [testhelper generateDesignCell: registry];
+    [codec serializeDesignCell:cell];
     
-    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:cell.serializedLength];
-    [cell serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
-    
-    
-    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
-    
-    CSGDesignCell* cell1 = [CSGDesignCell deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
+    CSGDesignCell* cell1 = [decodec deserializeDesignCell];
     
     if (cell.hash != cell1.hash || ![cell isEqual:cell1])
     {
-        STFail(@"Design cell serialization and equality");
+        STFail(@"DesignCell serialization and equality");
     }
 }
 

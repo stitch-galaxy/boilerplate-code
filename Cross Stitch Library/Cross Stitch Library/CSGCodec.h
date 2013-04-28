@@ -12,6 +12,7 @@
 @class CSGObjectsRegistry;
 @class CSGThreadInBlend;
 @class CSGThreadsBlend;
+@class CSGDesignCell;
 
 @interface CSGCodec : NSObject
 
@@ -24,5 +25,6 @@
 - (void) serializeThread: (CSGThread*) aThread;
 - (void) serializeThreadInBlend: (CSGThreadInBlend*) aThread;
 - (void) serializeThreadsBlend: (CSGThreadsBlend*) aBlend;
+- (void) serializeDesignCell: (CSGDesignCell*) aCell;
 
 @end
