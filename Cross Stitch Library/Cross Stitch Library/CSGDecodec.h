@@ -13,6 +13,8 @@
 @class CSGThreadInBlend;
 @class CSGThreadsBlend;
 @class CSGDesignCell;
+@class CSGDesignPoint;
+@class CSGDesignPoints;
 
 @interface CSGDecodec : NSObject
 
@@ -24,5 +26,7 @@
 - (CSGThreadInBlend*) deserializeThreadInBlend;
 - (CSGThreadsBlend*) deserializeThreadsBlend;
 - (CSGDesignCell*) deserializeDesignCell;
+- (CSGDesignPoint*) deserializeDesignPoint;
+- (CSGDesignPoints*) deserializeDesignPoints;
 
 @end

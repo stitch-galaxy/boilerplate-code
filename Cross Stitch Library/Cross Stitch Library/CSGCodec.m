@@ -14,6 +14,8 @@
 #import "CSGThread.h"
 #import "CSGThreadsBlend.h"
 #import "CSGDesignCell.h"
+#import "CSGDesignPoint.h"
+#import "CSGDesignPoints.h"
 
 @interface CSGCodec()
 
@@ -437,6 +439,70 @@
     *buf = 0;
 }
 
+
+- (void) serializeDesignPoint: (CSGDesignPoint*) aPoint
+{
+    size_t anSize =  self.serializedObjectsRegistryLength;
+    anSize += [self serializedDesignPointLength: aPoint];
+    anEncoder = [[CSGBinaryEncoder alloc] initWithLength: anSize];
+    
+    [self serializeObjectsRegistry];
+    [self serializeDesignPointImpl:aPoint];
+}
+
+-(size_t) serializedDesignPointLength: (CSGDesignPoint*) aPoint
+{
+    return sizeof(uint32_t) * 2 + sizeof(uint8_t) * 3;
+}
+
+- (void) serializeDesignPointImpl: (CSGDesignPoint*) aPoint
+{
+    uint32_t* buf = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *buf = aPoint.x;
+    
+    uint32_t* buf1 = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *buf1 = aPoint.y;
+    
+    uint8_t* buf2 = [anEncoder modifyBytes:sizeof(uint8_t)];
+    *buf2 = aPoint.cellX;
+    
+    uint8_t* buf3 = [anEncoder modifyBytes:sizeof(uint8_t)];
+    *buf3 = aPoint.cellY;
+    
+    uint8_t* buf4 = [anEncoder modifyBytes:sizeof(uint8_t)];
+    *buf4 = aPoint.cellDenominator;
+
+}
+
+- (void) serializeDesignPoints: (CSGDesignPoints*) aPoints
+{
+    size_t anSize =  self.serializedObjectsRegistryLength;
+    anSize += [self serializedDesignPointsLength: aPoints];
+    anEncoder = [[CSGBinaryEncoder alloc] initWithLength: anSize];
+    
+    [self serializeObjectsRegistry];
+    [self serializeDesignPointsImpl:aPoints];
+}
+
+-(size_t) serializedDesignPointsLength: (CSGDesignPoints*) aPoints
+{
+    size_t size = sizeof(uint32_t);
+    for(CSGDesignPoint *coord in aPoints.points)
+    {
+        size += [self serializedDesignPointLength: coord];
+    }
+    return size;
+}
+
+- (void) serializeDesignPointsImpl: (CSGDesignPoints*) aPoints
+{
+    uint32_t* buf = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *buf = aPoints.points.count;
+    for(CSGDesignPoint *coord in aPoints.points)
+    {
+        [self serializeDesignPointImpl:coord];
+    }
+}
 
 
 @end

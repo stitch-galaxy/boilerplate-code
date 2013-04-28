@@ -109,7 +109,24 @@
     }
 }
 
-
+- (void) testDesignCellCoordinateSerializationLegacy
+{
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGDesignPoint *coordinate = [testhelper generateDesignCoordinate: registry];
+    
+    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:coordinate.serializedLength];
+    [coordinate serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    
+    
+    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
+    
+    CSGDesignPoint* coordinate1 = [CSGDesignPoint deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
+    if (coordinate.hash != coordinate1.hash || ![coordinate isEqual:coordinate1])
+    {
+        STFail(@"DesignCoordinate serialization and equality");
+    }
+    
+}
 
 - (void) testThreadSerializationAndEquality
 {
@@ -176,23 +193,36 @@
     }
 }
 
-- (void) testDesignCellCoordinateSerialization
+- (void) testDesignPointSerializationAndEquality
 {
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
-    CSGDesignPoint *coordinate = [testhelper generateDesignCoordinate: registry];
+    CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
+    CSGDesignPoint* point = [testhelper generateDesignCoordinate:registry];
+    [codec serializeDesignPoint:point];
     
-    CSGBinaryEncoder* anEncoder = [[CSGBinaryEncoder alloc] initWithLength:coordinate.serializedLength];
-    [coordinate serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
+    CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
+    CSGDesignPoint* point1 = [decodec deserializeDesignPoint];
     
-    
-    CSGBinaryDecoder* anDecoder = [[CSGBinaryDecoder alloc] initWithData:anEncoder.data];
-    
-    CSGDesignPoint* coordinate1 = [CSGDesignPoint deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];    
-    if (coordinate.hash != coordinate1.hash || ![coordinate isEqual:coordinate1])
+    if (point.hash != point1.hash || ![point isEqual:point1])
     {
-        STFail(@"DesignCoordinate serialization and equality");
+        STFail(@"DesignPoint serialization and equality");
     }
+}
 
+- (void) testDesignPointsSerializationAndEquality
+{
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
+    CSGDesignPoints* points = [testhelper generateDesignPoints:registry];
+    [codec serializeDesignPoints:points];
+    
+    CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
+    CSGDesignPoints* points1 = [decodec deserializeDesignPoints];
+    
+    if (points.hash != points1.hash || ![points isEqual:points1])
+    {
+        STFail(@"DesignPoint serialization and equality");
+    }
 }
 
 -(void) testDesignPointsSerialization

@@ -14,6 +14,8 @@
 #import "CSGThread.h"
 #import "CSGThreadsBlend.h"
 #import "CSGDesignCell.h"
+#import "CSGDesignPoint.h"
+#import "CSGDesignPoints.h"
 
 @interface CSGDecodec()
 
@@ -206,6 +208,56 @@
 		stitchType = *buf;
 	}
 	return [registry getDesignCellByPrototype:aCell];
+}
+
+- (CSGDesignPoint*) deserializeDesignPoint
+{
+    [self deserilizeObjectsRegistry];
+    return [self deserializeDesignPointImpl];
+}
+
+- (CSGDesignPoint*) deserializeDesignPointImpl
+{
+    const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t aX = *buf;
+    
+    const uint32_t *buf1 = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t anY = *buf1;
+    
+    const uint8_t *buf2 =[anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t aCellX = *buf2;
+    
+    const uint8_t *buf3 =[anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t aCellY = *buf3;
+    
+    
+    const uint8_t *buf4 =[anDecoder readBytes:sizeof(uint8_t)];
+    uint8_t aCellDenominator = *buf4;
+    
+    CSGDesignPoint *point = [[CSGDesignPoint alloc] initWithX:aX Y:anY CellX:aCellX CellY:aCellY CellDenominator:aCellDenominator];
+    
+    return [registry getDesignPoint: point];
+}
+
+- (CSGDesignPoints*) deserializeDesignPoints
+{
+    [self deserilizeObjectsRegistry];
+    return [self deserializeDesignPointsImpl];
+}
+
+- (CSGDesignPoints*) deserializeDesignPointsImpl
+{
+    NSMutableArray *aPoints = [[NSMutableArray alloc] init];
+    const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t numPoints = *buf;
+    for(uint32_t i = 0; i < numPoints; ++i)
+    {
+        CSGDesignPoint *coord = [self deserializeDesignPointImpl];
+        [aPoints addObject:coord];
+    }
+    
+    CSGDesignPoints* aRet = [[CSGDesignPoints alloc] initWithPoints:aPoints];
+    return [registry getDesignPoints: aRet];
 }
 
 @end
