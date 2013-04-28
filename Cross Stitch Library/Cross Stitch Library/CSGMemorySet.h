@@ -12,7 +12,8 @@
 
 - (id) member: (id) anObject;
 - (void) putObject: (id) anObject;
+- (uint32_t) count;
 
-@property (nonatomic, retain) NSHashTable* objectsSet;
+-(id) initWithCapacity: (uint32_t) aCapacity;
 
 @end

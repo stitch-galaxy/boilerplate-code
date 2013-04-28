@@ -18,6 +18,9 @@
 #import "CSGDesignPoints.h"
 #import "CSGBackStitch.h"
 #import "CSGStraightStitch.h"
+#import "CSGDesign.h"
+#import "CSGMemorySetWithIndex.h"
+#import "CSGMemorySet.h"
 
 @interface CSGCodec()
 
@@ -47,13 +50,36 @@
 
 - (size_t) serializedObjectsRegistryLength
 {
-    //TODO: implement when necessary
-    return 0;
+    size_t size = sizeof(uint32_t);//cellsSet
+    size += sizeof(uint32_t);//threadsMemorySet
+    size += sizeof(uint32_t);//threadsInBlendMemorySet
+    size += sizeof(uint32_t);//threadBlendsMemorySet
+    
+    for(CSGDesignCell *cell in registry.cellsMemorySet.objects)
+    {
+        size += [self serializedDesignCellLength:cell];
+    }
+    return size;
 }
 
 - (void) serializeObjectsRegistry
 {
-    //TODO: implement when necessary
+    uint32_t *buf = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *buf = registry.threadsMemorySet.count;
+    
+    buf = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *buf = registry.threadsInBlendMemorySet.count;
+    
+    buf = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *buf = registry.threadBlendsMemorySet.count;
+    
+    buf = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *buf = registry.cellsMemorySet.objects.count;
+    
+    for(CSGDesignCell *cell in registry.cellsMemorySet.objects)
+    {
+        [self serializeDesignCellImpl:cell];
+    }
 }
 
 - (void) serializeThread: (CSGThread*) aThread
@@ -506,46 +532,104 @@
     }
 }
 
-- (void) serializeCSGBackStitch: (CSGBackStitch*) aStitch
+- (void) serializeBackStitch: (CSGBackStitch*) aStitch
 {
     size_t anSize =  self.serializedObjectsRegistryLength;
-    anSize += [self serializedCSGBackStitchLength: aStitch];
+    anSize += [self serializedBackStitchLength: aStitch];
     anEncoder = [[CSGBinaryEncoder alloc] initWithLength: anSize];
     
     [self serializeObjectsRegistry];
-    [self serializeCSGBackStitchImpl:aStitch];
+    [self serializeBackStitchImpl:aStitch];
 }
 
-- (size_t) serializedCSGBackStitchLength: (CSGBackStitch*) aStitch
+- (size_t) serializedBackStitchLength: (CSGBackStitch*) aStitch
 {
     return [self serializedThreadsBlendLength:aStitch.threadBlend] + [self serializedDesignPointsLength:aStitch.curve];
 }
 
-- (void) serializeCSGBackStitchImpl: (CSGBackStitch*) aStitch
+- (void) serializeBackStitchImpl: (CSGBackStitch*) aStitch
 {
     [self serializeThreadsBlendImpl:aStitch.threadBlend];
     [self serializeDesignPointsImpl:aStitch.curve];
 }
 
-- (void) serializeCSGStraightStitch: (CSGStraightStitch*) aStitch
+- (void) serializeStraightStitch: (CSGStraightStitch*) aStitch
 {
     size_t anSize =  self.serializedObjectsRegistryLength;
-    anSize += [self serializedCSGStraightStitchLength: aStitch];
+    anSize += [self serializedStraightStitchLength: aStitch];
     anEncoder = [[CSGBinaryEncoder alloc] initWithLength: anSize];
     
     [self serializeObjectsRegistry];
-    [self serializeCSGStraightStitchImpl:aStitch];
+    [self serializeStraightStitchImpl:aStitch];
 }
 
-- (size_t) serializedCSGStraightStitchLength: (CSGStraightStitch*) aStitch
+- (size_t) serializedStraightStitchLength: (CSGStraightStitch*) aStitch
 {
     return [self serializedThreadsBlendLength:aStitch.threadBlend] + [self serializedDesignPointsLength:aStitch.curve];
 }
 
-- (void) serializeCSGStraightStitchImpl: (CSGStraightStitch*) aStitch
+- (void) serializeStraightStitchImpl: (CSGStraightStitch*) aStitch
 {
     [self serializeThreadsBlendImpl:aStitch.threadBlend];
     [self serializeDesignPointsImpl:aStitch.curve];
+}
+
+- (void) serializeDesign:(CSGDesign*) aDesign
+{
+    size_t anSize =  self.serializedObjectsRegistryLength;
+    anSize += [self serializedDesignLength: aDesign];
+    anEncoder = [[CSGBinaryEncoder alloc] initWithLength: anSize];
+    
+    [self serializeObjectsRegistry];
+    [self serializeDesignImpl:aDesign];
+}
+
+- (size_t) serializedDesignLength:(CSGDesign*) aDesign
+{
+    size_t size = sizeof(uint32_t) * 2;
+    size += sizeof(uint32_t) * aDesign.height * aDesign.width;
+    
+    size += sizeof(uint32_t);
+    for(CSGBackStitch* stitch in aDesign.backStitches)
+    {
+        size += [self serializedBackStitchLength:stitch];
+    }
+    size += sizeof(uint32_t);
+    for(CSGStraightStitch* stitch in aDesign.straightStitches)
+    {
+        size += [self serializedStraightStitchLength:stitch];
+    }
+    return size;
+}
+
+- (void) serializeDesignImpl:(CSGDesign*) aDesign
+{
+    uint32_t *pWidth = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *pWidth = aDesign.width;
+    uint32_t *pHeight = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *pHeight = aDesign.height;
+    
+    
+    uint32_t *pCellIndex = nil;
+    for(CSGDesignCell* cell in aDesign.cells)
+    {
+        pCellIndex = [anEncoder modifyBytes:sizeof(uint32_t)];
+        *pCellIndex = [registry getDesignCellIndex:cell];
+    }
+    
+    uint32_t *pBackStitchesNum = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *pBackStitchesNum = (uint32_t) aDesign.backStitches.count;
+    for(CSGBackStitch* stitch in aDesign.backStitches)
+    {
+        [self serializeBackStitchImpl: stitch];
+    }
+    
+    uint32_t *pStraightStitchesNum = [anEncoder modifyBytes:sizeof(uint32_t)];
+    *pStraightStitchesNum = (uint32_t) aDesign.straightStitches.count;
+    for(CSGStraightStitch* stitch in aDesign.straightStitches)
+    {
+        [self serializeStraightStitchImpl: stitch];
+    }
 }
 
 

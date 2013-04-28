@@ -18,8 +18,8 @@
 
 -(uint32_t) getIndexByObject: (id) anObject;
 
-@property (nonatomic, retain) NSHashTable* objectsSet;
-@property (nonatomic, retain) NSMutableArray* objectsArray;
-@property (nonatomic, retain) NSMapTable* objectToIndexMap;
+- (NSArray*) objects;
+
+- (id) initWithCapacity: (uint32_t) aCapacity;
 
 @end

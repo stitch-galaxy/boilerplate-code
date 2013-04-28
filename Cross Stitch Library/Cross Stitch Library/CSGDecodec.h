@@ -17,6 +17,7 @@
 @class CSGDesignPoints;
 @class CSGBackStitch;
 @class CSGStraightStitch;
+@class CSGDesign;
 
 
 @interface CSGDecodec : NSObject
@@ -33,5 +34,6 @@
 - (CSGDesignPoints*) deserializeDesignPoints;
 - (CSGBackStitch*) deserializeBackStitch;
 - (CSGStraightStitch*) deserializeStraightStitch;
+- (CSGDesign*) deserializeDesign;
 
 @end

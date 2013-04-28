@@ -39,22 +39,47 @@
 
 - (id) init
 {
+    return [self initWithThreadsMemorySetCapacity:1 ThreadsInBlendMemorySetCapacity:1 ThreadBlendsMemorySetCapacity:1 CellsMemorySetCapacity:1];
+}
+
+-(id) initWithThreadsMemorySetCapacity: (uint32_t) c1 ThreadsInBlendMemorySetCapacity: (uint32_t) c2 ThreadBlendsMemorySetCapacity: (uint32_t) c3 CellsMemorySetCapacity: (uint32_t) c4
+{
     if (self = [super init])
     {
         tmpThread = [CSGThread alloc];
-        threadsSet = [[CSGMemorySet alloc] init];
+        threadsSet = [[CSGMemorySet alloc] initWithCapacity: c1];
         
         tmpThreadInBlend = [CSGThreadInBlend alloc];
-        threadInBlendsSet = [[CSGMemorySet alloc] init];
+        threadInBlendsSet = [[CSGMemorySet alloc] initWithCapacity:c2];
         
         tmpThreadsBlend = [CSGThreadsBlend alloc];
-        threadBlendsSet = [[CSGMemorySet alloc] init];
+        threadBlendsSet = [[CSGMemorySet alloc] initWithCapacity:c3];
         
         tmpCell = [CSGDesignCell alloc];
-        cellsSet = [[CSGMemorySetWithIndex alloc] init];
+        cellsSet = [[CSGMemorySetWithIndex alloc] initWithCapacity:c4];
         
     }
     return self;
+}
+
+- (CSGMemorySetWithIndex*) cellsMemorySet
+{
+    return cellsSet;
+}
+
+- (CSGMemorySet*) threadsMemorySet
+{
+    return threadsSet;
+}
+
+- (CSGMemorySet*) threadsInBlendMemorySet
+{
+    return threadInBlendsSet;
+}
+
+- (CSGMemorySet*) threadBlendsMemorySet
+{
+    return threadBlendsSet;
 }
 
 - (CSGDesignCell*) getDesignCellPrototype

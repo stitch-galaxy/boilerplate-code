@@ -18,6 +18,8 @@
 #import "CSGDesignPoints.h"
 #import "CSGBackStitch.h"
 #import "CSGStraightStitch.h"
+#import "CSGDesign.h"
+#import "CSGMemorySetWithIndex.h"
 
 @interface CSGDecodec()
 
@@ -43,8 +45,28 @@
 
 -(void) deserilizeObjectsRegistry
 {
-    //TODO: implement when need
-    registry = [[CSGObjectsRegistry alloc] init];
+    const uint32_t *buf = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t c1 = *buf;
+    
+    buf = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t c2 = *buf;
+    
+    buf = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t c3 = *buf;
+    
+    buf = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t c4 = *buf;
+    
+    registry = [[CSGObjectsRegistry alloc] initWithThreadsMemorySetCapacity:c1 ThreadsInBlendMemorySetCapacity:c2 ThreadBlendsMemorySetCapacity:c3 CellsMemorySetCapacity:c4];
+    
+    
+    for(int i = 0; i < c4; ++i)
+    {
+        CSGDesignCell *cell = [self deserializeDesignCellImpl];
+        [registry.cellsMemorySet putObject:cell];
+    }
+    
+    
 }
 
 //deserialization
@@ -290,6 +312,52 @@
     
     CSGStraightStitch *aStitch = [[CSGStraightStitch alloc] initWithThreadsBlend:aThreadsBlend Curve:aCurve];
     return [registry getStraightStitch: aStitch];
+}
+
+- (CSGDesign*) deserializeDesign
+{
+    [self deserilizeObjectsRegistry];
+    return [self deserializeDesignImpl];
+
+}
+
+- (CSGDesign*) deserializeDesignImpl
+{
+    const uint32_t *pWidth = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t aWidth = *pWidth;
+    const uint32_t *pHeight = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t aHeight = *pHeight;
+    NSMutableArray *aCells = [[NSMutableArray alloc] initWithCapacity:aWidth * aHeight];
+    
+    
+    const uint32_t *pCellIndex = nil;
+    for(uint32_t i = 0; i < aWidth * aHeight; ++i)
+    {
+        pCellIndex = [anDecoder readBytes:sizeof(uint32_t)];
+        CSGDesignCell* cell = [registry getDesignCellByIndex:*pCellIndex];
+        [aCells addObject:cell];
+    }
+    
+    const uint32_t *pBackStitchesNum = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t aBackStitchesNum = *pBackStitchesNum;
+    NSMutableArray *aBackStitches = [[NSMutableArray alloc] initWithCapacity:aBackStitchesNum];
+    for(uint32_t i = 0; i < aBackStitchesNum; ++i)
+    {
+        CSGBackStitch* stitch = [self deserializeBackStitchImpl];
+        [aBackStitches addObject:stitch];
+    }
+    
+    const uint32_t *pStraightStitchesNum = [anDecoder readBytes:sizeof(uint32_t)];
+    uint32_t aStraightStitchesNum = *pStraightStitchesNum;
+    NSMutableArray *aStraightStitches = [[NSMutableArray alloc] initWithCapacity:aStraightStitchesNum];
+    for(uint32_t i = 0; i < aStraightStitchesNum; ++i)
+    {
+        CSGStraightStitch* stitch = [self deserializeStraightStitchImpl];
+        [aStraightStitches addObject:stitch];
+    }
+    
+    CSGDesign* aDesign = [[CSGDesign alloc] initWithWidth:aWidth Height:aHeight Cells:aCells BackStitches:aBackStitches StraightStitches:aStraightStitches];
+    return [registry getDesign: aDesign];
 }
 
 @end

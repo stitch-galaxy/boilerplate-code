@@ -287,7 +287,7 @@
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
     CSGBackStitch* stitch = [testhelper generateBackStitch:registry];
-    [codec serializeCSGBackStitch:stitch];
+    [codec serializeBackStitch:stitch];
     
     CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
     CSGBackStitch* stitch1 = [decodec deserializeBackStitch];
@@ -303,7 +303,7 @@
     CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
     CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
     CSGStraightStitch* stitch = [testhelper generateStraightStitch:registry];
-    [codec serializeCSGStraightStitch:stitch];
+    [codec serializeStraightStitch:stitch];
     
     CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
     CSGStraightStitch* stitch1 = [decodec deserializeStraightStitch];
@@ -315,10 +315,49 @@
 }
 
 
+-(void) testDesignSerializationLegacy
+{
+    NSLog(@"------------------------");
+    NSDate *tStart = [NSDate date];
+    
+    CSGObjectsRegistry *registry = [[CSGObjectsRegistry alloc] init];
+    CSGDesign* design = [testhelper generateDesign: registry];
+    NSDate *tStartSerialization = [NSDate date];
+    NSLog(@"%f seconds to generate design", [tStartSerialization timeIntervalSinceDate:tStart]);
+    
+    CSGCodec *codec = [[CSGCodec alloc] initWithObjectsRegistry:registry];
+    [codec serializeDesign: design];
+    
+    NSDate *tSerialized = [NSDate date];
+    
+    NSLog(@"%f seconds to serialize", [tSerialized timeIntervalSinceDate:tStartSerialization]);
+    
+    CSGDecodec *decodec = [[CSGDecodec alloc] initWithData:codec.data];
+    CSGDesign* design1 = [decodec deserializeDesign];
+    
+    NSDate *tDeserialized = [NSDate date];
+    NSLog(@"%f seconds to deserialize", [tDeserialized timeIntervalSinceDate:tSerialized]);
+    
+    if (design.hash != design1.hash)
+    {
+        STFail(@"Design serialization and equality");
+    }
+    
+    NSDate *tHashCompared = [NSDate date];
+    NSLog(@"%f seconds to compare hash", [tHashCompared timeIntervalSinceDate:tDeserialized]);
+    
+    if (![design isEqual:design1])
+    {
+        STFail(@"Design serialization and equality");
+    }
+    NSDate *tCompared = [NSDate date];
+    NSLog(@"%f seconds to check equality", [tCompared timeIntervalSinceDate:tHashCompared]);
+    NSLog(@"------------------------");
+}
 
 
-
--(void) testDesignSerialization
+/*
+-(void) testDesignSerializationLegacy
 {
     NSLog(@"------------------------");
     NSDate *tStart = [NSDate date];
@@ -365,7 +404,6 @@
     NSLog(@"%f seconds to check equality", [tCompared timeIntervalSinceDate:tHashCompared]);
     NSLog(@"------------------------");
 }
-
-
+*/
 
 @end

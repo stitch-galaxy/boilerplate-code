@@ -19,6 +19,8 @@
 @class CSGBackStitch;
 @class CSGStraightStitch;
 @class CSGDesign;
+@class CSGMemorySetWithIndex;
+@class CSGMemorySet;
 
 @interface CSGObjectsRegistry : NSObject
 
@@ -38,5 +40,12 @@
 - (CSGBackStitch*) getBackStitch: (CSGBackStitch*) anInstance;
 - (CSGStraightStitch*) getStraightStitch: (CSGStraightStitch*) anInstance;
 - (CSGDesign*) getDesign: (CSGDesign*) anInstance;
+
+//Serilization-deserializtion part
+- (CSGMemorySetWithIndex*) cellsMemorySet;
+- (CSGMemorySet*) threadsMemorySet;
+- (CSGMemorySet*) threadsInBlendMemorySet;
+- (CSGMemorySet*) threadBlendsMemorySet;
+-(id) initWithThreadsMemorySetCapacity: (uint32_t) c1 ThreadsInBlendMemorySetCapacity: (uint32_t) c2 ThreadBlendsMemorySetCapacity: (uint32_t) c3 CellsMemorySetCapacity: (uint32_t) c4;
 
 @end
