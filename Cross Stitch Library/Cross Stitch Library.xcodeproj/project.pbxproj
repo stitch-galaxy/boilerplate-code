@@ -145,39 +145,10 @@
 		ECB71DE216E7E77A000FC6F4 /* Embrodiery */ = {
 			isa = PBXGroup;
 			children = (
-				EC869B94171BEACD00DA8AE4 /* CSGDesignGenerator.h */,
-				EC869B95171BEACD00DA8AE4 /* CSGDesignGenerator.m */,
-				ECB42D7E1715ED90000C8037 /* CSGDesign.h */,
-				ECB42D7F1715ED90000C8037 /* CSGDesign.m */,
-				ECE7670C16F3295A00D5A67A /* Serialization */,
-				ECB71DE516E7EB24000FC6F4 /* Stitches */,
-				ECB71DE316E7E794000FC6F4 /* Materials */,
-			);
-			name = Embrodiery;
-			sourceTree = "<group>";
-		};
-		ECB71DE316E7E794000FC6F4 /* Materials */ = {
-			isa = PBXGroup;
-			children = (
 				ECCB3BA416D50348002C4033 /* CSGThread.h */,
 				ECCB3BA516D50348002C4033 /* CSGThread.m */,
-			);
-			name = Materials;
-			sourceTree = "<group>";
-		};
-		ECB71DE516E7EB24000FC6F4 /* Stitches */ = {
-			isa = PBXGroup;
-			children = (
-				ECB71DE616E7EB56000FC6F4 /* Thread */,
 				ECE7671816F3B85F00D5A67A /* CSGDesignCell.h */,
 				ECE7671916F3B85F00D5A67A /* CSGDesignCell.m */,
-			);
-			name = Stitches;
-			sourceTree = "<group>";
-		};
-		ECB71DE616E7EB56000FC6F4 /* Thread */ = {
-			isa = PBXGroup;
-			children = (
 				ECB42D7B1715ECF1000C8037 /* CSGStraightStitch.h */,
 				ECB42D7C1715ECF1000C8037 /* CSGStraightStitch.m */,
 				ECCFD9F016F0F903004FE762 /* CSGThreadsBlend.h */,
@@ -188,8 +159,12 @@
 				ECC91925170CB19200CA4077 /* CSGDesignPoint.m */,
 				ECC919271710AEDE00CA4077 /* CSGBackStitch.h */,
 				ECC919281710AEDE00CA4077 /* CSGBackStitch.m */,
+				EC869B94171BEACD00DA8AE4 /* CSGDesignGenerator.h */,
+				EC869B95171BEACD00DA8AE4 /* CSGDesignGenerator.m */,
+				ECB42D7E1715ED90000C8037 /* CSGDesign.h */,
+				ECB42D7F1715ED90000C8037 /* CSGDesign.m */,
 			);
-			name = Thread;
+			name = Embrodiery;
 			sourceTree = "<group>";
 		};
 		ECC2327F16D1372100105066 = {
@@ -282,6 +257,7 @@
 		ECCB3BA016D4CEF0002C4033 /* Ver1.0 */ = {
 			isa = PBXGroup;
 			children = (
+				ECE7670C16F3295A00D5A67A /* Serialization */,
 				ECB71DE216E7E77A000FC6F4 /* Embrodiery */,
 				EC0F6BC016DCC6E8007FF7CF /* ArtWorkInfo.h */,
 				EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */,
