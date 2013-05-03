@@ -25,15 +25,6 @@
 
 @end
 
-@interface CSGThreadInBlend (Serialization)
-
-- (size_t) serializedLength;
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-+ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-
-@end
-
-
 @protocol CSGThreadsBlend
 
 - (NSArray*) threadsInBlend;
@@ -43,13 +34,5 @@
 @interface CSGThreadsBlend : NSObject<CSGThreadsBlend>
 
 - (id) initWithThreadsInBlend: (NSArray* ) threadsInBlend;
-
-@end
-
-@interface CSGThreadsBlend (Serialization)
-
-- (size_t) serializedLength;
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-+ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
 
 @end

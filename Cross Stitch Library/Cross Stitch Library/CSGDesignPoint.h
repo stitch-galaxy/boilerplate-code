@@ -27,13 +27,3 @@
 - (id) initWithX: (uint32_t) aX Y: (uint32_t) anY CellX: (uint8_t) aCellX CellY: (uint8_t) aCellY CellDenominator: (uint8_t) aCellDenominator;
 
 @end
-
-
-@interface CSGDesignPoint (Serialization)
-
-- (size_t) serializedLength;
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-+ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-
-
-@end

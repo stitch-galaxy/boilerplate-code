@@ -92,39 +92,6 @@
 
 @end
 
-
-@implementation CSGThreadInBlend (Serialization)
-
-- (size_t) serializedLength
-{
-    //return sizeof(uint32_t) + sizeof(uint8_t);
-    return CSG_thread.serializedLength + sizeof(uint8_t);
-}
-
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
-{
-    //uint32_t *tIndex = [anEncoder modifyBytes: sizeof(uint32_t)];
-    //*tIndex = [registry getThreadIndex:CSG_thread];
-    [CSG_thread serializeWithBinaryEncoder: anEncoder ObjectsRegistry:registry];
-        
-    uint8_t *buf = [anEncoder modifyBytes: sizeof(uint8_t)];
-    *buf = CSG_flossCount;
-}
-
-+ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-{
-    CSGThread *thread = [CSGThread deserializeWithBinaryDecoder: anDecoder ObjectsRegistry: registry];
-    //const uint32_t *tIndex = [anDecoder readBytes:sizeof(uint32_t)];
-    //CSGThread *thread = [registry getThreadByIndex: *tIndex];
-    
-    const uint8_t *buf1 = [anDecoder readBytes:sizeof(uint8_t)];
-    uint8_t flossCount = *buf1;
-    
-    return [registry getThreadInBlendWithThread:thread FlossCount:flossCount];
-}
-
-@end
-
 @interface CSGThreadsBlend ()
 
 @property NSArray* CSG_threads;
@@ -210,46 +177,6 @@
     return hash;
 }
 
-
-@end
-
-@implementation CSGThreadsBlend (Serialization)
-
-- (size_t) serializedLength
-{
-    size_t result = sizeof(uint8_t);
-    
-    for(CSGThreadInBlend *thread in CSG_threads)
-    {
-        result += [thread serializedLength];
-    }
-    return result;
-}
-
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
-{
-    uint8_t* buf = [anEncoder modifyBytes:sizeof(uint8_t)];
-    *buf = [CSG_threads count];
-    
-    for(CSGThreadInBlend *thread in CSG_threads)
-    {
-        [thread serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
-    }
-}
-
-+ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-{
-    const uint8_t *buf = [anDecoder readBytes:sizeof(uint8_t)];
-    uint8_t length = *buf;
-    
-    NSMutableArray* threadsInBlend = [[NSMutableArray alloc] init];
-    for(int i = 0; i < length; ++i)
-    {
-        CSGThreadInBlend* threadInBlend = [CSGThreadInBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
-        [threadsInBlend addObject:threadInBlend];
-    }
-    return [registry getThreadsBlendWithThreadsInBlend:threadsInBlend];
-}
 
 @end
 

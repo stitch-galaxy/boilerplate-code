@@ -71,27 +71,3 @@
 }
 
 @end
-
-@implementation CSGBackStitch (Serialization)
-
-- (size_t) serializedLength
-{
-    return threadBlend.serializedLength + curve.serializedLength;
-}
-
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry
-{
-    [threadBlend serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
-    [curve serializeWithBinaryEncoder:anEncoder ObjectsRegistry:registry];
-}
-
-+ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-{
-    CSGThreadsBlend *aThreadsBlend = [CSGThreadsBlend deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
-    CSGDesignPoints *aCurve = [CSGDesignPoints deserializeWithBinaryDecoder:anDecoder ObjectsRegistry:registry];
-    
-    CSGBackStitch *aStitch = [[CSGBackStitch alloc] initWithThreadsBlend:aThreadsBlend Curve:aCurve];
-    return [registry getBackStitch: aStitch];
-}
-
-@end

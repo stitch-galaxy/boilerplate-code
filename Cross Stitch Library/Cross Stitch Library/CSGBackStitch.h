@@ -24,12 +24,4 @@
 
 @end
 
-@interface CSGBackStitch (Serialization)
-
-- (size_t) serializedLength;
-- (void) serializeWithBinaryEncoder: (CSGBinaryEncoder *) anEncoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-+ (id) deserializeWithBinaryDecoder: (CSGBinaryDecoder*) anDecoder ObjectsRegistry: (CSGObjectsRegistry*) registry;
-
-@end
-
 
