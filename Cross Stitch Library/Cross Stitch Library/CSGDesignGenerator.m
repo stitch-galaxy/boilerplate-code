@@ -11,8 +11,8 @@
 #define DESIGN_COLORS_NUMBER 50
 #define DESIGN_MAX_FLOSSES_OF_THREAD 2
 #define DESIGN_THREADS_IN_BLEND_MAX_NUMBER 2
-#define DESIGN_WIDTH 2//00
-#define DESIGN_HEIGHT 2//00
+#define DESIGN_WIDTH 200
+#define DESIGN_HEIGHT 200
 #define DESIGN_CELL_GRANULARITY 2
 
 
@@ -242,7 +242,17 @@
     {
         [aCells addObject: [self generateDesignCell:registry]];
     }
-    CSGDesign* design = [[CSGDesign alloc] initWithWidth:DESIGN_WIDTH Height:DESIGN_HEIGHT Cells:aCells BackStitches:aBackStitches StraightStitches:aStraightStitches];
+    
+    uint32_t numDoneBytes = (DESIGN_WIDTH * DESIGN_HEIGHT - 1) / 8 + 1;
+    
+    uint8_t *done = malloc(numDoneBytes);
+    for(uint32_t i = 0; i < numDoneBytes; ++i)
+    {
+        uint8_t *b = done + i;
+        *b = [CSGDesignGenerator randomIndexFor:255];
+    }
+    
+    CSGDesign* design = [[CSGDesign alloc] initWithWidth:DESIGN_WIDTH Height:DESIGN_HEIGHT Cells:aCells BackStitches:aBackStitches StraightStitches:aStraightStitches Done:done];
     return design;
 }
 

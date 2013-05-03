@@ -589,6 +589,9 @@
     size_t size = sizeof(uint32_t) * 2;
     size += sizeof(uint32_t) * aDesign.height * aDesign.width;
     
+    size += (aDesign.height * aDesign.width - 1) / 8 + 1;
+    
+    
     size += sizeof(uint32_t);
     for(CSGBackStitch* stitch in aDesign.backStitches)
     {
@@ -616,6 +619,10 @@
         pCellIndex = [anEncoder modifyBytes:sizeof(uint32_t)];
         *pCellIndex = [registry getDesignCellIndex:cell];
     }
+    
+    size_t numBytes = (aDesign.height * aDesign.width - 1) / 8 + 1;
+    uint8_t *buf = [anEncoder modifyBytes:numBytes];
+    memcpy(buf, aDesign.doneBitMask, numBytes);
     
     uint32_t *pBackStitchesNum = [anEncoder modifyBytes:sizeof(uint32_t)];
     *pBackStitchesNum = (uint32_t) aDesign.backStitches.count;

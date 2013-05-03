@@ -199,6 +199,19 @@
     }
     NSDate *tCompared = [NSDate date];
     NSLog(@"%f seconds to check equality", [tCompared timeIntervalSinceDate:tHashCompared]);
+    
+    [design setDone:YES AtX:10 Y:10];
+    if (![design isDoneAtX:10 Y:10])
+    {
+        STFail(@"Design done function failed");
+    }
+    
+    [design setDone:NO AtX:10 Y:10];
+    if ([design isDoneAtX:10 Y:10])
+    {
+        STFail(@"Design done function failed");
+    }
+    
     NSLog(@"------------------------");
 }
 

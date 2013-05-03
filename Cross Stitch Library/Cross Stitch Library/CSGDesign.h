@@ -20,10 +20,14 @@
 @property (nonatomic, retain) NSArray* backStitches;
 @property (nonatomic, retain) NSArray* straightStitches;
 
+- (bool) isDoneAtX: (uint32_t) x Y: (uint32_t) y;
+- (void) setDone: (bool) isDone AtX: (uint32_t) x Y: (uint32_t) y;
+- (void*) doneBitMask;
+
 @end
 
 @interface CSGDesign : NSObject<CSGDesign>
 
--(id) initWithWidth: (uint32_t) aWidth Height: (uint32_t) aHeight Cells: (NSArray*) aCells BackStitches: (NSArray*) aBackStitches StraightStitches: (NSArray*) aStraightStitches;
+-(id) initWithWidth: (uint32_t) aWidth Height: (uint32_t) aHeight Cells: (NSArray*) aCells BackStitches: (NSArray*) aBackStitches StraightStitches: (NSArray*) aStraightStitches Done: (uint8_t*) aDone;
 
 @end

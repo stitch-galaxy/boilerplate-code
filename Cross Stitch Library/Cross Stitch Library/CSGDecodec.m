@@ -344,6 +344,12 @@
         [aCells addObject:cell];
     }
     
+    size_t numBytes = (aWidth * aHeight - 1) / 8 + 1;
+    const uint8_t *buf = [anDecoder readBytes:numBytes];
+    
+    uint8_t *doneBitMask = malloc(numBytes);
+    memcpy(doneBitMask, buf, numBytes);
+    
     const uint32_t *pBackStitchesNum = [anDecoder readBytes:sizeof(uint32_t)];
     uint32_t aBackStitchesNum = *pBackStitchesNum;
     NSMutableArray *aBackStitches = [[NSMutableArray alloc] initWithCapacity:aBackStitchesNum];
@@ -362,7 +368,7 @@
         [aStraightStitches addObject:stitch];
     }
     
-    CSGDesign* aDesign = [[CSGDesign alloc] initWithWidth:aWidth Height:aHeight Cells:aCells BackStitches:aBackStitches StraightStitches:aStraightStitches];
+    CSGDesign* aDesign = [[CSGDesign alloc] initWithWidth:aWidth Height:aHeight Cells:aCells BackStitches:aBackStitches StraightStitches:aStraightStitches Done:doneBitMask];
     return [registry getDesign: aDesign];
 }
 

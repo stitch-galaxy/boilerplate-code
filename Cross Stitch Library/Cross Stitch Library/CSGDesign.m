@@ -1,6 +1,9 @@
 #import "CSGDesign.h"
 
 @implementation CSGDesign
+{
+    uint8_t *done;
+}
 
 @synthesize width;
 @synthesize height;
@@ -15,7 +18,7 @@
     return nil;
 }
 
--(id) initWithWidth: (uint32_t) aWidth Height: (uint32_t) aHeight Cells: (NSArray*) aCells BackStitches: (NSArray*) aBackStitches StraightStitches: (NSArray*) aStraightStitches
+-(id) initWithWidth: (uint32_t) aWidth Height: (uint32_t) aHeight Cells: (NSArray*) aCells BackStitches: (NSArray*) aBackStitches StraightStitches: (NSArray*) aStraightStitches Done: (uint8_t*) aDone
 {
     if (self = [super init])
     {
@@ -24,10 +27,53 @@
         cells = aCells;
         backStitches = aBackStitches;
         straightStitches = aStraightStitches;
+        done = aDone;
     }
     return self;
 }
 
+- (void*) doneBitMask
+{
+    return done;
+}
+
+- (void) dealloc
+{
+    free(done);
+    // [super dealloc]; << provided by the compiler
+}
+
+- (bool) isDoneAtX: (uint32_t) x Y: (uint32_t) y
+{
+    uint32_t idx = (width * y + x);
+    uint8_t *buf = done + idx / 8;
+    uint8_t targetByte = *buf;
+    
+    uint8_t inByteIdx = idx % 8;
+    uint8_t value = targetByte >> (8 - inByteIdx - 1);
+    return value & 0x1;
+}
+
+- (void) setDone: (bool) isDone AtX: (uint32_t) x Y: (uint32_t) y
+{
+    uint32_t idx = (width * y + x);
+    uint8_t *buf = done + idx / 8;
+    uint8_t sourceByte = *buf;
+    
+    uint8_t inByteIdx = idx % 8;
+    uint8_t shift = 8 - inByteIdx - 1;
+    
+    uint8_t dstByte = sourceByte;
+    if (isDone)
+    {
+        dstByte |= 1 << shift;
+    }
+    else
+    {
+        dstByte &= ~(1 << shift);
+    }
+    *buf = dstByte;
+}
 
 - (BOOL) isEqual: (id) object
 {
@@ -65,6 +111,11 @@
         }
     }
     
+    if (memcmp(done, aDesign.doneBitMask, (width * height - 1) / 8 + 1) != 0)
+    {
+        return NO;
+    }
+    
     if (backStitches.count != aDesign.backStitches.count)
     {
         return NO;
@@ -97,22 +148,29 @@
 - (NSUInteger)hash
 {
     NSUInteger hash = 17;
-    hash = hash*31 + width;
-    hash = hash*31 + height;
+    hash = hash * 31 + width;
+    hash = hash * 31 + height;
     for(uint32_t i = 0; i < width * height; ++i)
     {
         CSGDesignCell* o = [cells objectAtIndex:i];
-        hash = hash*31 + o.hash;
+        hash = hash * 31 + o.hash;
     }
+    
+    for(uint32_t i = 0; i < (width * height - 1) / 8 + 1; ++i)
+    {
+        hash = hash * 31 + *(done + i);
+    }
+    
+    
     for(uint32_t i = 0; i < backStitches.count; ++i)
     {
         CSGBackStitch* o = [backStitches objectAtIndex:i];
-        hash = hash*31 + o.hash;
+        hash = hash * 31 + o.hash;
     }
     for(uint32_t i = 0; i < straightStitches.count; ++i)
     {
         CSGStraightStitch* o = [straightStitches objectAtIndex:i];
-        hash = hash*31 + o.hash;
+        hash = hash * 31 + o.hash;
     }
     
     return hash;
