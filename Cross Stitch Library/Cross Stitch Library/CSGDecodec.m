@@ -62,8 +62,14 @@
     
     for(int i = 0; i < c4; ++i)
     {
-        CSGDesignCell *cell = [self deserializeDesignCellImpl];
-        [registry.cellsMemorySet putObject:cell];
+        //NB: no necessity to put object in set, because deserializeDesignCellImpl already did it.
+//        CSGDesignCell *cell = [self deserializeDesignCellImpl];
+//        if (![registry.cellsMemorySet member:cell])
+//        {
+//            [registry.cellsMemorySet putObject:cell];
+//        }
+        
+        [self deserializeDesignCellImpl];
     }
     
     
@@ -248,14 +254,14 @@
     const uint32_t *buf1 = [anDecoder readBytes:sizeof(uint32_t)];
     uint32_t anY = *buf1;
     
-    const uint8_t *buf2 =[anDecoder readBytes:sizeof(uint8_t)];
+    const uint8_t *buf2 = [anDecoder readBytes:sizeof(uint8_t)];
     uint8_t aCellX = *buf2;
     
-    const uint8_t *buf3 =[anDecoder readBytes:sizeof(uint8_t)];
+    const uint8_t *buf3 = [anDecoder readBytes:sizeof(uint8_t)];
     uint8_t aCellY = *buf3;
     
     
-    const uint8_t *buf4 =[anDecoder readBytes:sizeof(uint8_t)];
+    const uint8_t *buf4 = [anDecoder readBytes:sizeof(uint8_t)];
     uint8_t aCellDenominator = *buf4;
     
     CSGDesignPoint *point = [[CSGDesignPoint alloc] initWithX:aX Y:anY CellX:aCellX CellY:aCellY CellDenominator:aCellDenominator];
