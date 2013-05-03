@@ -22,6 +22,8 @@
 
 - (bool) isDoneAtX: (uint32_t) x Y: (uint32_t) y;
 - (void) setDone: (bool) isDone AtX: (uint32_t) x Y: (uint32_t) y;
+- (void) setDone: (bool) isDone FromX: (uint32_t) fromX Y: (uint32_t) fromY ToX:(uint32_t) toX Y: (uint32_t) toY;
+
 - (void*) doneBitMask;
 
 @end

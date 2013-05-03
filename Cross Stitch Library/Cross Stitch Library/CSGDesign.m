@@ -46,6 +46,11 @@
 - (bool) isDoneAtX: (uint32_t) x Y: (uint32_t) y
 {
     uint32_t idx = (width * y + x);
+    return [self isDoneImpl: idx];
+}
+
+- (bool) isDoneImpl: (uint32_t) idx
+{
     uint8_t *buf = done + idx / 8;
     uint8_t targetByte = *buf;
     
@@ -57,6 +62,11 @@
 - (void) setDone: (bool) isDone AtX: (uint32_t) x Y: (uint32_t) y
 {
     uint32_t idx = (width * y + x);
+    [self setDoneImpl:isDone Idx:idx];
+}
+
+- (void) setDoneImpl: (bool) isDone Idx: (uint32_t) idx
+{
     uint8_t *buf = done + idx / 8;
     uint8_t sourceByte = *buf;
     
@@ -73,6 +83,17 @@
         dstByte &= ~(1 << shift);
     }
     *buf = dstByte;
+}
+
+- (void) setDone: (bool) isDone FromX: (uint32_t) fromX Y: (uint32_t) fromY ToX:(uint32_t) toX Y: (uint32_t) toY
+{
+    for(uint32_t x = fromX; x <= toX; ++x)
+    {
+        for(uint32_t y = fromY; y <= toY; ++y)
+        {
+            [self setDone:isDone AtX:x Y:y];
+        }
+    }
 }
 
 - (BOOL) isEqual: (id) object
