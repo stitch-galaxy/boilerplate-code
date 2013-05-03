@@ -10,16 +10,14 @@
 
 @interface CSGMemorySetWithIndex : NSObject
 
+- (id) initWithCapacity: (uint32_t) aCapacity;
+
+
 - (id) member: (id) anObject;
-
 - (void) putObject: (id) anObject;
-
 - (id) getObjectByIndex: (uint32_t) anIndex;
-
 -(uint32_t) getIndexByObject: (id) anObject;
-
 - (NSArray*) objects;
 
-- (id) initWithCapacity: (uint32_t) aCapacity;
 
 @end

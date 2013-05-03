@@ -7,10 +7,14 @@
 //
 
 #import "CSGDesignGenerator.h"
+#import "CSGMemorySetWithIndex.h"
 
 #define DESIGN_COLORS_NUMBER 50
 #define DESIGN_MAX_FLOSSES_OF_THREAD 2
 #define DESIGN_THREADS_IN_BLEND_MAX_NUMBER 2
+
+#define DESIGN_CELLS_VARIANT_NUMBERS 50 * 2 * 2 * 2
+
 #define DESIGN_WIDTH 200
 #define DESIGN_HEIGHT 200
 #define DESIGN_CELL_GRANULARITY 2
@@ -85,8 +89,15 @@
     return [registry getThreadsBlendWithThreadsInBlend:aThreads];
 }
 
+
+
 - (CSGDesignCell*) generateDesignCell: (CSGObjectsRegistry*) registry;
 {
+    if (registry.cellsMemorySet.objects.count >= DESIGN_CELLS_VARIANT_NUMBERS)
+    {
+        return [registry getDesignCellByIndex:[CSGDesignGenerator randomIndexFor:DESIGN_CELLS_VARIANT_NUMBERS - 1]];
+    }
+    
     CSGDesignCell* designCell = [registry getDesignCellPrototype];
     //Cross
     if (CSGDesignGenerator.randomBool)
