@@ -38,6 +38,8 @@
 		ECC919291710AEDE00CA4077 /* CSGBackStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC919281710AEDE00CA4077 /* CSGBackStitch.m */; };
 		ECCB3BA616D50348002C4033 /* CSGThread.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB3BA516D50348002C4033 /* CSGThread.m */; };
 		ECCFD9F216F0F903004FE762 /* CSGThreadsBlend.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */; };
+		ECDB44881734872200224FA7 /* CSGDesignParser.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDB44871734872200224FA7 /* CSGDesignParser.m */; };
+		ECDB448C17348B3100224FA7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ECDB44891734887300224FA7 /* libxml2.dylib */; };
 		ECDE8A4A171EE73D00EE1B6F /* CSGMemorySet.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDE8A49171EE73D00EE1B6F /* CSGMemorySet.m */; };
 		ECE7670F16F3297D00D5A67A /* CSGBinaryEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7670E16F3297D00D5A67A /* CSGBinaryEncoder.m */; };
 		ECE7671216F332F100D5A67A /* CSGBinaryDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE7671116F332F100D5A67A /* CSGBinaryDecoder.m */; };
@@ -107,6 +109,9 @@
 		ECCFD9EF16F09A6A004FE762 /* Cross Stitch Library.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Cross Stitch Library.entitlements"; sourceTree = "<group>"; };
 		ECCFD9F016F0F903004FE762 /* CSGThreadsBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGThreadsBlend.h; sourceTree = "<group>"; };
 		ECCFD9F116F0F903004FE762 /* CSGThreadsBlend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGThreadsBlend.m; sourceTree = "<group>"; };
+		ECDB44861734872200224FA7 /* CSGDesignParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignParser.h; sourceTree = "<group>"; };
+		ECDB44871734872200224FA7 /* CSGDesignParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesignParser.m; sourceTree = "<group>"; };
+		ECDB44891734887300224FA7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		ECDE8A48171EE73D00EE1B6F /* CSGMemorySet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGMemorySet.h; sourceTree = "<group>"; };
 		ECDE8A49171EE73D00EE1B6F /* CSGMemorySet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGMemorySet.m; sourceTree = "<group>"; };
 		ECE7670D16F3297D00D5A67A /* CSGBinaryEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGBinaryEncoder.h; sourceTree = "<group>"; };
@@ -123,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECDB448C17348B3100224FA7 /* libxml2.dylib in Frameworks */,
 				ECC2328C16D1372100105066 /* UIKit.framework in Frameworks */,
 				ECC2328E16D1372100105066 /* Foundation.framework in Frameworks */,
 				ECC2329016D1372100105066 /* CoreGraphics.framework in Frameworks */,
@@ -170,6 +176,7 @@
 		ECC2327F16D1372100105066 = {
 			isa = PBXGroup;
 			children = (
+				ECDB44891734887300224FA7 /* libxml2.dylib */,
 				ECC2329116D1372100105066 /* Cross Stitch Library */,
 				ECC232B816D1372100105066 /* Cross Stitch LibraryTests */,
 				ECC2328A16D1372100105066 /* Frameworks */,
@@ -257,6 +264,7 @@
 		ECCB3BA016D4CEF0002C4033 /* Ver1.0 */ = {
 			isa = PBXGroup;
 			children = (
+				ECDB4485173486DD00224FA7 /* Parsers */,
 				ECE7670C16F3295A00D5A67A /* Serialization */,
 				ECB71DE216E7E77A000FC6F4 /* Embrodiery */,
 				EC0F6BC016DCC6E8007FF7CF /* ArtWorkInfo.h */,
@@ -265,6 +273,15 @@
 				ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */,
 			);
 			name = Ver1.0;
+			sourceTree = "<group>";
+		};
+		ECDB4485173486DD00224FA7 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				ECDB44861734872200224FA7 /* CSGDesignParser.h */,
+				ECDB44871734872200224FA7 /* CSGDesignParser.m */,
+			);
+			name = Parsers;
 			sourceTree = "<group>";
 		};
 		ECE7670C16F3295A00D5A67A /* Serialization */ = {
@@ -421,6 +438,7 @@
 				ECC584B7172D3E1500732EC1 /* CSGObjectsRegistry.m in Sources */,
 				ECC584BA172D3E9700732EC1 /* CSGCodec.m in Sources */,
 				ECC584BD172D490100732EC1 /* CSGDecodec.m in Sources */,
+				ECDB44881734872200224FA7 /* CSGDesignParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +559,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Cross Stitch Library/Cross Stitch Library-Prefix.pch";
+				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
 				INFOPLIST_FILE = "Cross Stitch Library/Cross Stitch Library-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -552,6 +571,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Cross Stitch Library/Cross Stitch Library-Prefix.pch";
+				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
 				INFOPLIST_FILE = "Cross Stitch Library/Cross Stitch Library-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
