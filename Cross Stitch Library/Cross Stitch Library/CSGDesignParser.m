@@ -9,6 +9,19 @@
 #import "CSGDesignParser.h"
 #import "CSGDesign.h"
 
+#import <libxml/tree.h>
+
+// define a struct to hold the attribute info
+struct _xmlSAX2Attributes {
+    const xmlChar* localname;
+    const xmlChar* prefix;
+    const xmlChar* uri;
+    const xmlChar* value;
+    const xmlChar* end;
+};
+typedef struct _xmlSAX2Attributes xmlSAX2Attributes;
+
+
 // called from libxml functions
 @interface CSGDesignParser (LibXMLParserMethods)
 
@@ -28,6 +41,22 @@ static xmlSAXHandler simpleSAXHandlerStruct;
 
 
 @interface CSGDesignParser()
+{
+    xmlParserCtxtPtr xmlParserContext;
+}
+
+//url
+@property(nonatomic, retain) NSURL* url;
+//callback
+@property(nonatomic, assign) id<CSGDesignParserDelegate> delegate;
+//flags
+@property(nonatomic, assign) BOOL error;
+@property(nonatomic, assign) BOOL done;
+//connection and threading
+@property(nonatomic, retain) NSURLConnection *connection;
+@property(nonatomic, retain) NSOperationQueue *retrieverQueue;
+//business object
+@property(nonatomic, retain) CSGDesign *currentDesign;
 
 @property (nonatomic, retain) NSMutableString *title;
 @property (nonatomic, assign) BOOL parsingTitle;
@@ -73,11 +102,14 @@ static xmlSAXHandler simpleSAXHandlerStruct;
 	[self.retrieverQueue addOperation:op];
 }
 
--(id) initWithUrl: (NSString*) anUrl
+-(id) initWithUrl: (NSURL*) anUrl delegate:(id<CSGDesignParserDelegate>)anDelegate
 {
     if (self = [super init])
     {
         url = anUrl;
+        delegate = anDelegate;
+        done = false;
+        error = false;
     }
     return self;
 }
@@ -86,7 +118,7 @@ static xmlSAXHandler simpleSAXHandlerStruct;
 {
     BOOL success = NO;
     // create a connection
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLConnection *con = [[NSURLConnection alloc]
                             initWithRequest:request
                             delegate:self];

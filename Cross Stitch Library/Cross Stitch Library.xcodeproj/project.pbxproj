@@ -12,6 +12,8 @@
 		EC869B96171BEACD00DA8AE4 /* CSGDesignGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = EC869B95171BEACD00DA8AE4 /* CSGDesignGenerator.m */; };
 		ECB42D7D1715ECF1000C8037 /* CSGStraightStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB42D7C1715ECF1000C8037 /* CSGStraightStitch.m */; };
 		ECB42D801715ED90000C8037 /* CSGDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB42D7F1715ED90000C8037 /* CSGDesign.m */; };
+		ECBD953917381F3300C984E1 /* CSGDesignParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBD953817381F3300C984E1 /* CSGDesignParserTest.m */; };
+		ECBD953B1738218100C984E1 /* TestDesign.xml in Resources */ = {isa = PBXBuildFile; fileRef = ECBD953A1738218100C984E1 /* TestDesign.xml */; };
 		ECC1F19316D2C455005C847B /* ArtWorkMaterials.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */; };
 		ECC2328C16D1372100105066 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC2328B16D1372100105066 /* UIKit.framework */; };
 		ECC2328E16D1372100105066 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC2328D16D1372100105066 /* Foundation.framework */; };
@@ -67,6 +69,9 @@
 		ECB42D7C1715ECF1000C8037 /* CSGStraightStitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGStraightStitch.m; sourceTree = "<group>"; };
 		ECB42D7E1715ED90000C8037 /* CSGDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesign.h; sourceTree = "<group>"; };
 		ECB42D7F1715ED90000C8037 /* CSGDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesign.m; sourceTree = "<group>"; };
+		ECBD953717381F3300C984E1 /* CSGDesignParserTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignParserTest.h; sourceTree = "<group>"; };
+		ECBD953817381F3300C984E1 /* CSGDesignParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesignParserTest.m; sourceTree = "<group>"; };
+		ECBD953A1738218100C984E1 /* TestDesign.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestDesign.xml; sourceTree = "<group>"; };
 		ECC1F19116D2C455005C847B /* ArtWorkMaterials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWorkMaterials.h; sourceTree = "<group>"; };
 		ECC1F19216D2C455005C847B /* ArtWorkMaterials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWorkMaterials.m; sourceTree = "<group>"; };
 		ECC2328816D1372100105066 /* Cross Stitch Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cross Stitch Library.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,6 +242,8 @@
 		ECC232B816D1372100105066 /* Cross Stitch LibraryTests */ = {
 			isa = PBXGroup;
 			children = (
+				ECBD953717381F3300C984E1 /* CSGDesignParserTest.h */,
+				ECBD953817381F3300C984E1 /* CSGDesignParserTest.m */,
 				ECC232BE16D1372100105066 /* CSGSerializationTests.h */,
 				ECC232BF16D1372100105066 /* CSGSerializationTests.m */,
 				ECC232B916D1372100105066 /* Supporting Files */,
@@ -249,6 +256,7 @@
 			children = (
 				ECC232BA16D1372100105066 /* Cross Stitch LibraryTests-Info.plist */,
 				ECC232BB16D1372100105066 /* InfoPlist.strings */,
+				ECBD953A1738218100C984E1 /* TestDesign.xml */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -391,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECC232BD16D1372100105066 /* InfoPlist.strings in Resources */,
+				ECBD953B1738218100C984E1 /* TestDesign.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECC232C016D1372100105066 /* CSGSerializationTests.m in Sources */,
+				ECBD953917381F3300C984E1 /* CSGDesignParserTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
