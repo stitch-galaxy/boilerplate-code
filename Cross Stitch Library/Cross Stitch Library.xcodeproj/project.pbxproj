@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */; };
 		EC4AC3981743F3B600E5D224 /* CSGXmlParser.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4AC3971743F3B600E5D224 /* CSGXmlParser.m */; };
+		EC4AC39B17441E8900E5D224 /* CSGDesignXmlParser.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4AC39A17441E8900E5D224 /* CSGDesignXmlParser.m */; };
 		EC869B93171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = EC869B92171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m */; };
 		EC869B96171BEACD00DA8AE4 /* CSGDesignGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = EC869B95171BEACD00DA8AE4 /* CSGDesignGenerator.m */; };
 		ECB42D7D1715ECF1000C8037 /* CSGStraightStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB42D7C1715ECF1000C8037 /* CSGStraightStitch.m */; };
@@ -64,6 +65,8 @@
 		EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWorkInfo.m; sourceTree = "<group>"; };
 		EC4AC3961743F3B600E5D224 /* CSGXmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGXmlParser.h; sourceTree = "<group>"; };
 		EC4AC3971743F3B600E5D224 /* CSGXmlParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGXmlParser.m; sourceTree = "<group>"; };
+		EC4AC39917441E8900E5D224 /* CSGDesignXmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignXmlParser.h; sourceTree = "<group>"; };
+		EC4AC39A17441E8900E5D224 /* CSGDesignXmlParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGDesignXmlParser.m; sourceTree = "<group>"; };
 		EC869B91171BE7F000DA8AE4 /* CSGMemorySetWithIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGMemorySetWithIndex.h; sourceTree = "<group>"; };
 		EC869B92171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGMemorySetWithIndex.m; sourceTree = "<group>"; };
 		EC869B94171BEACD00DA8AE4 /* CSGDesignGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignGenerator.h; sourceTree = "<group>"; };
@@ -293,6 +296,8 @@
 				ECDB44871734872200224FA7 /* CSGDesignParser.m */,
 				EC4AC3961743F3B600E5D224 /* CSGXmlParser.h */,
 				EC4AC3971743F3B600E5D224 /* CSGXmlParser.m */,
+				EC4AC39917441E8900E5D224 /* CSGDesignXmlParser.h */,
+				EC4AC39A17441E8900E5D224 /* CSGDesignXmlParser.m */,
 			);
 			name = Parsers;
 			sourceTree = "<group>";
@@ -454,6 +459,7 @@
 				ECC584BD172D490100732EC1 /* CSGDecodec.m in Sources */,
 				ECDB44881734872200224FA7 /* CSGDesignParser.m in Sources */,
 				EC4AC3981743F3B600E5D224 /* CSGXmlParser.m in Sources */,
+				EC4AC39B17441E8900E5D224 /* CSGDesignXmlParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
