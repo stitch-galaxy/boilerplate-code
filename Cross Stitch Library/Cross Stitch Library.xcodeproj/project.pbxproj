@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */; };
+		EC4AC3981743F3B600E5D224 /* CSGXmlParser.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4AC3971743F3B600E5D224 /* CSGXmlParser.m */; };
 		EC869B93171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = EC869B92171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m */; };
 		EC869B96171BEACD00DA8AE4 /* CSGDesignGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = EC869B95171BEACD00DA8AE4 /* CSGDesignGenerator.m */; };
 		ECB42D7D1715ECF1000C8037 /* CSGStraightStitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB42D7C1715ECF1000C8037 /* CSGStraightStitch.m */; };
@@ -61,6 +62,8 @@
 /* Begin PBXFileReference section */
 		EC0F6BC016DCC6E8007FF7CF /* ArtWorkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWorkInfo.h; sourceTree = "<group>"; };
 		EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWorkInfo.m; sourceTree = "<group>"; };
+		EC4AC3961743F3B600E5D224 /* CSGXmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGXmlParser.h; sourceTree = "<group>"; };
+		EC4AC3971743F3B600E5D224 /* CSGXmlParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGXmlParser.m; sourceTree = "<group>"; };
 		EC869B91171BE7F000DA8AE4 /* CSGMemorySetWithIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGMemorySetWithIndex.h; sourceTree = "<group>"; };
 		EC869B92171BE7F000DA8AE4 /* CSGMemorySetWithIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGMemorySetWithIndex.m; sourceTree = "<group>"; };
 		EC869B94171BEACD00DA8AE4 /* CSGDesignGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGDesignGenerator.h; sourceTree = "<group>"; };
@@ -288,6 +291,8 @@
 			children = (
 				ECDB44861734872200224FA7 /* CSGDesignParser.h */,
 				ECDB44871734872200224FA7 /* CSGDesignParser.m */,
+				EC4AC3961743F3B600E5D224 /* CSGXmlParser.h */,
+				EC4AC3971743F3B600E5D224 /* CSGXmlParser.m */,
 			);
 			name = Parsers;
 			sourceTree = "<group>";
@@ -448,6 +453,7 @@
 				ECC584BA172D3E9700732EC1 /* CSGCodec.m in Sources */,
 				ECC584BD172D490100732EC1 /* CSGDecodec.m in Sources */,
 				ECDB44881734872200224FA7 /* CSGDesignParser.m in Sources */,
+				EC4AC3981743F3B600E5D224 /* CSGXmlParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

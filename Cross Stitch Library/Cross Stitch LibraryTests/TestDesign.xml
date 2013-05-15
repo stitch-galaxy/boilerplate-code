@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <design width="2" height="2">
-    <!-- <cellStitch x="1" y="1" type="cross">
+    <cellStitch x="1" y="1" type="cross">
         <threadsBlend>
             <threadInBlend flossCount="2">
-                <thread red="10" green="15" blue="16"/>
-            </threadsBlend>
+                <thread red="1" green="2" blue="3"/>
+            </threadInBlend>
         </threadsBlend>
-    </cellStitch> -->
+    </cellStitch>
     <backStitch>
+        <threadsBlend>
+            <threadInBlend flossCount="1">
+                <thread red="3" green="2" blue="1"/>
+            </threadInBlend>
+        </threadsBlend>
         <points>
             <point x="1" y="1"/>
+            <point x="2" y="2"/>
         </points>
     </backStitch>
 </design>

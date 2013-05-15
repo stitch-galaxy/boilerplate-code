@@ -47,17 +47,19 @@ static xmlSAXHandler simpleSAXHandlerStruct;
 
 //url
 @property(nonatomic, retain) NSURL* url;
-//callback
-@property(nonatomic, assign) id<CSGDesignParserDelegate> delegate;
+
 //flags
 @property(nonatomic, assign) BOOL error;
 @property(nonatomic, assign) BOOL done;
 //connection and threading
 @property(nonatomic, retain) NSURLConnection *connection;
 @property(nonatomic, retain) NSOperationQueue *retrieverQueue;
+
+//callback
+@property(nonatomic, assign) id<CSGDesignParserDelegate> delegate;
 //business object
 @property(nonatomic, retain) CSGDesign *currentDesign;
-
+//temporary parsing objects
 @property (nonatomic, retain) NSMutableString *title;
 @property (nonatomic, assign) BOOL parsingTitle;
 
@@ -65,23 +67,22 @@ static xmlSAXHandler simpleSAXHandlerStruct;
 
 @implementation CSGDesignParser
 
-@synthesize title;
-@synthesize parsingTitle;
-
-
 //Url
 @synthesize url;
-//callback
-@synthesize delegate;
 //flags
 @synthesize error;
 @synthesize done;
 //connection and threading
 @synthesize connection;
 @synthesize retrieverQueue = _retrieverQueue;
-//Business objects
-@synthesize currentDesign;
 
+//callback
+@synthesize delegate;
+//business objects
+@synthesize currentDesign;
+//temporary parsing objects
+@synthesize title;
+@synthesize parsingTitle;
 
 - (NSOperationQueue *)retrieverQueue
 {
@@ -162,13 +163,6 @@ static xmlSAXHandler simpleSAXHandlerStruct;
 }
 
 #pragma mark Parsing Function Callback Methods
-
-/*
- Sample entry
- <design href="http://google.com">
- <title>Batterfly</title>
- </entry>
- */
 
 static const char *kDesignElementName = "design";
 static NSUInteger kDesignElementNameLength = 7;
