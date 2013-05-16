@@ -23,7 +23,7 @@
     [parser parse];
 }
 
-- (id) initWithUrl: (NSURL*) anUrl delegate: (id<CSGXmlParserDelegate>) delegate
+- (id) initWithUrl: (NSURL*) anUrl
 {
     if (self = [super init])
     {

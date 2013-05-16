@@ -64,7 +64,7 @@ static xmlSAXHandler simpleSAXHandlerStruct;
 @property(nonatomic, assign) id<CSGXmlParserDelegate> delegate;
 
 //element text
-@property (nonatomic, retain) NSMutableString *text;
+@property (nonatomic, retain) NSMutableArray *texts;
 
 @end
 
@@ -80,7 +80,7 @@ static xmlSAXHandler simpleSAXHandlerStruct;
 @synthesize delegate;
 
 //element text holder
-@synthesize text;
+@synthesize texts;
 
 -(id) initWithUrl: (NSURL*) anUrl delegate:(id<CSGXmlParserDelegate>)anDelegate
 {
@@ -89,6 +89,7 @@ static xmlSAXHandler simpleSAXHandlerStruct;
         url = anUrl;
         delegate = anDelegate;
         done = false;
+        texts = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -133,7 +134,8 @@ static xmlSAXHandler simpleSAXHandlerStruct;
 defaultAttributeCount:(int)defaultAttributeCount
           attributes:(xmlSAX2Attributes *)attributes
 {
-    NSUInteger sElementNameLength = prefix - localname;
+    
+    NSUInteger sElementNameLength = xmlStrlen(localname);
     NSString *elementName = [[NSString alloc] initWithBytes:localname length:sElementNameLength encoding:NSUTF8StringEncoding];
     
     NSMutableArray *attributeNames = [[NSMutableArray alloc] initWithCapacity:attributeCount];
@@ -141,10 +143,12 @@ defaultAttributeCount:(int)defaultAttributeCount
     
     for(int i = 0; i < attributeCount; ++i)
     {
-        NSUInteger sAttributeNameLength = attributes[i].prefix - attributes[i].localname;
+        NSUInteger sAttributeNameLength = xmlStrlen(attributes[i].localname);
         NSString *attributeName = [[NSString alloc] initWithBytes:attributes[i].localname length:sAttributeNameLength encoding:NSUTF8StringEncoding];
         [attributeNames addObject:attributeName];
         
+        //It works so, we can not use xmlStrlen
+        //NSUInteger sAttributeValueLength = xmlStrlen(attributes[i].value);
         NSUInteger sAttributeValueLength = attributes[i].end - attributes[i].value;
         NSString *attributeValue = [[NSString alloc] initWithBytes:attributes[i].value length:sAttributeValueLength encoding:NSUTF8StringEncoding];
         [attributeValues addObject:attributeValue];
@@ -154,21 +158,23 @@ defaultAttributeCount:(int)defaultAttributeCount
             attributeNames:attributeNames
            attributeValues:attributeValues];
     
-    text = [[NSMutableString alloc] init];
+    [texts addObject:[[NSMutableString alloc] init]];
 }
 
 - (void)endElement:(const xmlChar *)localname prefix:(const xmlChar *)prefix uri:(const xmlChar *)URI
 {
-    NSUInteger sElementNameLength = prefix - localname;
+    NSUInteger sElementNameLength = xmlStrlen(localname);
     NSString *elementName = [[NSString alloc] initWithBytes:localname length:sElementNameLength encoding:NSUTF8StringEncoding];
     
+    NSString *text = texts.lastObject;
+    [texts removeLastObject];
     [delegate endElement:elementName text:text];
 }
 
 - (void)charactersFound:(const xmlChar *)characters length:(int)length
 {
     NSString *value = [[NSString alloc] initWithBytes:(const void *)characters length:length encoding: NSUTF8StringEncoding];
-    [text appendString:value];
+    [texts.lastObject appendString:value];
 }
 
 - (void)parsingError:(const char *)msg, ...

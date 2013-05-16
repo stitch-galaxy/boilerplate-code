@@ -7,8 +7,7 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
-#import "CSGDesignParser.h"
 
-@interface CSGDesignParserTest : SenTestCase<CSGDesignParserDelegate>
+@interface CSGDesignParserTest : SenTestCase
 
 @end

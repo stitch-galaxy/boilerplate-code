@@ -12,6 +12,6 @@
 @interface CSGDesignXmlParser : NSObject<CSGXmlParserDelegate>
 
 - (void) parse;
-- (id) initWithUrl: (NSURL*) anUrl delegate: (id<CSGXmlParserDelegate>) delegate;
+- (id) initWithUrl: (NSURL*) anUrl;
 
 @end

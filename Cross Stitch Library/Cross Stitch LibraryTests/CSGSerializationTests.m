@@ -162,7 +162,7 @@
 }
 
 
--(void) testDesignSerializationLegacy
+-(void) testDesignSerialization
 {
     NSLog(@"------------------------");
     NSDate *tStart = [NSDate date];
