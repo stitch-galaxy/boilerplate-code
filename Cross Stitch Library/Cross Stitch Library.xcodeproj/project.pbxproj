@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11B90FD5F34146538DFE002F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96DB9671C08242DFB24BEA16 /* libPods.a */; };
 		EC0F6BC216DCC6E9007FF7CF /* ArtWorkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */; };
 		EC4AC3981743F3B600E5D224 /* CSGXmlParser.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4AC3971743F3B600E5D224 /* CSGXmlParser.m */; };
 		EC4AC39B17441E8900E5D224 /* CSGDesignXmlParser.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4AC39A17441E8900E5D224 /* CSGDesignXmlParser.m */; };
@@ -61,6 +62,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		698399400D1B4FC19A551453 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		96DB9671C08242DFB24BEA16 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC0F6BC016DCC6E8007FF7CF /* ArtWorkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtWorkInfo.h; sourceTree = "<group>"; };
 		EC0F6BC116DCC6E8007FF7CF /* ArtWorkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtWorkInfo.m; sourceTree = "<group>"; };
 		EC4AC3961743F3B600E5D224 /* CSGXmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGXmlParser.h; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 				ECC2328C16D1372100105066 /* UIKit.framework in Frameworks */,
 				ECC2328E16D1372100105066 /* Foundation.framework in Frameworks */,
 				ECC2329016D1372100105066 /* CoreGraphics.framework in Frameworks */,
+				11B90FD5F34146538DFE002F /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +196,7 @@
 				ECC232B816D1372100105066 /* Cross Stitch LibraryTests */,
 				ECC2328A16D1372100105066 /* Frameworks */,
 				ECC2328916D1372100105066 /* Products */,
+				698399400D1B4FC19A551453 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,6 +216,7 @@
 				ECC2328D16D1372100105066 /* Foundation.framework */,
 				ECC2328F16D1372100105066 /* CoreGraphics.framework */,
 				ECC232B216D1372100105066 /* SenTestingKit.framework */,
+				96DB9671C08242DFB24BEA16 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -331,9 +337,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ECC232C316D1372100105066 /* Build configuration list for PBXNativeTarget "Cross Stitch Library" */;
 			buildPhases = (
+				8C1771FF84494C568F43E0E0 /* Check Pods Manifest.lock */,
 				ECC2328416D1372100105066 /* Sources */,
 				ECC2328516D1372100105066 /* Frameworks */,
 				ECC2328616D1372100105066 /* Resources */,
+				C82D7FC70D32479481186D7A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -416,6 +424,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8C1771FF84494C568F43E0E0 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+		};
+		C82D7FC70D32479481186D7A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
 		ECC232AF16D1372100105066 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -578,10 +614,11 @@
 		};
 		ECC232C416D1372100105066 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 698399400D1B4FC19A551453 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Cross Stitch Library/Cross Stitch Library-Prefix.pch";
-				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Cross Stitch Library/Cross Stitch Library-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -590,10 +627,11 @@
 		};
 		ECC232C516D1372100105066 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 698399400D1B4FC19A551453 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Cross Stitch Library/Cross Stitch Library-Prefix.pch";
-				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Cross Stitch Library/Cross Stitch Library-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
