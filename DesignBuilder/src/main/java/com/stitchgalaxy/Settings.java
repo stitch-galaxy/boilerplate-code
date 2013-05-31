@@ -32,7 +32,7 @@ public class Settings
     private Settings()
     {
     	prop = new Properties();
-        String fileName = "app.cfg";
+        String fileName = "settings.cfg";
         try
         {
         	InputStream is = new FileInputStream(fileName);
@@ -50,17 +50,17 @@ public class Settings
     
     public String getInputDirectory()
     {
-    	return prop.getProperty("inputDirectory");
+    	return prop.getProperty("com.stitchgalaxy.designParser.inputDirectory");
     }
     
     public String getOutputDirectory()
     {
-    	return prop.getProperty("outputDirectory");
+    	return prop.getProperty("com.stitchgalaxy.designParser.outputDirectory");
     }
     
     public int getHalfCellSizePx()
     {
-    	String sSize =  prop.getProperty("halfCellSizePx", "5");
+    	String sSize =  prop.getProperty("com.stitchgalaxy.designParser.halfCellSizePx", "5");
     	return Integer.parseInt(sSize);
     }
 }

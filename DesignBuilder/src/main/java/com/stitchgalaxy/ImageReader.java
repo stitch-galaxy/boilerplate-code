@@ -270,7 +270,7 @@ public class ImageReader
 	
 	private BufferedImage filterOutDefaultImage(BufferedImage img)
 	{
-		if (img.getWidth() == 1)
+		if (img.getWidth() <= 1)
 		{
 			return null;
 		}
