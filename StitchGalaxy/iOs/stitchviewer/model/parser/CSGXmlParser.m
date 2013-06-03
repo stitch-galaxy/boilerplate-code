@@ -8,7 +8,7 @@
 
 #import "CSGXmlParser.h"
 
-#import "AFHttpClient.h"
+//#import "AFHttpClient.h"
 #import <libxml/tree.h>
 
 // define a struct to hold the attribute info

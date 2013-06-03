@@ -1,2 +1,8 @@
-platform :ios, '6.0'
-pod 'AFNetworking', '1.2.1'
+platform :ios, 6.0
+workspace 'Core'
+
+target :'Cross Stitch Library' do
+  xcodeproj 'Cross Stitch Library.xcodeproj'
+    pod 'AFNetworking'
+  end
+
