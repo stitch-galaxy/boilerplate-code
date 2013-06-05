@@ -46,6 +46,7 @@
 		EC647D3D175D367900849681 /* CSGDesignParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647D3A175D367900849681 /* CSGDesignParserTest.m */; };
 		EC647D3E175D367900849681 /* CSGSerializationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647D3C175D367900849681 /* CSGSerializationTests.m */; };
 		EC647D47175D42CA00849681 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647D46175D42CA00849681 /* libxml2.dylib */; };
+		EC647D49175F589900849681 /* TestDesign.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC647D48175F589900849681 /* TestDesign.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,7 @@
 		EC647D3B175D367900849681 /* CSGSerializationTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGSerializationTests.h; sourceTree = "<group>"; };
 		EC647D3C175D367900849681 /* CSGSerializationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGSerializationTests.m; sourceTree = "<group>"; };
 		EC647D46175D42CA00849681 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		EC647D48175F589900849681 /* TestDesign.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestDesign.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +233,7 @@
 		EC647CE8175D32D100849681 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EC647D48175F589900849681 /* TestDesign.xml */,
 				EC647CE9175D32D100849681 /* stitchviewerTests-Info.plist */,
 				EC647CEA175D32D100849681 /* InfoPlist.strings */,
 			);
@@ -395,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC647CEC175D32D100849681 /* InfoPlist.strings in Resources */,
+				EC647D49175F589900849681 /* TestDesign.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
