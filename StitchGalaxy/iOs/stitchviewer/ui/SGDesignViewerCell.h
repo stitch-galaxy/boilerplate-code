@@ -1,13 +1,13 @@
 //
-//  SGViewController.h
+//  SGDesignViewerCell.h
 //  stitchviewer
 //
-//  Created by 123 on 04.06.13.
+//  Created by 123 on 07.06.13.
 //  Copyright (c) 2013 Tarasov Evgeny. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface SGViewController : UIViewController
+@interface SGDesignViewerCell : UICollectionViewCell
 
 @end
