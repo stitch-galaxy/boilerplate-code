@@ -26,7 +26,7 @@
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="i5q-ra-ESc">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <collectionViewLayout key="collectionViewLayout" id="dC2-Ow-ysf" customClass="BHPhotoAlbumLayout"/>
+                        <collectionViewLayout key="collectionViewLayout" id="dC2-Ow-ysf" customClass="SGDesignCollectionLayout"/>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qti-Fb-k75">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>

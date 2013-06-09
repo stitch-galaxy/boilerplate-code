@@ -7,7 +7,7 @@
 //
 
 #import "SGCollectionViewController.h"
-#import "BHPhotoAlbumLayout.h"
+#import "SGDesignCollectionLayout.h"
 #import "SGDesignViewerCell.h"
 
 
@@ -15,7 +15,7 @@ static NSString * const PhotoCellIdentifier = @"PhotoCell";
 
 @interface SGCollectionViewController ()
 
-@property (nonatomic, weak) IBOutlet BHPhotoAlbumLayout *photoAlbumLayout;
+@property (nonatomic, weak) IBOutlet SGDesignCollectionLayout *photoAlbumLayout;
 
 @end
 
@@ -51,7 +51,7 @@ static NSString * const PhotoCellIdentifier = @"PhotoCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 5;
+    return 1;
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
@@ -64,7 +64,7 @@ static NSString * const PhotoCellIdentifier = @"PhotoCell";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 11;
+    return 6;
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

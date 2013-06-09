@@ -48,7 +48,7 @@
 		EC647D49175F589900849681 /* TestDesign.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC647D48175F589900849681 /* TestDesign.xml */; };
 		EC647D9E1760D0EE00849681 /* SGMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647D9D1760D0EE00849681 /* SGMainViewController.m */; };
 		EC647DA8176252A900849681 /* SGCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DA7176252A900849681 /* SGCollectionViewController.m */; };
-		EC647DAC1762569700849681 /* BHPhotoAlbumLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAB1762569700849681 /* BHPhotoAlbumLayout.m */; };
+		EC647DAC1762569700849681 /* SGDesignCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAB1762569700849681 /* SGDesignCollectionLayout.m */; };
 		EC647DAF1762571900849681 /* BHEmblemView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAE1762571900849681 /* BHEmblemView.m */; };
 		EC647DB11762594A00849681 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647DB01762594A00849681 /* QuartzCore.framework */; };
 		EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DB317625EA500849681 /* SGDesignViewerCell.m */; };
@@ -135,8 +135,8 @@
 		EC647D9D1760D0EE00849681 /* SGMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGMainViewController.m; sourceTree = "<group>"; };
 		EC647DA6176252A900849681 /* SGCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGCollectionViewController.h; path = ui/SGCollectionViewController.h; sourceTree = "<group>"; };
 		EC647DA7176252A900849681 /* SGCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGCollectionViewController.m; path = ui/SGCollectionViewController.m; sourceTree = "<group>"; };
-		EC647DAA1762569700849681 /* BHPhotoAlbumLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHPhotoAlbumLayout.h; path = ui/BHPhotoAlbumLayout.h; sourceTree = "<group>"; };
-		EC647DAB1762569700849681 /* BHPhotoAlbumLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHPhotoAlbumLayout.m; path = ui/BHPhotoAlbumLayout.m; sourceTree = "<group>"; };
+		EC647DAA1762569700849681 /* SGDesignCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignCollectionLayout.h; path = ui/SGDesignCollectionLayout.h; sourceTree = "<group>"; };
+		EC647DAB1762569700849681 /* SGDesignCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignCollectionLayout.m; path = ui/SGDesignCollectionLayout.m; sourceTree = "<group>"; };
 		EC647DAD1762571900849681 /* BHEmblemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHEmblemView.h; path = ui/BHEmblemView.h; sourceTree = "<group>"; };
 		EC647DAE1762571900849681 /* BHEmblemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHEmblemView.m; path = ui/BHEmblemView.m; sourceTree = "<group>"; };
 		EC647DB01762594A00849681 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -332,8 +332,8 @@
 			children = (
 				EC647DAD1762571900849681 /* BHEmblemView.h */,
 				EC647DAE1762571900849681 /* BHEmblemView.m */,
-				EC647DAA1762569700849681 /* BHPhotoAlbumLayout.h */,
-				EC647DAB1762569700849681 /* BHPhotoAlbumLayout.m */,
+				EC647DAA1762569700849681 /* SGDesignCollectionLayout.h */,
+				EC647DAB1762569700849681 /* SGDesignCollectionLayout.m */,
 				EC647DA6176252A900849681 /* SGCollectionViewController.h */,
 				EC647DA7176252A900849681 /* SGCollectionViewController.m */,
 				EC647DB217625EA400849681 /* SGDesignViewerCell.h */,
@@ -508,7 +508,7 @@
 				EC647D38175D365900849681 /* CSGThreadsBlend.m in Sources */,
 				EC647D9E1760D0EE00849681 /* SGMainViewController.m in Sources */,
 				EC647DA8176252A900849681 /* SGCollectionViewController.m in Sources */,
-				EC647DAC1762569700849681 /* BHPhotoAlbumLayout.m in Sources */,
+				EC647DAC1762569700849681 /* SGDesignCollectionLayout.m in Sources */,
 				EC647DAF1762571900849681 /* BHEmblemView.m in Sources */,
 				EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */,
 			);

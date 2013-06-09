@@ -10,7 +10,7 @@
 
 UIKIT_EXTERN NSString * const BHPhotoAlbumLayoutAlbumTitleKind;
 
-@interface BHPhotoAlbumLayout : UICollectionViewLayout
+@interface SGDesignCollectionLayout : UICollectionViewLayout
 
 @property (nonatomic) UIEdgeInsets itemInsets;
 @property (nonatomic) CGSize itemSize;

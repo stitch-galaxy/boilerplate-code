@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Bryan Hansen. All rights reserved.
 //
 
-#import "BHPhotoAlbumLayout.h"
+#import "SGDesignCollectionLayout.h"
 #import "BHEmblemView.h"
 
 static NSUInteger const RotationCount = 32;
@@ -17,7 +17,7 @@ static NSString * const BHPhotoAlbumLayoutPhotoCellKind = @"PhotoCell";
 NSString * const BHPhotoAlbumLayoutAlbumTitleKind = @"AlbumTitle";
 static NSString * const BHPhotoEmblemKind = @"Emblem";
 
-@interface BHPhotoAlbumLayout ()
+@interface SGDesignCollectionLayout ()
 
 @property (nonatomic, strong) NSDictionary *layoutInfo;
 @property (nonatomic, strong) NSArray *rotations;
@@ -29,7 +29,7 @@ static NSString * const BHPhotoEmblemKind = @"Emblem";
 
 @end
 
-@implementation BHPhotoAlbumLayout
+@implementation SGDesignCollectionLayout
 
 #pragma mark - Properties
 
