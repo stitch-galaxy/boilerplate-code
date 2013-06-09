@@ -19,7 +19,6 @@
 		EC647CD1175D32D100849681 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EC647CD0175D32D100849681 /* Default-568h@2x.png */; };
 		EC647CD4175D32D100849681 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC647CD2175D32D100849681 /* MainStoryboard_iPhone.storyboard */; };
 		EC647CD7175D32D100849681 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC647CD5175D32D100849681 /* MainStoryboard_iPad.storyboard */; };
-		EC647CDA175D32D100849681 /* SGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647CD9175D32D100849681 /* SGViewController.m */; };
 		EC647CE2175D32D100849681 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647CE1175D32D100849681 /* SenTestingKit.framework */; };
 		EC647CE3175D32D100849681 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647CBA175D32D100849681 /* UIKit.framework */; };
 		EC647CE4175D32D100849681 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647CBC175D32D100849681 /* Foundation.framework */; };
@@ -47,6 +46,12 @@
 		EC647D3E175D367900849681 /* CSGSerializationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647D3C175D367900849681 /* CSGSerializationTests.m */; };
 		EC647D47175D42CA00849681 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647D46175D42CA00849681 /* libxml2.dylib */; };
 		EC647D49175F589900849681 /* TestDesign.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC647D48175F589900849681 /* TestDesign.xml */; };
+		EC647D9E1760D0EE00849681 /* SGMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647D9D1760D0EE00849681 /* SGMainViewController.m */; };
+		EC647DA8176252A900849681 /* SGCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DA7176252A900849681 /* SGCollectionViewController.m */; };
+		EC647DAC1762569700849681 /* BHPhotoAlbumLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAB1762569700849681 /* BHPhotoAlbumLayout.m */; };
+		EC647DAF1762571900849681 /* BHEmblemView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAE1762571900849681 /* BHEmblemView.m */; };
+		EC647DB11762594A00849681 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647DB01762594A00849681 /* QuartzCore.framework */; };
+		EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DB317625EA500849681 /* SGDesignViewerCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,8 +82,6 @@
 		EC647CD0175D32D100849681 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		EC647CD3175D32D100849681 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		EC647CD6175D32D100849681 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		EC647CD8175D32D100849681 /* SGViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SGViewController.h; sourceTree = "<group>"; };
-		EC647CD9175D32D100849681 /* SGViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SGViewController.m; sourceTree = "<group>"; };
 		EC647CE0175D32D100849681 /* stitchviewerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = stitchviewerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC647CE1175D32D100849681 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		EC647CE9175D32D100849681 /* stitchviewerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "stitchviewerTests-Info.plist"; sourceTree = "<group>"; };
@@ -128,6 +131,17 @@
 		EC647D3C175D367900849681 /* CSGSerializationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGSerializationTests.m; sourceTree = "<group>"; };
 		EC647D46175D42CA00849681 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		EC647D48175F589900849681 /* TestDesign.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestDesign.xml; sourceTree = "<group>"; };
+		EC647D9C1760D0EE00849681 /* SGMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGMainViewController.h; sourceTree = "<group>"; };
+		EC647D9D1760D0EE00849681 /* SGMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGMainViewController.m; sourceTree = "<group>"; };
+		EC647DA6176252A900849681 /* SGCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGCollectionViewController.h; path = ui/SGCollectionViewController.h; sourceTree = "<group>"; };
+		EC647DA7176252A900849681 /* SGCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGCollectionViewController.m; path = ui/SGCollectionViewController.m; sourceTree = "<group>"; };
+		EC647DAA1762569700849681 /* BHPhotoAlbumLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHPhotoAlbumLayout.h; path = ui/BHPhotoAlbumLayout.h; sourceTree = "<group>"; };
+		EC647DAB1762569700849681 /* BHPhotoAlbumLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHPhotoAlbumLayout.m; path = ui/BHPhotoAlbumLayout.m; sourceTree = "<group>"; };
+		EC647DAD1762571900849681 /* BHEmblemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHEmblemView.h; path = ui/BHEmblemView.h; sourceTree = "<group>"; };
+		EC647DAE1762571900849681 /* BHEmblemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHEmblemView.m; path = ui/BHEmblemView.m; sourceTree = "<group>"; };
+		EC647DB01762594A00849681 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		EC647DB217625EA400849681 /* SGDesignViewerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignViewerCell.h; path = ui/SGDesignViewerCell.h; sourceTree = "<group>"; };
+		EC647DB317625EA500849681 /* SGDesignViewerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignViewerCell.m; path = ui/SGDesignViewerCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC647DB11762594A00849681 /* QuartzCore.framework in Frameworks */,
 				EC647D47175D42CA00849681 /* libxml2.dylib in Frameworks */,
 				EC647CBB175D32D100849681 /* UIKit.framework in Frameworks */,
 				EC647CBD175D32D100849681 /* Foundation.framework in Frameworks */,
@@ -159,7 +174,6 @@
 		EC647CAE175D32D100849681 = {
 			isa = PBXGroup;
 			children = (
-				EC647D46175D42CA00849681 /* libxml2.dylib */,
 				EC647CC0175D32D100849681 /* stitchviewer */,
 				EC647CE7175D32D100849681 /* stitchviewerTests */,
 				EC647CB9175D32D100849681 /* Frameworks */,
@@ -180,6 +194,8 @@
 		EC647CB9175D32D100849681 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EC647D46175D42CA00849681 /* libxml2.dylib */,
+				EC647DB01762594A00849681 /* QuartzCore.framework */,
 				EC647CBA175D32D100849681 /* UIKit.framework */,
 				EC647CBC175D32D100849681 /* Foundation.framework */,
 				EC647CBE175D32D100849681 /* CoreGraphics.framework */,
@@ -195,11 +211,12 @@
 				EC647CF8175D365900849681 /* model */,
 				EC647CC9175D32D100849681 /* SGAppDelegate.h */,
 				EC647CCA175D32D100849681 /* SGAppDelegate.m */,
+				EC647DA9176252B600849681 /* ui */,
 				EC647CD2175D32D100849681 /* MainStoryboard_iPhone.storyboard */,
 				EC647CD5175D32D100849681 /* MainStoryboard_iPad.storyboard */,
-				EC647CD8175D32D100849681 /* SGViewController.h */,
-				EC647CD9175D32D100849681 /* SGViewController.m */,
 				EC647CC1175D32D100849681 /* Supporting Files */,
+				EC647D9C1760D0EE00849681 /* SGMainViewController.h */,
+				EC647D9D1760D0EE00849681 /* SGMainViewController.m */,
 			);
 			path = stitchviewer;
 			sourceTree = "<group>";
@@ -308,6 +325,21 @@
 				EC647D24175D365900849681 /* CSGThreadsBlend.m */,
 			);
 			path = ver_1.0;
+			sourceTree = "<group>";
+		};
+		EC647DA9176252B600849681 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				EC647DAD1762571900849681 /* BHEmblemView.h */,
+				EC647DAE1762571900849681 /* BHEmblemView.m */,
+				EC647DAA1762569700849681 /* BHPhotoAlbumLayout.h */,
+				EC647DAB1762569700849681 /* BHPhotoAlbumLayout.m */,
+				EC647DA6176252A900849681 /* SGCollectionViewController.h */,
+				EC647DA7176252A900849681 /* SGCollectionViewController.m */,
+				EC647DB217625EA400849681 /* SGDesignViewerCell.h */,
+				EC647DB317625EA500849681 /* SGDesignViewerCell.m */,
+			);
+			name = ui;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,7 +487,6 @@
 			files = (
 				EC647CC7175D32D100849681 /* main.m in Sources */,
 				EC647CCB175D32D100849681 /* SGAppDelegate.m in Sources */,
-				EC647CDA175D32D100849681 /* SGViewController.m in Sources */,
 				EC647D25175D365900849681 /* CSGBinaryDecoder.m in Sources */,
 				EC647D26175D365900849681 /* CSGBinaryEncoder.m in Sources */,
 				EC647D27175D365900849681 /* CSGCodec.m in Sources */,
@@ -475,6 +506,11 @@
 				EC647D36175D365900849681 /* CSGStraightStitch.m in Sources */,
 				EC647D37175D365900849681 /* CSGThread.m in Sources */,
 				EC647D38175D365900849681 /* CSGThreadsBlend.m in Sources */,
+				EC647D9E1760D0EE00849681 /* SGMainViewController.m in Sources */,
+				EC647DA8176252A900849681 /* SGCollectionViewController.m in Sources */,
+				EC647DAC1762569700849681 /* BHPhotoAlbumLayout.m in Sources */,
+				EC647DAF1762571900849681 /* BHEmblemView.m in Sources */,
+				EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,7 +594,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -599,7 +634,6 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "stitchviewer/stitchviewer-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "stitchviewer/stitchviewer-Info.plist";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -613,7 +647,6 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "stitchviewer/stitchviewer-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "stitchviewer/stitchviewer-Info.plist";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
