@@ -13,8 +13,10 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    if (self)
+    {
+        //TODO: remove this
+        self.backgroundColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
     }
     return self;
 }

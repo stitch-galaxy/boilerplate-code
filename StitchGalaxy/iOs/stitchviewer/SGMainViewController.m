@@ -23,6 +23,32 @@
     return self;
 }
 
+-(void) segmentAction: (UISegmentedControl *) segmentedControl
+{
+    // Update the label with the segment number
+    NSString *segmentNumber = [NSString stringWithFormat:@"%0d",
+                               segmentedControl.selectedSegmentIndex + 1];
+    [(UITextView *)self.view setText:segmentNumber];
+}
+- (void) loadView
+{
+    [super loadView];
+    
+    // Create the segmented control
+    NSArray *buttonNames = [NSArray arrayWithObjects:
+                            @"One", @"Two", @"Three", @"Four", @"Five", @"Six", nil];
+    UISegmentedControl* segmentedControl = [[UISegmentedControl alloc]
+                                            initWithItems:buttonNames];
+    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    segmentedControl.momentary = YES;
+    [segmentedControl addTarget:self action:@selector(segmentAction:)
+               forControlEvents:UIControlEventValueChanged];
+    
+    // Add it to the navigation bar
+    self.navigationItem.titleView = segmentedControl;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
