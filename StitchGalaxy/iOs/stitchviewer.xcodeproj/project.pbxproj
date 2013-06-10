@@ -49,7 +49,7 @@
 		EC647D9E1760D0EE00849681 /* SGMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647D9D1760D0EE00849681 /* SGMainViewController.m */; };
 		EC647DA8176252A900849681 /* SGCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DA7176252A900849681 /* SGCollectionViewController.m */; };
 		EC647DAC1762569700849681 /* SGDesignCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAB1762569700849681 /* SGDesignCollectionLayout.m */; };
-		EC647DAF1762571900849681 /* BHEmblemView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAE1762571900849681 /* BHEmblemView.m */; };
+		EC647DAF1762571900849681 /* SGDesignCollectionDecorationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAE1762571900849681 /* SGDesignCollectionDecorationView.m */; };
 		EC647DB11762594A00849681 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647DB01762594A00849681 /* QuartzCore.framework */; };
 		EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DB317625EA500849681 /* SGDesignViewerCell.m */; };
 /* End PBXBuildFile section */
@@ -137,8 +137,8 @@
 		EC647DA7176252A900849681 /* SGCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGCollectionViewController.m; path = ui/SGCollectionViewController.m; sourceTree = "<group>"; };
 		EC647DAA1762569700849681 /* SGDesignCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignCollectionLayout.h; path = ui/SGDesignCollectionLayout.h; sourceTree = "<group>"; };
 		EC647DAB1762569700849681 /* SGDesignCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignCollectionLayout.m; path = ui/SGDesignCollectionLayout.m; sourceTree = "<group>"; };
-		EC647DAD1762571900849681 /* BHEmblemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHEmblemView.h; path = ui/BHEmblemView.h; sourceTree = "<group>"; };
-		EC647DAE1762571900849681 /* BHEmblemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHEmblemView.m; path = ui/BHEmblemView.m; sourceTree = "<group>"; };
+		EC647DAD1762571900849681 /* SGDesignCollectionDecorationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignCollectionDecorationView.h; path = ui/SGDesignCollectionDecorationView.h; sourceTree = "<group>"; };
+		EC647DAE1762571900849681 /* SGDesignCollectionDecorationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignCollectionDecorationView.m; path = ui/SGDesignCollectionDecorationView.m; sourceTree = "<group>"; };
 		EC647DB01762594A00849681 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EC647DB217625EA400849681 /* SGDesignViewerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignViewerCell.h; path = ui/SGDesignViewerCell.h; sourceTree = "<group>"; };
 		EC647DB317625EA500849681 /* SGDesignViewerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignViewerCell.m; path = ui/SGDesignViewerCell.m; sourceTree = "<group>"; };
@@ -330,8 +330,8 @@
 		EC647DA9176252B600849681 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				EC647DAD1762571900849681 /* BHEmblemView.h */,
-				EC647DAE1762571900849681 /* BHEmblemView.m */,
+				EC647DAD1762571900849681 /* SGDesignCollectionDecorationView.h */,
+				EC647DAE1762571900849681 /* SGDesignCollectionDecorationView.m */,
 				EC647DAA1762569700849681 /* SGDesignCollectionLayout.h */,
 				EC647DAB1762569700849681 /* SGDesignCollectionLayout.m */,
 				EC647DA6176252A900849681 /* SGCollectionViewController.h */,
@@ -509,7 +509,7 @@
 				EC647D9E1760D0EE00849681 /* SGMainViewController.m in Sources */,
 				EC647DA8176252A900849681 /* SGCollectionViewController.m in Sources */,
 				EC647DAC1762569700849681 /* SGDesignCollectionLayout.m in Sources */,
-				EC647DAF1762571900849681 /* BHEmblemView.m in Sources */,
+				EC647DAF1762571900849681 /* SGDesignCollectionDecorationView.m in Sources */,
 				EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

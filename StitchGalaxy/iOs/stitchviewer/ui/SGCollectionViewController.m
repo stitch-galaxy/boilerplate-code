@@ -11,7 +11,7 @@
 #import "SGDesignViewerCell.h"
 
 
-static NSString * const PhotoCellIdentifier = @"PhotoCell";
+static NSString * const PhotoCellIdentifier = @"DesignCell";
 
 @interface SGCollectionViewController ()
 
@@ -64,23 +64,18 @@ static NSString * const PhotoCellIdentifier = @"PhotoCell";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 6;
+    return 5;
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
     {
-        self.photoAlbumLayout.numberOfColumns = 3;
-        //TODO: Bad way to detect iPhone 4 vs iPhone 5
-        CGFloat sideInsets = [UIScreen mainScreen].preferredMode.size.width == 1136.0f ? 45.0f : 25.0f;
-        
-        self.photoAlbumLayout.itemInsets = UIEdgeInsetsMake(22.0f, sideInsets, 13.0f, sideInsets);
+        [self.photoAlbumLayout setNumberOfColumns: 3 Rows: 2];
     }
     else
     {
-        self.photoAlbumLayout.numberOfColumns = 2;
-        self.photoAlbumLayout.itemInsets = UIEdgeInsetsMake(22.0f, 22.0f, 13.0f, 22.0f);
+        [self.photoAlbumLayout setNumberOfColumns: 2 Rows: 3];
     }
 }
 

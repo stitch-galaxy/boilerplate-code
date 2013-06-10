@@ -6,22 +6,22 @@
 //  Copyright (c) 2012 Bryan Hansen. All rights reserved.
 //
 
-#import "BHEmblemView.h"
+#import "SGDesignCollectionDecorationView.h"
 
-static NSString * const BHEmblemViewImageName = @"emblem";
+static NSString * const SGDesignCollectionDecorationImageName = @"decoration";
 
-@implementation BHEmblemView
+@implementation SGDesignCollectionDecorationView
 
 + (CGSize)defaultSize
 {
-    return [UIImage imageNamed:BHEmblemViewImageName].size;
+    return [UIImage imageNamed:SGDesignCollectionDecorationImageName].size;
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIImage *image = [UIImage imageNamed:BHEmblemViewImageName];
+        UIImage *image = [UIImage imageNamed:SGDesignCollectionDecorationImageName];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         imageView.frame = self.bounds;
         
