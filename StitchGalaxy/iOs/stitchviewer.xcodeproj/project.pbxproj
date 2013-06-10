@@ -46,7 +46,6 @@
 		EC647D3E175D367900849681 /* CSGSerializationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647D3C175D367900849681 /* CSGSerializationTests.m */; };
 		EC647D47175D42CA00849681 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647D46175D42CA00849681 /* libxml2.dylib */; };
 		EC647D49175F589900849681 /* TestDesign.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC647D48175F589900849681 /* TestDesign.xml */; };
-		EC647D9E1760D0EE00849681 /* SGMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647D9D1760D0EE00849681 /* SGMainViewController.m */; };
 		EC647DA8176252A900849681 /* SGCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DA7176252A900849681 /* SGCollectionViewController.m */; };
 		EC647DAC1762569700849681 /* SGDesignCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAB1762569700849681 /* SGDesignCollectionLayout.m */; };
 		EC647DAF1762571900849681 /* SGDesignCollectionDecorationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAE1762571900849681 /* SGDesignCollectionDecorationView.m */; };
@@ -131,8 +130,6 @@
 		EC647D3C175D367900849681 /* CSGSerializationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSGSerializationTests.m; sourceTree = "<group>"; };
 		EC647D46175D42CA00849681 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		EC647D48175F589900849681 /* TestDesign.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestDesign.xml; sourceTree = "<group>"; };
-		EC647D9C1760D0EE00849681 /* SGMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGMainViewController.h; sourceTree = "<group>"; };
-		EC647D9D1760D0EE00849681 /* SGMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGMainViewController.m; sourceTree = "<group>"; };
 		EC647DA6176252A900849681 /* SGCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGCollectionViewController.h; path = ui/SGCollectionViewController.h; sourceTree = "<group>"; };
 		EC647DA7176252A900849681 /* SGCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGCollectionViewController.m; path = ui/SGCollectionViewController.m; sourceTree = "<group>"; };
 		EC647DAA1762569700849681 /* SGDesignCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignCollectionLayout.h; path = ui/SGDesignCollectionLayout.h; sourceTree = "<group>"; };
@@ -215,8 +212,6 @@
 				EC647CD2175D32D100849681 /* MainStoryboard_iPhone.storyboard */,
 				EC647CD5175D32D100849681 /* MainStoryboard_iPad.storyboard */,
 				EC647CC1175D32D100849681 /* Supporting Files */,
-				EC647D9C1760D0EE00849681 /* SGMainViewController.h */,
-				EC647D9D1760D0EE00849681 /* SGMainViewController.m */,
 			);
 			path = stitchviewer;
 			sourceTree = "<group>";
@@ -506,7 +501,6 @@
 				EC647D36175D365900849681 /* CSGStraightStitch.m in Sources */,
 				EC647D37175D365900849681 /* CSGThread.m in Sources */,
 				EC647D38175D365900849681 /* CSGThreadsBlend.m in Sources */,
-				EC647D9E1760D0EE00849681 /* SGMainViewController.m in Sources */,
 				EC647DA8176252A900849681 /* SGCollectionViewController.m in Sources */,
 				EC647DAC1762569700849681 /* SGDesignCollectionLayout.m in Sources */,
 				EC647DAF1762571900849681 /* SGDesignCollectionDecorationView.m in Sources */,
