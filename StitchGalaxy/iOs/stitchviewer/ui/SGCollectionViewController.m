@@ -10,6 +10,8 @@
 #import "SGDesignCollectionLayout.h"
 #import "SGDesignViewerCell.h"
 
+#import "UIImageView+AFNetworking.h"
+
 
 static NSString * const PhotoCellIdentifier = @"DesignCell";
 
@@ -34,8 +36,9 @@ static NSString * const PhotoCellIdentifier = @"DesignCell";
 {
     [super viewDidLoad];
     
-    //TODO: REMOVE THIS LATER - IT'S A TEST
-	self.collectionView.backgroundColor = [UIColor colorWithWhite:0.25f alpha:1.0f];
+    
+    UIImage *patternImage = [UIImage imageNamed:@"viewerbg"];
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:patternImage];
     
     //TODO: replace this with configuration in IB
     [self.collectionView registerClass:[SGDesignViewerCell class] forCellWithReuseIdentifier:PhotoCellIdentifier];
@@ -58,6 +61,8 @@ static NSString * const PhotoCellIdentifier = @"DesignCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SGDesignViewerCell *photoCell = [collectionView dequeueReusableCellWithReuseIdentifier:PhotoCellIdentifier forIndexPath:indexPath];
+    
+    [photoCell.imageView setImageWithURL:[NSURL URLWithString:@"http://stitchgalaxy.com/design.jpg"] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     return photoCell;
 }

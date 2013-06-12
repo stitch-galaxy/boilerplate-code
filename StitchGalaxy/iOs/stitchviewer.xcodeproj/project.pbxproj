@@ -51,6 +51,12 @@
 		EC647DAF1762571900849681 /* SGDesignCollectionDecorationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAE1762571900849681 /* SGDesignCollectionDecorationView.m */; };
 		EC647DB11762594A00849681 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647DB01762594A00849681 /* QuartzCore.framework */; };
 		EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DB317625EA500849681 /* SGDesignViewerCell.m */; };
+		EC90BED71765CE1000B164C6 /* emblem.png in Resources */ = {isa = PBXBuildFile; fileRef = EC90BED61765CE1000B164C6 /* emblem.png */; };
+		EC90BEDC1765D5FE00B164C6 /* viewerbg_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEDA1765D5FE00B164C6 /* viewerbg_@2X.png */; };
+		EC90BEDD1765D5FE00B164C6 /* viewerbg.png in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEDB1765D5FE00B164C6 /* viewerbg.png */; };
+		EC90BEE01768B86900B164C6 /* SGSearchUIDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEDF1768B86800B164C6 /* SGSearchUIDatasource.m */; };
+		EC90BEE31768BA3200B164C6 /* SGCollectionViewKinds.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEE21768BA3200B164C6 /* SGCollectionViewKinds.m */; };
+		EC90BEEA1768C8C400B164C6 /* SGDesignSearchResults.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEE91768C8C400B164C6 /* SGDesignSearchResults.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +145,15 @@
 		EC647DB01762594A00849681 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EC647DB217625EA400849681 /* SGDesignViewerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignViewerCell.h; path = ui/SGDesignViewerCell.h; sourceTree = "<group>"; };
 		EC647DB317625EA500849681 /* SGDesignViewerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignViewerCell.m; path = ui/SGDesignViewerCell.m; sourceTree = "<group>"; };
+		EC90BED61765CE1000B164C6 /* emblem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = emblem.png; path = img/emblem.png; sourceTree = "<group>"; };
+		EC90BEDA1765D5FE00B164C6 /* viewerbg_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "viewerbg_@2X.png"; path = "img/viewerbg_@2X.png"; sourceTree = "<group>"; };
+		EC90BEDB1765D5FE00B164C6 /* viewerbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = viewerbg.png; path = img/viewerbg.png; sourceTree = "<group>"; };
+		EC90BEDE1768B86800B164C6 /* SGSearchUIDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGSearchUIDatasource.h; path = ui/SGSearchUIDatasource.h; sourceTree = "<group>"; };
+		EC90BEDF1768B86800B164C6 /* SGSearchUIDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGSearchUIDatasource.m; path = ui/SGSearchUIDatasource.m; sourceTree = "<group>"; };
+		EC90BEE11768BA3200B164C6 /* SGCollectionViewKinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGCollectionViewKinds.h; path = ui/SGCollectionViewKinds.h; sourceTree = "<group>"; };
+		EC90BEE21768BA3200B164C6 /* SGCollectionViewKinds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGCollectionViewKinds.m; path = ui/SGCollectionViewKinds.m; sourceTree = "<group>"; };
+		EC90BEE81768C8C400B164C6 /* SGDesignSearchResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignSearchResults.h; path = dao/SGDesignSearchResults.h; sourceTree = "<group>"; };
+		EC90BEE91768C8C400B164C6 /* SGDesignSearchResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignSearchResults.m; path = dao/SGDesignSearchResults.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +234,9 @@
 		EC647CC1175D32D100849681 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EC90BEDA1765D5FE00B164C6 /* viewerbg_@2X.png */,
+				EC90BEDB1765D5FE00B164C6 /* viewerbg.png */,
+				EC90BED61765CE1000B164C6 /* emblem.png */,
 				EC647CC2175D32D100849681 /* stitchviewer-Info.plist */,
 				EC647CC3175D32D100849681 /* InfoPlist.strings */,
 				EC647CC6175D32D100849681 /* main.m */,
@@ -255,6 +273,7 @@
 		EC647CF8175D365900849681 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				EC90BEE41768C7FB00B164C6 /* dao */,
 				EC647CF9175D365900849681 /* codec */,
 				EC647D09175D365900849681 /* CSGDesignGenerator.h */,
 				EC647D0A175D365900849681 /* CSGDesignGenerator.m */,
@@ -333,8 +352,21 @@
 				EC647DA7176252A900849681 /* SGCollectionViewController.m */,
 				EC647DB217625EA400849681 /* SGDesignViewerCell.h */,
 				EC647DB317625EA500849681 /* SGDesignViewerCell.m */,
+				EC90BEDE1768B86800B164C6 /* SGSearchUIDatasource.h */,
+				EC90BEDF1768B86800B164C6 /* SGSearchUIDatasource.m */,
+				EC90BEE11768BA3200B164C6 /* SGCollectionViewKinds.h */,
+				EC90BEE21768BA3200B164C6 /* SGCollectionViewKinds.m */,
 			);
 			name = ui;
+			sourceTree = "<group>";
+		};
+		EC90BEE41768C7FB00B164C6 /* dao */ = {
+			isa = PBXGroup;
+			children = (
+				EC90BEE81768C8C400B164C6 /* SGDesignSearchResults.h */,
+				EC90BEE91768C8C400B164C6 /* SGDesignSearchResults.m */,
+			);
+			name = dao;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,6 +449,9 @@
 				EC647CD1175D32D100849681 /* Default-568h@2x.png in Resources */,
 				EC647CD4175D32D100849681 /* MainStoryboard_iPhone.storyboard in Resources */,
 				EC647CD7175D32D100849681 /* MainStoryboard_iPad.storyboard in Resources */,
+				EC90BED71765CE1000B164C6 /* emblem.png in Resources */,
+				EC90BEDC1765D5FE00B164C6 /* viewerbg_@2X.png in Resources */,
+				EC90BEDD1765D5FE00B164C6 /* viewerbg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +540,9 @@
 				EC647DAC1762569700849681 /* SGDesignCollectionLayout.m in Sources */,
 				EC647DAF1762571900849681 /* SGDesignCollectionDecorationView.m in Sources */,
 				EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */,
+				EC90BEE01768B86900B164C6 /* SGSearchUIDatasource.m in Sources */,
+				EC90BEE31768BA3200B164C6 /* SGCollectionViewKinds.m in Sources */,
+				EC90BEEA1768C8C400B164C6 /* SGDesignSearchResults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

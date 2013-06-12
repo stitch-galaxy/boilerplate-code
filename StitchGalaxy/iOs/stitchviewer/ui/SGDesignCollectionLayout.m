@@ -69,7 +69,7 @@ static NSString * const SGDesignCollectionViewDecorationKind = @"Decoration";
 - (void)setup
 {
     //TODO: detect initial rotation to make setup correctly
-    self.itemSize = CGSizeMake(125.0f, 125.0f);
+    self.itemSize = CGSizeMake(300.0f, 200.0f);
     
     if (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
     //if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
