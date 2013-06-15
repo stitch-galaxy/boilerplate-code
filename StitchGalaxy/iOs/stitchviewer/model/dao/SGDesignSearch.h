@@ -7,26 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SGDesignSearchResult.h"
+#import "SGSearchCriteria.h"
 
 @protocol SGDesignResultsLoadingProgress <NSObject>
 
 - (void) resultsLoaded;
-- (void) resultsLoadingError: (NSString*) error;
-- (void) searchFinished;
+- (void) resultsLoadingError: (NSError*) error;
 
 @end
 
-@interface SGDesignSearchResult : NSObject
+@interface SGDesignSearch : NSObject
 
-@property (nonatomic, retain, readwrite) NSString *imageSmallUrl;
-@property (nonatomic, retain, readwrite) NSString *imageLargeUrl;
-@property (nonatomic, assign, readwrite) uint32_t width;
-@property (nonatomic, assign, readwrite) uint32_t height;
-@property (nonatomic, assign, readwrite) NSDecimal price;
-
-@end
-
-@interface SGDesignSearchResults : NSObject
+- (id) initWithCriteria: (SGSearchCriteria*) aCriteria;
 
 @property (nonatomic, weak, readwrite) id<SGDesignResultsLoadingProgress> delegate;
 
@@ -35,3 +28,5 @@
 - (SGDesignSearchResult*) getSearchResult: (uint32_t) index;
 
 @end
+
+

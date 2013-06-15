@@ -17,7 +17,7 @@
 @synthesize searchResults;
 
 
--(id) initWithSearchResultsAccessor: (SGDesignSearchResults*) aSearhcResults ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection
+-(id) initWithSearchResultsAccessor: (SGDesignSearch*) aSearhcResults ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection
 {
     self = [super init];
     if (self)

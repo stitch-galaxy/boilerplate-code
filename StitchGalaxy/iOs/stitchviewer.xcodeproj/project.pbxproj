@@ -56,7 +56,10 @@
 		EC90BEDD1765D5FE00B164C6 /* viewerbg.png in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEDB1765D5FE00B164C6 /* viewerbg.png */; };
 		EC90BEE01768B86900B164C6 /* SGSearchUIDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEDF1768B86800B164C6 /* SGSearchUIDatasource.m */; };
 		EC90BEE31768BA3200B164C6 /* SGCollectionViewKinds.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEE21768BA3200B164C6 /* SGCollectionViewKinds.m */; };
-		EC90BEEA1768C8C400B164C6 /* SGDesignSearchResults.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEE91768C8C400B164C6 /* SGDesignSearchResults.m */; };
+		EC90BEEA1768C8C400B164C6 /* SGDesignSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEE91768C8C400B164C6 /* SGDesignSearch.m */; };
+		EC90BEED176D095900B164C6 /* SGDesignSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEEC176D095900B164C6 /* SGDesignSearchResult.m */; };
+		EC90BEF0176D09A200B164C6 /* SGSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEEF176D09A100B164C6 /* SGSearchCriteria.m */; };
+		EC90BEF2176D234300B164C6 /* SearchTest.json in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEF1176D234300B164C6 /* SearchTest.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,8 +155,13 @@
 		EC90BEDF1768B86800B164C6 /* SGSearchUIDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGSearchUIDatasource.m; path = ui/SGSearchUIDatasource.m; sourceTree = "<group>"; };
 		EC90BEE11768BA3200B164C6 /* SGCollectionViewKinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGCollectionViewKinds.h; path = ui/SGCollectionViewKinds.h; sourceTree = "<group>"; };
 		EC90BEE21768BA3200B164C6 /* SGCollectionViewKinds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGCollectionViewKinds.m; path = ui/SGCollectionViewKinds.m; sourceTree = "<group>"; };
-		EC90BEE81768C8C400B164C6 /* SGDesignSearchResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignSearchResults.h; path = dao/SGDesignSearchResults.h; sourceTree = "<group>"; };
-		EC90BEE91768C8C400B164C6 /* SGDesignSearchResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignSearchResults.m; path = dao/SGDesignSearchResults.m; sourceTree = "<group>"; };
+		EC90BEE81768C8C400B164C6 /* SGDesignSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignSearch.h; path = dao/SGDesignSearch.h; sourceTree = "<group>"; };
+		EC90BEE91768C8C400B164C6 /* SGDesignSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignSearch.m; path = dao/SGDesignSearch.m; sourceTree = "<group>"; };
+		EC90BEEB176D095900B164C6 /* SGDesignSearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignSearchResult.h; path = dao/SGDesignSearchResult.h; sourceTree = "<group>"; };
+		EC90BEEC176D095900B164C6 /* SGDesignSearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignSearchResult.m; path = dao/SGDesignSearchResult.m; sourceTree = "<group>"; };
+		EC90BEEE176D09A100B164C6 /* SGSearchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGSearchCriteria.h; path = dao/SGSearchCriteria.h; sourceTree = "<group>"; };
+		EC90BEEF176D09A100B164C6 /* SGSearchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGSearchCriteria.m; path = dao/SGSearchCriteria.m; sourceTree = "<group>"; };
+		EC90BEF1176D234300B164C6 /* SearchTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchTest.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +274,7 @@
 				EC647D48175F589900849681 /* TestDesign.xml */,
 				EC647CE9175D32D100849681 /* stitchviewerTests-Info.plist */,
 				EC647CEA175D32D100849681 /* InfoPlist.strings */,
+				EC90BEF1176D234300B164C6 /* SearchTest.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -363,8 +372,12 @@
 		EC90BEE41768C7FB00B164C6 /* dao */ = {
 			isa = PBXGroup;
 			children = (
-				EC90BEE81768C8C400B164C6 /* SGDesignSearchResults.h */,
-				EC90BEE91768C8C400B164C6 /* SGDesignSearchResults.m */,
+				EC90BEE81768C8C400B164C6 /* SGDesignSearch.h */,
+				EC90BEE91768C8C400B164C6 /* SGDesignSearch.m */,
+				EC90BEEB176D095900B164C6 /* SGDesignSearchResult.h */,
+				EC90BEEC176D095900B164C6 /* SGDesignSearchResult.m */,
+				EC90BEEE176D09A100B164C6 /* SGSearchCriteria.h */,
+				EC90BEEF176D09A100B164C6 /* SGSearchCriteria.m */,
 			);
 			name = dao;
 			sourceTree = "<group>";
@@ -461,6 +474,7 @@
 			files = (
 				EC647CEC175D32D100849681 /* InfoPlist.strings in Resources */,
 				EC647D49175F589900849681 /* TestDesign.xml in Resources */,
+				EC90BEF2176D234300B164C6 /* SearchTest.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,7 +556,9 @@
 				EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */,
 				EC90BEE01768B86900B164C6 /* SGSearchUIDatasource.m in Sources */,
 				EC90BEE31768BA3200B164C6 /* SGCollectionViewKinds.m in Sources */,
-				EC90BEEA1768C8C400B164C6 /* SGDesignSearchResults.m in Sources */,
+				EC90BEEA1768C8C400B164C6 /* SGDesignSearch.m in Sources */,
+				EC90BEED176D095900B164C6 /* SGDesignSearchResult.m in Sources */,
+				EC90BEF0176D09A200B164C6 /* SGSearchCriteria.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

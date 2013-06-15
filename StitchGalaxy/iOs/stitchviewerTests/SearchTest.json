@@ -1,0 +1,14 @@
+search:
+{
+    total: 500,
+    items:
+        [
+         searchItem:
+         {
+         
+         },
+         searchItem:
+         {
+         },
+        ]
+}

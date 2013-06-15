@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SGDesignSearchResults.h"
+#import "SGDesignSearch.h"
 
 @interface SGSearchUIDatasource : NSObject<UICollectionViewDataSource>
 
 @property (nonatomic, assign, readwrite) NSUInteger itemsNumberPerSection;
-@property (nonatomic, retain, readwrite) SGDesignSearchResults *searchResults;
+@property (nonatomic, retain, readwrite) SGDesignSearch *searchResults;
 
--(id) initWithSearchResultsAccessor: (SGDesignSearchResults*) aSearhcResults ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection;
+-(id) initWithSearchResultsAccessor: (SGDesignSearch*) aSearhcResults ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection;
 
 @end
 
