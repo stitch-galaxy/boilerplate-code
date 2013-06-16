@@ -5,8 +5,8 @@
      {
      "designName": "testDesign",
      "width": 12,
-     "heigth": 14,
-     "colorNumbers": 32,
+     "height": 14,
+     "colorsNumber": 32,
      "imageSmallUrl": "http://stitchgalaxy.com/images/testDesignSmall.jpg",
      "imageLargeUrl": "http://stitchgalaxy.com/images/testDesignLarge.jpg",
      "price":0.45,
@@ -14,24 +14,23 @@
      "releaseDate":"2013-05-16",
      "rating":5,
      "downloads":6,
-     "detailsUrl":"http://stitchgalaxy.com/home.html",
+     "descriptionUrl":"http://stitchgalaxy.com/home.html",
      "designDownloadUrl":"http://stitchgalaxy.com/design.dsg"
      },
      {
      "designName": "testDesign",
      "width": 12,
-     "heigth": 14,
-     "colorNumbers": 32,
-     "imageSmallUrl-en": "http://stitchgalaxy.com/images/testDesignSmall.jpg",
-     "imageLargeUrl-en": "http://stitchgalaxy.com/images/testDesignLarge.jpg",
+     "height": 14,
+     "colorsNumber": 32,
+     "imageSmallUrl": "http://stitchgalaxy.com/images/testDesignSmall.jpg",
+     "imageLargeUrl": "http://stitchgalaxy.com/images/testDesignLarge.jpg",
      "price":0.45,
      "discountPercents":0,
      "releaseDate":"2013-05-16",
      "rating":5,
      "downloads":6,
-     "detailsUrl":"http://stitchgalaxy.com/home.html",
+     "descriptionUrl":"http://stitchgalaxy.com/home.html",
      "designDownloadUrl":"http://stitchgalaxy.com/design.dsg"
-     
      }
-     ]
+    ]
 }

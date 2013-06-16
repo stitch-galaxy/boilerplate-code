@@ -40,7 +40,7 @@ static NSString * const SG_JSON_SEARCH_ITEMS_NUMBER = @"total";
     total = t.unsignedLongLongValue;
     
     
-    NSArray* items = [searchResults objectForKey:SG_JSON_SEARCH_ITEMS_NUMBER];
+    NSArray* items = [searchResults objectForKey:SG_JSON_SEARCH_ITEMS_KEY];
     for(NSDictionary *item in items)
     {
         SGDesignSearchResult *result = [[SGDesignSearchResult alloc] init];

@@ -15,7 +15,7 @@ static NSString * const SG_JSON_SEARCH_ITEM_COLORS_NUM = @"colorsNumber";
 static NSString * const SG_JSON_SEARCH_ITEM_IMAGE_SMALL_URL = @"imageSmallUrl";
 static NSString * const SG_JSON_SEARCH_ITEM_IMAGE_LARGE_URL = @"imageLargeUrl";
 static NSString * const SG_JSON_SEARCH_ITEM_PRICE = @"price";
-static NSString * const SG_JSON_SEARCH_ITEM_DICSOUNT_PERCENTAGE = @"discountPercentage";
+static NSString * const SG_JSON_SEARCH_ITEM_DICSOUNT_PERCENTAGE = @"discountPercents";
 static NSString * const SG_JSON_SEARCH_ITEM_RELEASE_DATE = @"releaseDate";
 static NSString * const SG_JSON_SEARCH_ITEM_RATING = @"rating";
 static NSString * const SG_JSON_SEARCH_ITEM_DOWNLOADS = @"downloads";
@@ -124,7 +124,7 @@ static NSString * const SG_JSON_SEARCH_ITEM_DESIGN_DOWNLOAD_URL = @"designDownlo
         if (nil == dateFormat)
         {
             dateFormat = [[NSDateFormatter alloc] init];
-            [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZ"];
+            [dateFormat setDateFormat:@"yyyy-MM-dd"];
         }
         releaseDate = [dateFormat dateFromString:aReleaseDate];
     }
