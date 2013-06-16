@@ -45,6 +45,35 @@ static NSString * const SG_JSON_SEARCH_ITEM_DESIGN_DOWNLOAD_URL = @"designDownlo
 //url to download design
 @synthesize designDownloadUrl;
 
+- (id) init
+{
+    if (self = [super init])
+    {
+        designName = nil;
+        width = 0;
+        height = 0;
+        colorsNumber = 0;
+        imageSmallUrl = nil;
+        imageLargeUrl = nil;
+        NSDecimalNumber *aPrice = [[NSDecimalNumber alloc] initWithInt:0];
+        price = [aPrice decimalValue];
+        discountPercentage = 0;
+        static NSDate *defaultReleaseDate = nil;
+        if (nil == defaultReleaseDate)
+        {
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"yyyy-MM-dd"];
+            defaultReleaseDate = [dateFormat dateFromString:@"2013-01-01"];
+        }
+        releaseDate = defaultReleaseDate;
+        rating = 0;
+        downloads = 0;
+        descriptionUrl = nil;
+        designDownloadUrl = nil;
+    }
+    return self;
+}
+
 - (void) loadJSON: (id) JSON
 {
     NSDictionary *dict = JSON;
