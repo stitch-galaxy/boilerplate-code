@@ -9,26 +9,20 @@
 #import "SGDesignSearch.h"
 #import "AFJSONRequestOperation.h"
 
-@interface SGDesignSearch()
-
-@property (nonatomic, retain, readwrite) SGSearchCriteria *criteria;
-
-@end
-
 @implementation SGDesignSearch
 
 @synthesize delegate;
 @synthesize criteria;
+@synthesize searchResults;
 
 
-- (id) initWithCriteria: (SGSearchCriteria*) aCriteria
+- (id) init
 {
-    criteria = aCriteria;
-}
-
-
-- (uint32_t) totalResultsLoaded
-{
+    if (self = [super init])
+    {
+        searchResults = [[SGDesignSearchResults alloc] init];
+    }
+    return self;
 }
 
 - (NSURL*) getRequestUrlToLoadRangeFrom:(uint32_t) from To: (uint32_t) to
@@ -37,11 +31,9 @@
     return url;
 }
 
-
 - (void) parseJSONResponseForRangeFrom:(uint32_t) from To: (uint32_t) to JSON: (id) JSON
 {
-    NSDictionary* searchResults = (NSDictionary *) JSON;
-    uint32_t totalResultsLoaded = [searchResults objectForKey:@"overalResults"];
+    [searchResults loadJSON:JSON];
     
     [delegate resultsLoaded];
 }
@@ -63,10 +55,6 @@
     }
                                          ];
     [operation start];
-}
-
-- (SGDesignSearchResult*) getSearchResult: (uint32_t) index
-{
 }
 
 @end

@@ -30,4 +30,6 @@
 //url to download design
 @property (nonatomic, retain, readwrite) NSURL *designDownloadUrl;
 
+- (void) loadJSON: (id) JSON;
+
 @end

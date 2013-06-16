@@ -59,7 +59,9 @@
 		EC90BEEA1768C8C400B164C6 /* SGDesignSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEE91768C8C400B164C6 /* SGDesignSearch.m */; };
 		EC90BEED176D095900B164C6 /* SGDesignSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEEC176D095900B164C6 /* SGDesignSearchResult.m */; };
 		EC90BEF0176D09A200B164C6 /* SGSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEEF176D09A100B164C6 /* SGSearchCriteria.m */; };
-		EC90BEF2176D234300B164C6 /* SearchTest.json in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEF1176D234300B164C6 /* SearchTest.json */; };
+		EC90BEF2176D234300B164C6 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEF1176D234300B164C6 /* SearchResult.json */; };
+		EC90BEF5176DBD1F00B164C6 /* SGDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEF4176DBD1F00B164C6 /* SGDataSourceTests.m */; };
+		EC90BEFB176DBEBC00B164C6 /* SGDesignSearchResults.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEFA176DBEBB00B164C6 /* SGDesignSearchResults.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,7 +163,11 @@
 		EC90BEEC176D095900B164C6 /* SGDesignSearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignSearchResult.m; path = dao/SGDesignSearchResult.m; sourceTree = "<group>"; };
 		EC90BEEE176D09A100B164C6 /* SGSearchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGSearchCriteria.h; path = dao/SGSearchCriteria.h; sourceTree = "<group>"; };
 		EC90BEEF176D09A100B164C6 /* SGSearchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGSearchCriteria.m; path = dao/SGSearchCriteria.m; sourceTree = "<group>"; };
-		EC90BEF1176D234300B164C6 /* SearchTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchTest.json; sourceTree = "<group>"; };
+		EC90BEF1176D234300B164C6 /* SearchResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchResult.json; sourceTree = "<group>"; };
+		EC90BEF3176DBD1F00B164C6 /* SGDataSourceTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDataSourceTests.h; sourceTree = "<group>"; };
+		EC90BEF4176DBD1F00B164C6 /* SGDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDataSourceTests.m; sourceTree = "<group>"; };
+		EC90BEF9176DBEBB00B164C6 /* SGDesignSearchResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignSearchResults.h; path = dao/SGDesignSearchResults.h; sourceTree = "<group>"; };
+		EC90BEFA176DBEBB00B164C6 /* SGDesignSearchResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignSearchResults.m; path = dao/SGDesignSearchResults.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +265,8 @@
 		EC647CE7175D32D100849681 /* stitchviewerTests */ = {
 			isa = PBXGroup;
 			children = (
+				EC90BEF3176DBD1F00B164C6 /* SGDataSourceTests.h */,
+				EC90BEF4176DBD1F00B164C6 /* SGDataSourceTests.m */,
 				EC647D39175D367900849681 /* CSGDesignParserTest.h */,
 				EC647D3A175D367900849681 /* CSGDesignParserTest.m */,
 				EC647D3B175D367900849681 /* CSGSerializationTests.h */,
@@ -274,7 +282,7 @@
 				EC647D48175F589900849681 /* TestDesign.xml */,
 				EC647CE9175D32D100849681 /* stitchviewerTests-Info.plist */,
 				EC647CEA175D32D100849681 /* InfoPlist.strings */,
-				EC90BEF1176D234300B164C6 /* SearchTest.json */,
+				EC90BEF1176D234300B164C6 /* SearchResult.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -378,6 +386,8 @@
 				EC90BEEC176D095900B164C6 /* SGDesignSearchResult.m */,
 				EC90BEEE176D09A100B164C6 /* SGSearchCriteria.h */,
 				EC90BEEF176D09A100B164C6 /* SGSearchCriteria.m */,
+				EC90BEF9176DBEBB00B164C6 /* SGDesignSearchResults.h */,
+				EC90BEFA176DBEBB00B164C6 /* SGDesignSearchResults.m */,
 			);
 			name = dao;
 			sourceTree = "<group>";
@@ -474,7 +484,7 @@
 			files = (
 				EC647CEC175D32D100849681 /* InfoPlist.strings in Resources */,
 				EC647D49175F589900849681 /* TestDesign.xml in Resources */,
-				EC90BEF2176D234300B164C6 /* SearchTest.json in Resources */,
+				EC90BEF2176D234300B164C6 /* SearchResult.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +569,7 @@
 				EC90BEEA1768C8C400B164C6 /* SGDesignSearch.m in Sources */,
 				EC90BEED176D095900B164C6 /* SGDesignSearchResult.m in Sources */,
 				EC90BEF0176D09A200B164C6 /* SGSearchCriteria.m in Sources */,
+				EC90BEFB176DBEBC00B164C6 /* SGDesignSearchResults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +579,7 @@
 			files = (
 				EC647D3D175D367900849681 /* CSGDesignParserTest.m in Sources */,
 				EC647D3E175D367900849681 /* CSGSerializationTests.m in Sources */,
+				EC90BEF5176DBD1F00B164C6 /* SGDataSourceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

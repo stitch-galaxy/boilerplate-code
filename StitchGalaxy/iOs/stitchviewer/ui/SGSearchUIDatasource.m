@@ -14,16 +14,16 @@
 @implementation SGSearchUIDatasource
 
 @synthesize itemsNumberPerSection;
-@synthesize searchResults;
+@synthesize search;
 
 
--(id) initWithSearchResultsAccessor: (SGDesignSearch*) aSearhcResults ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection
+-(id) initWithSearchResultsAccessor: (SGDesignSearch*) aSearch ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection
 {
     self = [super init];
     if (self)
     {
         itemsNumberPerSection = anItemsNumberPerSection;
-        searchResults = aSearhcResults;
+        search = aSearch;
     }
     return self;
 }
@@ -38,7 +38,7 @@
     SGDesignViewerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:SGCollectionViewCellIdentifier forIndexPath:indexPath];
     
     uint32_t itemIndex = indexPath.section * itemsNumberPerSection + indexPath.item;
-    SGDesignSearchResult *searchResult = [searchResults getSearchResult: itemIndex];
+    SGDesignSearchResult *searchResult = [search.searchResults getSearchResult: itemIndex];
     
     [cell.imageView setImageWithURL:[NSURL URLWithString:searchResult.imageSmallUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
@@ -48,7 +48,7 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return (searchResults.totalResultsLoaded - 1) / itemsNumberPerSection + 1;
+    return (search.searchResults.total - 1) / itemsNumberPerSection + 1;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SGDesignSearchResult.h"
+#import "SGDesignSearchResults.h"
 #import "SGSearchCriteria.h"
 
 @protocol SGDesignResultsLoadingProgress <NSObject>
@@ -19,13 +19,12 @@
 
 @interface SGDesignSearch : NSObject
 
-- (id) initWithCriteria: (SGSearchCriteria*) aCriteria;
-
+@property (nonatomic, retain, readwrite) SGSearchCriteria *criteria;
 @property (nonatomic, weak, readwrite) id<SGDesignResultsLoadingProgress> delegate;
+@property (nonatomic, retain, readwrite) SGDesignSearchResults *searchResults;
 
-- (uint32_t) totalResultsLoaded;
 - (void) loadRangeFrom: (uint32_t) from To: (uint32_t) to;
-- (SGDesignSearchResult*) getSearchResult: (uint32_t) index;
+
 
 @end
 
