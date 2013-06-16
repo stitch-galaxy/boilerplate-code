@@ -25,29 +25,28 @@
     return self;
 }
 
-- (NSURL*) getRequestUrlToLoadRangeFrom:(uint32_t) from To: (uint32_t) to
+- (NSURL*) getRequestUrlToLoadPage:(uint32_t) pageIndex OfSize: (uint32_t) pageSize
 {
     NSURL *url = [NSURL URLWithString:@"https://stitchgalaxy.com/search.json"];
     return url;
 }
 
-- (void) parseJSONResponseForRangeFrom:(uint32_t) from To: (uint32_t) to JSON: (id) JSON
+- (void) parseJSONResponseForPage:(uint32_t) pageIndex OfSize: (uint32_t) pageSize JSON: (id) JSON
 {
-    [searchResults loadJSON:JSON];
-    
+    [searchResults loadJSON:JSON forPage: pageIndex OfSize: pageSize];
     [delegate resultsLoaded];
 }
 
-- (void) loadRangeFrom: (uint32_t) from To: (uint32_t) to
+- (void) loadPage: (uint32_t) pageIndex OfSize: (uint32_t) pageSize
 {
     
-    NSURL *url = [self getRequestUrlToLoadRangeFrom:from To: to];
+    NSURL *url = [self getRequestUrlToLoadPage:pageIndex OfSize: pageSize];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
     {
-        [self parseJSONResponseForRangeFrom:from To:to JSON: JSON];
+        [self parseJSONResponseForPage:pageIndex OfSize:pageSize JSON: JSON];
     }
                                                                                         failure:^(NSURLRequest *request , NSHTTPURLResponse *response , NSError *error , id JSON)
     {

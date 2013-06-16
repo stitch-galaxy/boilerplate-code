@@ -11,7 +11,7 @@
 
 @interface SGDesignSearchResults : NSObject
 
-- (void) loadJSON: (id) JSON;
+- (void) loadJSON: (id) JSON forPage: (uint32_t) pageIndex OfSize: (uint32_t) pageSize;
 - (SGDesignSearchResult*) getSearchResult: (uint32_t) index;
 
 @property (nonatomic, assign, readonly) uint64_t total;

@@ -14,7 +14,7 @@ static NSString * const SG_JSON_SEARCH_ITEMS_NUMBER = @"total";
 
 @interface SGDesignSearchResults()
 
-@property (nonatomic, retain, readwrite) NSArray *results;
+@property (nonatomic, retain, readwrite) NSMutableArray *results;
 
 @end
 
@@ -27,24 +27,26 @@ static NSString * const SG_JSON_SEARCH_ITEMS_NUMBER = @"total";
 {
     if (self = [super init])
     {
-        results = [[NSArray alloc] init];
+        //TODO: handle initial capcacity properly
+        results = [[NSMutableArray alloc] initWithCapacity:1000];
         total = 0;
     }
     return self;
 }
 
-- (void) loadJSON: (id) JSON
+- (void) loadJSON: (id) JSON forPage: (uint32_t) pageIndex OfSize: (uint32_t) pageSize;
 {
     NSDictionary* searchResults = (NSDictionary *) JSON;
     NSNumber *t = [searchResults objectForKey:SG_JSON_SEARCH_ITEMS_NUMBER];
     total = t.unsignedLongLongValue;
     
-    
     NSArray* items = [searchResults objectForKey:SG_JSON_SEARCH_ITEMS_KEY];
+    
     for(NSDictionary *item in items)
     {
         SGDesignSearchResult *result = [[SGDesignSearchResult alloc] init];
         [result loadJSON:item];
+        [results addObject:result];
     }
 }
 

@@ -23,7 +23,7 @@
 @property (nonatomic, weak, readwrite) id<SGDesignResultsLoadingProgress> delegate;
 @property (nonatomic, retain, readwrite) SGDesignSearchResults *searchResults;
 
-- (void) loadRangeFrom: (uint32_t) from To: (uint32_t) to;
+- (void) loadPage: (uint32_t) pageIndex OfSize: (uint32_t) pageSize;
 
 
 @end
