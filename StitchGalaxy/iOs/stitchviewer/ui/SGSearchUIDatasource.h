@@ -14,7 +14,7 @@
 @property (nonatomic, assign, readwrite) NSUInteger itemsNumberPerSection;
 @property (nonatomic, retain, readwrite) SGDesignSearch *search;
 
--(id) initWithSearchResultsAccessor: (SGDesignSearch*) aSearch ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection;
+-(id) initWithSearch: (SGDesignSearch*) aSearch ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection;
 
 @end
 

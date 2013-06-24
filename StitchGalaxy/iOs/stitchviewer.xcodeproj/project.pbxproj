@@ -51,6 +51,7 @@
 		EC647DAF1762571900849681 /* SGDesignCollectionDecorationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DAE1762571900849681 /* SGDesignCollectionDecorationView.m */; };
 		EC647DB11762594A00849681 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC647DB01762594A00849681 /* QuartzCore.framework */; };
 		EC647DB417625EA500849681 /* SGDesignViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC647DB317625EA500849681 /* SGDesignViewerCell.m */; };
+		EC8BF9021776262500CBD6AD /* search.py in Resources */ = {isa = PBXBuildFile; fileRef = EC8BF9011776262500CBD6AD /* search.py */; };
 		EC90BED71765CE1000B164C6 /* emblem.png in Resources */ = {isa = PBXBuildFile; fileRef = EC90BED61765CE1000B164C6 /* emblem.png */; };
 		EC90BEDC1765D5FE00B164C6 /* viewerbg_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEDA1765D5FE00B164C6 /* viewerbg_@2X.png */; };
 		EC90BEDD1765D5FE00B164C6 /* viewerbg.png in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEDB1765D5FE00B164C6 /* viewerbg.png */; };
@@ -62,6 +63,7 @@
 		EC90BEF2176D234300B164C6 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEF1176D234300B164C6 /* SearchResult.json */; };
 		EC90BEF5176DBD1F00B164C6 /* SGDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEF4176DBD1F00B164C6 /* SGDataSourceTests.m */; };
 		EC90BEFB176DBEBC00B164C6 /* SGDesignSearchResults.m in Sources */ = {isa = PBXBuildFile; fileRef = EC90BEFA176DBEBB00B164C6 /* SGDesignSearchResults.m */; };
+		EC90BEFD176E043A00B164C6 /* MySqlDbSchema.sql in Resources */ = {isa = PBXBuildFile; fileRef = EC90BEFC176E043A00B164C6 /* MySqlDbSchema.sql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +152,7 @@
 		EC647DB01762594A00849681 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EC647DB217625EA400849681 /* SGDesignViewerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignViewerCell.h; path = ui/SGDesignViewerCell.h; sourceTree = "<group>"; };
 		EC647DB317625EA500849681 /* SGDesignViewerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignViewerCell.m; path = ui/SGDesignViewerCell.m; sourceTree = "<group>"; };
+		EC8BF9011776262500CBD6AD /* search.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = search.py; sourceTree = "<group>"; };
 		EC90BED61765CE1000B164C6 /* emblem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = emblem.png; path = img/emblem.png; sourceTree = "<group>"; };
 		EC90BEDA1765D5FE00B164C6 /* viewerbg_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "viewerbg_@2X.png"; path = "img/viewerbg_@2X.png"; sourceTree = "<group>"; };
 		EC90BEDB1765D5FE00B164C6 /* viewerbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = viewerbg.png; path = img/viewerbg.png; sourceTree = "<group>"; };
@@ -168,6 +171,7 @@
 		EC90BEF4176DBD1F00B164C6 /* SGDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDataSourceTests.m; sourceTree = "<group>"; };
 		EC90BEF9176DBEBB00B164C6 /* SGDesignSearchResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGDesignSearchResults.h; path = dao/SGDesignSearchResults.h; sourceTree = "<group>"; };
 		EC90BEFA176DBEBB00B164C6 /* SGDesignSearchResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SGDesignSearchResults.m; path = dao/SGDesignSearchResults.m; sourceTree = "<group>"; };
+		EC90BEFC176E043A00B164C6 /* MySqlDbSchema.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MySqlDbSchema.sql; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +287,8 @@
 				EC647CE9175D32D100849681 /* stitchviewerTests-Info.plist */,
 				EC647CEA175D32D100849681 /* InfoPlist.strings */,
 				EC90BEF1176D234300B164C6 /* SearchResult.json */,
+				EC90BEFC176E043A00B164C6 /* MySqlDbSchema.sql */,
+				EC8BF9011776262500CBD6AD /* search.py */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -485,6 +491,8 @@
 				EC647CEC175D32D100849681 /* InfoPlist.strings in Resources */,
 				EC647D49175F589900849681 /* TestDesign.xml in Resources */,
 				EC90BEF2176D234300B164C6 /* SearchResult.json in Resources */,
+				EC90BEFD176E043A00B164C6 /* MySqlDbSchema.sql in Resources */,
+				EC8BF9021776262500CBD6AD /* search.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

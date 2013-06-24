@@ -17,7 +17,7 @@
 @synthesize search;
 
 
--(id) initWithSearchResultsAccessor: (SGDesignSearch*) aSearch ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection
+-(id) initWithSearch: (SGDesignSearch*) aSearch ItemsCountPerSection: (NSUInteger) anItemsNumberPerSection
 {
     self = [super init];
     if (self)
@@ -40,7 +40,7 @@
     uint32_t itemIndex = indexPath.section * itemsNumberPerSection + indexPath.item;
     SGDesignSearchResult *searchResult = [search.searchResults getSearchResult: itemIndex];
     
-    [cell.imageView setImageWithURL:[NSURL URLWithString:searchResult.imageSmallUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [cell.imageView setImageWithURL:searchResult.imageSmallUrl placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     return cell;
 }
