@@ -1,36 +1,46 @@
 create database stitchgalaxy
 
+use stitchgalaxy
+
 create table T_DESIGNS
-(ID BIGINT,
+(
+DesignId BIGINT,
 Width INT,
 Heigth INT,
 ColorsNumber INT,
+ReleaseDate DateTime
 )
 
-CREATE TABLE T_DESIGN_LOCALIZED_PARAMETERS
+create table T_DESIGN_PARAMETERS
+(
+ParametersId BIGINT,
+#Localized information can be duplicated in store
+[Name] NVARCHAR(255),
+#Localized information can be duplicated in store
+Description NVARCHAR(255),
+ImageSmallName VARCHAR(255),
+ImageLargeName VARCHAR(255),
+DescriptionUrl VARCHAR(255),
+DownloadUrl VARCHAR(255)
+)
+
+create table T_DESIGN_LOCALIZED_PARAMETERS
 (
 ID BIGINT,
+[Language] VARCHAR(50),
+[Region] VARCHAR(50),
 DesignId BIGINT,
-[Locale] VARCHAR(50),
-imageSmallName VARCHAR(255),
-imageLargeName VARCHAR(255),
-descriptionUrl VARCHAR(255),
-downloadUrl VARCHAR(255)
+ParametersId BIGINT
 )
 
+alter table T_DESIGN_LOCALIZED_PARAMETERS
+	add constraint FK_DESIGNLOCALIZEDPARAMETERS foreign key (DesignId)
+		references dbo.T_DESIGNS (DesignId)
 
-@property (nonatomic, assign, readwrite) NSString *designName;
-//images
-@property (nonatomic, retain, readwrite) NSURL *imageSmallUrl;
-@property (nonatomic, retain, readwrite) NSURL *imageLargeUrl;
-//pricing
-@property (nonatomic, assign, readwrite) NSDecimal price;
-@property (nonatomic, assign, readwrite) uint32_t discountPercentage;
-//social information
-@property (nonatomic, retain, readwrite) NSDate *releaseDate;
-@property (nonatomic, assign, readwrite) uint32_t rating;
-@property (nonatomic, assign, readwrite) uint64_t downloads;
-//details
-@property (nonatomic, retain, readwrite) NSURL *descriptionUrl;
-//url to download design
-@property (nonatomic, retain, readwrite) NSURL *designDownloadUrl;
+
+create table T_DESIGN_COUNTERS
+(
+DesignId BIGINT,
+Sales BIGINT,
+Rating DOUBLE,
+)
