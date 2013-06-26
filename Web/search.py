@@ -6,46 +6,47 @@ import json
 
 
 class Design:
-   'Design search result class'
-   name
-   description
-   width
-   heigth
-   colors
-   imageSmallUrl
-   imageLargeUrl
-   releaseDate
-   descriptionUrl
-   downloadUrl
-   avgRating
-   sales
-   
-   
-   def __init__(self):
-   
-   def toJson(self):
-   return 'HAHA'
+    name = None
+    description = None
+    width = None
+    heigth = None
+    colors = None
+    imageSmallUrl = None
+    imageLargeUrl = None
+    releaseDate = None
+    descriptionUrl = None
+    downloadUrl = None
+    avgRating = None
+    sales = None
+    def __init__(self):
+        self.width = 0
 
+    def toJson(self):
+        return json.dumps({'name': self.name, 'description': self.description, 'width': self.width})
 
 def application(environ, start_response):
     
     # Returns a dictionary containing lists as values.
     d = parse_qs(environ['QUERY_STRING'])
-
-
     
+    # Read request parameters
     language = d.get('language', [''])[0] # Returns the language value.
     region = d.get('region', [''])[0] # Returns the region value.
     
     # Always escape user input to avoid script injection
     language = escape(language)
     region = escape(region)
+    
+    #Make db request
+    
+    #Create data structures
+    
+    design = Design()
+    design.name = 'a'
+    design.description = 'b'
+    design.width = 15
 
-	design = Design()
-	design.name = 'TestName'
-    designs = []
-
-    response_body = language + region
+    response_body = design.toJson()
     
     status = '200 OK'
     
