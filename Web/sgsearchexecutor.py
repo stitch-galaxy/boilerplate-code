@@ -1,19 +1,13 @@
-from sgconfig import searchsql
+﻿from sgconfig import searchsql
 from sgconfig import dbconfig
 
 from sgsearchresults import SearchResults
 from sgsearchresults import Design
 
 import json
+
 import mysql.connector
 from mysql.connector import errorcode
-
-class ComplexEncoder(json.JSONEncoder):
-	def default(self, obj):
-		if hasattr(obj,'reprJSON'):
-			return obj.reprJSON()
-		else:
-			return json.JSONEncoder.default(self, obj) 
 
 class SearchExecutor:
 
@@ -23,6 +17,7 @@ class SearchExecutor:
 		
 	def performSearch(self):
 		searchResults = SearchResults()
+						
 		try:
 			cnx = mysql.connector.connect(**dbconfig)
 			cursor = cnx.cursor()
@@ -52,4 +47,4 @@ class SearchExecutor:
 			searchResults.error = "MySql connection error: {}".format(err)
 		else:
 			cnx.close()
-		return json.dumps(searchResults.reprJSON(), cls=ComplexEncoder)
+		return json.dumps(searchResults.reprJSON())

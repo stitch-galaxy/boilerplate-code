@@ -1,4 +1,4 @@
-class SearchResults:
+﻿class SearchResults:
 
 	def __init__(self):
 		self.results = []
@@ -6,9 +6,9 @@ class SearchResults:
 		
 	def reprJSON(self):
 		self.dict = dict()
-		self.dict['results'] = self.results
+		self.dict["results"] = self.results
 		if self.error != None:
-			self.dict['error'] = self.error
+			self.dict["error"] = self.error
 		
 		return self.dict
 
@@ -31,28 +31,28 @@ class Design:
     def reprJSON(self):
 		self.dict = dict()
 		if self.name != None:
-			self.dict['name'] = self.name
+			self.dict["name"] = self.name
 		if self.description != None:
-			self.dict['description'] = self.description
+			self.dict["description"] = self.description
 		if self.width != None:
-			self.dict['width'] = self.width
+			self.dict["width"] = self.width
 		if self.heigth != None:
-			self.dict['heigth'] = self.heigth
+			self.dict["heigth"] = self.heigth
 		if self.colors != None:
-			self.dict['colors'] = self.colors
+			self.dict["colors"] = self.colors
 		if self.imageSmallUrl != None:
-			self.dict['imageSmallUrl'] = self.imageSmallUrl
+			self.dict["imageSmallUrl"] = self.imageSmallUrl
 		if self.imageLargeUrl != None:
-			self.dict['imageLargeUrl'] = self.imageLargeUrl
+			self.dict["imageLargeUrl"] = self.imageLargeUrl
 		if self.releaseDate != None:
-			self.dict['releaseDate'] = self.releaseDate
+			self.dict["releaseDate"] = self.releaseDate
 		if self.descriptionUrl != None:
-			self.dict['descriptionUrl'] = self.descriptionUrl
+			self.dict["descriptionUrl"] = self.descriptionUrl
 		if self.downloadUrl != None:
-			self.dict['downloadUrl'] = self.downloadUrl
+			self.dict["downloadUrl"] = self.downloadUrl
 		if self.avgRating != None:
-			self.dict['avgRating'] = self.avgRating
+			self.dict["avgRating"] = self.avgRating
 		if self.sales != None:
-			self.dict['sales'] = self.sales
+			self.dict["sales"] = self.sales
 			
 		return self.dict
