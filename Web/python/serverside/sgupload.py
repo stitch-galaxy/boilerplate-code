@@ -10,18 +10,11 @@ CHUNKSIZE = 8192
 
 def application(environ, start_response):
 
-#	length = environ.get('CONTENT_LENGTH', '0')
-#	length = 0 if length == '' else int(length)
-#	body = environ['wsgi.input'].read(length)
-#
-#	response_body = body
-	response_body = 'a'
+	response_body = 'ok'
 
 	form = cgi.FieldStorage(fp=cStringIO.StringIO(environ['wsgi.input'].read(int(environ['CONTENT_LENGTH']))), environ=environ)
 	if form.has_key('design'):
 		desingList = form.getlist('design')
-
-#	form = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ)
 
 	status = "200 OK"
 	field = form.list[0]

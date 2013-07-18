@@ -15,5 +15,3 @@ dbConfig = {
 
 serverName = "localhost"
 serverPort = 8051
-
-uploadUrl = "http://127.0.0.1:8051/upload"
