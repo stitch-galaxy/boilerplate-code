@@ -1,5 +1,5 @@
-﻿from sgconfig import searchsql
-from sgconfig import dbconfig
+﻿from sgconfig import searchSql
+from sgconfig import dbConfig
 
 from sgsearchresults import SearchResults
 from sgsearchresults import Design
@@ -14,15 +14,15 @@ class SearchExecutor:
 	def __init__(self):
 		self.language = "en"
 		self.region = "us"
-		
+
 	def performSearch(self):
 		searchResults = SearchResults()
-						
+
 		try:
-			cnx = mysql.connector.connect(**dbconfig)
+			cnx = mysql.connector.connect(**dbConfig)
 			cursor = cnx.cursor()
 			try:
-				query = (searchsql)
+				query = (searchSql)
 				cursor.execute(query, (self.language,))
 				for (DesignId, ReleaseDate, Width, Height, Colors, Name, Description, ImageSmall, ImageLargeName, DescriptionUrl, DownloadUrl, Sales, AvgRating) in cursor:
 					design = Design()

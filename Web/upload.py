@@ -1,11 +1,8 @@
 ﻿import requests
-from sgconfig.py import siteurl
+from sgconfig import uploadUrl
 
-data = "json serialized params"
+files = {'design': open('design.csd', 'rb')}
 
-try:
-    r = requests.get("https://github.com/timeline.json")
-except UnicodeEncodeError as err:
-    print err
-print r.encoding
-print r.text.encode('cp866', 'ignore')
+r = requests.post(uploadUrl, files=files)
+
+print r.text
