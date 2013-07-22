@@ -1,8 +1,8 @@
-﻿from sgconfig import searchSql
-from sgconfig import dbConfig
+﻿from search_config import searchSql
+from search_config import dbConfig
 
-from sgsearchresults import SearchResults
-from sgsearchresults import Design
+from searchresults import SearchResults
+from searchresults import Design
 
 import json
 

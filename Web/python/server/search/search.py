@@ -3,10 +3,10 @@
 from wsgiref.simple_server import make_server
 from cgi import parse_qs, escape
 
-from sgsearchexecutor import SearchExecutor
+from searchexecutor import SearchExecutor
 
-from sgconfig import serverName
-from sgconfig import serverPort
+from search_config import serverName
+from search_config import serverPort
 
 def application(environ, start_response):
 

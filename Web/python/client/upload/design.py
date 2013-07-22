@@ -4,6 +4,9 @@
 		self.designFilePath = None
 		self.descrpitionFilePath = None
 		self.jsonFilePath = None
+		self.imageSmallFilePath = None
+		self.imageLargeFilePath = None
+		self.jsonFilePath = None
 
 class Design:
 
