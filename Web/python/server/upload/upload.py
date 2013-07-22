@@ -4,6 +4,7 @@ import cgi
 import cStringIO
 import os, os.path
 import json
+from designlocalization import DesignLocalization
 
 from upload_config import serverName
 from upload_config import serverPort
@@ -36,51 +37,42 @@ def application(environ, start_response):
 	form = cgi.FieldStorage(fp=cStringIO.StringIO(environ['wsgi.input'].read(int(environ['CONTENT_LENGTH']))), environ=environ)
 
 
-	designGuid = form.getvalue("designGuid")
+	designLocalization = DesignLocalization()
+
+	designLocalization.designGuid = form.getvalue("designGuid")
 
 	localizationString = form.getvalue("localization")
 
 	locList = localizationString.split("_")
 	if len(locList) == 2:
-		language = locList[0]
-		locale = locList[1]
+		designLocalization.language = locList[0]
+		designLocalization.locale = locList[1]
 	else:
-		language = locList[0]
-		locale = None
-
-	designFileName = None
-	descriptionFileName = None
-	imageSmallFileName = None
-	imageLargeFileName = None
-	designName = None
-	designDescription = None
-	designWidth = None
-	designHeight = None
-	designColors = None
+		designLocalization.language = locList[0]
 
 	if form.has_key("design"):
 		field = form["design"]
-	 	designFileName = field.filename
+	 	designLocalization.designFileName = field.filename
 		file = field.file
-		copyFile(file, designFileName, designGuid)
+		copyFile(file, designLocalization.designFileName, designGuid)
 
 	if form.has_key("description"):
 		field = form["description"]
-	 	descriptionFileName = field.filename
+	 	designLocalization.descriptionFileName = field.filename
 		file = field.file
-		copyFile(file, descriptionFileName, designGuid)
+		copyFile(file, designLocalization.descriptionFileName, designGuid)
 
 	if form.has_key("imageSmall"):
 		field = form["imageSmall"]
-	 	imageSmallFileName = field.filename
+	 	designLocalization.imageSmallFileName = field.filename
 		file = field.file
-		copyFile(file, imageSmallFileName, designGuid)
+		copyFile(file, designLocalization.imageSmallFileName, designGuid)
 
 	if form.has_key("imageLarge"):
 		field = form["imageLarge"]
-	 	imageLargeFileName = field.filename
+	 	designLocalization.imageLargeFileName = field.filename
 		file = field.file
-		copyFile(file, imageLargeFileName, designGuid)
+		copyFile(file, designLocalization.imageLargeFileName, designGuid)
 
 	if form.has_key("json"):
 		field = form["json"]
@@ -88,15 +80,15 @@ def application(environ, start_response):
 		jsonAsString = input.getvalue()
 		jsonDict = json.loads(jsonAsString)
 		if jsonDict.has_key("name"):
-			designName = jsonDict["name"]
+			designLocalization.designName = jsonDict["name"]
 		if jsonDict.has_key("description"):
-			designDescription = jsonDict["description"]
+			designLocalization.designDescription = jsonDict["description"]
 		if jsonDict.has_key("width"):
-			designWidth = jsonDict["width"]
+			designLocalization.designWidth = jsonDict["width"]
 		if jsonDict.has_key("height"):
-			designHeight = jsonDict["height"]
+			designLocalization.designHeight = jsonDict["height"]
 		if jsonDict.has_key("colors"):
-			designColors = jsonDict["colors"]
+			designLocalization.designColors = jsonDict["colors"]
 
 	response_headers = [("Content-Type", "text/plain"),
 						("Content-Length", str(len(response_body)))]
