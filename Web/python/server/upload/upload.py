@@ -90,6 +90,8 @@ def application(environ, start_response):
 		if jsonDict.has_key("colors"):
 			designLocalization.designColors = jsonDict["colors"]
 
+	designLocalization.update()
+
 	response_headers = [("Content-Type", "text/plain"),
 						("Content-Length", str(len(response_body)))]
 
