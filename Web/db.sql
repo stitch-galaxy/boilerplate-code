@@ -48,7 +48,7 @@ alter table T_DESIGN_TAGS
 
 use stitchgalaxy;
 
-DELIMITER $$
+delimiter $$
 create procedure createOrUpdateDesignInformation
 (
 in uuid char(16),
@@ -77,7 +77,7 @@ begin
 	if recordsFound = 1
 	then
 			
-		select ReleaseDate, Sales, TotalRating, TotalRates, Blocked into curReleasedate, curSales, cutTotalRating, curTotalRates, curBlocked from T_DESIGNS where DesignUuid = designUuid;
+		select ReleaseDate, Sales, TotalRating, TotalRates, Blocked into curReleasedate, curSales, curTotalRating, curTotalRates, curBlocked from T_DESIGNS where DesignUuid = designUuid;
 
 		if releaseDate is null
 		then
@@ -119,8 +119,9 @@ begin
 	end if;
 
 end$$
+delimiter ;
 
-DELIMITER $$
+delimiter $$
 create procedure createOrUpdateDesignLocalization
 (
 in uuid char(16),
@@ -156,39 +157,174 @@ begin
 	end if;
 
 end$$
+delimiter ;
 
-DELIMITER $$
-create procedure searchDesigns
+delimiter $$
+create procedure getTagsList
 (
-in searchString nvarchar(255),
-in sortOrder int
+	intlist text 
 )
 begin
 
-#TOP_SALE = 1
-#MOST_RECENT = 2
-#TOP_RATE = 3
-#MOST_RELEVANT = 4
-#RANDOM = 5
-#PRICE_ASC = 6
-#PRICE_DESC = 7
-#COMPLEXITY_ASC = 8
-#COMPLEXITY_DESC = 9
+declare comma int default 0;
+declare mylist text default intlist;
+declare temp text default '';
+declare strlen int default length(intlist);
 
-	declare designUuid varbinary(16);
-	declare parametersId int default null;
 
-	set designUuid = hex(uuid);
+create temporary table TagsTempTable(TagId int);
 
-	select ParametersId into parametersId from T_DESIGN_PARAMETERS where DesignUuid = designUuid and Language = language;
-	
-	if parametersId is null
+SET comma = LOCATE(',',mylist);
+
+while strlen > 0 do
+	if
+	comma = 0
 	then
-		insert into T_DESIGN_PARAMETERS(DesignUuid, Language, Name, Description, Width, Heigth, Colors, HasThumbnail, HasImage, HasWebDescription, HasDesign) 
-		values(designUuid, language, name, description, width, heigth, colors, hasThumbnail, hasImage, hasWebDescription, hasDesign);
+		set temp = TRIM(mylist);
+		set mylist = '';
+		set strlen = 0;
 	else
-		update T_DESIGN_PARAMETERS set DesignUuid = designUuid, Language = language, Name = name, Description = description, Width = width, Heigth = heigth, Colors = colors, HasThumbnail = hasThumbnail, HasImage = hasImage, HasWebDescription = hasWebDescription, HasDesign = hasDesign 
-		where ParametersId = parametersId;
+		set temp = trim(substring(mylist,1,comma));
+		set mylist = trim(substring(mylist from comma + 1));
+		set strlen = length(mylist);
 	end if;
 
+	if cast(temp as unsigned) != 0
+	then
+		insert into TagsTempTable (TagId) values(cast(temp as unsigned));
+	end if;
+	set comma = locate(',',mylist);
+end while;
+
+end $$
+delimiter ;
+
+delimiter $$
+create procedure searchDesigns
+(
+in searchString text,
+in tagsList text,
+in sortOrder int,
+in pageNumber int,
+in resultsOnPage int,
+out totalResults bigint
+)
+begin
+
+declare categoriesFilter bit default 0;
+declare startFrom bigint;
+
+declare rI int default 0;
+declare rAlreadySelected bit default 1;
+
+set startFrom = pageNumber * resultsOnPage;
+
+if (length(trim(tagsList)) <> 0)
+then
+	call getTagsList(tagsList);
+	set categoriesFilter = 1;
+	select count(*) into totalResults from T_DESIGNS;
+else
+	select count(distinct degsignUuid) into totalResults from T_DESIGN_TAGS where TagId in (select TagId from TagsTempTable);
+end if;
+
+	#MOST_RECENT
+	if sortOrder = 0
+	then
+		if categoriesFilter
+		then
+			select DesignUuid from T_DESIGNS
+			where DesignUuid in (select DesignUuid from T_DESIGN_TAGS where TagId in (select TagId from TagsTempTable))
+			order by ReleaseDate desc
+			limit startFrom, resultsOnPage;
+		else
+			select DesignUuid from T_DESIGNS
+			order by ReleaseDate desc
+			limit startFrom, resultsOnPage;
+		end if;
+	end if;
+	#TOP_SALE
+	if sortOrder = 1
+	then
+		if categoriesFilter
+		then
+			select DesignUuid from T_DESIGNS
+			where DesignUuid in (select DesignUuid from T_DESIGN_TAGS where TagId in (select TagId from TagsTempTable))
+			order by Sales desc
+			limit startFrom, resultsOnPage;
+		else
+			select DesignUuid from T_DESIGNS
+			order by Sales desc
+			limit startFrom, resultsOnPage;
+		end if;
+	end if;
+	#RANDOM
+	if sortOrder = 1
+	then
+		create temporary table tempSearchResults (DesignUuid varbinary(16), StartFrom bigint);
+
+		while rI < resultsOnPage and rI < totalResults do
+			set rAlreadySelected = 1;
+			while rAlreadySelected do
+				set startFrom = round(rand() * totalResults); 	
+				select count(*) <> 0 into rAlreadySelected from tempSearchResults where StartFrom = startFrom;
+			end while;
+			
+			#insert data into tempSearchResults
+			if categoriesFilter
+			then
+				insert into tempSearchResults (DesignUuid)
+				select DesignUuid from T_DESIGNS limit startFrom, 1;
+			else
+				insert into tempSearchResults (DesignUuid)
+				select DesignUuid from T_DESIGNS 
+				where DesignUuid in (select DesignUuid from T_DESIGN_TAGS where TagId in (select TagId from TagsTempTable))
+				limit startFrom, 1;
+			end if;
+			#increment rI for main loop
+			set rI = rI + 1;
+		end while;
+		
+		select DesignUuid from tempSearchResults;
+	end if;
+
+#Mutually exclusive orders
+#MOST_RECENT
+#TOP_SALE
+#RANDOM
+#TOP_RATE
+#MOST_RELEVANT
+#PRICE_ASC
+#PRICE_DESC
+#COMPLEXITY_ASC
+#COMPLEXITY_DESC
+
 end$$
+delimiter ;
+
+delimiter $$
+create procedure getDesignInfo
+(
+in designUuid varbinary(16),
+in language varchar(10)
+)
+begin
+	select 
+		d.ReleaseDate, 
+		d.Sales, 
+		d.TotalRating, 
+		d.TotalRates, 
+		dp.Name,
+		dp.Description,
+		dp.Width,
+		dp.Heigth,
+		dp.Colors,
+		dp.HasThumbnail,
+		dp.HasImage,
+		dp.HasWebDescription,
+		dp.HasDesign
+ from T_DESIGNS d
+	INNER JOIN T_DESIGN_PARAMETERS dp on d.DesignUuid = dp.DesignUuid
+	where dp.Language = language;
+end $$
+delimiter ;
