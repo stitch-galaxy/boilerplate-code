@@ -4,19 +4,20 @@
 		self.designFilePath = None
 		self.descrpitionFilePath = None
 		self.jsonFilePath = None
-		self.imageSmallFilePath = None
-		self.imageLargeFilePath = None
+		self.thumbnailFilePath = None
+		self.imageFilePath = None
 		self.jsonFilePath = None
 
 class Design:
 
 	def __init__(self):
+		self.jsonFilePath = None
 		self.dict = dict()
 
-	def getLocalization(self, localizationString):
-		if not(self.dict.has_key(localizationString)):
-			self.dict[localizationString] = DesignLocalization()
-		return self.dict[localizationString]
+	def getLocalization(self, languageString):
+		if not(self.dict.has_key(languageString)):
+			self.dict[languageString] = DesignLocalization()
+		return self.dict[languageString]
 
 class Designs:
 

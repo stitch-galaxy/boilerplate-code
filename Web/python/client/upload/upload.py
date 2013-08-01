@@ -3,13 +3,25 @@ import os, os.path
 import uuid
 from design import Designs, Design, DesignLocalization
 
-def logPreparingDirectoryData(directoryName):
-	print "INFO: Preparing " + directoryName + " directory data"
-def logDirectorySkipped(directoryName):
-	print "WARNING: " + directoryName + " directory skipped"
+def logProcessingDirectory(directoryName):
+	print "INFO: Processing " + directoryName + " directory"
 
-def logFileSkipped(fileName):
-	print "WARNING: " + fileName + " skipped"
+def logDirectorySkipped(path):
+	print "WARNING: " + path + " directory skipped"
+
+def logFileSkipped(path):
+	print "WARNING: " + path + " file skipped"
+
+def postRequest(files, data):
+    retries = 0
+	while retries != 1:
+		try:
+			r = requests.post(uploadUrl, files = files, data= requestParameters, timeout = 1000)
+			print "INFO: Success"
+			break
+		except:
+			print "ERROR: POST request failed"
+			retries = retries + 1
 
 uploadUrl = "http://127.0.0.1:8051/upload"
 #uploadUrl = "http://stitchgalaxy.com/upload"
@@ -17,83 +29,99 @@ uploadUrl = "http://127.0.0.1:8051/upload"
 
 designs = Designs()
 
+bRootDir = True
 #prepare data for requests
-for dataroot, designDirs, _ in os.walk("./data"):
-	for directoryName in designDirs:
-			designDirPath = os.path.join(dataroot, directoryName)
-			if os.path.isdir(designDirPath):
-				#design dir found
-				try:
-					uuid.UUID(directoryName)
-					logPreparingDirectoryData(directoryName)
-				except:
-					logDirectorySkipped(directoryName)
-					continue
-				design = designs.getDesign(directoryName)
+for dirName, subDirList, fileList in os.walk("./data"):
+	#first level directory
+	if bRootDir:
+		for fileName in fileList:
+			logFileSkipped(os.path.join(dirName, fileName))
+		bRootDir = False
+		continue
 
-				for filesroot, _, files in os.walk(designDirPath):
-					for fileName in files:
-						filePath = os.path.join(filesroot, fileName)
-						if os.path.isdir(filePath):
-							continue
-						#form data for post request
-						mainFileParts = fileName.split(".")
-						if len(mainFileParts) == 2:
-							fileNameWithLanguageAndLocation = mainFileParts[0]
-							fileExtension = mainFileParts[1]
-							fileParts = fileNameWithLanguageAndLocation.split("_", 1)
+	#skip traversing into third level directories
+	for subDir in subDirList:
+		logDirectorySkipped(os.path.join(dirName, subDir))
+	del subDirList[:]
 
-							if len(fileParts) == 2:
-								nameOfFile = fileParts[0]
-								localizationString = fileParts[1]
-								designLocalization = design.getLocalization(localizationString)
-								#process files we know
-								if nameOfFile == "design" and fileExtension == "csd":
-									designLocalization.designFilePath = filePath
-								elif nameOfFile == "description" and fileExtension == "html":
-									designLocalization.descrpitionFilePath = filePath
-								elif nameOfFile == "imageSmall" and (fileExtension == "png" or fileExtension == "jpg" or fileExtension=="jpeg"):
-									designLocalization.imageSmallFilePath = filePath
-								elif nameOfFile == "imageLarge" and (fileExtension == "png" or fileExtension == "jpg" or fileExtension=="jpeg"):
-									designLocalization.imageLargeFilePath = filePath
-								elif nameOfFile == "design" and fileExtension == "json":
-									designLocalization.jsonFilePath = filePath
-								else:
-									logFileSkipped(fileName)
-									continue;
-							else:
-								logFileSkipped(fileName)
-								continue;
-						else:
-							logFileSkipped(fileName)
-							continue;
+	directoryName = os.path.basename(dirName)
+	try:
+		uuid.UUID(directoryName)
+		logProcessingDirectory(directoryName)
+	except:
+		logDirectorySkipped(dirName)
+		continue
+
+	design = designs.getDesign(directoryName)
+
+	#process designs directory
+	for fileName in fileList:
+		#process file
+		filePath = os.path.join(dirName, fileName)
+
+		#process main.json with design general description
+		if fileName == "main.json":
+			design.jsonFilePath = filePath
+			continue
+
+		mainFileParts = os.path.splitext(fileName)
+		if len(mainFileParts) == 2:
+			fileNameWithLanguage = mainFileParts[0]
+			fileExtension = mainFileParts[1]
+			fileParts = fileNameWithLanguage.split("_", 1)
+
+			if len(fileParts) == 2:
+				nameOfFile = fileParts[0]
+				languageString = fileParts[1]
+				designLocalization = design.getLocalization(languageString)
+				#process files we know
+				if nameOfFile == "design" and fileExtension == "csd":
+					designLocalization.designFilePath = filePath
+				elif nameOfFile == "description" and fileExtension == "html":
+					designLocalization.descrpitionFilePath = filePath
+				elif nameOfFile == "thumbnail" and (fileExtension == "png" or fileExtension == "jpg" or fileExtension=="jpeg"):
+					designLocalization.thumbnailFilePath = filePath
+				elif nameOfFile == "image" and (fileExtension == "png" or fileExtension == "jpg" or fileExtension=="jpeg"):
+					designLocalization.imageFilePath = filePath
+				elif nameOfFile == "design" and fileExtension == "json":
+					designLocalization.jsonFilePath = filePath
+				else:
+					logFileSkipped(filePath)
+					continue;
+			else:
+				logFileSkipped(filePath)
+				continue;
+		else:
+			logFileSkipped(filePath)
+			continue;
 
 for designGuid, design in designs.dict.iteritems():
-	for localizationString, designLocalization in design.dict.iteritems():
 
-		requestParameters = dict()
+	requestParameters = dict()
+    files = dict()
+
+	requestParameters["designGuid"] = designGuid
+
+	files["json"] = open(design.jsonFilePath, "rb")
+
+	print "Posting " + designGuid + " design data"
+	requests.post(file, requestParameters)
+
+	for languageString, designLocalization in design.dict.iteritems():
+
 		requestParameters["designGuid"] = designGuid
-		requestParameters["localization"] = localizationString
+		requestParameters["language"] = languageString
 
-		files = dict()
 		if designLocalization.designFilePath != None:
 			files["design"] = open(designLocalization.designFilePath, "rb")
 		if designLocalization.descrpitionFilePath != None:
 			files["description"] = open(designLocalization.descrpitionFilePath, "rb")
    		if designLocalization.jsonFilePath != None:
 			files["json"] = open(designLocalization.jsonFilePath, "rb")
-		if designLocalization.jsonFilePath != None:
-			files["imageSmall"] = open(designLocalization.imageSmallFilePath, "rb")
-		if designLocalization.jsonFilePath != None:
-			files["imageLarge"] = open(designLocalization.imageLargeFilePath, "rb")
+		if designLocalization.thumbnailFilePath != None:
+			files["thumbnail"] = open(designLocalization.thumbnailFilePath, "rb")
+		if designLocalization.imageFilePath != None:
+			files["image"] = open(designLocalization.imageFilePath, "rb")
 
-		print "Posting " + designGuid + " design data for " + localizationString + " localization"
-		retries = 0
-		while retries != 1:
-			try:
-				r = requests.post(uploadUrl, files = files, data= requestParameters, timeout = 1000)
-				break
-			except:
-				print "POST request failed"
-				retries = retries + 1
-
+		print "Posting " + designGuid + " design data for " + languageString + " language"
+		postRequest(files, requestParameters)
