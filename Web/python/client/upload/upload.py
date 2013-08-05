@@ -13,7 +13,7 @@ def logFileSkipped(path):
 	print "WARNING: " + path + " file skipped"
 
 def postRequest(files, data):
-    retries = 0
+	retries = 0
 	while retries != 1:
 		try:
 			r = requests.post(uploadUrl, files = files, data= requestParameters, timeout = 1000)
@@ -75,15 +75,15 @@ for dirName, subDirList, fileList in os.walk("./data"):
 				languageString = fileParts[1]
 				designLocalization = design.getLocalization(languageString)
 				#process files we know
-				if nameOfFile == "design" and fileExtension == "csd":
+				if nameOfFile == "design" and fileExtension == ".csd":
 					designLocalization.designFilePath = filePath
-				elif nameOfFile == "description" and fileExtension == "html":
+				elif nameOfFile == "description" and fileExtension == ".html":
 					designLocalization.descrpitionFilePath = filePath
-				elif nameOfFile == "thumbnail" and (fileExtension == "png" or fileExtension == "jpg" or fileExtension=="jpeg"):
+				elif nameOfFile == "thumbnail" and (fileExtension == ".png" or fileExtension == ".jpg" or fileExtension==".jpeg"):
 					designLocalization.thumbnailFilePath = filePath
-				elif nameOfFile == "image" and (fileExtension == "png" or fileExtension == "jpg" or fileExtension=="jpeg"):
+				elif nameOfFile == "image" and (fileExtension == ".png" or fileExtension == ".jpg" or fileExtension==".jpeg"):
 					designLocalization.imageFilePath = filePath
-				elif nameOfFile == "design" and fileExtension == "json":
+				elif nameOfFile == "design" and fileExtension == ".json":
 					designLocalization.jsonFilePath = filePath
 				else:
 					logFileSkipped(filePath)
@@ -96,16 +96,15 @@ for dirName, subDirList, fileList in os.walk("./data"):
 			continue;
 
 for designGuid, design in designs.dict.iteritems():
-
 	requestParameters = dict()
-    files = dict()
+	files = dict()
 
 	requestParameters["designGuid"] = designGuid
 
 	files["json"] = open(design.jsonFilePath, "rb")
 
 	print "Posting " + designGuid + " design data"
-	requests.post(file, requestParameters)
+	postRequest(file, requestParameters)
 
 	for languageString, designLocalization in design.dict.iteritems():
 

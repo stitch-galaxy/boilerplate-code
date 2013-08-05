@@ -100,8 +100,16 @@ def application(environ, start_response):
 			jsonAsString = input.getvalue()
 			jsonDict = json.loads(jsonAsString)
 
-        if jsonDict.has_key("releaseDate"):
-				designLocalization.releaseDate = datetime.strptime(jsonDict["releaseDate"], "%d-%m-%Y")
+		if jsonDict.has_key("releaseDate"):
+				design.releaseDate = datetime.strptime(jsonDict["releaseDate"], "%d-%m-%Y")
+		if jsonDict.has_key("sales"):
+				design.sales = jsonDict["sales"]
+		if jsonDict.has_key("totalRating"):
+				design.totalRating = jsonDict["totalRating"]
+		if jsonDict.has_key("totalRates"):
+				design.totalRates = jsonDict["totalRates"]
+		if jsonDict.has_key("blocked"):
+				design.blocked = jsonDict["blocked"]
 
 	response_headers = [("Content-Type", "text/plain"),
 						("Content-Length", str(len(response_body)))]
