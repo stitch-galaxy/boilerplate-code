@@ -104,7 +104,7 @@ for designGuid, design in designs.dict.iteritems():
 	files["json"] = open(design.jsonFilePath, "rb")
 
 	print "Posting " + designGuid + " design data"
-	postRequest(file, requestParameters)
+	postRequest(files, requestParameters)
 
 	for languageString, designLocalization in design.dict.iteritems():
 

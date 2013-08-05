@@ -37,42 +37,40 @@ def application(environ, start_response):
 
 	form = cgi.FieldStorage(fp=cStringIO.StringIO(environ['wsgi.input'].read(int(environ['CONTENT_LENGTH']))), environ=environ)
 
-	designLocalization.designGuid = form.getvalue("designGuid")
 
 	if form.has_key("language"):
-		languageString = form.getvalue("language")
-
 		designLocalization = DesignLocalization()
 
-		designLocalization.language = languageString
+		designLocalization.designGuid = form.getvalue("designGuid")
+		designLocalization.language = form.getvalue("language")
 
 		if form.has_key("design"):
 			field = form["design"]
 		 	designLocalization.designFileName = field.filename
 			designLocalization.hasDesign = True
 			file = field.file
-			copyFile(file, designLocalization.designFileName, designGuid)
+			copyFile(file, designLocalization.designFileName, designLocalization.designGuid)
 
 		if form.has_key("description"):
 			field = form["description"]
 		 	designLocalization.descriptionFileName = field.filename
 			designLocalization.hasDescription = True
 			file = field.file
-			copyFile(file, designLocalization.descriptionFileName, designGuid)
+			copyFile(file, designLocalization.descriptionFileName, designLocalization.designGuid)
 
 		if form.has_key("thumbnail"):
 			field = form["thumbnail"]
 		 	designLocalization.thumbnailFileName = field.filename
 			designLocalization.hasThumbnail = True
 			file = field.file
-			copyFile(file, designLocalization.thumbnailFileName, designGuid)
+			copyFile(file, designLocalization.thumbnailFileName, designLocalization.designGuid)
 
 		if form.has_key("image"):
 			field = form["image"]
 		 	designLocalization.imageFileName = field.filename
 			designLocalization.hasImage = True
 			file = field.file
-			copyFile(file, designLocalization.imageFileName, designGuid)
+			copyFile(file, designLocalization.imageFileName, designLocalization.designGuid)
 
 		if form.has_key("json"):
 			field = form["json"]
@@ -93,6 +91,7 @@ def application(environ, start_response):
 		designLocalization.update()
 	else:
 		design = Design()
+		design.designGuid = form.getvalue("designGuid")
 
 		if form.has_key("json"):
 			field = form["json"]
