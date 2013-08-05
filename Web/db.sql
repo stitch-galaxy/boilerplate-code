@@ -48,10 +48,30 @@ alter table T_DESIGN_TAGS
 
 use stitchgalaxy;
 
+
+DELIMITER $$
+ 
+CREATE FUNCTION uuid_from_bin(b BINARY(16))
+RETURNS CHAR(36) DETERMINISTIC
+BEGIN
+DECLARE hex CHAR(32);
+SET hex = HEX(b);
+RETURN CONCAT(LEFT(hex, 8), '-', MID(hex, 9,4), '-', MID(hex, 13,4), '-', MID(hex, 17,4), '-', RIGHT(hex, 12));
+END
+$$
+ 
+CREATE FUNCTION uuid_to_bin(s CHAR(36))
+RETURNS BINARY(16) DETERMINISTIC
+RETURN UNHEX(CONCAT(LEFT(s, 8), MID(s, 10, 4), MID(s, 15, 4), MID(s, 20, 4), RIGHT(s, 12)))
+$$
+ 
+DELIMITER ;
+
+
 delimiter $$
 create procedure createOrUpdateDesignInformation
 (
-in uuid char(16),
+in uuid char(36),
 in releaseDate datetime,
 in sales bigint,
 in totalRating bigint,
@@ -70,7 +90,7 @@ begin
 
 	declare recordsFound int default 0;
 
-	set designUuid = hex(uuid);
+	set designUuid = uuid_to_bin(uuid);
 	
 	select count(*) into recordsFound from T_DESIGNS where DesignUuid = designUuid;
 	
@@ -124,7 +144,7 @@ delimiter ;
 delimiter $$
 create procedure createOrUpdateDesignLocalization
 (
-in uuid char(16),
+in uuid char(36),
 in language varchar(10),
 in name varchar(255),
 in description varchar(255),
@@ -143,7 +163,7 @@ begin
 	declare designUuid varbinary(16);
 	declare parametersId int default null;
 
-	set designUuid = hex(uuid);
+	set designUuid = uuid_to_bin(uuid);
 
 	select ParametersId into parametersId from T_DESIGN_PARAMETERS where DesignUuid = designUuid and Language = language;
 	

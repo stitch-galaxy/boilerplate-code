@@ -4,7 +4,7 @@ import cgi
 import cStringIO
 import os, os.path
 import json
-from design import DesignLocalization
+from design import DesignLocalization, Design
 from datetime import datetime
 
 from upload_config import serverName
@@ -74,7 +74,7 @@ def application(environ, start_response):
 
 		if form.has_key("json"):
 			field = form["json"]
-			input = cStringIO.StringIO(field.file.read())
+			input = cStringIO.StringIO(field.file.read().decode("utf-8-sig"))
 			jsonAsString = input.getvalue()
 			jsonDict = json.loads(jsonAsString)
 			if jsonDict.has_key("name"):
@@ -95,7 +95,7 @@ def application(environ, start_response):
 
 		if form.has_key("json"):
 			field = form["json"]
-			input = cStringIO.StringIO(field.file.read())
+			input = cStringIO.StringIO(field.file.read().decode("utf-8-sig"))
 			jsonAsString = input.getvalue()
 			jsonDict = json.loads(jsonAsString)
 
@@ -109,6 +109,8 @@ def application(environ, start_response):
 				design.totalRates = jsonDict["totalRates"]
 		if jsonDict.has_key("blocked"):
 				design.blocked = jsonDict["blocked"]
+
+		design.update()
 
 	response_headers = [("Content-Type", "text/plain"),
 						("Content-Length", str(len(response_body)))]
