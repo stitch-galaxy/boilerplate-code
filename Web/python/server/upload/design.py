@@ -21,14 +21,13 @@ class Design:
 			cursor = cnx.cursor()
 			try:
 				cursor.callproc("createOrUpdateDesignInformation", (self.designGuid, self.releaseDate, self.sales, self.totalRating, self.totalRates, self.blocked))
-			except mysql.connector.Error as err:
+				cnx.commit()
+			except Exception as err:
 				self.error = err
-				searchResults.error = "MySql error: {}".format(err)
 			else:
 				cursor.close()
-		except mysql.connector.Error as err:
+		except Exception as err:
 			self.error = err
-			searchResults.error = "MySql connection error: {}".format(err)
 		else:
 			cnx.close()
 
@@ -62,13 +61,12 @@ class DesignLocalization:
 			cursor = cnx.cursor()
 			try:
 				cursor.callproc("createOrUpdateDesignLocalization", (self.designGuid, self.language, self.name, self.description, self.width, self.height, self.colors, self.hasThumbnail, self.hasImage, self.hasDescription, self.hasDesign))
-			except mysql.connector.Error as err:
+				cnx.commit()
+			except Exception as err:
 				self.error = err
-				searchResults.error = "MySql error: {}".format(err)
 			else:
 				cursor.close()
-		except mysql.connector.Error as err:
+		except Exception as err:
 			self.error = err
-			searchResults.error = "MySql connection error: {}".format(err)
 		else:
 			cnx.close()

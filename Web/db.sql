@@ -64,9 +64,8 @@ CREATE FUNCTION uuid_to_bin(s CHAR(36))
 RETURNS BINARY(16) DETERMINISTIC
 RETURN UNHEX(CONCAT(LEFT(s, 8), MID(s, 10, 4), MID(s, 15, 4), MID(s, 20, 4), RIGHT(s, 12)))
 $$
- 
-DELIMITER ;
 
+DELIMITER ;
 
 delimiter $$
 create procedure createOrUpdateDesignInformation
@@ -96,7 +95,7 @@ begin
 	
 	if recordsFound = 1
 	then
-			
+
 		select ReleaseDate, Sales, TotalRating, TotalRates, Blocked into curReleasedate, curSales, curTotalRating, curTotalRates, curBlocked from T_DESIGNS where DesignUuid = designUuid;
 
 		if releaseDate is null
@@ -136,10 +135,13 @@ begin
 	else
 		insert into T_DESIGNS(DesignUuid, ReleaseDate, Sales, TotalRating, TotalRates, Blocked)
 		values (designUuid, releaseDate, sales, totalRating, totalRates, blocked);
+
 	end if;
 
 end$$
 delimiter ;
+
+drop procedure createOrUpdateDesignLocalization;
 
 delimiter $$
 create procedure createOrUpdateDesignLocalization
@@ -161,19 +163,19 @@ in hasDesign bit
 begin
 
 	declare designUuid varbinary(16);
-	declare parametersId int default null;
+	declare parId bigint;
 
 	set designUuid = uuid_to_bin(uuid);
 
-	select ParametersId into parametersId from T_DESIGN_PARAMETERS where DesignUuid = designUuid and Language = language;
+	select  ParametersId into parId from T_DESIGN_PARAMETERS where DesignUuid = designUuid and Language = language LIMIT 1;
 	
-	if parametersId is null
+	if parId is null
 	then
 		insert into T_DESIGN_PARAMETERS(DesignUuid, Language, Name, Description, Width, Heigth, Colors, HasThumbnail, HasImage, HasWebDescription, HasDesign) 
-		values(designUuid, language, name, description, width, heigth, colors, hasThumbnail, hasImage, hasWebDescription, hasDesign);
+		values(designUuid, language, name, description, width, height, colors, hasThumbnail, hasImage, hasWebDescription, hasDesign);
 	else
-		update T_DESIGN_PARAMETERS set DesignUuid = designUuid, Language = language, Name = name, Description = description, Width = width, Heigth = heigth, Colors = colors, HasThumbnail = hasThumbnail, HasImage = hasImage, HasWebDescription = hasWebDescription, HasDesign = hasDesign 
-		where ParametersId = parametersId;
+		update T_DESIGN_PARAMETERS set DesignUuid = designUuid, Language = language, Name = name, Description = description, Width = width, Heigth = height, Colors = colors, HasThumbnail = hasThumbnail, HasImage = hasImage, HasWebDescription = hasWebDescription, HasDesign = hasDesign 
+		where ParametersId = parId;
 	end if;
 
 end$$
@@ -348,3 +350,77 @@ begin
 	where dp.Language = language;
 end $$
 delimiter ;
+
+SHOW CHARACTER SET;
+
+use StitchGalaxy;
+drop table articles;
+
+
+
+
+CREATE TABLE articles (
+id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+title VARCHAR(200),
+body TEXT,
+FULLTEXT (title,body)
+) CHARSET utf8 COLLATE utf8_general_ci ENGINE=MyISAM;
+
+
+INSERT INTO articles (title,body) VALUES
+('MySQL Tutorial','DBMS stands for DataBase ...'),
+('How To Use MySQL Well','After you went through a ...'),
+('Optimizing MySQL','In this tutorial we will show ...'),
+('1001 MySQL Tricks','1. Never run mysqld as root. 2. ...'),
+('MySQL vs. YourSQL','In the following database comparison ...'),
+('MySQL Security','When configured properly, MySQL ...'),
+('Евгений Тарасов', 'ну-ка попробуем');
+
+INSERT INTO articles (title,body) VALUES
+('попробуем','попробуем попробуем');
+
+INSERT INTO articles (title,body) VALUES
+('Семен','Семен клевый мужик. Но иногда попадает под дождь.');
+
+INSERT INTO articles (title,body) VALUES
+('Дождь','Дождь - это природное явления. Во время дождя бывает холодно.');
+
+SELECT *, MATCH (title,body) AGAINST ('дождь') as relevance FROM articles
+WHERE MATCH (title,body) AGAINST ('дождь') limit 0,10;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create table articles (
+    id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    title VARCHAR(200),
+    body TEXT,
+    FULLTEXT (title,body)
+    ) 
+CHARSET utf8 COLLATE utf8_general_ci ENGINE=MyISAM;
+
+insert into articles (title, body) values
+('Denis Yesakov','Black Jack and sluts'),
+('Евгений Тарасов','Свобода выбора');
+
+select * from articles
+where match (title, body) against ('Тарасов');
