@@ -1,137 +1,155 @@
-drop database StitchGalaxy;
+drop database if exists stitch_galaxy;
 
-create database StitchGalaxy;
+create database stitch_galaxy;
 
-use StitchGalaxy;
+use stitch_galaxy;
 
-create table T_DESIGNS
+drop table if exists design;
+create table design
 (
-DesignUuid varbinary(16),
-ReleaseDate datetime default now() not null,
-Sales bigint default 0,
-TotalRating bigint default 0,
-TotalRates bigint default 0,
-Blocked bit null,
-primary key (DesignUuid)
-);
+uuid varbinary(16),
+release_date datetime not null,
+sales bigint not null,
+total_rating bigint not null,
+total_rates bigint not null,
+blocked bit not null,
+primary key (uuid)
+) charset utf8 collate utf8_unicode_ci engine=InnoDB;
 
-create table T_DESIGN_PARAMETERS
+drop table if exists design_language_parameter;
+create table design_language_parameter
 (
-ParametersId bigint auto_increment,
-DesignUuid varbinary(16),
-Language varchar(10) not null,
-Name nvarchar(255) not null,
-Description nvarchar(255) null,
-Width int null,
-Heigth int null,
-Colors int null,
-HasThumbnail bit not null,
-HasImage bit not null,
-HasWebDescription bit not null,
-HasDesign bit not null,
-primary key (ParametersId)
-);
+id bigint auto_increment,
+design_uuid varbinary(16),
+language varchar(10) not null,
+width int null,
+heigth int null,
+colors int null,
+has_thumbnail bit not null,
+has_image bit not null,
+has_web_description bit not null,
+has_design bit not null,
+primary key (id)
+) charset utf8 collate utf8_unicode_ci engine=InnoDB;
 
-alter table T_DESIGN_PARAMETERS
-	add foreign key (DesignUuid)
-		references T_DESIGNS (DesignUuid);
+alter table design_language_parameter
+	add foreign key (design_uuid)
+		references design (uuid);
 
-create table T_DESIGN_TAGS
+drop table if exists design_language_textual_parameter;
+create table design_language_textual_parameter
 (
-	DesignUuid varbinary(16),
-	TagId int
-);
+id bigint auto_increment,
+design_uuid varbinary(16),
+language varchar(10) not null,
+name nvarchar(255) not null,
+description text null,
+web_description text null,
+primary key (id),
+fulltext(name, description, web_description)
+) charset utf8 collate utf8_unicode_ci engine=MyISAM;
 
-alter table T_DESIGN_TAGS
-	add foreign key (DesignUuid)
-		references T_DESIGNS (DesignUuid);
+alter table design_language_textual_parameter
+	add foreign key (design_uuid)
+		references design (uuid);
 
-use stitchgalaxy;
+drop table if exists design_tag;
+create table design_tag
+(
+	design_uuid varbinary(16),
+	tag_id int
+) charset utf8 collate utf8_unicode_ci engine=InnoDB;
 
+alter table design_tag
+	add foreign key (design_uuid)
+		references design (uuid);
 
+drop function if exists uuid_from_bin;
 DELIMITER $$
- 
-CREATE FUNCTION uuid_from_bin(b BINARY(16))
-RETURNS CHAR(36) DETERMINISTIC
-BEGIN
-DECLARE hex CHAR(32);
-SET hex = HEX(b);
-RETURN CONCAT(LEFT(hex, 8), '-', MID(hex, 9,4), '-', MID(hex, 13,4), '-', MID(hex, 17,4), '-', RIGHT(hex, 12));
-END
+create function uuid_from_bin(b binary(16))
+returns char(36) deterministic
+begin
+declare hex char(32);
+set hex = hex(b);
+return concat(left(hex, 8), '-', mid(hex, 9,4), '-', mid(hex, 13,4), '-', mid(hex, 17,4), '-', right(hex, 12));
+end
 $$
+DELIMITER ;
  
-CREATE FUNCTION uuid_to_bin(s CHAR(36))
-RETURNS BINARY(16) DETERMINISTIC
-RETURN UNHEX(CONCAT(LEFT(s, 8), MID(s, 10, 4), MID(s, 15, 4), MID(s, 20, 4), RIGHT(s, 12)))
+drop function if exists uuid_to_bin;
+DELIMITER $$
+create function uuid_to_bin(s char(36))
+returns binary(16) deterministic
+return unhex(concat(left(s, 8), mid(s, 10, 4), mid(s, 15, 4), mid(s, 20, 4), right(s, 12)))
 $$
-
 DELIMITER ;
 
+drop procedure if exists cu_design;
 delimiter $$
-create procedure createOrUpdateDesignInformation
+create procedure cu_design
 (
-in uuid char(36),
-in releaseDate datetime,
+in text_uuid char(36),
+in release_date datetime,
 in sales bigint,
-in totalRating bigint,
-in totalRates bigint,
+in total_rating bigint,
+in total_rates bigint,
 in blocked bit
 )
 begin
 
-	declare designUuid varbinary(16);
+	declare design_uuid varbinary(16);
 
-	declare curReleaseDate datetime;
-	declare curSales bigint;
-	declare curTotalRating bigint;
-	declare curTotalRates bigint;
-	declare curBlocked bit;
+	declare cur_release_date datetime;
+	declare cur_sales bigint;
+	declare cur_total_rating bigint;
+	declare cur_total_rates bigint;
+	declare cur_blocked bit;
 
-	declare recordsFound int default 0;
+	declare records_found int default 0;
 
-	set designUuid = uuid_to_bin(uuid);
+	set design_uuid = uuid_to_bin(text_uuid);
 	
-	select count(*) into recordsFound from T_DESIGNS where DesignUuid = designUuid;
+	select count(*) into records_found from design where uuid = design_uuid;
 	
-	if recordsFound = 1
+	if records_found = 1
 	then
 
-		select ReleaseDate, Sales, TotalRating, TotalRates, Blocked into curReleasedate, curSales, curTotalRating, curTotalRates, curBlocked from T_DESIGNS where DesignUuid = designUuid;
+		select release_date, sales, total_rating, total_rates, blocked into cur_release_date, cur_sales, cur_total_rating, cur_total_rates, cur_blocked from design where uuid = design_uuid;
 
-		if releaseDate is null
+		if release_date is null
 		then
-			set releaseDate = curReleaseDate;
+			set release_date = cur_release_date;
 		end if;
 
 		if sales is null
 		then
-			set sales = curSales;
+			set sales = cur_sales;
 		end if;
 
-		if totalRating is null
+		if total_rating is null
 		then
-			set totalRating = curTotalRating;
+			set total_rating = cur_total_rating;
 		end if;
 
-		if totalRates is null
+		if total_rates is null
 		then
-			set totalRates = curTotalRates;
+			set total_rates = cur_total_rates;
 		end if;
 
 		if blocked is null
 		then
-			set blocked = curBlocked;
+			set blocked = cur_blocked;
 		end if;
 		
-		update T_DESIGNS 
+		update design
 		set 
-			ReleaseDate = releaseDate,
-			Sales = sales,
-			TotalRating = totalRating,
-			TotalRates = totalRates,
-			Blocked = totalBlocked
+			release_date = release_date,
+			sales = sales,
+			total_rating = total_rating,
+			total_rates = total_rates,
+			blocked = total_blocked
 		where
-			DesignUuid = designUuid;
+			uuid = design_uuid;
 	else
 		insert into T_DESIGNS(DesignUuid, ReleaseDate, Sales, TotalRating, TotalRates, Blocked)
 		values (designUuid, releaseDate, sales, totalRating, totalRates, blocked);
@@ -141,15 +159,17 @@ begin
 end$$
 delimiter ;
 
-drop procedure createOrUpdateDesignLocalization;
+#--------------------------#
 
+drop procedure if exists cu_design_language_parameter;
 delimiter $$
-create procedure createOrUpdateDesignLocalization
+create procedure cu_design_language_parameter
 (
-in uuid char(36),
+in text_uuid char(36),
 in language varchar(10),
 in name varchar(255),
-in description varchar(255),
+in description text,
+in webDescription text,
 
 in width int,
 in height int,
@@ -162,7 +182,8 @@ in hasDesign bit
 )
 begin
 
-	declare designUuid varbinary(16);
+	declare design_uuid varbinary(16);
+
 	declare parId bigint;
 
 	set designUuid = uuid_to_bin(uuid);
