@@ -1,7 +1,7 @@
 ﻿import requests
 import os, os.path
 import uuid
-from design import Designs, Design, DesignLocalization
+from design import Designs, Design
 
 def logProcessingDirectory(directoryName):
 	print "INFO: Processing " + directoryName + " directory"
@@ -14,7 +14,7 @@ def logFileSkipped(path):
 
 def postRequest(files, data):
 	retries = 0
-	while retries != 1:
+	while retries != 3:
 		try:
 			r = requests.post(uploadUrl, files = files, data= requestParameters, timeout = 1000)
 			print "INFO: Success"
