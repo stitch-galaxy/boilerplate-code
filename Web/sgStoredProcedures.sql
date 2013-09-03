@@ -1,97 +1,6 @@
-drop database if exists stitch_galaxy;
-create database stitch_galaxy;
 use stitch_galaxy;
 
-drop table if exists design;
-create table design
-(
-uuid varbinary(16) not null,
-release_date datetime not null,
-sales bigint not null,
-total_rating bigint not null,
-total_rates bigint not null,
-blocked bit not null,
-primary key (uuid)
-) charset utf8 collate utf8_unicode_ci engine=InnoDB;
-
-drop table if exists language;
-create table language
-(
-id int not null,
-name varchar(10) not null,
-description tinytext null,
-primary key (id)
-) charset utf8 collate utf8_unicode_ci engine=InnoDB;
-
-drop table if exists design_language_parameter;
-create table design_language_parameter
-(
-id bigint auto_increment not null,
-design_uuid varbinary(16) not null,
-language varchar(10) not null,
-width int not null,
-heigth int not null,
-colors int not null,
-has_thumbnail bit not null,
-has_image bit not null,
-has_web_description bit not null,
-has_design bit not null,
-primary key (id)
-) charset utf8 collate utf8_unicode_ci engine=InnoDB;
-
-alter table design_language_parameter
-	add foreign key (design_uuid)
-		references design (uuid);
-
-drop table if exists design_language_textual_parameter;
-create table design_language_textual_parameter
-(
-id bigint auto_increment not null,
-design_uuid varbinary(16) not null,
-language varchar(10) not null,
-name varchar(255) not null,
-description text null,
-web_description text null,
-primary key (id),
-fulltext(name, description, web_description)
-) charset utf8 collate utf8_unicode_ci engine=MyISAM;
-
-alter table design_language_textual_parameter
-	add foreign key (design_uuid)
-		references design (uuid);
-
-drop table if exists tag;
-create table tag
-(
-id bigint auto_increment,
-primary key (id)
-) charset utf8 collate utf8_unicode_ci engine=InnoDb;
-
-drop table if exists tag_language_name;
-create table tag_language_name
-(
-id bigint auto_increment,
-tag_id bigint not null,
-language varchar(10) not null,
-name varchar(255) not null,
-primary key(id),
-fulltext(name)
-) charset utf8 collate utf8_unicode_ci engine=MyISAM;
-
-drop table if exists design_tag;
-create table design_tag
-(
-	design_uuid varbinary(16),
-	tag_id int
-) charset utf8 collate utf8_unicode_ci engine=InnoDB;
-
-alter table design_tag
-	add foreign key (design_uuid)
-		references design (uuid);
-
-alter table design_tag
-	add foreign key (tag_id)
-		references tag (id);
+#uuid functions
 
 drop function if exists uuid_from_bin;
 DELIMITER $$
@@ -112,6 +21,8 @@ returns binary(16) deterministic
 return unhex(concat(left(s, 8), mid(s, 10, 4), mid(s, 15, 4), mid(s, 20, 4), right(s, 12)))
 $$
 DELIMITER ;
+
+#create update design
 
 drop procedure if exists cu_design;
 delimiter $$
@@ -183,17 +94,37 @@ begin
 		if release_date is null
 		then
 			set release_date = curdate();
-SELECT NOW(),CURDATE(),CURTIME();
 		end if;
-		insert into T_DESIGNS(DesignUuid, ReleaseDate, Sales, TotalRating, TotalRates, Blocked)
-		values (designUuid, releaseDate, sales, totalRating, totalRates, blocked);
+
+		if sales is null
+		then
+			set sales = 0;
+		end if;
+
+		if total_rating is null
+		then
+			set total_rating  = 0;
+		end if;
+
+		if total_rates is null
+		then
+			set total_rates = 0;
+		end if;
+
+		if blocked is null
+		then
+			set blocked = 0;
+		end if;
+
+		insert into design(uuid, release_date, sales, total_rating, total_rates, blocked)
+		values (design_uuid, release_Date, sales, total_rating, total_rates, blocked);
 
 	end if;
 
 end$$
 delimiter ;
 
-#--------------------------#
+#create update design language parameters
 
 drop procedure if exists cu_design_language_parameter;
 delimiter $$

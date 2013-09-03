@@ -60,7 +60,7 @@ for dirName, subDirList, fileList in os.walk("./data"):
 		filePath = os.path.join(dirName, fileName)
 
 		#process main.json with design general description
-		if fileName == "design.json":
+		if fileName == "main.json":
 			design.jsonFilePath = filePath
 			continue
 
@@ -73,14 +73,18 @@ for dirName, subDirList, fileList in os.walk("./data"):
 			if len(fileParts) == 2:
 				nameOfFile = fileParts[0]
 				languageString = fileParts[1]
-
+				designLocalization = design.getLocalization(languageString)
 				#process files we know
-				if (nameOfFile == "design" and fileExtension == ".csd") \
-				or (nameOfFile == "description" and fileExtension == ".html") \
-				or (nameOfFile == "thumbnail" and (fileExtension == ".png" or fileExtension == ".jpg" or fileExtension==".jpeg")) \
-				or (nameOfFile == "image" and (fileExtension == ".png" or fileExtension == ".jpg" or fileExtension==".jpeg")) \
-				or (nameOfFile == "design" and fileExtension == ".json"):
-					design.files[fileName] = filePath
+				if nameOfFile == "design" and fileExtension == ".csd":
+					designLocalization.designFilePath = filePath
+				elif nameOfFile == "description" and fileExtension == ".html":
+					designLocalization.descrpitionFilePath = filePath
+				elif nameOfFile == "thumbnail" and (fileExtension == ".png" or fileExtension == ".jpg" or fileExtension==".jpeg"):
+					designLocalization.thumbnailFilePath = filePath
+				elif nameOfFile == "image" and (fileExtension == ".png" or fileExtension == ".jpg" or fileExtension==".jpeg"):
+					designLocalization.imageFilePath = filePath
+				elif nameOfFile == "design" and fileExtension == ".json":
+					designLocalization.jsonFilePath = filePath
 				else:
 					logFileSkipped(filePath)
 					continue;
@@ -99,8 +103,24 @@ for designGuid, design in designs.dict.iteritems():
 
 	files["json"] = open(design.jsonFilePath, "rb")
 
-	for fileName in design.files:
-		files[fileName] = open(design.files[fileName], "rb")
-
 	print "Posting " + designGuid + " design data"
 	postRequest(files, requestParameters)
+
+	for languageString, designLocalization in design.dict.iteritems():
+
+		requestParameters["designGuid"] = designGuid
+		requestParameters["language"] = languageString
+
+		if designLocalization.designFilePath != None:
+			files["design"] = open(designLocalization.designFilePath, "rb")
+		if designLocalization.descrpitionFilePath != None:
+			files["description"] = open(designLocalization.descrpitionFilePath, "rb")
+   		if designLocalization.jsonFilePath != None:
+			files["json"] = open(designLocalization.jsonFilePath, "rb")
+		if designLocalization.thumbnailFilePath != None:
+			files["thumbnail"] = open(designLocalization.thumbnailFilePath, "rb")
+		if designLocalization.imageFilePath != None:
+			files["image"] = open(designLocalization.imageFilePath, "rb")
+
+		print "Posting " + designGuid + " design data for " + languageString + " language"
+		postRequest(files, requestParameters)

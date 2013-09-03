@@ -1,0 +1,30 @@
+﻿{
+	"releaseDate":"29-07-2013",
+	"sales":0,
+	"totalRating":25,
+	"totalRates":5,
+	"blocked":0,
+	"languages": 
+	[
+		{
+			"language":"en",
+			"name":"Owl",
+			"description":"Lovely owl",
+			"width":150,
+			"height":150,
+			"colors":78,
+			"hasThumbnail":1,
+			"hasImage":1,
+			"hasDesign":1,
+			"hasHtmlPage":1
+		},
+		{
+			"language":"ru",
+			"name":"Совёнок",
+			"description":"Прелестный совёнок",
+			"width":150,
+			"height":150,
+			"colors":78
+		}
+	]
+}
