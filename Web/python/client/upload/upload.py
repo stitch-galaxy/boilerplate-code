@@ -12,18 +12,18 @@ def logDirectorySkipped(path):
 def logFileSkipped(path):
 	print "WARNING: " + path + " file skipped"
 
-def postRequest(files, data):
+def postRequest(files, requestParameters):
 	retries = 0
 	while retries != 3:
 		try:
-			r = requests.post(uploadUrl, files = files, data= requestParameters, timeout = 1000)
+			r = requests.post(uploadUrl, files = files, data = requestParameters, timeout = 1000)
 			print "INFO: Success"
 			break
 		except:
 			print "ERROR: POST request failed"
 			retries = retries + 1
 
-uploadUrl = "http://127.0.0.1:8051/upload"
+uploadUrl = "http://localhost/upload"
 #uploadUrl = "http://stitchgalaxy.com/upload"
 
 
@@ -61,7 +61,7 @@ for dirName, subDirList, fileList in os.walk("./data"):
 
 		#process main.json with design general description
 		if fileName == "design.json":
-			design.jsonFilePath = filePath
+			design.files[fileName] = filePath
 			continue
 
 		mainFileParts = os.path.splitext(fileName)
@@ -96,8 +96,6 @@ for designGuid, design in designs.dict.iteritems():
 	files = dict()
 
 	requestParameters["designGuid"] = designGuid
-
-	files["json"] = open(design.jsonFilePath, "rb")
 
 	for fileName in design.files:
 		files[fileName] = open(design.files[fileName], "rb")

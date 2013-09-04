@@ -1,15 +1,11 @@
-﻿from wsgiref.simple_server import make_server
-from cgi import parse_qs, escape
-import cgi
+﻿import os, os.path
+import traceback
+from pymongo import MongoClient
 import cStringIO
-import os, os.path
 import json
-from design import DesignLocalization, Design
-from datetime import datetime
 
-from upload_config import serverName
-from upload_config import serverPort
 from upload_config import folderToStoreData
+from upload_config import mongoConnectionString
 
 CHUNK_SIZE = 8192
 
@@ -30,94 +26,36 @@ def copyFile(file, fileName, designGuid):
 			else:
 				break
 
-def application(environ, start_response):
+class Upload:
+	def __init__(self, dict, designGuid):
+		self.dict = dict
+		self.response_body = None
+  		self.status = None
+		self.response_headers = None
+		self.designGuid = designGuid
 
-	response_body = "ok"
-	status = "200 OK"
+	def commit(self):
+		try:
+			self.status = "200 OK"
+			self.response_body = "Success"
 
-	form = cgi.FieldStorage(fp=cStringIO.StringIO(environ['wsgi.input'].read(int(environ['CONTENT_LENGTH']))), environ=environ)
+			for fileName in self.dict:
+				if fileName != "design.json":
+					copyFile(self.dict[fileName], fileName, self.designGuid)
 
+			jsonStr = self.dict["design.json"].read().decode("utf-8-sig")
+			jsonDict = json.loads(jsonStr)
 
-	if form.has_key("language"):
-		designLocalization = DesignLocalization()
+			client = MongoClient(mongoConnectionString)
+			db = client["stitch_galaxy"]
+			designs = db["design"]
+			designId = designs.insert(jsonDict)
+			a = 'a'
 
-		designLocalization.designGuid = form.getvalue("designGuid")
-		designLocalization.language = form.getvalue("language")
+		except Exception as err:
+			self.status = "500 Internal Server Error"
+			self.response_body = traceback.format_exc()
+  		self.response_headers = [("Content-Type", "text/plain"), ("Content-Length", str(len(self.response_body)))]
 
-		if form.has_key("design"):
-			field = form["design"]
-		 	designLocalization.designFileName = field.filename
-			designLocalization.hasDesign = True
-			file = field.file
-			copyFile(file, designLocalization.designFileName, designLocalization.designGuid)
-
-		if form.has_key("description"):
-			field = form["description"]
-		 	designLocalization.descriptionFileName = field.filename
-			designLocalization.hasDescription = True
-			file = field.file
-			copyFile(file, designLocalization.descriptionFileName, designLocalization.designGuid)
-
-		if form.has_key("thumbnail"):
-			field = form["thumbnail"]
-		 	designLocalization.thumbnailFileName = field.filename
-			designLocalization.hasThumbnail = True
-			file = field.file
-			copyFile(file, designLocalization.thumbnailFileName, designLocalization.designGuid)
-
-		if form.has_key("image"):
-			field = form["image"]
-		 	designLocalization.imageFileName = field.filename
-			designLocalization.hasImage = True
-			file = field.file
-			copyFile(file, designLocalization.imageFileName, designLocalization.designGuid)
-
-		if form.has_key("json"):
-			field = form["json"]
-			input = cStringIO.StringIO(field.file.read().decode("utf-8-sig"))
-			jsonAsString = input.getvalue()
-			jsonDict = json.loads(jsonAsString)
-			if jsonDict.has_key("name"):
-				designLocalization.name = jsonDict["name"]
-			if jsonDict.has_key("description"):
-				designLocalization.description = jsonDict["description"]
-			if jsonDict.has_key("width"):
-				designLocalization.width = jsonDict["width"]
-			if jsonDict.has_key("height"):
-				designLocalization.height = jsonDict["height"]
-			if jsonDict.has_key("colors"):
-				designLocalization.colors = jsonDict["colors"]
-
-		designLocalization.update()
-	else:
-		design = Design()
-		design.designGuid = form.getvalue("designGuid")
-
-		if form.has_key("json"):
-			field = form["json"]
-			input = cStringIO.StringIO(field.file.read().decode("utf-8-sig"))
-			jsonAsString = input.getvalue()
-			jsonDict = json.loads(jsonAsString)
-
-		if jsonDict.has_key("releaseDate"):
-				design.releaseDate = datetime.strptime(jsonDict["releaseDate"], "%d-%m-%Y")
-		if jsonDict.has_key("sales"):
-				design.sales = jsonDict["sales"]
-		if jsonDict.has_key("totalRating"):
-				design.totalRating = jsonDict["totalRating"]
-		if jsonDict.has_key("totalRates"):
-				design.totalRates = jsonDict["totalRates"]
-		if jsonDict.has_key("blocked"):
-				design.blocked = jsonDict["blocked"]
-
-		design.update()
-
-	response_headers = [("Content-Type", "text/plain"),
-						("Content-Length", str(len(response_body)))]
-
-	start_response(status, response_headers)
-
-	return [response_body]
-
-httpd = make_server(serverName, serverPort, application)
-httpd.serve_forever()
+	def getResponse(self):
+		return (self.status, self.response_headers, self.response_body)
