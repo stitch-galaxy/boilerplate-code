@@ -1,8 +1,9 @@
 ﻿import os, os.path
 import traceback
 from pymongo import MongoClient
-import cStringIO
 import json
+import uuid
+import datetime
 
 from upload_config import folderToStoreData
 from upload_config import mongoConnectionString
@@ -26,13 +27,21 @@ def copyFile(file, fileName, designGuid):
 			else:
 				break
 
+def ConvertJsonToBson(designGuid, jsonDict):
+	bsonDict = copy.deepcopy(jsonDict)
+	bson["guid"] = designGuid
+
+	if jsonDict.has_key("releaseDate"):
+		bsonDict["releaseDate"] = datetime.strptime(jsonDict["releaseDate"], "%m-%d-%Y")
+	return bsonDict
+
 class Upload:
 	def __init__(self, dict, designGuid):
 		self.dict = dict
 		self.response_body = None
   		self.status = None
 		self.response_headers = None
-		self.designGuid = designGuid
+		self.designGuid = uuid.UUID(designGuid)
 
 	def commit(self):
 		try:
@@ -46,11 +55,19 @@ class Upload:
 			jsonStr = self.dict["design.json"].read().decode("utf-8-sig")
 			jsonDict = json.loads(jsonStr)
 
+			bsonDict = ConvertJsonToBson(self.designGuid, jsonDict)
+
 			client = MongoClient(mongoConnectionString)
 			db = client["stitch_galaxy"]
 			designs = db["design"]
-			designId = designs.insert(jsonDict)
-			a = 'a'
+
+			design = designs.find_one({"guid", designGuid})
+			if design != None:
+				designId = design["_id"];
+				bsonDict["_id"] = designId
+				designs.save(bsonDict)
+			else:
+				designId = designs.insert(bsonDict)
 
 		except Exception as err:
 			self.status = "500 Internal Server Error"
