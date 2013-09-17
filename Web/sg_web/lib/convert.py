@@ -1,19 +1,20 @@
-﻿import datetime
+﻿from datetime import datetime
+import copy
 
 class JsonBsonConverter(object):
 
 	def __init__(self, designGuid):
 		self.designGuid= designGuid
 
-	def convertJsonToBson(jsonDict):
+	def convertJsonToBson(self, jsonDict):
 		bsonDict = copy.deepcopy(jsonDict)
 
 		#enrich with guid
-		bson["guid"] = self.designGuid
+		bsonDict["guid"] = self.designGuid
 
 	    #convert to datetime to persist properly
 		if bsonDict.has_key("releaseDate"):
-			bsonDict["releaseDate"] = datetime.strptime(bsonDict["releaseDate"], "%m-%d-%Y")
+			bsonDict["releaseDate"] = datetime.strptime(bsonDict["releaseDate"], "%d-%m-%Y")
 
 	    #blocked property
 		if bsonDict.has_key("blocked") and bsonDict["blocked"]:

@@ -39,7 +39,13 @@ class Upload:
 			db = client["stitch_galaxy"]
 			designs = db["design"]
 
-			design = designs.find_one({"guid", designGuid})
+			#hexString = '5d78ad35ea5f11e1a183705681b29c47'
+ 			#newLinkField = { 'guid' : uuid.UUID( hexString ) }
+			#design = designs.find_one(newLinkField)
+			newLinkField = { 'guid' : self.designGuid }
+			design = designs.find_one(newLinkField)
+			#design = designs.find_one({"guid", self.designGuid})
+
 			if design != None:
 				designId = design["_id"];
 				bsonDict["_id"] = designId

@@ -2,7 +2,8 @@
 from cgi import parse_qs, escape
 import cgi
 import cStringIO
-from upload.upload import Upload
+
+from upload import Upload
 
 from server_config import serverName
 from server_config import serverPort
