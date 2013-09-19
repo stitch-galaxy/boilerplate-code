@@ -1,0 +1,1 @@
+﻿serverUrl = "http://localhost:80"

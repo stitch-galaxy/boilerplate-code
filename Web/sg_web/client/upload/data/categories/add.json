@@ -1,0 +1,15 @@
+﻿{
+	"path":"root/cars",
+	"parent":"root"
+	"languages":
+	[
+		{
+			"language":"en",
+			"name":"Cars",
+		},
+		{
+			"language":"ru",
+			"name":"Машины",
+		}
+	]
+}
