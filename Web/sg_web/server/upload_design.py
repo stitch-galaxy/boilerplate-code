@@ -8,7 +8,7 @@ from sg_web.lib.convert import JsonBsonConverter
 from sg_web.lib.storage import Storage, DiskStorage
 from sg_web.lib.mongodb import MongoDbAccessor
 
-class Upload(object):
+class UploadDesign(object):
 	def __init__(self, dict, designGuid):
 		self.dict = dict
 		self.response_body = None

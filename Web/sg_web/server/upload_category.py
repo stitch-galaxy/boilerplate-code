@@ -4,14 +4,14 @@ from sg_web.server.server_config import mongoConnectionString
 
 from sg_web.lib.mongodb import MongoDbAccessor
 
-class Categories(object):
+class UploadCategory(object):
 	def __init__(self):
 		self.response_body = None
   		self.status = None
 		self.response_headers = None
 
 	def addCategory(self, json):
-
+		return
 
 	def loadSubcategories(self, parentCategory):
 		try:

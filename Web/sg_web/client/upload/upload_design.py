@@ -1,8 +1,14 @@
-﻿import requests
-import os, os.path
+﻿import os, os.path
 import uuid
-from design import Designs, Design
 
+#configuration
+from sg_web.client.upload.upload_config import serverUrl
+
+#clasess
+from sg_web.client.upload.design import Designs, Design
+from sg_web.client.upload.common import postRequest
+
+#functions
 def logProcessingDirectory(directoryName):
 	print "INFO: Processing " + directoryName + " directory"
 
@@ -12,20 +18,9 @@ def logDirectorySkipped(path):
 def logFileSkipped(path):
 	print "WARNING: " + path + " file skipped"
 
-def postRequest(files, requestParameters):
-	retries = 0
-	while retries != 3:
-		try:
-			r = requests.post(uploadUrl, files = files, data = requestParameters, timeout = 1000)
-			print "INFO: Success"
-			break
-		except:
-			print "ERROR: POST request failed"
-			retries = retries + 1
+#script code
 
-uploadUrl = "http://localhost/upload"
-#uploadUrl = "http://stitchgalaxy.com/upload"
-
+uploadUrl = serverUrl + "/uploadDesign"
 
 designs = Designs()
 

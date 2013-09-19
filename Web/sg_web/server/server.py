@@ -3,16 +3,19 @@ from cgi import parse_qs, escape
 import cgi
 import cStringIO
 
-from upload import Upload
+#configuration
+from sg_web.server.server_config import serverName
+from sg_web.server.server_config import serverPort
 
-from server_config import serverName
-from server_config import serverPort
+#classes
+from sg_web.server.upload_design import UploadDesign
+from sg_web.server.upload_category import UploadCategory
 
 def application(environ, start_response):
 
 	script_path = environ["PATH_INFO"]
 
-	if (script_path == "/upload"):
+	if (script_path == "/uploadDesign"):
 
 		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 		designGuid = form.getvalue("designGuid")
@@ -25,10 +28,12 @@ def application(environ, start_response):
 				file = field.file
 				filesDict[fileName] = file
 
-		upload = Upload(filesDict, designGuid)
+		upload = UploadDesign(filesDict, designGuid)
 		upload.commit()
 		response = upload.getResponse()
-	elif (script_path == "/getCategories"):
+	elif (script_path == "/uploadCategory"):
+
+
 		categoriesLoader = CategoriesLoader()
 		categoriesLoader.loadCategories()
 		categoriesLoader.getResponse()
