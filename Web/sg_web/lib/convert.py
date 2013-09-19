@@ -14,16 +14,16 @@ class JsonBsonConverter(object):
 		bsonDict["guid"] = self.designGuid
 
 	    #convert to datetime to persist properly
-		if bsonDict.has_key("releaseDate"):
-			bsonDict["releaseDate"] = datetime.strptime(bsonDict["releaseDate"], "%d-%m-%Y")
+		if bsonDict.has_key("release_date"):
+			bsonDict["release_date"] = datetime.strptime(bsonDict["release_date"], "%d-%m-%Y")
 
 		#compute rating
-		if bsonDict.has_key("totalRating"):
-			bsonDict["totalRating"] = 0
-		if bsonDict.has_key("totalRates"):
-			bsonDict["totalRates"] = 0
-		if bsonDict["totalRates"] != 0:
-			bsonDict["rating"] = float(["totalRating"]) / bsonDict["totalRates"]
+		if bsonDict.has_key("total_rating"):
+			bsonDict["total_rating"] = 0
+		if bsonDict.has_key("total_rates"):
+			bsonDict["total_rates"] = 0
+		if bsonDict["total_rates"] != 0:
+			bsonDict["rating"] = float(["total_rating"]) / bsonDict["total_rates"]
 		else:
 			bsonDict["rating"] = 0.0
 
@@ -41,24 +41,24 @@ class JsonBsonConverter(object):
 
 			for language in languages:
 				#thumbnail property
-				if language.has_key("hasThumbnail") and language["hasThumbnail"]:
-					language["hasThumbnail"] = True
+				if language.has_key("has_thumbnail") and language["has_thumbnail"]:
+					language["has_thumbnail"] = True
 				else:
-					language["hasThumbnail"] = False
+					language["has_thumbnail"] = False
 	            #image property
-				if language.has_key("hasImage") and language["hasImage"]:
-					language["hasImage"] = True
+				if language.has_key("has_image") and language["has_image"]:
+					language["has_image"] = True
 				else:
-					language["hasImage"] = False
+					language["has_image"] = False
 	            #design property
-				if language.has_key("hasDesign") and language["hasDesign"]:
-					language["hasDesign"] = True
+				if language.has_key("has_design") and language["has_design"]:
+					language["has_design"] = True
 				else:
-					language["hasDesign"] = False
+					language["has_design"] = False
 	            #html page property
-				if language.has_key("hasHtmlPage") and language["hasHtmlPage"]:
-					language["hasHtmlPage"] = True
+				if language.has_key("has_html_page") and language["has_html_page"]:
+					language["has_html_page"] = True
 				else:
-					language["hasHtmlPage"] = False
+					language["has_html_page"] = False
 
 		return bsonDict

@@ -33,10 +33,14 @@ def application(environ, start_response):
 		response = upload.getResponse()
 	elif (script_path == "/uploadCategory"):
 
+		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		categoriesLoader = CategoriesLoader()
-		categoriesLoader.loadCategories()
-		categoriesLoader.getResponse()
+		field = form["add.json"]
+		file = field.file
+
+		upload = UploadCategory(file)
+		upload.commit()
+		response = upload.getResponse()
 	else:
 		status = "501 Not Implemented"
 		response_body = "Not implemeted"

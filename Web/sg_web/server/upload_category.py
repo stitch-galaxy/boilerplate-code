@@ -1,4 +1,5 @@
 ﻿import traceback
+import math
 
 from sg_web.server.server_config import mongoConnectionString
 
@@ -28,7 +29,7 @@ class UploadCategory(object):
 			if parentPath == "root":
 				parentCategoryId = 0
 			else:
-				parentCategoryId = db.getCategoryId(parentPath)
+				parentCategoryId = db.getCategorySeed(parentPath)
 
 			if parentCategoryId < 0:
 				raise Exception("Can not find parent category: " + parentPath)
@@ -39,9 +40,11 @@ class UploadCategory(object):
 				raise Exception("Subcategories count limit reached")
 
 			depthLevel = jsonDict["path"].count("/")
+			if depthLevel > MAX_DEPTH:
+				raise Exception("Max depth limit reached")
 
 			#actual formula
-			category_seed = parentCategoryId + (currParentSubcategoriesNum + 1) * LEVEL_SEED ^ (MAX_DEPTH - depthLevel)
+			category_seed = parentCategoryId + (currParentSubcategoriesNum + 1) * pow(LEVEL_SEED, (MAX_DEPTH - depthLevel))
 			jsonDict["category_seed"] = category_seed
 
 			db.persistCategory(jsonDict)
