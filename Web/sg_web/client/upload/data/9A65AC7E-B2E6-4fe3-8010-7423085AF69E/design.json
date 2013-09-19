@@ -1,10 +1,12 @@
 ﻿{
 	"releaseDate":"29-07-2013",
 	"sales":0,
-	"totalRating":25,
-	"totalRates":5,
+	"totalRating":0,
+	"totalRates":0,
+	"priceUSD":1.0,
 	"blocked":0,
-	"languages": 
+	"complexity":0.5,
+	"languages":
 	[
 		{
 			"language":"en",
@@ -17,14 +19,14 @@
 			"hasImage":1,
 			"hasDesign":1,
 			"hasHtmlPage":1
+			"author":"Evgeny Tarasov"
 		},
 		{
 			"language":"ru",
 			"name":"Совёнок",
 			"description":"Прелестный совёнок",
-			"width":150,
-			"height":150,
-			"colors":78
+			"hasHtmlPage":1,
+			"author":"Евгений Тарасов"
 		}
 	]
 }

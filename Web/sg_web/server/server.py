@@ -28,7 +28,10 @@ def application(environ, start_response):
 		upload = Upload(filesDict, designGuid)
 		upload.commit()
 		response = upload.getResponse()
-
+	elif (script_path == "/getCategories"):
+		categoriesLoader = CategoriesLoader()
+		categoriesLoader.loadCategories()
+		categoriesLoader.getResponse()
 	else:
 		status = "501 Not Implemented"
 		response_body = "Not implemeted"

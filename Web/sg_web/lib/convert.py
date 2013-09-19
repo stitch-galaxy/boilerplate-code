@@ -1,5 +1,6 @@
 ﻿from datetime import datetime
 import copy
+import random
 
 class JsonBsonConverter(object):
 
@@ -15,6 +16,19 @@ class JsonBsonConverter(object):
 	    #convert to datetime to persist properly
 		if bsonDict.has_key("releaseDate"):
 			bsonDict["releaseDate"] = datetime.strptime(bsonDict["releaseDate"], "%d-%m-%Y")
+
+		#compute rating
+		if bsonDict.has_key("totalRating"):
+			bsonDict["totalRating"] = 0
+		if bsonDict.has_key("totalRates"):
+			bsonDict["totalRates"] = 0
+		if bsonDict["totalRates"] != 0:
+			bsonDict["rating"] = float(["totalRating"]) / bsonDict["totalRates"]
+		else:
+			bsonDict["rating"] = 0.0
+
+		#introduce random field
+		bsonDict["random"] = random.random()
 
 	    #blocked property
 		if bsonDict.has_key("blocked") and bsonDict["blocked"]:

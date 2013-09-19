@@ -1,7 +1,4 @@
-﻿import os, os.path
-import traceback
-from pymongo import MongoClient
-import json
+﻿import traceback
 import uuid
 
 from sg_web.server.server_config import diskStorageFolder
@@ -9,8 +6,9 @@ from sg_web.server.server_config import mongoConnectionString
 
 from sg_web.lib.convert import JsonBsonConverter
 from sg_web.lib.storage import Storage, DiskStorage
+from sg_web.lib.mongodb import MongoDbAccessor
 
-class Upload:
+class Upload(object):
 	def __init__(self, dict, designGuid):
 		self.dict = dict
 		self.response_body = None
@@ -35,23 +33,8 @@ class Upload:
 
 			bsonDict = converter.convertJsonToBson(jsonDict)
 
-			client = MongoClient(mongoConnectionString)
-			db = client["stitch_galaxy"]
-			designs = db["design"]
-
-			#hexString = '5d78ad35ea5f11e1a183705681b29c47'
- 			#newLinkField = { 'guid' : uuid.UUID( hexString ) }
-			#design = designs.find_one(newLinkField)
-			newLinkField = { 'guid' : self.designGuid }
-			design = designs.find_one(newLinkField)
-			#design = designs.find_one({"guid", self.designGuid})
-
-			if design != None:
-				designId = design["_id"];
-				bsonDict["_id"] = designId
-				designs.save(bsonDict)
-			else:
-				designId = designs.insert(bsonDict)
+			db = MongoDbAccessor(mongoConnectionString)
+			db.persistDesign(self.designGuid, bsonDict)
 
 		except Exception as err:
 			self.status = "500 Internal Server Error"
