@@ -6,6 +6,8 @@
 	"price_usd":1.0,
 	"blocked":0,
 	"complexity":0.5,
+	"categories":[10000,20100],
+	"avg_color":[100,100,100],
 	"languages":
 	[
 		{
@@ -18,15 +20,17 @@
 			"has_thumbnail":1,
 			"has_image":1,
 			"has_design":1,
-			"has_html_page":1
-			"author":"Evgeny Tarasov"
+			"has_html_page":1,
+			"author":"Evgeny Tarasov",
+			"tags":["animals", "child"]
 		},
 		{
 			"language":"ru",
 			"name":"Совёнок",
 			"description":"Прелестный совёнок",
 			"has_html_page":1,
-			"author":"Евгений Тарасов"
+			"author":"Евгений Тарасов",
+			"tags":["животные", "дети"]
 		}
 	]
 }
