@@ -3,10 +3,9 @@
 	NOT_IMPLEMETED = ""
 	INTERNAL_SERVER_ERROR = "500 Internal Server Error"
 
-
 class CONTENT_TYPE:
 	TEXT_PLAIN = "text/plain"
-
+	APPLICATION_JSON = "application/json"
 
 class WebResponse(object):
 	def __init__(self):

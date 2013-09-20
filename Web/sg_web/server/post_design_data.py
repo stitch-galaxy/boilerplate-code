@@ -10,7 +10,7 @@ class PostDesignData(object):
 	def __init__(self, web_response, designGuid, jsonFile):
 		self.web_response = web_response
 		self.jsonFile = jsonFile
-		self.designGuid = uuid.UUID(designGuid)
+		self.designGuid = designGuid
 
 	def post(self):
 		converter = JsonBsonConverter(self.designGuid)

@@ -19,6 +19,14 @@ class MongoDbAccessor(object):
 		else:
 			designId = designs.insert(bsonDict)
 
+	def getDesign(self, designGuid):
+		designs = db["design"]
+
+		query = { "guid" : designGuid }
+		design = designs.find_one(query)
+
+		return design
+
 	def getCategorySeed(self, path):
 		categories = db["category"]
 

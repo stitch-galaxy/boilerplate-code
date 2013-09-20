@@ -8,6 +8,9 @@ class Storage(object):
 	def persistFile(self, file, fileName):
 		raise NotImplementedError("Abstract class")
 
+	def getFiles(self):
+		raise NotImplementedError("Abstract class")
+
 CHUNK_SIZE = 8192
 
 class DiskStorage(Storage):
@@ -32,6 +35,9 @@ class DiskStorage(Storage):
 					chunk = file.read(CHUNK_SIZE)
 				else:
 					break
+
+	def getFiles(self):
+		return
 
 class CDNStorage(Storage):
 

@@ -2,6 +2,7 @@
 from cgi import parse_qs, escape
 import cgi
 import cStringIO
+import uuid
 
 #configuration
 from sg_web.server.server_config import serverName
@@ -13,7 +14,9 @@ from sg_web.lib.enums import REQUEST_PATH
 from sg_web.server.web_response import WebResponse, RESPONSE_STATUS, CONTENT_TYPE
 
 from sg_web.server.post_design_data import PostDesignData
-
+from sg_web.server.post_design_file import PostDesignFile
+from sg_web.server.get_design_data import GetDesignData
+from sg_web.server.get_design_files import GetDesignFiles
 
 from sg_web.server.upload_design import UploadDesign
 from sg_web.server.upload_category import UploadCategory
@@ -37,7 +40,7 @@ def application(environ, start_response):
 		fileName = field.filename
 		jsonFile = field.file
 
-		post = PostDesignData(designGuid, jsonFile)
+		post = PostDesignData(response, designGuid, jsonFile)
 		post.post()
 	#post design file
 	if (script_path == REQUEST_PATH.POST_DESIGN_FILE):
@@ -49,9 +52,24 @@ def application(environ, start_response):
 		fileName = field.filename
 		file = field.file
 
-		post = PostDesignData(designGuid, jsonFile)
+		post = PostDesignFile(response, designGuid, file)
+		post.post()
+	#get design data
+	if (script_path == REQUEST_PATH.GET_DESIGN_DATA):
+		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
+		designGuid = uuid.UUID(form.getvalue("designGuid"))
 
+		get = GetDesignData(response, designGuid)
+		get.get()
+	#get design files
+	if (script_path == REQUEST_PATH.GET_DESIGN_FILES):
+		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+
+		designGuid = uuid.UUID(form.getvalue("designGuid"))
+
+		get = GetDesignFiles(response, designGuid)
+		get.get()
 
 	elif (script_path == "/uploadRequest"):
 		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
@@ -78,16 +96,10 @@ def application(environ, start_response):
 		upload = UploadCategory(file)
 		upload.commit()
 		response = upload.getResponse()
-	else:
-		status = "501 Not Implemented"
-		response_body = "Not implemeted"
-		response_headers = [("Content-Type", "text/plain"),
-						("Content-Length", str(len(response_body)))]
-		response = (status, response_headers, response_body)
 
-	start_response(response[0], response[1])
+	start_response(response.getStatus(), response.getHeaders())
 
-	return [response[2]]
+	return [response.getResponseBody()]
 
 httpd = make_server(serverName, serverPort, application)
 httpd.serve_forever()
