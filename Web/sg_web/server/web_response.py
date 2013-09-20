@@ -10,8 +10,9 @@ class CONTENT_TYPE:
 
 class WebResponse(object):
 	def __init__(self):
-		self.status = RESPONSE_STATUS.OK
-        self.contentType = CONTENT_TYPE.TEXT_PLAIN
+		self.status = RESPONSE_STATUS.NOT_IMPLEMETED
+		self.contentType = CONTENT_TYPE.TEXT_PLAIN
+		self.responseBody = "Method not implemeted"
 
 	def setStatus(self, status):
 		self.status = status
