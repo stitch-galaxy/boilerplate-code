@@ -17,12 +17,12 @@ from sg_web.server.post_design_data import PostDesignData
 from sg_web.server.post_design_file import PostDesignFile
 from sg_web.server.get_design_data import GetDesignData
 from sg_web.server.get_design_files import GetDesignFiles
+from sg_web.server.delete_design_file import DeleteDesignFile
+from sg_web.server.get_categories import GetCategories
+
 
 from sg_web.server.upload_design import UploadDesign
 from sg_web.server.upload_category import UploadCategory
-
-#constants
-POST_DESIGN_DATA = "/post_design_data"
 
 def application(environ, start_response):
 
@@ -40,8 +40,8 @@ def application(environ, start_response):
 		fileName = field.filename
 		jsonFile = field.file
 
-		post = PostDesignData(response, designGuid, jsonFile)
-		post.post()
+		request = PostDesignData(response, designGuid, jsonFile)
+		request.post()
 	#post design file
 	if (script_path == REQUEST_PATH.POST_DESIGN_FILE):
 		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
@@ -52,25 +52,41 @@ def application(environ, start_response):
 		fileName = field.filename
 		file = field.file
 
-		post = PostDesignFile(response, designGuid, file)
-		post.post()
+		request = PostDesignFile(response, designGuid, file)
+		request.post()
 	#get design data
 	if (script_path == REQUEST_PATH.GET_DESIGN_DATA):
 		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
 		designGuid = uuid.UUID(form.getvalue("designGuid"))
 
-		get = GetDesignData(response, designGuid)
-		get.get()
+		request = GetDesignData(response, designGuid)
+		request.get()
 	#get design files
 	if (script_path == REQUEST_PATH.GET_DESIGN_FILES):
 		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
 		designGuid = uuid.UUID(form.getvalue("designGuid"))
 
-		get = GetDesignFiles(response, designGuid)
-		get.get()
+		request = GetDesignFiles(response, designGuid)
+		request.get()
+	#delete design file
+	if (script_path == REQUEST_PATH.DELETE_DESIGN_FILE):
+		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
+		designGuid = uuid.UUID(form.getvalue("designGuid"))
+		fileName = form.getvalue("fileName")
+
+		request = DeleteDesignFile(response, designGuid, fileName)
+		request.delete()
+	#get design categories
+	if (script_path == REQUEST_PATH.GET_DESIGN_CATEGORIES):
+		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+
+		parentCategory = uuid.UUID(form.getvalue("parentCategory"))
+
+		request = GetCategories(response, designGuid, parentCategory)
+		request.get()
 	elif (script_path == "/uploadRequest"):
 		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 		designGuid = form.getvalue("designGuid")

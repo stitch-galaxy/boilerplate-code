@@ -8,18 +8,15 @@ from sg_web.lib.convert import JsonBsonConverter
 
 import json
 
-class GetDesignData(object):
+class GetCategories(object):
 
-	def __init__(self, web_response, designGuid):
+	def __init__(self, web_response, parentCategory):
 		self.web_response = web_response
-		self.designGuid = designGuid
+		self.parentCategory = parentCategory
 
 	def post(self):
 		db = MongoDbAccessor(mongoConnectionString)
-		bsonDict = db.getDesign(self.designGuid)
-
-		converter = JsonBsonConverter(self.designGuid)
-		jsonDict = converter.convertBsonToJson(bsonDict)
+		jsonDict = db.getCategories(parentCategory)
 
 		jsonStr = json.dumps(jsonDict, ensure_ascii = False, encoding="utf-8")
 

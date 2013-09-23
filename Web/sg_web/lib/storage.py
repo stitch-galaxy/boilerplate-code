@@ -37,7 +37,23 @@ class DiskStorage(Storage):
 					break
 
 	def getFiles(self):
-		return
+		files = list()
+
+		rootDir = self.folderToStoreData + str(self.designGuid) + "/"
+
+		for dirName, subDirList, fileList in os.walk(rootDir):
+			for fileName in fileList:
+				files.append(fileName)
+
+			#skip traversing into third level directories
+			for subDir in subDirList:
+				del subDirList[:]
+
+		return files
+
+	def deleteFile(self, fileName):
+		fileName = self.folderToStoreData + str(self.designGuid) + "/" + fileName
+		os.remove(fileName)
 
 class CDNStorage(Storage):
 

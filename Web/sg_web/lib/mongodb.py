@@ -27,22 +27,11 @@ class MongoDbAccessor(object):
 
 		return design
 
-	def getCategorySeed(self, path):
-		categories = db["category"]
-
-		query = { "path", path}
-		category = categories.find_one(query)
-
-		if category != None:
-			return category["category_seed"];
-
-		return -1
-
-	def getSubcategoriesCount(self, path):
+	def getCategories(self, parentPath):
 		categories = db["category"]
 
 		query = { "parent_path", path}
-		return categories.find(query).count()
+		return categories.find(query)
 
 	def persistCategory(self, bsonDict):
 		categories = db["category"]

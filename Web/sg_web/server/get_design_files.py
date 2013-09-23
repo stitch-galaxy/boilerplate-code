@@ -12,15 +12,20 @@ class GetDesignFiles(object):
 		self.web_response = web_response
 		self.designGuid = designGuid
 
-	def post(self):
+	def get(self):
 
 		storage = DiskStorage(self.designGuid, diskStorageFolder)
 		files = storage.getFiles()
 
-		converter = JsonBsonConverter(self.designGuid)
-		jsonDict = converter.convertBsonToJson(bsonDict)
 
-		jsonStr = json.dumps(jsonDict, ensure_ascii = False, encoding="utf-8")
+		for dirName, subDirList, fileList in os.walk("./data"):
+			for fileName in fileList:
+
+			#skip traversing into third level directories
+			for subDir in subDirList:
+				del subDirList[:]
+
+		jsonStr = json.dumps(files, ensure_ascii = False, encoding="utf-8")
 
 		self.web_response.setStatus(RESPONSE_STATUS.OK)
 		self.web_response.setContentType(CONTENT_TYPE.APPLICATION_JSON)
