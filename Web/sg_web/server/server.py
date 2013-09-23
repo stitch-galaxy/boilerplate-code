@@ -106,31 +106,6 @@ def application(environ, start_response):
 
 		request = DeleteCategory(response, category)
 		request.delete()
-	elif (script_path == "/uploadRequest"):
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
-		designGuid = form.getvalue("designGuid")
-
-		filesDict = dict()
-		for key in form.keys():
-			if key != "designGuid":
-				field = form[key];
-				fileName = field.filename
-				file = field.file
-				filesDict[fileName] = file
-
-		upload = UploadDesign(filesDict, designGuid)
-		upload.commit()
-		response = upload.getResponse()
-	elif (script_path == "/uploadCategory"):
-
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
-
-		field = form["add.json"]
-		file = field.file
-
-		upload = UploadCategory(file)
-		upload.commit()
-		response = upload.getResponse()
 
 	start_response(response.getStatus(), response.getHeaders())
 

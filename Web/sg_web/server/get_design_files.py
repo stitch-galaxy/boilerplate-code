@@ -17,14 +17,6 @@ class GetDesignFiles(object):
 		storage = DiskStorage(self.designGuid, diskStorageFolder)
 		files = storage.getFiles()
 
-
-		for dirName, subDirList, fileList in os.walk("./data"):
-			for fileName in fileList:
-
-			#skip traversing into third level directories
-			for subDir in subDirList:
-				del subDirList[:]
-
 		jsonStr = json.dumps(files, ensure_ascii = False, encoding="utf-8")
 
 		self.web_response.setStatus(RESPONSE_STATUS.OK)
