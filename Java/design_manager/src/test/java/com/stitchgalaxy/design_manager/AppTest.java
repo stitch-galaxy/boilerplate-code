@@ -1,4 +1,4 @@
-package com.stitchgalaxy;
+package com.stitchgalaxy.design_manager;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -33,12 +33,6 @@ public class AppTest
      */
     public void testApp()
     {
-    	ImageReader reader = new ImageReader();
-    	Design design = reader.readDesign();
-    	if (design != null)
-    	{
-    		JsonSerializer serializer = new JsonSerializer();
-    		serializer.serializeDesign(design);
-    	}
+        assertTrue( true );
     }
 }

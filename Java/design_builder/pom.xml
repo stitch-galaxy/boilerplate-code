@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.stitchgalaxy</groupId>
-  <artifactId>DesignBuilder</artifactId>
+  <artifactId>design_builder</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>DesignBuilder</name>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>design_builder</name>
   <url>http://stitchgalaxy.com</url>
 
   <repositories>
