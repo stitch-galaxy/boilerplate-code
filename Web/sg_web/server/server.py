@@ -22,90 +22,92 @@ from sg_web.server.get_categories import GetCategories
 from sg_web.server.post_category import PostCategory
 from sg_web.server.delete_category import DeleteCategory
 
-from sg_web.server.upload_design import UploadDesign
-from sg_web.server.upload_category import UploadCategory
-
 def application(environ, start_response):
 
 	response = WebResponse()
 
 	script_path = environ["PATH_INFO"]
 
-    #post design data
-	if (script_path == REQUEST_PATH.POST_DESIGN_DATA):
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+	try:
+	    #post design data
+		if (script_path == REQUEST_PATH.POST_DESIGN_DATA):
+			form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		designGuid = uuid.UUID(form.getvalue("designGuid"))
+			designGuid = uuid.UUID(form.getvalue("designGuid"))
 
-		field = form["json"]
-		fileName = field.filename
-		jsonFile = field.file
+			field = form["json"]
+			fileName = field.filename
+			jsonFile = field.file
 
-		request = PostDesignData(response, designGuid, jsonFile)
-		request.post()
-	#post design file
-	if (script_path == REQUEST_PATH.POST_DESIGN_FILE):
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+			request = PostDesignData(response, designGuid, jsonFile)
+			request.post()
+		#post design file
+		if (script_path == REQUEST_PATH.POST_DESIGN_FILE):
+			form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		designGuid = uuid.UUID(form.getvalue("designGuid"))
+			designGuid = uuid.UUID(form.getvalue("designGuid"))
 
-		field = form["file"]
-		fileName = field.filename
-		file = field.file
+			field = form["file"]
+			fileName = field.filename
+			file = field.file
 
-		request = PostDesignFile(response, designGuid, file)
-		request.post()
-	#get design data
-	if (script_path == REQUEST_PATH.GET_DESIGN_DATA):
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+			request = PostDesignFile(response, designGuid, fileName, file)
+			request.post()
+		#get design data
+		if (script_path == REQUEST_PATH.GET_DESIGN_DATA):
+			form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		designGuid = uuid.UUID(form.getvalue("designGuid"))
+			designGuid = uuid.UUID(form.getvalue("designGuid"))
 
-		request = GetDesignData(response, designGuid)
-		request.get()
-	#get design files
-	if (script_path == REQUEST_PATH.GET_DESIGN_FILES):
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+			request = GetDesignData(response, designGuid)
+			request.get()
+		#get design files
+		if (script_path == REQUEST_PATH.GET_DESIGN_FILES):
+			form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		designGuid = uuid.UUID(form.getvalue("designGuid"))
+			designGuid = uuid.UUID(form.getvalue("designGuid"))
 
-		request = GetDesignFiles(response, designGuid)
-		request.get()
-	#delete design file
-	if (script_path == REQUEST_PATH.DELETE_DESIGN_FILE):
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+			request = GetDesignFiles(response, designGuid)
+			request.get()
+		#delete design file
+		if (script_path == REQUEST_PATH.DELETE_DESIGN_FILE):
+			form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		designGuid = uuid.UUID(form.getvalue("designGuid"))
-		fileName = form.getvalue("fileName")
+			designGuid = uuid.UUID(form.getvalue("designGuid"))
+			fileName = form.getvalue("fileName")
 
-		request = DeleteDesignFile(response, designGuid, fileName)
-		request.delete()
-	#get design categories
-	if (script_path == REQUEST_PATH.GET_DESIGN_CATEGORIES):
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+			request = DeleteDesignFile(response, designGuid, fileName)
+			request.delete()
+		#get design categories
+		if (script_path == REQUEST_PATH.GET_DESIGN_CATEGORIES):
+			form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		parentCategory = form.getvalue("parentCategory")
+			parentCategory = form.getvalue("parentCategory")
 
-		request = GetCategories(response, designGuid, parentCategory)
-		request.get()
-	#post design category
-	if (script_path == REQUEST_PATH.POST_DESIGN_CATEGORY):
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+			request = GetCategories(response, designGuid, parentCategory)
+			request.get()
+		#post design category
+		if (script_path == REQUEST_PATH.POST_DESIGN_CATEGORY):
+			form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		field = form["json"]
-		fileName = field.filename
-		jsonFile = field.file
+			field = form["json"]
+			fileName = field.filename
+			jsonFile = field.file
 
-		request = PostCategory(response, jsonFile)
-		request.post()
-	#delete design categiry
-	if (script_path == REQUEST_PATH.DELETE_DESIGN_CATEGORY):
-		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+			request = PostCategory(response, jsonFile)
+			request.post()
+		#delete design categiry
+		if (script_path == REQUEST_PATH.DELETE_DESIGN_CATEGORY):
+			form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		category = form.getvalue("category")
+			category = form.getvalue("category")
 
-		request = DeleteCategory(response, category)
-		request.delete()
+			request = DeleteCategory(response, category)
+			request.delete()
+	except Exception as err:
+		response.setStatus(RESPONSE_STATUS.INTERNAL_SERVER_ERROR)
+		response.setContentType(CONTENT_TYPE.TEXT_PLAIN)
+		response.setResponseBody(err)
 
 	start_response(response.getStatus(), response.getHeaders())
 
