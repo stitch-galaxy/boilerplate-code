@@ -45,3 +45,9 @@ class MongoDbAccessor(object):
 			categories.save(bsonDict)
 		else:
 			categoryId = categories.insert(bsonDict)
+
+	def deleteCategory(self, path):
+		categories = db["category"]
+
+		query = { "parent_path", path}
+		categories.remove(query)

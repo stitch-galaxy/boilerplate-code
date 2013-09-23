@@ -19,7 +19,8 @@ from sg_web.server.get_design_data import GetDesignData
 from sg_web.server.get_design_files import GetDesignFiles
 from sg_web.server.delete_design_file import DeleteDesignFile
 from sg_web.server.get_categories import GetCategories
-
+from sg_web.server.post_category import PostCategory
+from sg_web.server.delete_category import DeleteCategory
 
 from sg_web.server.upload_design import UploadDesign
 from sg_web.server.upload_category import UploadCategory
@@ -83,10 +84,28 @@ def application(environ, start_response):
 	if (script_path == REQUEST_PATH.GET_DESIGN_CATEGORIES):
 		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 
-		parentCategory = uuid.UUID(form.getvalue("parentCategory"))
+		parentCategory = form.getvalue("parentCategory")
 
 		request = GetCategories(response, designGuid, parentCategory)
 		request.get()
+	#post design category
+	if (script_path == REQUEST_PATH.POST_DESIGN_CATEGORY):
+		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+
+		field = form["json"]
+		fileName = field.filename
+		jsonFile = field.file
+
+		request = PostCategory(response, jsonFile)
+		request.post()
+	#delete design categiry
+	if (script_path == REQUEST_PATH.DELETE_DESIGN_CATEGORY):
+		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
+
+		category = form.getvalue("category")
+
+		request = DeleteCategory(response, category)
+		request.delete()
 	elif (script_path == "/uploadRequest"):
 		form = cgi.FieldStorage(fp=cStringIO.StringIO(environ["wsgi.input"].read(int(environ["CONTENT_LENGTH"]))), environ=environ)
 		designGuid = form.getvalue("designGuid")
