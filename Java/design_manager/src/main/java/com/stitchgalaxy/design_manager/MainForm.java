@@ -32,7 +32,7 @@ public class MainForm extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnlMain = new javax.swing.JPanel();
         lblDesignGuid = new javax.swing.JLabel();
         ftfDesignGuid = new javax.swing.JFormattedTextField();
         lblDate = new javax.swing.JLabel();
@@ -51,94 +51,110 @@ public class MainForm extends javax.swing.JFrame
         ftfComplexity = new javax.swing.JFormattedTextField();
         lblAvgColor = new javax.swing.JLabel();
         btnChoseColor = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        pnlCategories = new javax.swing.JPanel();
+        lblCategories = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        lstCategories = new javax.swing.JList();
         jPanel5 = new javax.swing.JPanel();
         btnAddCategory = new javax.swing.JButton();
         btnRemoveCategory = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        pnlLocalizations = new javax.swing.JPanel();
+        lblLocalizations = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstLocalizations = new javax.swing.JList();
+        jPanel8 = new javax.swing.JPanel();
+        btnAddLocalization = new javax.swing.JButton();
+        btnEditLocalization = new javax.swing.JButton();
+        btnRemoveLocalization = new javax.swing.JButton();
+        pnlFiles = new javax.swing.JPanel();
+        lblFiles = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstFiles = new javax.swing.JList();
+        jPanel11 = new javax.swing.JPanel();
+        btnAddFile = new javax.swing.JButton();
+        btnRemoveFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout(3, 1));
+        getContentPane().setLayout(new java.awt.GridLayout(4, 1));
 
-        jPanel1.setLayout(new java.awt.GridLayout(9, 2));
+        pnlMain.setLayout(new java.awt.GridLayout(9, 2));
 
         lblDesignGuid.setText("Design UUID:");
-        jPanel1.add(lblDesignGuid);
+        pnlMain.add(lblDesignGuid);
 
         ftfDesignGuid.setText("jFormattedTextField1");
-        jPanel1.add(ftfDesignGuid);
+        pnlMain.add(ftfDesignGuid);
 
         lblDate.setText("Date:");
         lblDate.setVerifyInputWhenFocusTarget(false);
-        jPanel1.add(lblDate);
+        pnlMain.add(lblDate);
 
         ftfDate.setText("jFormattedTextField1");
-        jPanel1.add(ftfDate);
+        pnlMain.add(ftfDate);
         ftfDate.getAccessibleContext().setAccessibleParent(lblDate);
 
         lblSales.setText("Sales:");
-        jPanel1.add(lblSales);
+        pnlMain.add(lblSales);
 
         ftfSales.setText("jFormattedTextField1");
-        jPanel1.add(ftfSales);
+        pnlMain.add(ftfSales);
 
         lblTotalRates.setText("Total rates:");
-        jPanel1.add(lblTotalRates);
+        pnlMain.add(lblTotalRates);
 
         ftfTotalRates.setText("jFormattedTextField1");
-        jPanel1.add(ftfTotalRates);
+        pnlMain.add(ftfTotalRates);
 
         lblTotalRating.setText("Total rating:");
-        jPanel1.add(lblTotalRating);
+        pnlMain.add(lblTotalRating);
 
         ftflTotalRating.setText("jFormattedTextField1");
-        jPanel1.add(ftflTotalRating);
+        pnlMain.add(ftflTotalRating);
 
         lblAvgRating.setText("Avg rating:");
-        jPanel1.add(lblAvgRating);
+        pnlMain.add(lblAvgRating);
 
         ftfRating.setText("jFormattedTextField1");
-        jPanel1.add(ftfRating);
+        pnlMain.add(ftfRating);
 
         lblPriceUsd.setText("Price USD:");
-        jPanel1.add(lblPriceUsd);
+        pnlMain.add(lblPriceUsd);
 
         ftfPriceUsd.setText("jFormattedTextField1");
-        jPanel1.add(ftfPriceUsd);
+        pnlMain.add(ftfPriceUsd);
 
         lblComplexity.setText("Complexity:");
-        jPanel1.add(lblComplexity);
+        pnlMain.add(lblComplexity);
 
         ftfComplexity.setText("jFormattedTextField1");
-        jPanel1.add(ftfComplexity);
+        pnlMain.add(ftfComplexity);
 
         lblAvgColor.setText("Avg color:");
-        jPanel1.add(lblAvgColor);
-        jPanel1.add(btnChoseColor);
+        pnlMain.add(lblAvgColor);
+        pnlMain.add(btnChoseColor);
 
-        getContentPane().add(jPanel1);
+        getContentPane().add(pnlMain);
 
-        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
+        pnlCategories.setLayout(new javax.swing.BoxLayout(pnlCategories, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("Categories:");
-        jPanel2.add(jLabel1);
+        lblCategories.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblCategories.setText("Categories:");
+        pnlCategories.add(lblCategories);
 
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.LINE_AXIS));
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        lstCategories.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jList1.setMaximumSize(new java.awt.Dimension(200, 40));
-        jList1.setMinimumSize(new java.awt.Dimension(200, 40));
-        jList1.setPreferredSize(new java.awt.Dimension(200, 40));
-        jScrollPane1.setViewportView(jList1);
+        lstCategories.setMaximumSize(new java.awt.Dimension(200, 40));
+        lstCategories.setMinimumSize(new java.awt.Dimension(200, 40));
+        lstCategories.setPreferredSize(new java.awt.Dimension(200, 40));
+        jScrollPane1.setViewportView(lstCategories);
 
         jPanel4.add(jScrollPane1);
 
@@ -157,22 +173,90 @@ public class MainForm extends javax.swing.JFrame
 
         jPanel4.add(jPanel5);
 
-        jPanel2.add(jPanel4);
+        pnlCategories.add(jPanel4);
 
-        getContentPane().add(jPanel2);
+        getContentPane().add(pnlCategories);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 435, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 184, Short.MAX_VALUE)
-        );
+        pnlLocalizations.setLayout(new javax.swing.BoxLayout(pnlLocalizations, javax.swing.BoxLayout.PAGE_AXIS));
 
-        getContentPane().add(jPanel3);
+        lblLocalizations.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblLocalizations.setText("Localizations:");
+        pnlLocalizations.add(lblLocalizations);
+
+        jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.LINE_AXIS));
+
+        lstLocalizations.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstLocalizations.setMaximumSize(new java.awt.Dimension(200, 40));
+        lstLocalizations.setMinimumSize(new java.awt.Dimension(200, 40));
+        lstLocalizations.setPreferredSize(new java.awt.Dimension(200, 40));
+        jScrollPane2.setViewportView(lstLocalizations);
+
+        jPanel7.add(jScrollPane2);
+
+        jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.PAGE_AXIS));
+
+        btnAddLocalization.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
+        jPanel8.add(btnAddLocalization);
+
+        btnEditLocalization.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
+        jPanel8.add(btnEditLocalization);
+
+        btnRemoveLocalization.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/remove.png"))); // NOI18N
+        btnRemoveLocalization.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveLocalizationActionPerformed(evt);
+            }
+        });
+        jPanel8.add(btnRemoveLocalization);
+
+        jPanel7.add(jPanel8);
+
+        pnlLocalizations.add(jPanel7);
+
+        getContentPane().add(pnlLocalizations);
+
+        pnlFiles.setLayout(new javax.swing.BoxLayout(pnlFiles, javax.swing.BoxLayout.PAGE_AXIS));
+
+        lblFiles.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblFiles.setText("Files:");
+        pnlFiles.add(lblFiles);
+
+        jPanel10.setLayout(new javax.swing.BoxLayout(jPanel10, javax.swing.BoxLayout.LINE_AXIS));
+
+        lstFiles.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstFiles.setMaximumSize(new java.awt.Dimension(200, 40));
+        lstFiles.setMinimumSize(new java.awt.Dimension(200, 40));
+        lstFiles.setPreferredSize(new java.awt.Dimension(200, 40));
+        jScrollPane3.setViewportView(lstFiles);
+
+        jPanel10.add(jScrollPane3);
+
+        jPanel11.setLayout(new javax.swing.BoxLayout(jPanel11, javax.swing.BoxLayout.PAGE_AXIS));
+
+        btnAddFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
+        jPanel11.add(btnAddFile);
+
+        btnRemoveFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/remove.png"))); // NOI18N
+        btnRemoveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveFileActionPerformed(evt);
+            }
+        });
+        jPanel11.add(btnRemoveFile);
+
+        jPanel10.add(jPanel11);
+
+        pnlFiles.add(jPanel10);
+
+        getContentPane().add(pnlFiles);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -181,6 +265,16 @@ public class MainForm extends javax.swing.JFrame
     {//GEN-HEADEREND:event_btnRemoveCategoryActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRemoveCategoryActionPerformed
+
+    private void btnRemoveLocalizationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRemoveLocalizationActionPerformed
+    {//GEN-HEADEREND:event_btnRemoveLocalizationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoveLocalizationActionPerformed
+
+    private void btnRemoveFileActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRemoveFileActionPerformed
+    {//GEN-HEADEREND:event_btnRemoveFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoveFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,8 +327,13 @@ public class MainForm extends javax.swing.JFrame
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCategory;
+    private javax.swing.JButton btnAddFile;
+    private javax.swing.JButton btnAddLocalization;
     private javax.swing.JButton btnChoseColor;
+    private javax.swing.JButton btnEditLocalization;
     private javax.swing.JButton btnRemoveCategory;
+    private javax.swing.JButton btnRemoveFile;
+    private javax.swing.JButton btnRemoveLocalization;
     private javax.swing.JFormattedTextField ftfComplexity;
     private javax.swing.JFormattedTextField ftfDate;
     private javax.swing.JFormattedTextField ftfDesignGuid;
@@ -243,22 +342,33 @@ public class MainForm extends javax.swing.JFrame
     private javax.swing.JFormattedTextField ftfSales;
     private javax.swing.JFormattedTextField ftfTotalRates;
     private javax.swing.JFormattedTextField ftflTotalRating;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblAvgColor;
     private javax.swing.JLabel lblAvgRating;
+    private javax.swing.JLabel lblCategories;
     private javax.swing.JLabel lblComplexity;
     private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblDesignGuid;
+    private javax.swing.JLabel lblFiles;
+    private javax.swing.JLabel lblLocalizations;
     private javax.swing.JLabel lblPriceUsd;
     private javax.swing.JLabel lblSales;
     private javax.swing.JLabel lblTotalRates;
     private javax.swing.JLabel lblTotalRating;
+    private javax.swing.JList lstCategories;
+    private javax.swing.JList lstFiles;
+    private javax.swing.JList lstLocalizations;
+    private javax.swing.JPanel pnlCategories;
+    private javax.swing.JPanel pnlFiles;
+    private javax.swing.JPanel pnlLocalizations;
+    private javax.swing.JPanel pnlMain;
     // End of variables declaration//GEN-END:variables
 }
