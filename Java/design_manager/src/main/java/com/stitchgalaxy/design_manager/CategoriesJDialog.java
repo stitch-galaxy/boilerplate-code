@@ -61,6 +61,7 @@ public class CategoriesJDialog extends javax.swing.JDialog
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler40 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        filler12 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         filler11 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -76,7 +77,7 @@ public class CategoriesJDialog extends javax.swing.JDialog
 
         jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
 
-        lblName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblName.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblName.setText("Categories tree:");
         lblName.setMaximumSize(new java.awt.Dimension(300, 20));
         lblName.setMinimumSize(new java.awt.Dimension(300, 20));
@@ -86,6 +87,8 @@ public class CategoriesJDialog extends javax.swing.JDialog
 
         jPanel1.add(jPanel3);
         jPanel1.add(filler3);
+
+        jPanel9.setLayout(new javax.swing.BoxLayout(jPanel9, javax.swing.BoxLayout.LINE_AXIS));
 
         jScrollPane2.setPreferredSize(new java.awt.Dimension(600, 300));
         jScrollPane2.setViewportView(jTree1);
@@ -108,6 +111,7 @@ public class CategoriesJDialog extends javax.swing.JDialog
 
         jPanel2.add(jPanel6);
 
+        jPanel4.setMaximumSize(new java.awt.Dimension(33152, 150));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.LINE_AXIS));
 
         jScrollPane3.setMaximumSize(new java.awt.Dimension(300, 150));
@@ -130,6 +134,9 @@ public class CategoriesJDialog extends javax.swing.JDialog
         jPanel4.add(jScrollPane3);
         jPanel4.add(filler4);
 
+        jPanel5.setMaximumSize(new java.awt.Dimension(65, 150));
+        jPanel5.setMinimumSize(new java.awt.Dimension(65, 150));
+        jPanel5.setPreferredSize(new java.awt.Dimension(65, 150));
         jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.PAGE_AXIS));
         jPanel5.add(filler5);
 
@@ -153,6 +160,7 @@ public class CategoriesJDialog extends javax.swing.JDialog
 
         jPanel8.add(jPanel2);
         jPanel8.add(filler40);
+        jPanel8.add(filler12);
 
         jPanel7.add(jPanel8);
         jPanel7.add(filler11);
@@ -232,6 +240,7 @@ public class CategoriesJDialog extends javax.swing.JDialog
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler10;
     private javax.swing.Box.Filler filler11;
+    private javax.swing.Box.Filler filler12;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;

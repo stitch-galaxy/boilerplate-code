@@ -10,6 +10,14 @@
  */
 package com.stitchgalaxy.design_manager;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author tarasev
@@ -41,17 +49,17 @@ public class DesignJDialog extends javax.swing.JDialog
         jPanel3 = new javax.swing.JPanel();
         lblName = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        jTextField1 = new javax.swing.JTextField();
+        designUuid = new javax.swing.JTextField();
         filler24 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
         jPanel15 = new javax.swing.JPanel();
         lblName1 = new javax.swing.JLabel();
         filler25 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        releaseDate = new javax.swing.JTextField();
         filler26 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
         jPanel16 = new javax.swing.JPanel();
         lblName2 = new javax.swing.JLabel();
         filler27 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        priceUsd = new javax.swing.JFormattedTextField();
         filler28 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
         jPanel17 = new javax.swing.JPanel();
         lblName3 = new javax.swing.JLabel();
@@ -170,11 +178,11 @@ public class DesignJDialog extends javax.swing.JDialog
         jPanel3.add(lblName);
         jPanel3.add(filler2);
 
-        jTextField1.setText("jTextField1");
-        jTextField1.setMaximumSize(new java.awt.Dimension(300, 20));
-        jTextField1.setMinimumSize(new java.awt.Dimension(300, 20));
-        jTextField1.setPreferredSize(new java.awt.Dimension(300, 20));
-        jPanel3.add(jTextField1);
+        designUuid.setEditable(false);
+        designUuid.setMaximumSize(new java.awt.Dimension(300, 20));
+        designUuid.setMinimumSize(new java.awt.Dimension(300, 20));
+        designUuid.setPreferredSize(new java.awt.Dimension(300, 20));
+        jPanel3.add(designUuid);
 
         jPanel1.add(jPanel3);
         jPanel1.add(filler24);
@@ -188,11 +196,19 @@ public class DesignJDialog extends javax.swing.JDialog
         jPanel15.add(lblName1);
         jPanel15.add(filler25);
 
-        jFormattedTextField1.setText("jFormattedTextField1");
-        jFormattedTextField1.setMaximumSize(new java.awt.Dimension(300, 20));
-        jFormattedTextField1.setMinimumSize(new java.awt.Dimension(300, 20));
-        jFormattedTextField1.setPreferredSize(new java.awt.Dimension(300, 20));
-        jPanel15.add(jFormattedTextField1);
+        releaseDate.setText("01-01-2013");
+        releaseDate.setMaximumSize(new java.awt.Dimension(300, 20));
+        releaseDate.setMinimumSize(new java.awt.Dimension(300, 20));
+        releaseDate.setPreferredSize(new java.awt.Dimension(300, 20));
+        releaseDate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                releaseDateKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                releaseDateKeyTyped(evt);
+            }
+        });
+        jPanel15.add(releaseDate);
 
         jPanel1.add(jPanel15);
         jPanel1.add(filler26);
@@ -206,11 +222,11 @@ public class DesignJDialog extends javax.swing.JDialog
         jPanel16.add(lblName2);
         jPanel16.add(filler27);
 
-        jFormattedTextField2.setText("jFormattedTextField1");
-        jFormattedTextField2.setMaximumSize(new java.awt.Dimension(300, 20));
-        jFormattedTextField2.setMinimumSize(new java.awt.Dimension(300, 20));
-        jFormattedTextField2.setPreferredSize(new java.awt.Dimension(300, 20));
-        jPanel16.add(jFormattedTextField2);
+        priceUsd.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0"))));
+        priceUsd.setMaximumSize(new java.awt.Dimension(300, 20));
+        priceUsd.setMinimumSize(new java.awt.Dimension(300, 20));
+        priceUsd.setPreferredSize(new java.awt.Dimension(300, 20));
+        jPanel16.add(priceUsd);
 
         jPanel1.add(jPanel16);
         jPanel1.add(filler28);
@@ -415,11 +431,6 @@ public class DesignJDialog extends javax.swing.JDialog
         jPanel5.add(filler6);
 
         btnRemoveCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/remove.png"))); // NOI18N
-        btnRemoveCategory.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoveCategoryActionPerformed(evt);
-            }
-        });
         jPanel5.add(btnRemoveCategory);
         jPanel5.add(filler7);
 
@@ -471,11 +482,6 @@ public class DesignJDialog extends javax.swing.JDialog
         jPanel10.add(filler23);
 
         btnRemoveCategory1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/remove.png"))); // NOI18N
-        btnRemoveCategory1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoveCategory1ActionPerformed(evt);
-            }
-        });
         jPanel10.add(btnRemoveCategory1);
         jPanel10.add(filler14);
 
@@ -542,15 +548,30 @@ public class DesignJDialog extends javax.swing.JDialog
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRemoveCategoryActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRemoveCategoryActionPerformed
-    {//GEN-HEADEREND:event_btnRemoveCategoryActionPerformed
+    private void releaseDateKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_releaseDateKeyTyped
+    {//GEN-HEADEREND:event_releaseDateKeyTyped
+        
+    }//GEN-LAST:event_releaseDateKeyTyped
 
-        // TODO add your handling code here:}//GEN-LAST:event_btnRemoveCategoryActionPerformed
-
-        private void btnRemoveCategory1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRemoveCategory1ActionPerformed
-    {//GEN-HEADEREND:event_btnRemoveCategory1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRemoveCategory1ActionPerformed
+    private void releaseDateKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_releaseDateKeyReleased
+    {//GEN-HEADEREND:event_releaseDateKeyReleased
+        DateFormat df = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+        try
+        {
+            String text = releaseDate.getText();
+            if (text.length() != 10)
+            {
+                releaseDate.setText(releaseDatePrevValue);
+                return;
+            }
+            Date result =  df.parse(text);
+            releaseDatePrevValue = text;
+        }
+        catch (ParseException ex)
+        {
+            releaseDate.setText(releaseDatePrevValue);
+        }
+    }//GEN-LAST:event_releaseDateKeyReleased
 
     /**
      * @param args the command line arguments
@@ -590,6 +611,7 @@ public class DesignJDialog extends javax.swing.JDialog
             java.util.logging.Logger.getLogger(DesignJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable()
@@ -618,6 +640,7 @@ public class DesignJDialog extends javax.swing.JDialog
     private javax.swing.JButton btnEditLocalization;
     private javax.swing.JButton btnRemoveCategory;
     private javax.swing.JButton btnRemoveCategory1;
+    private javax.swing.JTextField designUuid;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler10;
     private javax.swing.Box.Filler filler11;
@@ -668,9 +691,7 @@ public class DesignJDialog extends javax.swing.JDialog
     private javax.swing.Box.Filler filler9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField10;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
     private javax.swing.JFormattedTextField jFormattedTextField5;
@@ -715,7 +736,6 @@ public class DesignJDialog extends javax.swing.JDialog
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblName1;
     private javax.swing.JLabel lblName10;
@@ -728,5 +748,55 @@ public class DesignJDialog extends javax.swing.JDialog
     private javax.swing.JLabel lblName7;
     private javax.swing.JLabel lblName8;
     private javax.swing.JLabel lblName9;
+    private javax.swing.JFormattedTextField priceUsd;
+    private javax.swing.JTextField releaseDate;
     // End of variables declaration//GEN-END:variables
+
+    
+    private Design design;
+    private boolean  newMode;
+    private String releaseDatePrevValue = "01-01-2013";
+    
+    /**
+     * @return the design
+     */
+    public Design getDesign()
+    {
+        return design;
+    }
+
+    /**
+     * @param design the design to set
+     */
+    public void setDesign(Design design)
+    {
+        this.design = design;
+    }
+
+    /**
+     * @return the newMode
+     */
+    public boolean isNewMode()
+    {
+        return newMode;
+    }
+
+    /**
+     * @param newMode the newMode to set
+     */
+    public void setNewMode(boolean newMode)
+    {
+        this.newMode = newMode;
+    }
+    
+    
+    private void getFormData()
+    {
+    }
+    
+    public void setFormData()
+    {
+        designUuid.setText(design.getDesignUuid().toString());
+        priceUsd.setValue(design.getPriceUsd());
+    }
 }
