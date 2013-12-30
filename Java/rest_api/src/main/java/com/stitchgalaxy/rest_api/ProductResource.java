@@ -20,8 +20,8 @@ import javax.ws.rs.Produces;
  *
  * @author tarasev
  */
-@Path("generic")
-public class GenericResource {
+@Path("product")
+public class ProductResource {
 
     @Context
     private UriInfo context;
@@ -29,7 +29,7 @@ public class GenericResource {
     /**
      * Creates a new instance of GenericResource
      */
-    public GenericResource() {
+    public ProductResource() {
     }
 
     /**
@@ -38,8 +38,8 @@ public class GenericResource {
      */
     @GET
     @Produces("application/xml")
-    public String getXml() {
-        return "<ha><test/></ha>";
+    public String getNewProduct() {
+        return "<test/>";
     }
 
     /**
@@ -49,6 +49,6 @@ public class GenericResource {
      */
     @PUT
     @Consumes("application/xml")
-    public void putXml(String content) {
+    public void putNewProduct(String content) {
     }
 }

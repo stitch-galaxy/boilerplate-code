@@ -9,9 +9,11 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-      <module>design_manager</module>
-      <module>design_builder</module>
-      <module>rest_api</module>
+        <module>design_manager</module>
+        <module>design_builder</module>
+        <module>rest_api</module>
+        <module>sg_manager_web</module>
+        <module>lib</module>
     </modules>
 
 
