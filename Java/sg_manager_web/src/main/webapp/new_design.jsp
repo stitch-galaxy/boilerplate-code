@@ -13,9 +13,18 @@
 
         <link rel="stylesheet" href="./css/cmxform.css" />
         
+        <link rel="stylesheet" href="./css/colorpicker.css" type="text/css" />
+        
         <script src="./scripts/jquery.js"></script>
         <script src="./scripts/jquery.validate.min.js"></script>
+        
 
+	<script type="text/javascript" src="./js/colorpicker.js"></script>
+        <script type="text/javascript" src="./js/eye.js"></script>
+        <script type="text/javascript" src="./js/utils.js"></script>
+        <script type="text/javascript" src="./js/layout.js?ver=1.0.2"></script>
+
+        
         <script>
 
 $.validator.setDefaults({
@@ -68,11 +77,15 @@ $().ready(function() {
                 </p>
                 <p>
                     <label for="price">Price in USD</label>
-                    <input id="price" name="price" type="number" required></input>
+                    <input id="price" name="price" type="number" required/>
                 </p>
                 <p>
                     <label for="description">Description</label>
                     <textarea id="description" name="description"></textarea>
+                </p>
+                
+                <p>
+                    <input type="text" maxlength="6" size="6" id="colorpickerField1" value="" />
                 </p>
 
                 <p>
