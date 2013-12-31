@@ -10,23 +10,75 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>New design</title>
-    </head>
+
+        <link rel="stylesheet" href="./css/cmxform.css" />
+        
+        <script src="./scripts/jquery.js"></script>
+        <script src="./scripts/jquery.validate.min.js"></script>
+
+        <script>
+
+$.validator.setDefaults({
+        submitHandler: function() { alert("submitted!"); }
+});
+
+$().ready(function() {
     
+    $("#productForm").validate({
+                rules: {
+                        id: "required",
+                        date: "required",
+                        price: "required",
+                        description: {
+                                required: false
+                        }
+                },
+                messages: {
+                        id: "Please enter valid product uuid",
+                        date: "Please enter valid publication date",
+                        price: "Please enter valid price in USD"
+                    }
+                });
+
+            });
+        </script>
+        
+        <style type="text/css">
+#productForm { width: 670px; }
+#productForm label.error {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+}
+</style>
+
+    </head>
+
     <body>
-        <script type="text/javascript" src="./scripts/jquery.validate.min.js" />
-        <form action="/sg_manager_web/new_design" method="POST">
-            <table>
-                <tr>
-                    <td>
-                        Id
-                    </td>
-                    <td>
-                        <input readonly type="text" name="id" id="id"/>
-                    </td>
-                </tr>
-            </table>
-            <br/>
-            <input type="submit" value="Submit" />
+        <form class="cmxform" id="productForm" action="/sg_manager_web/new_design" method="POST">
+            <fieldset>
+                <legend>Please provide product parameters</legend>
+                <p>
+                    <label for="id">ID</label>
+                    <input id="id" name="id" type="text" required/>
+                </p>
+                <p>
+                    <label for="date">Publication date</label>
+                    <input id="date" name="date" type="dateISO" required/>
+                </p>
+                <p>
+                    <label for="price">Price in USD</label>
+                    <input id="price" name="price" type="number" required></input>
+                </p>
+                <p>
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description"></textarea>
+                </p>
+
+                <p>
+                    <input class="submit" type="submit" value="Submit"/>
+                </p>
+            </fieldset>
         </form>
     </body>
 </html>
