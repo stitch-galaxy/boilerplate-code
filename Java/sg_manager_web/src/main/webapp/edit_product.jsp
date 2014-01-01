@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>New design</title>
+        <title>Edit product</title>
 
         <link rel="stylesheet" href="./css/cmxform.css" />
         
@@ -35,10 +35,6 @@ $().ready(function() {
     
     $("#productForm").validate({
                 rules: {
-                        id: "required",
-                        date: "required",
-                        price: "required",
-                        name: "required",
                         sales: 
                         {
                             digits: true
@@ -61,7 +57,6 @@ $().ready(function() {
                         }
                 },
                 messages: {
-                        id: "Please enter valid product uuid",
                         date: "Please enter valid publication date",
                         price: "Please enter valid price in USD",
                         name: "Please enter design name",
@@ -107,7 +102,7 @@ $().ready(function() {
     <body>
         <form class="cmxform" id="productForm" action="/sg_manager_web/new_design" method="POST">
             <fieldset>
-                <legend>Please provide product parameters</legend>
+                <legend>Please edit product parameters</legend>
                 <p>
                     <label for="id">ID</label>
                     <input id="id" name="id" type="text" required/>

@@ -14,7 +14,7 @@
         <title>Stitch galaxy manager home page</title>
     </head>
     <body>
-        <a href="/sg_manager_web/new_design">Add new design</a>
+        <a href="/sg_manager_web/new_product">Add new design</a>
         <br/>
         <br/>
         <table border="1">
@@ -30,17 +30,17 @@ for (ProductRef product : (List<ProductRef>)request.getAttribute("products"))
                 <td>
 <%
     StringBuilder sb = new StringBuilder();
-    sb.append("<a href=\"sg_manager_web/edit_design?id=");
-    sb.append(product.Uuid.toString());
+    sb.append("<a href=\"sg_manager_web/edit_product?id=");
+    sb.append(product.getUuid().toString());
     sb.append("\">");
-    sb.append(product.Name);
+    sb.append(product.getName());
     sb.append("</a>");
     out.println(sb.toString());
 %>
                 </td>
                 <td>
 <%
-    out.println(product.Uuid.toString());
+    out.println(product.getUuid().toString());
 %>                    
                 </td>
             </tr>

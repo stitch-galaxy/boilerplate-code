@@ -31,8 +31,8 @@ public class HomeManagerServlet extends HttpServlet {
 
         List<ProductRef> products = new LinkedList<ProductRef>();
         ProductRef product = new ProductRef();
-        product.Name = "product 1";
-        product.Uuid = UUID.randomUUID();
+        product.setName("product 1");
+        product.setUuid(UUID.randomUUID());
         products.add(product);
         request.setAttribute("products", products);
         

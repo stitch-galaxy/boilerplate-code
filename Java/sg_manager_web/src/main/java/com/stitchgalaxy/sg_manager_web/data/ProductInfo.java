@@ -12,11 +12,9 @@ import java.util.UUID;
  *
  * @author tarasev
  */
-public class ProductRef {
+public class ProductInfo {
     private String name;
     private UUID uuid;
-    private boolean blocked;
-    
 
     /**
      * @return the name

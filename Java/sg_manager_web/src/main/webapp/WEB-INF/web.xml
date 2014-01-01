@@ -6,15 +6,15 @@
         <servlet-class>com.stitchgalaxy.sg_manager_web.HomeManagerServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>NewDesign</servlet-name>
-        <servlet-class>com.stitchgalaxy.sg_manager_web.NewDesignServlet</servlet-class>
+        <servlet-name>NewProduct</servlet-name>
+        <servlet-class>com.stitchgalaxy.sg_manager_web.NewProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
-        <url-pattern></url-pattern>
+        <url-pattern/>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>NewDesign</servlet-name>
-        <url-pattern>/new_design</url-pattern>
+        <servlet-name>NewProduct</servlet-name>
+        <url-pattern>/new_product</url-pattern>
     </servlet-mapping>
 </web-app>

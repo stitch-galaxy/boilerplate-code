@@ -9,6 +9,7 @@ package com.stitchgalaxy.sg_manager_web;
 import com.stitchgalaxy.sg_manager_web.data.ProductRef;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -22,12 +23,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author tarasev
  */
-public class NewDesignServlet extends HttpServlet {
+public class NewProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String destination = "/new_design.jsp";
+        String destination = "/new_product.jsp";
 
         request.setAttribute("id", UUID.randomUUID());
         
@@ -39,25 +40,30 @@ public class NewDesignServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String sId = request.getParameter("id");
-        String sDate = request.getParameter("date");
-        String sPriceUsd = request.getParameter("price_usd");
-        String sSales = request.getParameter("sales");
-        String sRating = request.getParameter("rating");
-        String sRates = request.getParameter("rates");
         String sName = request.getParameter("name");
-        String sDescription = request.getParameter("description");
-        String sAuthor = request.getParameter("author");
-        String sAuthorUri = request.getParameter("author_uri");
-        String sTranslator = request.getParameter("translator");
-        String sTranslatorUri = request.getParameter("translatorUri");
-        String sComplexity = request.getParameter("complexity");
-        String sAvgColor = request.getParameter("avg_color");
+        String sDate = request.getParameter("date");
+        String sPriceUsd = request.getParameter("price");
+        try
+        {
+            //TODO: store new product.
+            response.sendRedirect("/sg_manager_web/");
+        }
+        catch(Exception e)
+        {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            request.setAttribute("error_message", sw.toString());
+
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/error_save_product.jsp");
+            rd.forward(request, response);
+        }
     }
 
 
     @Override
     public String getServletInfo() {
-        return "SG manager new design servlet";
+        return "SG manager new product servlet";
     }
 
 }
