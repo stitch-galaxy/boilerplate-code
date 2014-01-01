@@ -15,7 +15,6 @@ import java.util.UUID;
 public class ProductRef {
     private String name;
     private UUID uuid;
-    private boolean blocked;
     
 
     /**

@@ -6,7 +6,7 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.sg_manager_web.data.ProductInfo;
+import com.stitchgalaxy.sg_manager_web.data.Product;
 import com.stitchgalaxy.sg_manager_web.data.ProductRef;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,9 +29,9 @@ public class EditProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductInfo product = null;
+        Product product = null;
         //TODO: fetch product
-        product = new ProductInfo();
+        product = new Product();
         request.setAttribute("product", product);
         
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/edit_product.jsp");
