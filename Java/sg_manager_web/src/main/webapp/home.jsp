@@ -28,7 +28,7 @@ for (Product product : (List<Product>)request.getAttribute("products"))
 %>
             <tr>
                 <td>
-                    <a href="/sg_manager_web/edit_product?id=<% out.print(product.getId()); %>"><% out.print(product.getName()); %></a>
+                    <a href="/sg_manager_web/edit_product?product=<% out.print(product.getId()); %>"><% out.print(product.getName()); %></a>
                 </td>
                 <td><% out.print(product.getId()); %></td>
             </tr>

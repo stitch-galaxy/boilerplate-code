@@ -32,9 +32,15 @@ public class Product {
     private Long rating;
     private Long rates;
     private Color avgColor;
-    private Double complexity;
+    private BigDecimal complexity;
     private String tags;
-    private List<ProductLocalization> localizations = new LinkedList<ProductLocalization>();
+    private final List<ProductLocalization> localizations = new LinkedList<ProductLocalization>();
+    private final List<Design> designs = new LinkedList<Design>();
+    private final List<Category> categories = new LinkedList<Category>();
+    private String prototypeUri;
+    private String thumbnailUri;
+    private String largeImageUri;
+    private String completeImageUri;
 
     /**
      * @return the name
@@ -207,14 +213,14 @@ public class Product {
     /**
      * @return the complexity
      */
-    public Double getComplexity() {
+    public BigDecimal getComplexity() {
         return complexity;
     }
 
     /**
      * @param complexity the complexity to set
      */
-    public void setComplexity(Double complexity) {
+    public void setComplexity(BigDecimal complexity) {
         this.complexity = complexity;
     }
 
@@ -237,5 +243,75 @@ public class Product {
      */
     public List<ProductLocalization> getLocalizations() {
         return localizations;
+    }
+
+    /**
+     * @return the prototypeUri
+     */
+    public String getPrototypeUri() {
+        return prototypeUri;
+    }
+
+    /**
+     * @param prototypeUri the prototypeUri to set
+     */
+    public void setPrototypeUri(String prototypeUri) {
+        this.prototypeUri = prototypeUri;
+    }
+
+    /**
+     * @return the thumbnailUri
+     */
+    public String getThumbnailUri() {
+        return thumbnailUri;
+    }
+
+    /**
+     * @param thumbnailUri the thumbnailUri to set
+     */
+    public void setThumbnailUri(String thumbnailUri) {
+        this.thumbnailUri = thumbnailUri;
+    }
+
+    /**
+     * @return the largeImageUri
+     */
+    public String getLargeImageUri() {
+        return largeImageUri;
+    }
+
+    /**
+     * @param largeImageUri the largeImageUri to set
+     */
+    public void setLargeImageUri(String largeImageUri) {
+        this.largeImageUri = largeImageUri;
+    }
+
+    /**
+     * @return the completeImageUri
+     */
+    public String getCompleteImageUri() {
+        return completeImageUri;
+    }
+
+    /**
+     * @param completeImageUri the completeImageUri to set
+     */
+    public void setCompleteImageUri(String completeProductUri) {
+        this.completeImageUri = completeProductUri;
+    }
+
+    /**
+     * @return the designs
+     */
+    public List<Design> getDesigns() {
+        return designs;
+    }
+
+    /**
+     * @return the categories
+     */
+    public List<Category> getCategories() {
+        return categories;
     }
 }

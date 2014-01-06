@@ -4,6 +4,8 @@
     Author     : tarasev
 --%>
 
+<%@page import="com.stitchgalaxy.sg_manager_web.data.Category"%>
+<%@page import="com.stitchgalaxy.sg_manager_web.data.Design"%>
 <%@page import="com.stitchgalaxy.sg_manager_web.data.ProductLocalization"%>
 <%@page import="org.joda.time.format.DateTimeFormatter"%>
 <%@page import="org.joda.time.format.ISODateTimeFormat"%>
@@ -14,8 +16,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Edit product</title>
-
-        <link rel="stylesheet" href="./css/cmxform.css" />
 
         <link rel="stylesheet" href="./css/colorpicker.css" type="text/css" />
 
@@ -30,12 +30,6 @@
 
 
         <script>
-
-            $.validator.setDefaults({
-                submitHandler: function() {
-                    alert("submitted!");
-                }
-            });
 
             $().ready(function() {
 
@@ -116,19 +110,26 @@
                 width: auto;
                 display: inline;
             }
+            .design_thumbnail_placeholder { height: 100px; width: 100px; overflow: hidden; }
+            .design_thumbnail { max-height: 100px; max-width: 100px; width: auto; height: auto; }
+            
+            .image_placeholder { height: 100px; width: 100px; }
+            .image { max-height: 100px; max-width: 100px; width: auto; height: auto; }
         </style>
 
     </head>
 
     <body>
-        <form class="cmxform" id="productForm" action="/sg_manager_web/new_design" method="POST">
+        <%
+            Product product = (Product) request.getAttribute("product");
+            DateTimeFormatter dtf = ISODateTimeFormat.date();
+        %>
+        <p><h4>Manage product parameters</h4></p>
+        <form id="productForm" action="/sg_manager_web/edit_product?product=<% out.print(product.getId()); %>" method="POST">
             <fieldset>
-                <legend>Please edit product parameters</legend>
+                <legend>product parameters</legend>
                 <p>
-                    <%
-                        Product product = (Product) request.getAttribute("product");
-                        DateTimeFormatter dtf = ISODateTimeFormat.date();
-                    %>
+                    
                     <label for="id">ID</label>
                     <input id="id" name="id" type="text" required readonly value="<% out.print(product.getId()); %>"/>
                 </p>
@@ -226,24 +227,167 @@
                 </p>
             </fieldset>
         </form>
-        <table border="1">
-            <tr><td><b>Localization</b></td></tr>
-            <%
-                for (ProductLocalization localization : product.getLocalizations()) {
-            %>
-            <tr>
-                <td>
-                    <a href="/sg_manager_web/edit_localization?product=<% out.print(product.getId());%>&locale=<% out.print(localization.getLocale());%>"><% out.print(localization.getLocale());%></a>
-                </td>
-            </tr>
-            <%
-                }
-            %>
-        </table>
+        <hr/>
+        <p><h4>Manage localizations</h4></p>
+        <%
+            if (product.getLocalizations().size() > 0) {
+        %>
+        <p>
+            <table border="1">
+                <tr><td><b>Localization</b></td><td><b>Action</b></td></tr>
+                <%
+                    for (ProductLocalization localization : product.getLocalizations()) {
+                %>
+                <tr>
+                    <td>
+                        <a href="/sg_manager_web/edit_localization?product=<% out.print(product.getId());%>&locale=<% out.print(localization.getLocale());%>"><% out.print(localization.getLocale());%></a>
+                    </td>
+                    <td>
+                        <a href="/sg_manager_web/remove_localization?product=<% out.print(product.getId());%>&locale=<% out.print(localization.getLocale());%>">Remove</a>
+                    </td>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+        </p>
+        <%
+            }
+        %>
         <p>
             <label for="locale">Locale</label>
-            <input id="locale" type="text"><a style="margin-left:10px;" href="/sg_manager_web/edit_localization?product=<% out.print(product.getId());%>&locale=" id="edit_locale">add or edit</a>
+            <input id="locale" type="text"><a style="margin-left:10px;" href="/sg_manager_web/edit_localization?product=<% out.print(product.getId());%>&locale=" id="edit_locale">Add or edit</a>
         </p>
-
+        <hr/>
+        <p><h4>Manage designs</h4></p>
+        <%
+            if (product.getDesigns().size() > 0) {
+        %>
+        <p>
+            <table border="1">
+                <tr><td><b>Design</b></td><td><b>Thumbnail</b></td><td><b>Action</b></td></tr>
+                <%
+                    for (Design design : product.getDesigns()) {
+                %>
+                <tr>
+                    <td>
+                        <a href="/sg_manager_web/edit_design?product=<% out.print(product.getId());%>&design=<% out.print(design.getId());%>"><% out.print(design.getPartId());%></a>
+                    </td>
+                    <td>
+                        <div class="design_thumbnail_placeholder">
+                            <%
+                                if (design.getThumbnailUri() != null) {
+                            %>
+                            <img src="<% out.print(design.getThumbnailUri());%>" border="1" class="design_thumbnail"/>
+                            <%
+                                }
+                            %>
+                        </div>
+                    </td>
+                    <td>
+                       <a href="/sg_manager_web/delete_design?product=<% out.print(product.getId());%>&design=<% out.print(design.getId());%>">Delete</a> 
+                    </td>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+        </p>
+        <%
+            }
+        %>
+        <p>
+            <a style="margin-left:10px;" href="/sg_manager_web/add_design?product=<% out.print(product.getId());%>" id="add_design">Add design</a>
+        </p>
+        <hr/>
+        <p><h4>Manage categories</h4></p>
+        <%
+            if (product.getCategories().size() > 0) {
+        %>
+        <p>
+            <table border="1">
+                <tr><td><b>Category</b></td><td><b>Action</b></td></tr>
+                <%
+                    for (Category category : product.getCategories()) {
+                %>
+                <tr>
+                    <td>
+                        <a href="/sg_manager_web/browse_category?category=<% out.print(category.getId());%>"><% out.print(category.getName());%></a>
+                    </td>
+                    <td>
+                       <a href="/sg_manager_web/delete_category?product=<% out.print(product.getId());%>&category=<% out.print(category.getId());%>">Delete</a> 
+                    </td>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+        </p>
+        <%
+            }
+        %>
+        <p>
+            <a style="margin-left:10px;" href="/sg_manager_web/add_category?product=<% out.print(product.getId());%>" id="add_category">Add category</a>
+        </p>
+        <hr/>
+        <p>
+            <h4>Manage files</h4>
+        </p>
+        <p>Prototype:</p>
+        <%
+            if (product.getPrototypeUri() != null) {
+        %>
+        <div class="image_placeholder">
+            <img src="<% out.print(product.getPrototypeUri());%>" border="1" class="image"/>
+        </div>
+        <%
+            }
+        %>
+        <form action="/sg_manager_web/upload_prototype?product=<% out.print(product.getId()); %>" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" />
+        </form>
+        <p>Thumbnail:</p>
+        <%
+            if (product.getThumbnailUri()!= null) {
+        %>
+        <div class="image_placeholder">
+            <img src="<% out.print(product.getThumbnailUri());%>" border="1" class="image"/>
+        </div>
+        <%
+            }
+        %>
+        <form action="upload_thumbnail" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" />
+        </form>
+        <p>Large image:</p>
+        <%
+            if (product.getLargeImageUri()!= null) {
+        %>
+        <div class="image_placeholder">
+            <img src="<% out.print(product.getLargeImageUri());%>" border="1" class="image"/>
+        </div>
+        <%
+            }
+        %>
+        <form action="upload_large_image" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" />
+        </form>
+        <p>Completed image:</p>
+        <%
+            if (product.getCompleteImageUri()!= null) {
+        %>
+        <div class="image_placeholder">
+            <img src="<% out.print(product.getCompleteImageUri());%>" border="1" class="image"/>
+        </div>
+        <%
+            }
+        %>
+        <form action="upload_complete_image" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" />
+        </form>
     </body>
 </html>

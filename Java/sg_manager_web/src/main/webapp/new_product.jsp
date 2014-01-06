@@ -10,8 +10,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>New product</title>
-
-        <link rel="stylesheet" href="./css/cmxform.css" />
         
         <script src="./scripts/jquery.js"></script>
         <script src="./scripts/jquery.validate.min.js"></script>
@@ -43,7 +41,7 @@ $().ready(function() {
     </head>
 
     <body>
-        <form class="cmxform" id="productForm" action="/sg_manager_web/new_product" method="POST">
+        <form id="productForm" action="/sg_manager_web/new_product" method="POST">
             <fieldset>
                 <legend>Please provide product parameters</legend>
                 <p>
