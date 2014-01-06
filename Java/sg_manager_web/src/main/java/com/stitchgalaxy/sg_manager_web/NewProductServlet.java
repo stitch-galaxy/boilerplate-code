@@ -6,7 +6,6 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.sg_manager_web.data.ProductRef;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -28,18 +27,13 @@ public class NewProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String destination = "/new_product.jsp";
-
-        request.setAttribute("id", UUID.randomUUID());
-        
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/new_product.jsp");
         rd.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String sId = request.getParameter("id");
         String sName = request.getParameter("name");
         String sDate = request.getParameter("date");
         String sPriceUsd = request.getParameter("price");

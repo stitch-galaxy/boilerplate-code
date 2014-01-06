@@ -6,7 +6,7 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.sg_manager_web.data.ProductRef;
+import com.stitchgalaxy.sg_manager_web.data.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
@@ -29,10 +29,10 @@ public class HomeManagerServlet extends HttpServlet {
             throws ServletException, IOException {
         String destination = "/home.jsp";
 
-        List<ProductRef> products = new LinkedList<ProductRef>();
-        ProductRef product = new ProductRef();
+        List<Product> products = new LinkedList<Product>();
+        Product product = new Product();
         product.setName("product 1");
-        product.setUuid(UUID.randomUUID());
+        product.setId(1L);
         products.add(product);
         request.setAttribute("products", products);
         

@@ -47,16 +47,6 @@ $().ready(function() {
             <fieldset>
                 <legend>Please provide product parameters</legend>
                 <p>
-                    <label for="id">ID</label>
-                    <%
-                            StringBuilder sb = new StringBuilder();
-    sb.append("<input size=40 id=\"id\" name=\"id\" type=\"text\" required readonly value=\"");
-    sb.append(request.getAttribute("id").toString());
-    sb.append("\"/>");
-    out.println(sb.toString());
-                        %>
-                </p>
-                <p>
                     <label for="name" >Name</label>
                     <input id="name" name="name" type="text" required/>
                 </p>

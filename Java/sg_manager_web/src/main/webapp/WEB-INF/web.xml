@@ -9,6 +9,10 @@
         <servlet-name>NewProduct</servlet-name>
         <servlet-class>com.stitchgalaxy.sg_manager_web.NewProductServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditProduct</servlet-name>
+        <servlet-class>com.stitchgalaxy.sg_manager_web.EditProductServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern/>
@@ -16,5 +20,9 @@
     <servlet-mapping>
         <servlet-name>NewProduct</servlet-name>
         <url-pattern>/new_product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProduct</servlet-name>
+        <url-pattern>/edit_product</url-pattern>
     </servlet-mapping>
 </web-app>

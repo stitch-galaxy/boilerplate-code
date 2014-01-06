@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.stitchgalaxy.sg_manager_web.data;
 
 import java.awt.Color;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import org.joda.time.LocalDate;
@@ -17,21 +19,22 @@ import org.joda.time.LocalDate;
  * @author tarasev
  */
 public class Product {
+
     private String name;
-    private UUID uuid;
-        private boolean blocked;
-        private String description;
-        private LocalDate date;
-        private BigDecimal priceUsd;
-        private Partner author;
-        private Partner translator;
-        private long sales;
-        private long rating;
-        private long rates;
-        private Color avgColor;
-        private double complexity;
-        private String tags;
-        private Set<Localization> localizations;
+    private Long id;
+    private Boolean blocked;
+    private String description;
+    private LocalDate date;
+    private BigDecimal priceUsd;
+    private Partner author;
+    private Partner translator;
+    private Long sales;
+    private Long rating;
+    private Long rates;
+    private Color avgColor;
+    private Double complexity;
+    private String tags;
+    private List<ProductLocalization> localizations = new LinkedList<ProductLocalization>();
 
     /**
      * @return the name
@@ -48,16 +51,191 @@ public class Product {
     }
 
     /**
-     * @return the uuid
+     * @return the id
      */
-    public UUID getUuid() {
-        return uuid;
+    public Long getId() {
+        return id;
     }
 
     /**
-     * @param uuid the uuid to set
+     * @param id the id to set
      */
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the blocked
+     */
+    public Boolean isBlocked() {
+        return blocked;
+    }
+
+    /**
+     * @param blocked the blocked to set
+     */
+    public void setBlocked(Boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the date
+     */
+    public LocalDate getDate() {
+        return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    /**
+     * @return the priceUsd
+     */
+    public BigDecimal getPriceUsd() {
+        return priceUsd;
+    }
+
+    /**
+     * @param priceUsd the priceUsd to set
+     */
+    public void setPriceUsd(BigDecimal priceUsd) {
+        this.priceUsd = priceUsd;
+    }
+
+    /**
+     * @return the author
+     */
+    public Partner getAuthor() {
+        return author;
+    }
+
+    /**
+     * @param author the author to set
+     */
+    public void setAuthor(Partner author) {
+        this.author = author;
+    }
+
+    /**
+     * @return the translator
+     */
+    public Partner getTranslator() {
+        return translator;
+    }
+
+    /**
+     * @param translator the translator to set
+     */
+    public void setTranslator(Partner translator) {
+        this.translator = translator;
+    }
+
+    /**
+     * @return the sales
+     */
+    public Long getSales() {
+        return sales;
+    }
+
+    /**
+     * @param sales the sales to set
+     */
+    public void setSales(Long sales) {
+        this.sales = sales;
+    }
+
+    /**
+     * @return the rating
+     */
+    public Long getRating() {
+        return rating;
+    }
+
+    /**
+     * @param rating the rating to set
+     */
+    public void setRating(Long rating) {
+        this.rating = rating;
+    }
+
+    /**
+     * @return the rates
+     */
+    public Long getRates() {
+        return rates;
+    }
+
+    /**
+     * @param rates the rates to set
+     */
+    public void setRates(Long rates) {
+        this.rates = rates;
+    }
+
+    /**
+     * @return the avgColor
+     */
+    public Color getAvgColor() {
+        return avgColor;
+    }
+
+    /**
+     * @param avgColor the avgColor to set
+     */
+    public void setAvgColor(Color avgColor) {
+        this.avgColor = avgColor;
+    }
+
+    /**
+     * @return the complexity
+     */
+    public Double getComplexity() {
+        return complexity;
+    }
+
+    /**
+     * @param complexity the complexity to set
+     */
+    public void setComplexity(Double complexity) {
+        this.complexity = complexity;
+    }
+
+    /**
+     * @return the tags
+     */
+    public String getTags() {
+        return tags;
+    }
+
+    /**
+     * @param tags the tags to set
+     */
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    /**
+     * @return the localizations
+     */
+    public List<ProductLocalization> getLocalizations() {
+        return localizations;
     }
 }

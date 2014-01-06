@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="com.stitchgalaxy.sg_manager_web.data.ProductRef"%>
+<%@page import="com.stitchgalaxy.sg_manager_web.data.Product"%>
 <%@page contentType="text/html" pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,26 +23,14 @@
                 <td><b>Id</b></td>
             </tr>
 <% 
-for (ProductRef product : (List<ProductRef>)request.getAttribute("products"))
+for (Product product : (List<Product>)request.getAttribute("products"))
 {
 %>
             <tr>
                 <td>
-<%
-    StringBuilder sb = new StringBuilder();
-    sb.append("<a href=\"sg_manager_web/edit_product?id=");
-    sb.append(product.getUuid().toString());
-    sb.append("\">");
-    sb.append(product.getName());
-    sb.append("</a>");
-    out.println(sb.toString());
-%>
+                    <a href="/sg_manager_web/edit_product?id=<% out.print(product.getId()); %>"><% out.print(product.getName()); %></a>
                 </td>
-                <td>
-<%
-    out.println(product.getUuid().toString());
-%>                    
-                </td>
+                <td><% out.print(product.getId()); %></td>
             </tr>
 <%
 }
