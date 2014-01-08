@@ -4,37 +4,32 @@
     Author     : tarasev
 --%>
 
-<%@page import="java.util.List"%>
-<%@page import="com.stitchgalaxy.sg_manager_web.data.Product"%>
 <%@page contentType="text/html" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Stitch galaxy manager home page</title>
+        <title>Home page</title>
+         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sg.css" type="text/css" />
     </head>
     <body>
-        <a href="/sg_manager_web/new_product">Add new design</a>
+        <div class="datagrid">
+            <table>
+                <thead><tr><th>Design name</th><th>Identifier</th></tr></thead>
+                <tbody>
+                    <c:forEach items="${products}" var="product" varStatus="loopStatus">
+                        <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
+                            <td>
+                                <a href="${pageContext.request.contextPath}/product_view?product=${product.id}">${product.name}</a>
+                            </td>
+                            <td>${product.id}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
         <br/>
-        <br/>
-        <table border="1">
-            <tr>
-                <td><b>Design Name</b></td>
-                <td><b>Id</b></td>
-            </tr>
-<% 
-for (Product product : (List<Product>)request.getAttribute("products"))
-{
-%>
-            <tr>
-                <td>
-                    <a href="/sg_manager_web/edit_product?product=<% out.print(product.getId()); %>"><% out.print(product.getName()); %></a>
-                </td>
-                <td><% out.print(product.getId()); %></td>
-            </tr>
-<%
-}
-%>
-        </table>
+        <a href="${pageContext.request.contextPath}/product_new" class="add_button">Add design »</a>
     </body>
 </html>
