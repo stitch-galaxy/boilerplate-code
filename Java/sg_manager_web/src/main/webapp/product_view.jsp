@@ -17,11 +17,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>View product</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sg.css" type="text/css" />
+        
+        
     </head>
     <body>
         <%
             Product product = (Product) request.getAttribute("product");
         %>
+        <h1>Product information</h1>
+        <h3>Main parameters</h3>
         <div class="datagrid">
             <table>
                 <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
@@ -108,9 +112,10 @@
                 </tbody>
             </table>
         </div>
-        <br/>
-        <a href="${pageContext.request.contextPath}/product_edit?product=${product.id}" class="edit_button">Edit design »</a>
-        <br/>
+        <p>
+            <a href="${pageContext.request.contextPath}/product_edit?product=${product.id}" class="edit_button">Edit »</a>
+        </p>
+        <h3>Author information</h3>
         <c:choose>
             <c:when test="${product.author != null}">
                 <div class="datagrid">
@@ -126,15 +131,18 @@
                         </tbody>
                     </table>
                 </div>
-                <br/>
-                <a href="${pageContext.request.contextPath}/product_remove_author?product=${product.id}" class="delete_button">Delete author »</a>
-                <a href="${pageContext.request.contextPath}/product_set_author?product=${product.id}" class="edit_button">Change author »</a>
+                <p>
+                    <a href="${pageContext.request.contextPath}/product_remove_author?product=${product.id}" class="delete_button">Delete »</a>
+                    <a href="${pageContext.request.contextPath}/product_set_author?product=${product.id}" class="edit_button">Change »</a>
+                </p>
             </c:when>
             <c:otherwise>
-                <a href="${pageContext.request.contextPath}/product_set_author?product=${product.id}" class="add_button">Set author »</a>
+                <p>
+                    <a href="${pageContext.request.contextPath}/product_set_author?product=${product.id}" class="add_button">Set »</a>
+                </p>
             </c:otherwise>
         </c:choose>
-        <br/>
+                <h3>Translator information</h3>
         <c:choose>
             <c:when test="${product.translator != null}">
                 <div class="datagrid">
@@ -150,24 +158,29 @@
                         </tbody>
                     </table>
                 </div>
-                <br/>
-                <a href="${pageContext.request.contextPath}/product_remove_translator?product=${product.id}" class="delete_button">Delete translator »</a>
-                <a href="${pageContext.request.contextPath}/product_set_translator?product=${product.id}" class="edit_button">Change translator »</a>
+                <p>
+                    <a href="${pageContext.request.contextPath}/product_remove_translator?product=${product.id}" class="delete_button">Delete »</a>
+                    <a href="${pageContext.request.contextPath}/product_set_translator?product=${product.id}" class="edit_button">Change »</a>
+                </p>
             </c:when>
             <c:otherwise>
-                <a href="${pageContext.request.contextPath}/product_set_translator?product=${product.id}" class="add_button">Set translator »</a>
+                <p>
+                    <a href="${pageContext.request.contextPath}/product_set_translator?product=${product.id}" class="add_button">Set »</a>    
+                </p>
             </c:otherwise>
         </c:choose>
-        <br/>
-        <%List<String> a = new LinkedList<String>(); a.add("a");%>
+                <h3>Localizations</h3>
         <div class="datagrid">
             <table>
-                <thead><tr><th>Locale</th><th>Name</th><th>Description</th><th>Tags</th></tr></thead>
+                <thead><tr><th>Locale</th><th>Action</th><th>Name</th><th>Description</th><th>Tags</th></tr></thead>
                 <tbody>
                     <c:forEach var="localization" items="${product.localizations}" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>
-                                ${localization.locale}<a href="${pageContext.request.contextPath}/product_edit_locale?product=${product.id}&localization=${localization.locale}" class="edit_button">edit »</a>
+                                ${localization.locale}
+                            </td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/product_edit_locale?product=${product.id}&localization=${localization.locale}" class="edit_button">Edit »</a> 
                             </td>
                             <td>${localization.name}</td>
                             <td>
@@ -181,7 +194,76 @@
                 </tbody>
             </table>
         </div>
-        <br/>
-        <a href="${pageContext.request.contextPath}/product_add_localization?product=${product.id}" class="add_button">Add localization »</a>
+        <P>
+            <a href="${pageContext.request.contextPath}/product_add_localization?product=${product.id}" class="add_button">Add »</a>
+        </p>
+        <h3>Categories</h3>
+        <div class="datagrid">
+            <table>
+                <thead><tr><th>Category</th><th>Action</th></tr></thead>
+                <tbody>
+                    <c:forEach var="category" items="${product.categories}" varStatus="loopStatus">
+                        <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
+                            <td>
+                                ${category.name}
+                            </td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/product_remove_category?product=${product.id}&category=${category.id}" class="delete_button">Remove »</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Images</h3>
+        
+        
+        <div class="container" style="background-image: url(http://i.stack.imgur.com/2OrtT.jpg);">
+            <a href="http://google.com" class="innera"></a>
+        </div>
+        
+        
+        <div class="img">
+  <a target="_blank" href="http://www.w3schools.com/css/klematis1_big.htm">
+  <img src="http://www.w3schools.com/css/klematis_big.jpg" alt="Klematis">
+  </a>
+  <div class="desc">Add a description of the image here</div>
+</div>
+<div class="img">
+  <a target="_blank" href="https://cdn1.iconfinder.com/data/icons/dellipack/32/phonebook.png">
+  <img src="https://cdn1.iconfinder.com/data/icons/dellipack/32/phonebook.png" alt="Klematis">
+  </a>
+  <div class="desc">
+      <form id="upload_form" action="test" method="post" enctype="multipart/form-data">
+<!--          <div class="upload">
+        <input type="file" name="upload" onchange="this.form.submit()"/>
+    </div>-->
+          <div class="fileUpload btn btn-primary">
+    <span>Upload</span>
+    <input type="file" class="upload" />
+</div>
+          
+          
+</form>
+</div>
+</div>
+<div class="img">
+  <a target="_blank" href="http://www.w3schools.com/css/klematis3_big.htm">
+  <img src="http://www.w3schools.com/css/klematis3_big.jpg" alt="Klematis">
+  </a>
+  <div class="desc">Add a description of the image here</div>
+</div>
+<div class="img">
+  <a target="_blank" href="http://www.w3schools.com/css/klematis4_big.htm">
+  <img src="http://www.w3schools.com/css/klematis4_big.jpg" alt="Klematis">
+  </a>
+  <div class="desc">Add a description of the image here</div>
+</div>
+        
+        
+        
+        
+        
     </body>
 </html>

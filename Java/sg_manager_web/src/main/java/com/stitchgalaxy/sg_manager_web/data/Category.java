@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class Category {
     private Long id;
-    private String Name;
-    private Category Parent;
-    private final List<Category> Childs = new LinkedList<Category>();
+    private String name;
+    private Category parent;
+    private final List<Category> childs = new LinkedList<Category>();
 
     /**
      * @return the id
@@ -37,34 +37,34 @@ public class Category {
      * @return the Name
      */
     public String getName() {
-        return Name;
+        return name;
     }
 
     /**
      * @param Name the Name to set
      */
     public void setName(String Name) {
-        this.Name = Name;
+        this.name = Name;
     }
 
     /**
      * @return the Parent
      */
     public Category getParent() {
-        return Parent;
+        return parent;
     }
 
     /**
      * @param Parent the Parent to set
      */
     public void setParent(Category Parent) {
-        this.Parent = Parent;
+        this.parent = Parent;
     }
 
     /**
      * @return the Childs
      */
     public List<Category> getChilds() {
-        return Childs;
+        return childs;
     }
 }
