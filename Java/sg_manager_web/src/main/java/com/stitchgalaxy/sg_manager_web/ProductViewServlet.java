@@ -93,7 +93,7 @@ public class ProductViewServlet extends HttpServlet {
         ProductLocalization locRu = new ProductLocalization();
         locRu.setLocale("ru");
         locRu.setName("Совенок");
-        locRu.setDescription("Маленький Совенок Сашуля");
+        locRu.setDescription("Маленький Совенок Сашуля\nКоторого мы очень любим!");
         locRu.setTags("самый крутой зверь");
         product.getLocalizations().add(locRu);
         
