@@ -12,15 +12,9 @@
         <title>Error</title>
     </head>
     <body>
-        <p>
-        <h3 style="color: red">Unable to save product</h3>
-        </p>
-
-        <xmp>
-        <%
-            out.println(request.getAttribute("error_message").toString());
-        %>
-        </xmp>
-
-</body>
+        <h3 style="color: red">${error_message}</h3>
+        <pre>
+            ${stack_trace}
+        </pre>
+    </body>
 </html>

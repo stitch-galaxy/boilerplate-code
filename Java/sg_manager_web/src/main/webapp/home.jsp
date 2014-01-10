@@ -21,7 +21,7 @@
                     <c:forEach items="${products}" var="product" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>
-                                <a href="${pageContext.request.contextPath}/product_view?product=${product.id}">${product.name}</a>
+                                <a href="${pageContext.request.contextPath}/product-view?product=${product.id}">${product.name}</a>
                             </td>
                             <td>${product.id}</td>
                         </tr>
@@ -30,6 +30,6 @@
             </table>
         </div>
         <br/>
-        <a href="${pageContext.request.contextPath}/product_new" class="add_button">Add design »</a>
+        <a href="${pageContext.request.contextPath}/product-new" class="add_button">Add design »</a>
     </body>
 </html>

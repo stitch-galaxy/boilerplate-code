@@ -113,7 +113,7 @@
             </table>
         </div>
         <p>
-            <a href="${pageContext.request.contextPath}/product_edit?product=${product.id}" class="edit_button">Edit »</a>
+            <a href="${pageContext.request.contextPath}/product-edit?product=${product.id}" class="edit_button">Edit »</a>
         </p>
         <h3>Author information</h3>
         <c:choose>
@@ -132,13 +132,13 @@
                     </table>
                 </div>
                 <p>
-                    <a href="${pageContext.request.contextPath}/product_remove_author?product=${product.id}" class="delete_button">Delete »</a>
-                    <a href="${pageContext.request.contextPath}/product_set_author?product=${product.id}" class="edit_button">Change »</a>
+                    <a href="${pageContext.request.contextPath}/product-remove-author?product=${product.id}" class="delete_button">Delete »</a>
+                    <a href="${pageContext.request.contextPath}/product-set-author?product=${product.id}" class="edit_button">Change »</a>
                 </p>
             </c:when>
             <c:otherwise>
                 <p>
-                    <a href="${pageContext.request.contextPath}/product_set_author?product=${product.id}" class="add_button">Set »</a>
+                    <a href="${pageContext.request.contextPath}/product-set-author?product=${product.id}" class="add_button">Set »</a>
                 </p>
             </c:otherwise>
         </c:choose>
@@ -159,13 +159,13 @@
                     </table>
                 </div>
                 <p>
-                    <a href="${pageContext.request.contextPath}/product_remove_translator?product=${product.id}" class="delete_button">Delete »</a>
-                    <a href="${pageContext.request.contextPath}/product_set_translator?product=${product.id}" class="edit_button">Change »</a>
+                    <a href="${pageContext.request.contextPath}/product-remove-translator?product=${product.id}" class="delete_button">Delete »</a>
+                    <a href="${pageContext.request.contextPath}/product-set-translator?product=${product.id}" class="edit_button">Change »</a>
                 </p>
             </c:when>
             <c:otherwise>
                 <p>
-                    <a href="${pageContext.request.contextPath}/product_set_translator?product=${product.id}" class="add_button">Set »</a>    
+                    <a href="${pageContext.request.contextPath}/product-set-translator?product=${product.id}" class="add_button">Set »</a>    
                 </p>
             </c:otherwise>
         </c:choose>
@@ -180,7 +180,7 @@
                                 ${localization.locale}
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/product_edit_locale?product=${product.id}&localization=${localization.locale}" class="edit_button">Edit »</a> 
+                                <a href="${pageContext.request.contextPath}/product-edit-localization?product=${product.id}&localization=${localization.locale}" class="edit_button">Edit »</a> 
                             </td>
                             <td>${localization.name}</td>
                             <td>
@@ -195,7 +195,7 @@
             </table>
         </div>
         <P>
-            <a href="${pageContext.request.contextPath}/product_add_localization?product=${product.id}" class="add_button">Add »</a>
+            <a href="${pageContext.request.contextPath}/product-add-localization?product=${product.id}" class="add_button">Add »</a>
         </p>
         <h3>Categories</h3>
         <div class="datagrid">
@@ -208,13 +208,17 @@
                                 ${category.name}
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/product_remove_category?product=${product.id}&category=${category.id}" class="delete_button">Remove »</a>
+                                <a href="${pageContext.request.contextPath}/product-remove-category?product=${product.id}&category=${category.id}" class="delete_button">Remove »</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
+        <p>
+            <a href="${pageContext.request.contextPath}/product-add-category?product=${product.id}" class="add_button">Add »</a>
+        </p>
+
 
         <h3>Images</h3>
         <div class="img_control_container">
@@ -226,7 +230,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/upload_thumbnail?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/upload-thumbnail?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -234,7 +238,7 @@
                 <c:choose>
                     <c:when test="${product.thumbnailUri != null}">
                         <div>
-                            <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
+                            <a href="${pageContext.request.contextPath}/product-remove-thumbnail?product=${product.id}" class="delete_button">Remove »</a>
                         </div>
                     </c:when>
                 </c:choose>
@@ -251,7 +255,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/upload_proto?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/upload-prototype?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -259,7 +263,57 @@
                 <c:choose>
                     <c:when test="${product.prototypeUri != null}">
                         <div>
-                            <a href="${pageContext.request.contextPath}/product_remove_prototype?product=${product.id}" class="delete_button">Remove »</a>
+                            <a href="${pageContext.request.contextPath}/product-remove-prototype?product=${product.id}" class="delete_button">Remove »</a>
+                        </div>
+                    </c:when>
+                </c:choose>
+            </div>
+        </div>
+        <div class="images_separator">
+        </div>
+        <div class="img_control_container">
+            <h5>Large image</h5>
+            <div class="image_container" style="background-image: url(${product.largeImageUri});">
+                <a href="${product.largeImageUri}" class="image_hyperlink" target="_blank"></a>
+            </div>
+            <p>        
+            </p>
+            <div>
+                <div class="file_upload"   style="float: left;">
+                    <form action="${pageContext.request.contextPath}/upload-large-image?product=${product.id}" method="post" enctype="multipart/form-data">
+                        <span>Upload »</span>
+                        <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
+                    </form>
+                </div>
+                <c:choose>
+                    <c:when test="${product.largeImageUri != null}">
+                        <div>
+                            <a href="${pageContext.request.contextPath}/product-remove-large-image?product=${product.id}" class="delete_button">Remove »</a>
+                        </div>
+                    </c:when>
+                </c:choose>
+            </div>
+        </div>
+        <div class="images_separator">
+        </div>
+        <div class="img_control_container">
+            <h5>Complete product</h5>
+            <div class="image_container" style="background-image: url(${product.completeProductUri});">
+                <a href="${product.completeProductUri}" class="image_hyperlink" target="_blank"></a>
+            </div>
+            <p>        
+            </p>
+            <div>
+                <div class="file_upload"   style="float: left;">
+                    <form action="${pageContext.request.contextPath}/upload-complete-product?product=${product.id}" method="post" enctype="multipart/form-data">
+                        <span>Upload »</span>
+                        <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
+                    </form>
+                </div>
+                <c:choose>
+                    <c:when test="${product.completeProductUri != null}">
+                        <div>
+                            <a href="${pageContext.request.contextPath}/product-remove-complete-product?product=${product.id}" class="delete_button">Remove »</a>
                         </div>
                     </c:when>
                 </c:choose>

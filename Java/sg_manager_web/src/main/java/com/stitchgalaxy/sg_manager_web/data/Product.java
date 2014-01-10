@@ -40,7 +40,7 @@ public class Product {
     private String prototypeUri;
     private String thumbnailUri;
     private String largeImageUri;
-    private String completeImageUri;
+    private String completeProductUri;
 
     /**
      * @return the name
@@ -290,15 +290,15 @@ public class Product {
     /**
      * @return the completeImageUri
      */
-    public String getCompleteImageUri() {
-        return completeImageUri;
+    public String getCompleteProductUri() {
+        return completeProductUri;
     }
 
     /**
      * @param completeImageUri the completeImageUri to set
      */
-    public void setCompleteImageUri(String completeProductUri) {
-        this.completeImageUri = completeProductUri;
+    public void setCompleteProductUri(String completeProductUri) {
+        this.completeProductUri = completeProductUri;
     }
 
     /**

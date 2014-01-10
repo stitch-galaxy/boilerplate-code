@@ -14,7 +14,7 @@
     </head>
 
     <body>
-        <form action="${pageContext.request.contextPath}/product_new" method="POST">
+        <form action="${pageContext.request.contextPath}/product-new" method="POST">
             <fieldset>
                 <legend>New product parameters</legend>
                 <p> 

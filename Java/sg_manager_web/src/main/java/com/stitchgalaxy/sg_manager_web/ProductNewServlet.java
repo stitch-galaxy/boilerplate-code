@@ -23,13 +23,13 @@ import javax.servlet.annotation.WebServlet;
  *
  * @author tarasev
  */
-@WebServlet("/product_new")
+@WebServlet("/product-new")
 public class ProductNewServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product_new.jsp");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-new.jsp");
         rd.forward(request, response);
     }
 
@@ -58,6 +58,6 @@ public class ProductNewServlet extends HttpServlet {
             errorHandler.process();
             return;
         }
-        response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product_view", productId));
+        response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product-view", productId));
     }
 }

@@ -33,7 +33,7 @@ import org.joda.time.format.ISODateTimeFormat;
  *
  * @author tarasev
  */
-@WebServlet("/product_view")
+@WebServlet("/product-view")
 public class ProductViewServlet extends HttpServlet {
 
     @Override
@@ -57,7 +57,7 @@ public class ProductViewServlet extends HttpServlet {
             errorHandler.process();
             return;
         }
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product_view.jsp");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-view.jsp");
         rd.forward(request, response);
     }
     
@@ -118,7 +118,7 @@ public class ProductViewServlet extends HttpServlet {
         product.setPrototypeUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
         product.setThumbnailUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
         product.setLargeImageUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
-        product.setCompleteImageUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
+        product.setCompleteProductUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
         
         return product;
     }
