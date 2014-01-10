@@ -218,6 +218,73 @@
         
         <h3>Images</h3>
         
+        <div class="datagrid">
+            <table>
+                <thead><tr><th>Image type</th><th>Image</th><th>Action</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Thumbnail
+                        </td>
+                        <td>
+                           <div class="image_container" style="background-image: url(${product.thumbnailUri});">
+                               <a href="${product.thumbnailUri}" class="image_hyperlink"></a>
+                           </div> 
+                        </td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <h3>Images</h3>
+        <div>
+            <p style="text-align: center;"><b><i>Thumbnail</i></b></p>
+            <div class="image_container" style="background-image: url(${product.thumbnailUri});">
+                               <a href="${product.thumbnailUri}" class="image_hyperlink"></a>
+                           </div> 
+                           <p>
+                               <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
+                           </p>
+                           <div class="file_upload_container">
+                               <div class="file_upload">
+                                         <span>Upload »</span>
+                                         <form><input type="file" class="upload" /></form>
+</div>
+                           </div>
+                                     
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         <div class="container" style="background-image: url(http://i.stack.imgur.com/2OrtT.jpg);">
             <a href="http://google.com" class="innera"></a>
@@ -240,7 +307,8 @@
         <input type="file" name="upload" onchange="this.form.submit()"/>
     </div>-->
           <div class="fileUpload btn btn-primary">
-    <span>Upload</span>
+<span>Upload</span>
+
     <input type="file" class="upload" />
 </div>
           
