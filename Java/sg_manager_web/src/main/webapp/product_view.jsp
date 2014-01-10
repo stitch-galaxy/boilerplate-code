@@ -217,6 +217,27 @@
         </div>
         
         <h3>Images</h3>
+        <div class="image_container" style="background-image: url(${product.thumbnailUri});">
+            <a href="${product.thumbnailUri}" class="image_hyperlink" target="_blank"></a>
+        </div>
+        <c:choose>
+            <c:when test="${product.thumbnailUri != null}">
+                <p>
+                    <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
+                </p>
+            </c:when>
+        </c:choose>
+        
+        
+<!--        
+        
+        
+        
+        
+        
+        
+        
+        
         
         <div class="datagrid">
             <table>
@@ -256,35 +277,7 @@
                            </div>
                                      
         </div>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         <div class="container" style="background-image: url(http://i.stack.imgur.com/2OrtT.jpg);">
             <a href="http://google.com" class="innera"></a>
@@ -303,9 +296,9 @@
   </a>
   <div class="desc">
       <form id="upload_form" action="test" method="post" enctype="multipart/form-data">
-<!--          <div class="upload">
+          <div class="upload">
         <input type="file" name="upload" onchange="this.form.submit()"/>
-    </div>-->
+    </div>
           <div class="fileUpload btn btn-primary">
 <span>Upload</span>
 
@@ -328,7 +321,7 @@
   </a>
   <div class="desc">Add a description of the image here</div>
 </div>
-        
+        -->
         
         
         

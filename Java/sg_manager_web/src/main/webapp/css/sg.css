@@ -79,17 +79,26 @@ input.text_input:invalid + .text_input_validation::after { content: '  '; }
 input.text_input:valid + .text_input_validation::after { content: ' ✓'; color: green}
 
 
+.image_container {
+  width: 150px;
+  height: 100px;
+  background-image: url(https://developer.mozilla.org/files/2917/fxlogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-color: #000;
+  border: 4px solid;
+  color: #000;
+}
 
+.image_hyperlink 
+{
+    display: block;
+    width: 100%; 
+    height: 100%;
+}
 
-
-
-
-
-
-
-
-
-
+/*
 div.img
   {
   margin:5px;
@@ -250,14 +259,4 @@ div.upload input {
 
 .file_upload_container{ width: 150px;}
 
-//image
-.image_container {
-    width: 150px;
-    height: 100px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-}
-
-.image_hyperlink {display: block; width: 100%; height: 100%;}
-.image_hyperlink:hover {border:1px solid #0000ff; }
+*/
