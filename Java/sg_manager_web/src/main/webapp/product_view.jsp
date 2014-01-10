@@ -17,8 +17,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>View product</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sg.css" type="text/css" />
-        
-        
+
+
     </head>
     <body>
         <%
@@ -142,7 +142,7 @@
                 </p>
             </c:otherwise>
         </c:choose>
-                <h3>Translator information</h3>
+        <h3>Translator information</h3>
         <c:choose>
             <c:when test="${product.translator != null}">
                 <div class="datagrid">
@@ -169,7 +169,7 @@
                 </p>
             </c:otherwise>
         </c:choose>
-                <h3>Localizations</h3>
+        <h3>Localizations</h3>
         <div class="datagrid">
             <table>
                 <thead><tr><th>Locale</th><th>Action</th><th>Name</th><th>Description</th><th>Tags</th></tr></thead>
@@ -215,116 +215,49 @@
                 </tbody>
             </table>
         </div>
-        
+
         <h3>Images</h3>
-        <div class="image_container" style="background-image: url(${product.thumbnailUri});">
-            <a href="${product.thumbnailUri}" class="image_hyperlink" target="_blank"></a>
-        </div>
-        <c:choose>
-            <c:when test="${product.thumbnailUri != null}">
-                <p>
-                    <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
-                </p>
-            </c:when>
-        </c:choose>
-        
-        
-<!--        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <div class="datagrid">
-            <table>
-                <thead><tr><th>Image type</th><th>Image</th><th>Action</th></tr></thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            Thumbnail
-                        </td>
-                        <td>
-                           <div class="image_container" style="background-image: url(${product.thumbnailUri});">
-                               <a href="${product.thumbnailUri}" class="image_hyperlink"></a>
-                           </div> 
-                        </td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
-        <h3>Images</h3>
-        <div>
-            <p style="text-align: center;"><b><i>Thumbnail</i></b></p>
+        <div class="img_control_container">
+            <h5>Thumbnail</h5>
             <div class="image_container" style="background-image: url(${product.thumbnailUri});">
-                               <a href="${product.thumbnailUri}" class="image_hyperlink"></a>
-                           </div> 
-                           <p>
-                               <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
-                           </p>
-                           <div class="file_upload_container">
-                               <div class="file_upload">
-                                         <span>Upload »</span>
-                                         <form><input type="file" class="upload" /></form>
-</div>
-                           </div>
-                                     
+                <a href="${product.thumbnailUri}" class="image_hyperlink" target="_blank"></a>
+            </div>
+            <p>        
+            </p>
+            <div>
+                <div class="file_upload"   style="float: left;">
+                    <form><span>Upload »</span><input type="file" class="upload" /></form>
+                </div>
+                <c:choose>
+                    <c:when test="${product.thumbnailUri != null}">
+                        <div>
+                            <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
+                        </div>
+                    </c:when>
+                </c:choose>
+            </div>
         </div>
-
-        
-        <div class="container" style="background-image: url(http://i.stack.imgur.com/2OrtT.jpg);">
-            <a href="http://google.com" class="innera"></a>
+        <div class="images_separator">
         </div>
-        
-        
-        <div class="img">
-  <a target="_blank" href="http://www.w3schools.com/css/klematis1_big.htm">
-  <img src="http://www.w3schools.com/css/klematis_big.jpg" alt="Klematis">
-  </a>
-  <div class="desc">Add a description of the image here</div>
-</div>
-<div class="img">
-  <a target="_blank" href="https://cdn1.iconfinder.com/data/icons/dellipack/32/phonebook.png">
-  <img src="https://cdn1.iconfinder.com/data/icons/dellipack/32/phonebook.png" alt="Klematis">
-  </a>
-  <div class="desc">
-      <form id="upload_form" action="test" method="post" enctype="multipart/form-data">
-          <div class="upload">
-        <input type="file" name="upload" onchange="this.form.submit()"/>
-    </div>
-          <div class="fileUpload btn btn-primary">
-<span>Upload</span>
-
-    <input type="file" class="upload" />
-</div>
-          
-          
-</form>
-</div>
-</div>
-<div class="img">
-  <a target="_blank" href="http://www.w3schools.com/css/klematis3_big.htm">
-  <img src="http://www.w3schools.com/css/klematis3_big.jpg" alt="Klematis">
-  </a>
-  <div class="desc">Add a description of the image here</div>
-</div>
-<div class="img">
-  <a target="_blank" href="http://www.w3schools.com/css/klematis4_big.htm">
-  <img src="http://www.w3schools.com/css/klematis4_big.jpg" alt="Klematis">
-  </a>
-  <div class="desc">Add a description of the image here</div>
-</div>
-        -->
-        
-        
-        
-        
+        <div class="img_control_container">
+            <h5>Thumbnail</h5>
+            <div class="image_container" style="background-image: url(${product.thumbnailUri});">
+                <a href="${product.thumbnailUri}" class="image_hyperlink" target="_blank"></a>
+            </div>
+            <p>        
+            </p>
+            <div>
+                <div class="file_upload"   style="float: left;">
+                    <form><span>Upload »</span><input type="file" class="upload" /></form>
+                </div>
+                <c:choose>
+                    <c:when test="${product.thumbnailUri != null}">
+                        <div>
+                            <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
+                        </div>
+                    </c:when>
+                </c:choose>
+            </div>
+        </div>
     </body>
 </html>
