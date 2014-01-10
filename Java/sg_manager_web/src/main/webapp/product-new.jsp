@@ -30,7 +30,7 @@
                 </p>
                 <p> 
                     <label for="date">Publication date</label>
-                    <input name="date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required value="<%out.print(LocalDate.now()); %>" class="text_input"/>
+                    <input name="date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}" required value="<%out.print(LocalDate.now()); %>" class="text_input"/>
                     <label class="text_input_validation"></label>
                 </p>
 

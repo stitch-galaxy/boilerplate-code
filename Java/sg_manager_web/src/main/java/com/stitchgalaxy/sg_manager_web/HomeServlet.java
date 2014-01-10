@@ -35,18 +35,9 @@ public class HomeServlet extends HttpServlet {
         //TODO: populate products
         try
         {
-            List<Product> products = new LinkedList<Product>();
-            Product product = new Product();
-            product.setName("Lovely owl");
-            product.setId(1L);
-            products.add(product);
-
-            Product p2 = new Product();
-            p2.setName("Pinguin");
-            p2.setId(2l);
-            products.add(p2);
             
-            request.setAttribute("products", products);
+            
+            request.setAttribute("products", TestData.createProductsList());
         }
         catch(Exception e)
         {

@@ -78,8 +78,6 @@ input.text_input:valid {color: green;}
 input.text_input:invalid + .text_input_validation::after { content: '  '; }
 input.text_input:valid + .text_input_validation::after { content: ' ✓'; color: green}
 
-
-
 .img_control_container
 {
     float: left;
@@ -95,7 +93,6 @@ input.text_input:valid + .text_input_validation::after { content: ' ✓'; color:
 .image_container {
   width: 150px;
   height: 100px;
-  background-image: url(https://developer.mozilla.org/files/2917/fxlogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;

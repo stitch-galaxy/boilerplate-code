@@ -34,6 +34,7 @@ public class ProductEditServlet extends HttpServlet {
         Product product = null;
         try
         {
+            product = TestData.createProductData();
             //TODO: fetch product
         }
         catch(Exception e)

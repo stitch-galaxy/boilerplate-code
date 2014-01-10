@@ -74,13 +74,13 @@
                     </tr>
                     <tr class="alt">
                         <td>
-                            Rating (sum of all user rates)
+                            Total rating
                         </td>
                         <td>${product.rating}</td>
                     </tr>
                     <tr>
                         <td>
-                            Rates amount
+                            Rates
                         </td>
                         <td>${product.rates}</td>
                     </tr>

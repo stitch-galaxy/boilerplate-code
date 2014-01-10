@@ -32,7 +32,7 @@ public class Product {
     private Long rating;
     private Long rates;
     private Color avgColor;
-    private BigDecimal complexity;
+    private Integer complexity;
     private String tags;
     private final List<ProductLocalization> localizations = new LinkedList<ProductLocalization>();
     private final List<Design> designs = new LinkedList<Design>();
@@ -75,6 +75,11 @@ public class Product {
      */
     public Boolean isBlocked() {
         return blocked;
+    }
+    
+    public boolean getBlocked()
+    {
+        return blocked != null && blocked;
     }
 
     /**
@@ -213,14 +218,14 @@ public class Product {
     /**
      * @return the complexity
      */
-    public BigDecimal getComplexity() {
+    public Integer getComplexity() {
         return complexity;
     }
 
     /**
      * @param complexity the complexity to set
      */
-    public void setComplexity(BigDecimal complexity) {
+    public void setComplexity(Integer complexity) {
         this.complexity = complexity;
     }
 
