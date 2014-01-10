@@ -226,7 +226,10 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form><span>Upload »</span><input type="file" class="upload" /></form>
+                    <form action="${pageContext.request.contextPath}/upload_thumbnail?product=${product.id}" method="post" enctype="multipart/form-data">
+                        <span>Upload »</span>
+                        <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
+                    </form>
                 </div>
                 <c:choose>
                     <c:when test="${product.thumbnailUri != null}">
@@ -240,20 +243,23 @@
         <div class="images_separator">
         </div>
         <div class="img_control_container">
-            <h5>Thumbnail</h5>
-            <div class="image_container" style="background-image: url(${product.thumbnailUri});">
-                <a href="${product.thumbnailUri}" class="image_hyperlink" target="_blank"></a>
+            <h5>Prototype</h5>
+            <div class="image_container" style="background-image: url(${product.prototypeUri});">
+                <a href="${product.prototypeUri}" class="image_hyperlink" target="_blank"></a>
             </div>
             <p>        
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form><span>Upload »</span><input type="file" class="upload" /></form>
+                    <form action="${pageContext.request.contextPath}/upload_proto?product=${product.id}" method="post" enctype="multipart/form-data">
+                        <span>Upload »</span>
+                        <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
+                    </form>
                 </div>
                 <c:choose>
-                    <c:when test="${product.thumbnailUri != null}">
+                    <c:when test="${product.prototypeUri != null}">
                         <div>
-                            <a href="${pageContext.request.contextPath}/product_remove_thumbnail?product=${product.id}" class="delete_button">Remove »</a>
+                            <a href="${pageContext.request.contextPath}/product_remove_prototype?product=${product.id}" class="delete_button">Remove »</a>
                         </div>
                     </c:when>
                 </c:choose>
