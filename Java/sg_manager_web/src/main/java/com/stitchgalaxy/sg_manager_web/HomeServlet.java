@@ -35,8 +35,6 @@ public class HomeServlet extends HttpServlet {
         //TODO: populate products
         try
         {
-            
-            
             request.setAttribute("products", TestData.createProductsList());
         }
         catch(Exception e)

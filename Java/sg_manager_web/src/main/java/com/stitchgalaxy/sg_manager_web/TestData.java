@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.stitchgalaxy.sg_manager_web;
 
 import com.stitchgalaxy.sg_manager_web.data.Category;
@@ -24,19 +23,16 @@ import org.joda.time.format.ISODateTimeFormat;
  * @author tarasev
  */
 public class TestData {
-    
-    public static List<Product> createProductsList()
-    {
+
+    public static List<Product> createProductsList() {
         List<Product> products = new LinkedList<Product>();
-        Product p1 = createProductData();
-        products.add(p1);
-        Product p2 = createProductData();
-        products.add(p2);
+        for (int i = 0; i < 10; ++i) {
+            products.add(createProductData());
+        }
         return products;
     }
-    
-    public static Product createProductData()
-    {
+
+    public static Product createProductData() {
         Product product = new Product();
         product.setId(1l);
         product.setBlocked(true);
@@ -46,31 +42,31 @@ public class TestData {
         LocalDate dt = dtf.parseLocalDate("2013-11-13");
         product.setDate(dt);
         product.setPriceUsd(new BigDecimal("1.5"));
-        
+
         Partner author = new Partner();
         author.setName("Author");
         author.setUri("http://google.com");
         product.setAuthor(author);
-       
+
         Partner translator = new Partner();
         translator.setName("Translator");
         translator.setUri("http://yandex.ru");
         product.setTranslator(translator);
-        
+
         product.setAvgColor(Color.PINK);
         product.setComplexity(5);
         product.setSales(100l);
         product.setRates(2l);
         product.setRating(9l);
         product.setTags("tree\nowl");
-        
+
         ProductLocalization locRu = new ProductLocalization();
         locRu.setLocale("ru");
         locRu.setName("Совенок");
         locRu.setDescription("Маленький Совенок Сашуля\nКоторого мы очень любим!");
         locRu.setTags("самый крутой зверь");
         product.getLocalizations().add(locRu);
-        
+
         Design design = new Design();
         design.setId(1l);
         design.setCanvas("Aida14");
@@ -81,19 +77,34 @@ public class TestData {
         design.setThreads("DMC");
         design.setWidth(200);
         design.setThumbnailUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
-        
+
         product.getDesigns().add(design);
-        
+
         Category category = new Category();
         category.setId(1l);
         category.setName("animals");
         product.getCategories().add(category);
-        
+
         product.setPrototypeUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
         product.setThumbnailUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
         product.setLargeImageUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
         product.setCompleteProductUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
-        
+
         return product;
+    }
+
+    public static List<Partner> createPartnersList() {
+        List<Partner> partners = new LinkedList<Partner>();
+        for (int i = 0; i < 10; ++i) {
+            partners.add(createPartnerData());
+        }
+        return partners;
+    }
+
+    public static Partner createPartnerData() {
+        Partner partner = new Partner();
+        partner.setName("Ksenia");
+        partner.setUri("http://zlataya.info/");
+        return partner;
     }
 }

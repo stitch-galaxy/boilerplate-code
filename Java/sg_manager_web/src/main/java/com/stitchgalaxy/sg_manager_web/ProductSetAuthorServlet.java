@@ -6,86 +6,76 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.sg_manager_web.data.Partner;
 import com.stitchgalaxy.sg_manager_web.data.Product;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.annotation.WebServlet;
 
 /**
  *
  * @author tarasev
  */
-@WebServlet("/product-edit")
-public class ProductEditServlet extends HttpServlet {
+@WebServlet("/product-set-author")
+@MultipartConfig
+public class ProductSetAuthorServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //TODO: populate products
         String productId = request.getParameter("product");
-        Product product = null;
         try
         {
-            product = TestData.createProductData();
-            //TODO: fetch product
+            //TODO: get all partners
+            List<Partner> partners = TestData.createPartnersList();
+            request.setAttribute("partners", partners);
         }
         catch(Exception e)
         {
             ErrorHandler errorHandler = new ErrorHandler();
             errorHandler.setException(e);
-            errorHandler.setMessage("Can not load product data");
+            errorHandler.setMessage("Unable to load partners");
             errorHandler.setRequest(request);
             errorHandler.setResponse(response);
             errorHandler.setServlet(this);
             errorHandler.process();
             return;
-        }
-        request.setAttribute("product", product);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-edit.jsp");
+        }        
+        
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/partners.jsp");
         rd.forward(request, response);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String errorMessage = "Unable to cast product parameters";
-        Long productId = 1l;
+        String productId = request.getParameter("product");
         try
         {
-            String sName = request.getParameter("name");
-            String sDate = request.getParameter("date");
-            String sPriceUsd = request.getParameter("price");
-            String sBlocked = request.getParameter("blocked");
-            String sDescription = request.getParameter("description");
-            String sSales = request.getParameter("sales");
-            String sRating = request.getParameter("rating");
-            String sRates = request.getParameter("rates");
-            String sComplexity = request.getParameter("complexity");
-            String sTags = request.getParameter("tags");
-            String sColor = request.getParameter("color");
-            errorMessage = "Unable to store product";
-            //TODO: store new product.
+            //TODO: save new author
         }
         catch(Exception e)
         {
             ErrorHandler errorHandler = new ErrorHandler();
             errorHandler.setException(e);
-            errorHandler.setMessage(errorMessage);
+            errorHandler.setMessage("Unable to save partner");
             errorHandler.setRequest(request);
             errorHandler.setResponse(response);
             errorHandler.setServlet(this);
             errorHandler.process();
             return;
         }
-        response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product-view", productId));
+        doGet(request, response);
     }
 }

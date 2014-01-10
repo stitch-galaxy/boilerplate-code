@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Home page</title>
-         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sg.css" type="text/css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sg.css" type="text/css" />
     </head>
     <body>
         <div class="datagrid">
@@ -29,7 +29,9 @@
                 </tbody>
             </table>
         </div>
-        <br/>
-        <a href="${pageContext.request.contextPath}/product-new" class="add_button">Add design »</a>
+        <p>
+            <a href="${pageContext.request.contextPath}/product-new" class="add_button">Add design »</a>
+        </p>
+
     </body>
 </html>

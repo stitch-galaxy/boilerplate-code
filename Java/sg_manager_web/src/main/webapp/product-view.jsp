@@ -194,7 +194,7 @@
                 </tbody>
             </table>
         </div>
-        <P>
+        <p>
             <a href="${pageContext.request.contextPath}/product-add-localization?product=${product.id}" class="add_button">Add »</a>
         </p>
         <h3>Categories</h3>

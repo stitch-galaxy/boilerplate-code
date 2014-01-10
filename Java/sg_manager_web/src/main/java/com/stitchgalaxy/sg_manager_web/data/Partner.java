@@ -11,6 +11,7 @@ package com.stitchgalaxy.sg_manager_web.data;
  * @author Андрей
  */
 public class Partner {
+    private Long id;
     private String name;
     private String uri;
 
@@ -40,6 +41,20 @@ public class Partner {
      */
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
     
 }

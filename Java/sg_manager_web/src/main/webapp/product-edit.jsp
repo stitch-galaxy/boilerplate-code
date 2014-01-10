@@ -19,7 +19,7 @@
         <%
             Product product = (Product) request.getAttribute("product");
         %>
-        <form action="${pageContext.request.contextPath}/product-new" method="POST">
+        <form action="${pageContext.request.contextPath}/product-edit" method="POST">
             <fieldset>
                 <legend>Product parameters</legend>
                 <p> 
@@ -83,7 +83,9 @@
                     <label class="text_input_validation"></label>
                     <a href='http://www.colorpicker.com/' target="_blank">pick a color</a>
                 </p>
-                <p><input class="submit_edit" type="submit" value="Save"/></p>
+                <p>
+                    <input class="submit_edit" type="submit" value="Save"/>
+                </p>
             </fieldset>
 
         </form>
