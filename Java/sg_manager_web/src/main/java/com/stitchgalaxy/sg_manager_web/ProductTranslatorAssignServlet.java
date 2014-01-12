@@ -6,51 +6,44 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.sg_manager_web.data.Partner;
+import com.stitchgalaxy.sg_manager_web.data.Product;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.annotation.WebServlet;
-import org.joda.time.LocalDate;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author tarasev
  */
-@WebServlet("/product-new")
-public class ProductNewServlet extends HttpServlet {
-
+@WebServlet("/product-assign-translator")
+@MultipartConfig
+public class ProductTranslatorAssignServlet extends HttpServlet {
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-new.jsp");
-        rd.forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
         String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
         Long productId = null;
         try
         {
-            String name = request.getParameter("name");
-            String sDate = request.getParameter("date");
-            LocalDate date = LocalDate.parse(sDate);
-            String sPriceUsd = request.getParameter("price");
-            BigDecimal price = new BigDecimal(sPriceUsd);
-            errorMessage = "Unable to store new product";
-            //TODO: store new product and get id.
-            productId = 1l;
+            String sProductId = request.getParameter("product");
+            productId = Long.parseLong(sProductId);
+            String sPartnerId = request.getParameter("partner");
+            Long partnerId = Long.parseLong(sPartnerId);
+            errorMessage = "Cannot assign translator";
+            //TODO: assign translator
         }
         catch(Exception e)
         {
@@ -62,7 +55,7 @@ public class ProductNewServlet extends HttpServlet {
             errorHandler.setServlet(this);
             errorHandler.process();
             return;
-        }
+        } 
         response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product-view", productId));
     }
 }

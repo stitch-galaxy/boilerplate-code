@@ -32,9 +32,9 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //TODO: populate products
         try
         {
+            //TODO: populate products
             request.setAttribute("products", TestData.createProductsList());
         }
         catch(Exception e)

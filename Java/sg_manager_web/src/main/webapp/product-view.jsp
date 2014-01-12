@@ -172,7 +172,7 @@
         <h3>Localizations</h3>
         <div class="datagrid">
             <table>
-                <thead><tr><th>Locale</th><th>Action</th><th>Name</th><th>Description</th><th>Tags</th></tr></thead>
+                <thead><tr><th>Locale</th><th>Action</th><th>Action</th><th>Name</th><th>Description</th><th>Tags</th></tr></thead>
                 <tbody>
                     <c:forEach var="localization" items="${product.localizations}" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
@@ -180,7 +180,10 @@
                                 ${localization.locale}
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/product-edit-localization?product=${product.id}&localization=${localization.locale}" class="edit_button">Edit »</a> 
+                                <a href="${pageContext.request.contextPath}/product-localization-edit?product=${product.id}&localization=${localization.locale}" class="edit_button">Edit »</a> 
+                            </td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/product-localization-remove?product=${product.id}&localization=${localization.locale}" class="delete_button">Delete »</a> 
                             </td>
                             <td>${localization.name}</td>
                             <td>
@@ -195,7 +198,7 @@
             </table>
         </div>
         <p>
-            <a href="${pageContext.request.contextPath}/product-add-localization?product=${product.id}" class="add_button">Add »</a>
+            <a href="${pageContext.request.contextPath}/product-localization-new?product=${product.id}" class="add_button">Add »</a>
         </p>
         <h3>Categories</h3>
         <div class="datagrid">
@@ -208,7 +211,7 @@
                                 ${category.name}
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/product-remove-category?product=${product.id}&category=${category.id}" class="delete_button">Remove »</a>
+                                <a href="${pageContext.request.contextPath}/product-category-remove?product=${product.id}&category=${category.id}" class="delete_button">Remove »</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -216,7 +219,7 @@
             </table>
         </div>
         <p>
-            <a href="${pageContext.request.contextPath}/product-add-category?product=${product.id}" class="add_button">Add »</a>
+            <a href="${pageContext.request.contextPath}/product-category-select?product=${product.id}&category=1" class="add_button">Add »</a>
         </p>
 
 

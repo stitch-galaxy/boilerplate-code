@@ -26,6 +26,8 @@ public class ErrorHandler {
     private String message;
     private GenericServlet servlet;
     
+    public static final String BAD_REQUEST_PARAMETERS = "Bad request parameters";
+    
     public void process() throws ServletException, IOException
     {
         StringWriter sw = new StringWriter();

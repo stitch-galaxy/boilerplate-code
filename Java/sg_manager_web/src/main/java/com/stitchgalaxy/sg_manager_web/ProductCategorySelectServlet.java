@@ -6,6 +6,8 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.sg_manager_web.data.Category;
+import com.stitchgalaxy.sg_manager_web.data.ProductLocalization;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigDecimal;
@@ -25,32 +27,23 @@ import org.joda.time.LocalDate;
  *
  * @author tarasev
  */
-@WebServlet("/product-new")
-public class ProductNewServlet extends HttpServlet {
+@WebServlet("/product-category-select")
+public class ProductCategorySelectServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-new.jsp");
-        rd.forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
         String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
-        Long productId = null;
+        
         try
         {
-            String name = request.getParameter("name");
-            String sDate = request.getParameter("date");
-            LocalDate date = LocalDate.parse(sDate);
-            String sPriceUsd = request.getParameter("price");
-            BigDecimal price = new BigDecimal(sPriceUsd);
-            errorMessage = "Unable to store new product";
-            //TODO: store new product and get id.
-            productId = 1l;
+            Long categoryId = Long.parseLong(request.getParameter("category"));
+            Long productId = Long.parseLong(request.getParameter("product"));
+            errorMessage = "Cannot load category";
+            Category category = TestData.createProductCategory();
+            //TODO: load product category
+            request.setAttribute("category", category);
+            request.setAttribute("productId", productId);
         }
         catch(Exception e)
         {
@@ -63,6 +56,8 @@ public class ProductNewServlet extends HttpServlet {
             errorHandler.process();
             return;
         }
-        response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product-view", productId));
+        
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-category-select.jsp");
+        rd.forward(request, response);
     }
 }

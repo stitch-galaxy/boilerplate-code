@@ -21,31 +21,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author tarasev
  */
-@WebServlet("/product-set-author")
+@WebServlet("/product-remove-author")
 @MultipartConfig
-public class ProductSetAuthorServlet extends HttpServlet {
-
+public class ProductAuthorRemoveServlet extends HttpServlet {
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //TODO: populate products
-        String productId = request.getParameter("product");
+        String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
+        Long productId = null;
         try
         {
-            //TODO: get all partners
-            List<Partner> partners = TestData.createPartnersList();
-            request.setAttribute("partners", partners);
+            String sProductId = request.getParameter("product");
+            productId = Long.parseLong(sProductId);
+            
+            //TODO: remove author
+            errorMessage = "Cannot remove author";
         }
         catch(Exception e)
         {
             ErrorHandler errorHandler = new ErrorHandler();
             errorHandler.setException(e);
-            errorHandler.setMessage("Unable to load partners");
+            errorHandler.setMessage(errorMessage);
             errorHandler.setRequest(request);
             errorHandler.setResponse(response);
             errorHandler.setServlet(this);
@@ -53,29 +56,6 @@ public class ProductSetAuthorServlet extends HttpServlet {
             return;
         }        
         
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/partners.jsp");
-        rd.forward(request, response);
-    }
-    
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String productId = request.getParameter("product");
-        try
-        {
-            //TODO: save new author
-        }
-        catch(Exception e)
-        {
-            ErrorHandler errorHandler = new ErrorHandler();
-            errorHandler.setException(e);
-            errorHandler.setMessage("Unable to save partner");
-            errorHandler.setRequest(request);
-            errorHandler.setResponse(response);
-            errorHandler.setServlet(this);
-            errorHandler.process();
-            return;
-        }
-        doGet(request, response);
+        response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product-view", productId));
     }
 }

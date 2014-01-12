@@ -39,9 +39,11 @@ public class ProductViewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
         try
         {
             Long productId = Long.parseLong(request.getParameter("product"));
+            errorMessage = "Can not fetch product data";
             Product product = TestData.createProductData();
             //TODO: fetch real data
             request.setAttribute("product", product);
@@ -50,7 +52,7 @@ public class ProductViewServlet extends HttpServlet {
         {
             ErrorHandler errorHandler = new ErrorHandler();
             errorHandler.setException(e);
-            errorHandler.setMessage("Can not fetch product data");
+            errorHandler.setMessage(errorMessage);
             errorHandler.setRequest(request);
             errorHandler.setResponse(response);
             errorHandler.setServlet(this);

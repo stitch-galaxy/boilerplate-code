@@ -22,8 +22,7 @@
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>${partner.name}</td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/product-add-localization?product=${product.id}" class="add_button">Add »</a>
-
+                                <a href="${pageContext.request.contextPath}/${action}?<%out.print(request.getAttribute("javax.servlet.forward.query_string"));%>&partner=${partner.id}" class="edit_button">Select »</a>
                             </td>
                             <td>
                                 <a href="${partner.uri}" target="_blank">${partner.uri}</a>
@@ -43,7 +42,7 @@
                     <label class="text_input_validation"></label>
                 </p>
                 <p> 
-                    <label for="uri">Name</label>
+                    <label for="uri">Site uri</label>
                     <input name="uri" type="text" placeholder="Enter site uri" class="text_input" pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$"/>
                     <label class="text_input_validation"></label>
                 </p>

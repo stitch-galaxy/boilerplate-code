@@ -6,8 +6,7 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.sg_manager_web.data.Product;
-import java.awt.Color;
+import com.stitchgalaxy.sg_manager_web.data.ProductLocalization;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigDecimal;
@@ -27,21 +26,22 @@ import org.joda.time.LocalDate;
  *
  * @author tarasev
  */
-@WebServlet("/product-edit")
-public class ProductEditServlet extends HttpServlet {
+@WebServlet("/product-localization-edit")
+public class ProductLocalizationEditServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
-        Product product = null;
+        Long productId = null;
         try
         {
-            String sProductId = request.getParameter("product");
-            Long productId = Long.parseLong(sProductId);
-            errorMessage = "Can not load product data";
-            product = TestData.createProductData();
-            //TODO: fetch product
+            String locale = request.getParameter("locale");
+            productId = Long.parseLong(request.getParameter("product"));
+            errorMessage = "Cannot load product localization";
+            ProductLocalization localization = TestData.createProductLocalization();
+            //TODO: load product localization
+            request.setAttribute("localization", localization);
         }
         catch(Exception e)
         {
@@ -54,46 +54,26 @@ public class ProductEditServlet extends HttpServlet {
             errorHandler.process();
             return;
         }
-        request.setAttribute("product", product);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-edit.jsp");
+        
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-localization-edit.jsp");
         rd.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
         Long productId = null;
         try
         {
-            String sProductId = request.getParameter("product");
-            productId = Long.parseLong(sProductId);
+            String locale = request.getParameter("locale");
+            productId = Long.parseLong(request.getParameter("product"));
             String name = request.getParameter("name");
-            String sDate = request.getParameter("date");
-            LocalDate date = LocalDate.parse(sDate);
-            String sPriceUsd = request.getParameter("price");
-            BigDecimal priceUsd = new BigDecimal(sPriceUsd);
-            String sBlocked = request.getParameter("blocked");
-            Boolean blocked = Boolean.FALSE;
-            if (sBlocked.equals("on") || sBlocked.equals("yes") || sBlocked.equals("checked") || sBlocked.equals("true"))
-            {
-                blocked = Boolean.TRUE;
-            }
             String description = request.getParameter("description");
-            String sSales = request.getParameter("sales");
-            Long sales = Long.parseLong(sSales);
-            String sRating = request.getParameter("rating");
-            Long rating = Long.parseLong(sRating);
-            String sRates = request.getParameter("rates");
-            Long rates = Long.parseLong(sRates);
-            String sComplexity = request.getParameter("complexity");
-            Integer complextity = Integer.parseInt(sComplexity);
             String tags = request.getParameter("tags");
-            String sColor = request.getParameter("color");
-            Color color = Color.decode(sColor.replace("#", "0x").toLowerCase());
-            errorMessage = "Unable to store product";
-            //TODO: store new product.
+            
+            errorMessage = "Cannot create product localization";
+            //TODO: store product localization
         }
         catch(Exception e)
         {

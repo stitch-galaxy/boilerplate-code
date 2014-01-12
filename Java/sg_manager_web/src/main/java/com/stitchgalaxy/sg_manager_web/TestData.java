@@ -60,13 +60,49 @@ public class TestData {
         product.setRating(9l);
         product.setTags("tree\nowl");
 
-        ProductLocalization locRu = new ProductLocalization();
-        locRu.setLocale("ru");
-        locRu.setName("Совенок");
-        locRu.setDescription("Маленький Совенок Сашуля\nКоторого мы очень любим!");
-        locRu.setTags("самый крутой зверь");
-        product.getLocalizations().add(locRu);
+        
+        product.getLocalizations().add(createProductLocalization());
 
+        
+        product.getDesigns().add(createProductDesign());
+
+        product.getCategories().add(createProductCategory());
+
+        product.setPrototypeUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
+        product.setThumbnailUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
+        product.setLargeImageUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
+        product.setCompleteProductUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
+
+        return product;
+    }
+    
+    public static Category createProductCategoryRaw()
+    {
+        Category category = new Category();
+        category.setId(1l);
+        category.setName("category");
+        
+        return category;
+    }
+    
+    public static Category createProductCategory()
+    {
+        Category category = new Category();
+        category.setId(1l);
+        category.setName("category");
+        
+        for(int i = 0; i < 10; ++i)
+        {
+            category.getChilds().add(createProductCategoryRaw());
+        }
+        
+        category.setParent(createProductCategoryRaw());
+        
+        return category;
+    }
+    
+    public static Design createProductDesign()
+    {
         Design design = new Design();
         design.setId(1l);
         design.setCanvas("Aida14");
@@ -77,20 +113,18 @@ public class TestData {
         design.setThreads("DMC");
         design.setWidth(200);
         design.setThumbnailUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
-
-        product.getDesigns().add(design);
-
-        Category category = new Category();
-        category.setId(1l);
-        category.setName("animals");
-        product.getCategories().add(category);
-
-        product.setPrototypeUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
-        product.setThumbnailUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
-        product.setLargeImageUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
-        product.setCompleteProductUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
-
-        return product;
+        
+        return design;
+    }
+    
+    public static ProductLocalization createProductLocalization()
+    {
+        ProductLocalization locRu = new ProductLocalization();
+        locRu.setLocale("ru");
+        locRu.setName("Совенок");
+        locRu.setDescription("Маленький Совенок Сашуля\nКоторого мы очень любим!");
+        locRu.setTags("самый крутой зверь");
+        return locRu;
     }
 
     public static List<Partner> createPartnersList() {
@@ -105,6 +139,7 @@ public class TestData {
         Partner partner = new Partner();
         partner.setName("Ksenia");
         partner.setUri("http://zlataya.info/");
+        partner.setId(1l);
         return partner;
     }
 }

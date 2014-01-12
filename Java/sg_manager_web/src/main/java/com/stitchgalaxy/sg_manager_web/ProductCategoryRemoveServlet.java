@@ -25,32 +25,20 @@ import org.joda.time.LocalDate;
  *
  * @author tarasev
  */
-@WebServlet("/product-new")
-public class ProductNewServlet extends HttpServlet {
+@WebServlet("/product-category-remove")
+public class ProductCategoryRemoveServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-new.jsp");
-        rd.forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
         String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
         Long productId = null;
         try
         {
-            String name = request.getParameter("name");
-            String sDate = request.getParameter("date");
-            LocalDate date = LocalDate.parse(sDate);
-            String sPriceUsd = request.getParameter("price");
-            BigDecimal price = new BigDecimal(sPriceUsd);
-            errorMessage = "Unable to store new product";
-            //TODO: store new product and get id.
-            productId = 1l;
+            Long categoryId = Long.parseLong(request.getParameter("category"));
+            productId = Long.parseLong(request.getParameter("product"));
+            errorMessage = "Cannot remove product from category";
+            //TODO: remove product from category
         }
         catch(Exception e)
         {
@@ -64,5 +52,6 @@ public class ProductNewServlet extends HttpServlet {
             return;
         }
         response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product-view", productId));
+        
     }
 }

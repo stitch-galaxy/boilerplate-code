@@ -19,7 +19,7 @@
         <%
             Product product = (Product) request.getAttribute("product");
         %>
-        <form action="${pageContext.request.contextPath}/product-edit" method="POST">
+        <form action="${pageContext.request.contextPath}/product-edit?product=${product.id}" method="POST">
             <fieldset>
                 <legend>Product parameters</legend>
                 <p> 

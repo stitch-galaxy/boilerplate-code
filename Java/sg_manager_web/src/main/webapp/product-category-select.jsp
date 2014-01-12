@@ -10,31 +10,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Home page</title>
+        <title>Select category</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sg.css" type="text/css" />
     </head>
     <body>
-        <p>
-            <a href="${pageContext.request.contextPath}/category-manage?category=1" class="edit_button">Manage categories »</a>
-        </p>
         <div class="datagrid">
             <table>
-                <thead><tr><th>Design name</th><th>Identifier</th></tr></thead>
+                <thead><tr><th>Category</th><th>Action</th></tr></thead>
                 <tbody>
-                    <c:forEach items="${products}" var="product" varStatus="loopStatus">
+                    <c:forEach items="${category.childs}" var="subcategory" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>
-                                <a href="${pageContext.request.contextPath}/product-view?product=${product.id}">${product.name}</a>
+                                <a href="${pageContext.request.contextPath}/product-category-select?product=${productId}&category=${subcategory.id}">${subcategory.name}</a>
                             </td>
-                            <td>${product.id}</td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/product-category-add?product=${productId}&category=${subcategory.id}" class="edit_button">Select »</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
-        <p>
-            <a href="${pageContext.request.contextPath}/product-new" class="add_button">Add design »</a>
-        </p>
-
     </body>
 </html>
