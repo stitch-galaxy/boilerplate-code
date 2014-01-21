@@ -108,11 +108,11 @@ public class TestData {
         design.setCanvas("Aida14");
         design.setColors(20);
         design.setHeight(100);
-        design.setPartId(1);
         design.setStitchesPerInch(new BigDecimal("14.0"));
         design.setThreads("DMC");
         design.setWidth(200);
         design.setThumbnailUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
+        design.setFileUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
         
         return design;
     }

@@ -14,7 +14,6 @@ import java.math.BigDecimal;
  */
 public class Design {
     private Long id;
-    private Integer partId;
     private Integer width;
     private Integer height;
     private Integer colors;
@@ -22,6 +21,7 @@ public class Design {
     private String threads;
     private BigDecimal stitchesPerInch;
     private String thumbnailUri;
+    private String fileUri;
 
     /**
      * @return the id
@@ -35,20 +35,6 @@ public class Design {
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * @return the partId
-     */
-    public Integer getPartId() {
-        return partId;
-    }
-
-    /**
-     * @param partId the partId to set
-     */
-    public void setPartId(Integer partId) {
-        this.partId = partId;
     }
 
     /**
@@ -147,5 +133,19 @@ public class Design {
      */
     public void setThumbnailUri(String thumbnailUri) {
         this.thumbnailUri = thumbnailUri;
+    }
+
+    /**
+     * @return the fileUri
+     */
+    public String getFileUri() {
+        return fileUri;
+    }
+
+    /**
+     * @param fileUri the fileUri to set
+     */
+    public void setFileUri(String fileUri) {
+        this.fileUri = fileUri;
     }
 }

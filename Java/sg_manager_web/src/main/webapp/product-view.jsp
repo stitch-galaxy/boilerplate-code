@@ -21,6 +21,9 @@
 
     </head>
     <body>
+        <p>
+            <a href="${pageContext.request.contextPath}/">Home</a>
+        </p>
         <%
             Product product = (Product) request.getAttribute("product");
         %>
@@ -221,6 +224,31 @@
         <p>
             <a href="${pageContext.request.contextPath}/product-category-select?product=${product.id}&category=1" class="add_button">Add »</a>
         </p>
+        <h3>Products</h3>
+        <div class="datagrid">
+            <table>
+                <thead><tr><th>Design Id</th><th>Action</th><th>Action</th></tr></thead>
+                <tbody>
+                    <c:forEach var="design" items="${product.designs}" varStatus="loopStatus">
+                        <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
+                            <td>
+                                ${design.id}
+                            </td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/product-design-edit?product=${product.id}&design=${design.id}" class="edit_button">Edit »</a>
+                            </td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/product-design-remove?product=${product.id}&design=${design.id}" class="delete_button">Remove »</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <p>
+            <a href="${pageContext.request.contextPath}/product-design-add?product=${product.id}" class="add_button">Add »</a>
+        </p>
+
 
 
         <h3>Images</h3>
@@ -321,6 +349,6 @@
                     </c:when>
                 </c:choose>
             </div>
-        </div>
+        </div>         
     </body>
 </html>

@@ -14,6 +14,12 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sg.css" type="text/css" />
     </head>
     <body>
+        <p>
+            <label for="parent">Parent</label>
+            <c:if test="${category.parent != null}">
+                <a href="${pageContext.request.contextPath}/product-category-select?product=${productId}&category=${category.parent.id}">${category.parent.name}</a> 
+            </c:if>
+        </p>
         <div class="datagrid">
             <table>
                 <thead><tr><th>Category</th><th>Action</th></tr></thead>

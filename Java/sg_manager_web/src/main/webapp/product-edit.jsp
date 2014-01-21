@@ -24,7 +24,7 @@
                 <legend>Product parameters</legend>
                 <p> 
                     <label for="name">Name</label>
-                    <input name="name" type="text" placeholder="Enter design name" required class="text_input" value="${product.name}"/>
+                    <input name="name" type="text" placeholder="Enter product name" required class="text_input" value="${product.name}"/>
                     <label class="text_input_validation"></label>
                 </p>
                 <p> 
