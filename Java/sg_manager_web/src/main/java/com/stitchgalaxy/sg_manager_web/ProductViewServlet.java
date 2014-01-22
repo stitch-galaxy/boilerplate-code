@@ -6,11 +6,11 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.sg_manager_web.data.Category;
-import com.stitchgalaxy.sg_manager_web.data.Design;
-import com.stitchgalaxy.sg_manager_web.data.Partner;
-import com.stitchgalaxy.sg_manager_web.data.Product;
-import com.stitchgalaxy.sg_manager_web.data.ProductLocalization;
+import com.stitchgalaxy.domain.Category;
+import com.stitchgalaxy.domain.Design;
+import com.stitchgalaxy.domain.Partner;
+import com.stitchgalaxy.domain.Product;
+import com.stitchgalaxy.domain.ProductLocalization;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.StringWriter;

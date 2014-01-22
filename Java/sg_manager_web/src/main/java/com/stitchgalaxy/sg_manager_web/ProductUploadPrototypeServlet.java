@@ -6,8 +6,10 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.domain.Partner;
 import com.stitchgalaxy.domain.Product;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.LinkedList;
@@ -20,28 +22,35 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author tarasev
  */
-@WebServlet("")
+@WebServlet("/product-upload-prototype")
 @MultipartConfig
-public class HomeServlet extends HttpServlet {
-
+public class ProductUploadPrototypeServlet extends HttpServlet {
+    
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
+        Long productId = null;
         try
         {
-            //TODO: populate products
-            request.setAttribute("products", TestData.createProductsList());
+            String sProductId = request.getParameter("product");
+            productId = Long.parseLong(sProductId);
+            Part filePart = request.getPart("file");
+            InputStream filecontent = filePart.getInputStream();
+            //TODO: store file
         }
         catch(Exception e)
         {
             ErrorHandler errorHandler = new ErrorHandler();
             errorHandler.setException(e);
-            errorHandler.setMessage("Unable to load products");
+            errorHandler.setMessage(errorMessage);
             errorHandler.setRequest(request);
             errorHandler.setResponse(response);
             errorHandler.setServlet(this);
@@ -49,7 +58,7 @@ public class HomeServlet extends HttpServlet {
             return;
         }        
         
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/home.jsp");
-        rd.forward(request, response);
+        response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product-view", productId));
+
     }
 }

@@ -6,7 +6,7 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.sg_manager_web.data.ProductLocalization;
+import com.stitchgalaxy.domain.ProductLocalization;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigDecimal;

@@ -6,8 +6,8 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.sg_manager_web.data.Design;
-import com.stitchgalaxy.sg_manager_web.data.Product;
+import com.stitchgalaxy.domain.Design;
+import com.stitchgalaxy.domain.Product;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -37,10 +37,11 @@ public class ProductDesignEditServlet extends HttpServlet {
             throws ServletException, IOException {
         String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
         Design design = null;
+        Long productId = null;
         try
         {
             String sProductId = request.getParameter("product");
-            Long productId = Long.parseLong(sProductId);
+            productId = Long.parseLong(sProductId);
             String sDesignId = request.getParameter("design");
             Long designId = Long.parseLong(sDesignId);
             errorMessage = "Can not load design data";
@@ -59,6 +60,7 @@ public class ProductDesignEditServlet extends HttpServlet {
             return;
         }
         request.setAttribute("design", design);
+        request.setAttribute("productId", productId);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/product-design-edit.jsp");
         rd.forward(request, response);
     }

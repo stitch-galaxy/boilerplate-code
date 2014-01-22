@@ -6,7 +6,7 @@
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.LinkedList"%>
-<%@page import="com.stitchgalaxy.sg_manager_web.data.Product"%>
+<%@page import="com.stitchgalaxy.domain.Product"%>
 <%@page contentType="text/html" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -261,7 +261,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/upload-thumbnail?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/product-upload-thumbnail?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -286,7 +286,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/upload-prototype?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/product-upload-prototype?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -311,7 +311,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/upload-large-image?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/product-upload-large-image?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -336,7 +336,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/upload-complete-product?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/product-upload-complete-product?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>

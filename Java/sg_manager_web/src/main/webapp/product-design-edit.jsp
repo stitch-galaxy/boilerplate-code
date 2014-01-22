@@ -4,7 +4,7 @@
     Author     : tarasev
 --%>
 
-<%@page import="com.stitchgalaxy.sg_manager_web.data.Design"%>
+<%@page import="com.stitchgalaxy.domain.Design"%>
 <%@page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -68,7 +68,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/design-upload-thumbnail?design=${design.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/design-upload-thumbnail?product=${productId}&design=${design.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -76,7 +76,7 @@
                 <c:choose>
                     <c:when test="${design.thumbnailUri != null}">
                         <div>
-                            <a href="${pageContext.request.contextPath}/design-remove-thumbnail?design=${design.id}" class="delete_button">Remove »</a>
+                            <a href="${pageContext.request.contextPath}/design-remove-thumbnail?product=${productId}&design=${design.id}" class="delete_button">Remove »</a>
                         </div>
                     </c:when>
                 </c:choose>
@@ -101,7 +101,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/design-upload-file?design=${design.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/design-upload-file?product=${productId}&design=${design.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -109,7 +109,7 @@
                 <c:choose>
                     <c:when test="${design.fileUri != null}">
                         <div>
-                            <a href="${pageContext.request.contextPath}/design-remove-file?design=${design.id}" class="delete_button">Remove »</a>
+                            <a href="${pageContext.request.contextPath}/design-remove-file?product=${productId}&design=${design.id}" class="delete_button">Remove »</a>
                         </div>
                     </c:when>
                 </c:choose>

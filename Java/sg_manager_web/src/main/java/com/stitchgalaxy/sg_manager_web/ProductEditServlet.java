@@ -6,7 +6,7 @@
 
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.sg_manager_web.data.Product;
+import com.stitchgalaxy.domain.Product;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.StringWriter;

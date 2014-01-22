@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-    <name>SG :: libraries</name>
+    <name>Stitch galaxy project</name>
 
     <artifactId>stitchgalaxy</artifactId>
     <groupId>com.stitchgalaxy</groupId>
@@ -15,6 +15,17 @@
         <module>sg_manager_web</module>
         <module>lib</module>
     </modules>
-
-
+    
+    <properties>
+        <sg-common.version>1.0.0-SNAPSHOT</sg-common.version>
+        <sg-manager-web.version>1.0.0-SNAPSHOT</sg-manager-web.version>
+        <joda-version>2.3</joda-version>
+        <junit.version>3.8.1</junit.version>
+        <javaee-web-api.version>6.0</javaee-web-api.version>
+        <jsp-api.version>2.1</jsp-api.version>
+        <commons-lang3.version>3.0</commons-lang3.version>
+        <jstl.version>1.2</jstl.version>
+        <taglibs.version>1.1.2</taglibs.version>
+    </properties>
+    
 </project>

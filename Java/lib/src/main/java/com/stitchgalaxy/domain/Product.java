@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.stitchgalaxy.sg_manager_web.data;
+package com.stitchgalaxy.domain;
 
 import java.awt.Color;
 import java.math.BigDecimal;

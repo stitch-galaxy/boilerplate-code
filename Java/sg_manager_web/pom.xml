@@ -8,60 +8,59 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <groupId>com.stitchgalaxy</groupId>
-    <artifactId>sg_manager_web</artifactId>
+    <artifactId>sg-manager-web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>sg_manager_web Maven Webapp</name>
+    <name>Web manager</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
+            <groupId>com.stitchgalaxy</groupId>
+            <artifactId>sg-common</artifactId>
+            <version>${sg-common.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
-            <version>6.0</version>
+            <version>${javaee-web-api.version}</version>
             <scope>provided</scope>
         </dependency>
-<!--        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>-->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
+            <version>${jsp-api.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
-            <version>1.1.2</version>
+            <version>${taglibs.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
         </dependency>
         
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.0</version>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda-version}</version>
         </dependency>
     </dependencies>
     <build>
-        <finalName>sg_manager_web</finalName>
+        <finalName>sg-manager-web</finalName>
     </build>
 </project>

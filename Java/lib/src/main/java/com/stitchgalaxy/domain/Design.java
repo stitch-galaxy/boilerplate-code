@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.stitchgalaxy.sg_manager_web.data;
+package com.stitchgalaxy.domain;
 
 import java.math.BigDecimal;
 
