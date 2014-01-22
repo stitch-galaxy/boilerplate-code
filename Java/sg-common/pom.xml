@@ -10,7 +10,7 @@
     <groupId>com.stitchgalaxy</groupId>
     <artifactId>sg-common</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Common libraries</name>
+    <name>Common</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

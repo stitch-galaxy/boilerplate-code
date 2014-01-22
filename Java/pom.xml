@@ -11,10 +11,11 @@
     <modules>
         <module>design_manager</module>
         <module>design_builder</module>
-        <module>rest_api</module>
-        <module>sg_manager_web</module>
-        <module>lib</module>
-    </modules>
+        <module>sg-rest-api</module>
+        <module>sg-manager-web</module>
+        <module>sg-common</module>
+    <module>sg-dao</module>
+  </modules>
     
     <properties>
         <sg-common.version>1.0.0-SNAPSHOT</sg-common.version>
