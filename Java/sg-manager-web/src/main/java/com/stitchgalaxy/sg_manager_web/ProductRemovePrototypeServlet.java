@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dao.DomainDataService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,32 +19,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/product-remove-prototype")
 public class ProductRemovePrototypeServlet extends HttpServlet {
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-        String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
-        Long productId = null;
-        try
-        {
-            String sProductId = request.getParameter("product");
-            productId = Long.parseLong(sProductId);
-            //TODO: remove file
-            errorMessage = "Unable to remove prototype";
-        }
-        catch(Exception e)
-        {
-            ErrorHandler errorHandler = new ErrorHandler();
-            errorHandler.setException(e);
-            errorHandler.setMessage(errorMessage);
-            errorHandler.setRequest(request);
-            errorHandler.setResponse(response);
-            errorHandler.setServlet(this);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            Long productId = Long.parseLong(request.getParameter("product"));
+            DomainDataService.getInstance().removeProductPrototype(productId);
+        } catch (Exception e) {
+            ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();
             return;
-        }        
-        
-        response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product-view", productId));
-
+        }
+        response.sendRedirect(String.format("%s%s?product=%s", request.getContextPath(), "/product-view", request.getParameter("product")));
     }
 }

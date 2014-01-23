@@ -19,6 +19,7 @@
     
     <properties>
         <sg-common.version>1.0.0-SNAPSHOT</sg-common.version>
+        <sg-dao.version>1.0.0-SNAPSHOT</sg-dao.version>
         <sg-manager-web.version>1.0.0-SNAPSHOT</sg-manager-web.version>
         <joda-version>2.3</joda-version>
         <junit.version>3.8.1</junit.version>

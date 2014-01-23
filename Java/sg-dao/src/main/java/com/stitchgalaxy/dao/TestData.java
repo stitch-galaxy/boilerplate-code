@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.stitchgalaxy.sg_manager_web;
+package com.stitchgalaxy.dao;
 
 import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.domain.Design;
@@ -121,9 +121,9 @@ public class TestData {
     {
         ProductLocalization locRu = new ProductLocalization();
         locRu.setLocale("ru");
-        locRu.setName("Совенок");
-        locRu.setDescription("Маленький Совенок Сашуля\nКоторого мы очень любим!");
-        locRu.setTags("самый крутой зверь");
+        locRu.setName("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+        locRu.setDescription("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ\nпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!");
+        locRu.setTags("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
         return locRu;
     }
 

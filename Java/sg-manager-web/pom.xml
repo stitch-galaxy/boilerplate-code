@@ -20,6 +20,11 @@
             <version>${sg-common.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.stitchgalaxy</groupId>
+            <artifactId>sg-dao</artifactId>
+            <version>${sg-dao.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>${javaee-web-api.version}</version>

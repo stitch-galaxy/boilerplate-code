@@ -3,62 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.domain.Partner;
-import com.stitchgalaxy.domain.Product;
+import com.stitchgalaxy.dao.DomainDataService;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author tarasev
  */
 @WebServlet("/product-design-remove")
-@MultipartConfig
 public class ProductDesignRemoveServlet extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String errorMessage = ErrorHandler.BAD_REQUEST_PARAMETERS;
-        Long productId = null;
-        Long designId = null;
-        try
-        {
-            String sProductId = request.getParameter("product");
-            productId = Long.parseLong(sProductId);
-            String sDesignId = request.getParameter("design");
-            designId = Long.parseLong(sDesignId);
-            
+        try {
+            Long productId = Long.parseLong(request.getParameter("product"));
+            Long designId = Long.parseLong(request.getParameter("design"));
+
             //TODO: remove design
-            errorMessage = "Cannot remove design";
-        }
-        catch(Exception e)
-        {
-            ErrorHandler errorHandler = new ErrorHandler();
-            errorHandler.setException(e);
-            errorHandler.setMessage(errorMessage);
-            errorHandler.setRequest(request);
-            errorHandler.setResponse(response);
-            errorHandler.setServlet(this);
+            DomainDataService.getInstance().removeProductDesign(productId, designId);
+        } catch (Exception e) {
+            ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();
             return;
-        }        
-        
-        response.sendRedirect(String.format("%s%s?product=%d", request.getContextPath(), "/product-view", productId));
+        }
+
+        response.sendRedirect(String.format("%s%s?product=%s", request.getContextPath(), "/product-view", request.getParameter("product")));
     }
 }

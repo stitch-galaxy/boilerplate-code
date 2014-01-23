@@ -12,7 +12,7 @@
         <title>Error</title>
     </head>
     <body>
-        <h3 style="color: red">${error_message}</h3>
+        <h3 style="color: red">Error</h3>
         <pre>
             ${stack_trace}
         </pre>
