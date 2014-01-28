@@ -27,5 +27,11 @@
             <artifactId>joda-time</artifactId>
             <version>${joda-version}</version>
         </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>${jpa-version}</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>

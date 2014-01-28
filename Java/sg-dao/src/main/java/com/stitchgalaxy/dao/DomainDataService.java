@@ -35,32 +35,41 @@ public final class DomainDataService
         return localInstance;
     }
 
+    //Localization
+    //TODO: add localization id attribute
     public static void removeProductLocalization(Long productId, String locale) {
     }
+    
+    public void storeProductLocalization(ProductLocalization localization) {
+    }
 
+    public void addProductLocalization(Long productId, String locale) {
+    }
+    
+    public ProductLocalization getProductLocalization(Long productId, String locale) {
+        return TestData.createProductLocalization();
+    }
+
+    //Categories
     public Category getCategoryById(Long categoryId) {
         return TestData.createProductCategory();
     }
 
     public void createSubcategory(Long categoryId, String name) {
     }
-
-    public List<Product> getAllProducts() {
-        return TestData.createProductsList();
+    
+    public void removeSubcategory(Long categoryId, Long subCategoryId) {
     }
-
-    public void productAssignAuthor(Long productId, Long authorId) {
+    
+    //Partners
+    public void addPartner(String name, String uri) {
     }
-
-    public void removeProductAuthor(Long productId) {
+    
+    public List<Partner> getAllPartners() {
+        return TestData.createPartnersList();
     }
-
-    public void addProductToCategory(Long categoryId, Long productId) {
-    }
-
-    public void removeProductFromCategory(Long categoryId, Long productId) {
-    }
-
+    
+    //Design
     public void createDesign(Long productId) {
     }
 
@@ -70,65 +79,54 @@ public final class DomainDataService
 
     public void storeDesignData(Design design) {
     }
-
-    public void removeDesignFile(Long designId) {
-    }
-
-    public void removeProductDesign(Long productId, Long designId) {
-    }
-
-    public void removeDesignThumbnail(Long designId) {
-    }
-
+    
     public void uploadDesignFile(Long designId, InputStream filecontent) {
     }
 
     public void uploadDesignThumbnail(Long designId, InputStream filecontent) {
     }
-
+    
+    public void removeDesignFile(Long designId) {
+    }
+    
+    public void removeDesignThumbnail(Long designId) {
+    }
+    
+    //Product
+    
+    public List<Product> getAllProducts() {
+        return TestData.createProductsList();
+    }
+    
     public Product getProductById(Long productId) {
         return TestData.createProductData();
     }
-
-    public void storeProductData(Product product) {
-    }
-
-    public ProductLocalization getProductLocalization(Long productId, String locale) {
-        return TestData.createProductLocalization();
-    }
-
-    public void storeProductLocalization(ProductLocalization localization) {
-    }
-
-    public void addProductLocalization(Long productId, String locale) {
-    }
-
+    
     public void createNewProduct(String name, LocalDate date, BigDecimal price) {
     }
-
-    public List<Partner> getAllPartners() {
-        return TestData.createPartnersList();
+    
+    public void storeProductData(Product product) {
+    }
+    
+    public void addProductToCategory(Long categoryId, Long productId) {
     }
 
-    public void addPartner(String name, String uri) {
+    public void removeProductFromCategory(Long categoryId, Long productId) {
     }
-
-    public void removeProductCompleteProduct(Long productId) {
-    }
-
-    public void removeProductLargeImage(Long productId) {
-    }
-
-    public void removeProductPrototype(Long productId) {
-    }
-
-    public void removeProductThumbnail(Long productId) {
+    
+    public void removeProductDesign(Long productId, Long designId) {
     }
 
     public void productAssignTranslator(Long productId, Long partnerId) {
     }
 
     public void removeProductTranslator(Long productId) {
+    }
+    
+    public void productAssignAuthor(Long productId, Long authorId) {
+    }
+
+    public void removeProductAuthor(Long productId) {
     }
 
     public void uploadProductCompleteProduct(Long productId, InputStream filecontent) {
@@ -142,7 +140,17 @@ public final class DomainDataService
 
     public void uploadProductThumbnail(Long productId, InputStream filecontent) {
     }
-
-    public void removeSubcategory(Long categoryId, Long subCategoryId) {
+    
+    public void removeProductCompleteProduct(Long productId) {
     }
+
+    public void removeProductLargeImage(Long productId) {
+    }
+
+    public void removeProductPrototype(Long productId) {
+    }
+
+    public void removeProductThumbnail(Long productId) {
+    }
+    
 }

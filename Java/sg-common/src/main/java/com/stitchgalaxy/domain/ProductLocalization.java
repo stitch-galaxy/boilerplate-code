@@ -8,7 +8,7 @@ package com.stitchgalaxy.domain;
 
 /**
  *
- * @author Андрей
+ * @author tarasev
  */
 public class ProductLocalization {
     private String locale;

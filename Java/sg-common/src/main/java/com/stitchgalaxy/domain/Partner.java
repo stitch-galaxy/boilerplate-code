@@ -8,7 +8,7 @@ package com.stitchgalaxy.domain;
 
 /**
  *
- * @author Андрей
+ * @author tarasev
  */
 public class Partner {
     private Long id;

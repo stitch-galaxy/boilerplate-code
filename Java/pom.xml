@@ -28,6 +28,7 @@
         <commons-lang3.version>3.0</commons-lang3.version>
         <jstl.version>1.2</jstl.version>
         <taglibs.version>1.1.2</taglibs.version>
+        <jpa-version>1.0.2</jpa-version>
     </properties>
     
 </project>
