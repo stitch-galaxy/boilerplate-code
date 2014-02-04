@@ -6,34 +6,20 @@
 
 package com.stitchgalaxy.domain;
 
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
+import java.util.Set;
 /**
  *
  * @author Administrator
  */
-@Entity
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
     private Category parent;
     
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-    private final List<Category> childs = new LinkedList<Category>();
+    private final Set<Category> childs = new HashSet<Category>();
 
     /**
      * @return the id
@@ -80,7 +66,25 @@ public class Category {
     /**
      * @return the Childs
      */
-    public List<Category> getChilds() {
+    public Set<Category> getChilds() {
         return childs;
+    }
+    
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Category other = (Category) obj;
+        return other.id.equals(id);
+
     }
 }

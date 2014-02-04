@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.stitchgalaxy.dao;
+package com.stitchgalaxy.service;
 
 import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.domain.Design;

@@ -5,7 +5,7 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.dao.DomainDataService;
+import com.stitchgalaxy.service.DomainDataService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

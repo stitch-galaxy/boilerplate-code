@@ -1,13 +1,16 @@
-package com.stitchgalaxy.dao;
+package com.stitchgalaxy.service;
 
 import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.domain.Design;
 import com.stitchgalaxy.domain.Partner;
 import com.stitchgalaxy.domain.Product;
 import com.stitchgalaxy.domain.ProductLocalization;
+import com.stitchgalaxy.dto.CategoryInfoDTO;
+import com.stitchgalaxy.service.DataMapper;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
+import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.joda.time.LocalDate;
 
 /**
@@ -16,6 +19,14 @@ import org.joda.time.LocalDate;
  */
 public final class DomainDataService 
 {
+    private DataMapper dataMapper;
+    
+    private DomainDataService()
+    {
+        dataMapper = new DataMapper();
+        dataMapper.setDataMapper(DozerBeanMapperWrapper.getInstance().getMapper());
+    }
+    
     private static volatile DomainDataService instance;
     
     public static DomainDataService getInstance()
@@ -51,8 +62,8 @@ public final class DomainDataService
     }
 
     //Categories
-    public Category getCategoryById(Long categoryId) {
-        return TestData.createProductCategory();
+    public CategoryInfoDTO getCategoryById(Long categoryId) {
+        return dataMapper.getCategoryInfoDTO(TestData.createProductCategory());
     }
 
     public void createSubcategory(Long categoryId, String name) {

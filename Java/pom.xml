@@ -14,7 +14,6 @@
         <module>sg-rest-api</module>
         <module>sg-manager-web</module>
         <module>sg-common</module>
-    <module>sg-dao</module>
   </modules>
     
     <properties>
@@ -22,13 +21,15 @@
         <sg-dao.version>1.0.0-SNAPSHOT</sg-dao.version>
         <sg-manager-web.version>1.0.0-SNAPSHOT</sg-manager-web.version>
         <joda-version>2.3</joda-version>
-        <junit.version>3.8.1</junit.version>
+        <junit-version>4.10</junit-version>
         <javaee-web-api.version>6.0</javaee-web-api.version>
         <jsp-api.version>2.1</jsp-api.version>
         <commons-lang3.version>3.0</commons-lang3.version>
         <jstl.version>1.2</jstl.version>
         <taglibs.version>1.1.2</taglibs.version>
         <jpa-version>1.0.2</jpa-version>
+        <dozer-version>5.4.0</dozer-version>
+        <spring-version>3.2.3.RELEASE</spring-version>
     </properties>
     
 </project>

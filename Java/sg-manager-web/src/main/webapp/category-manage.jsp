@@ -33,7 +33,7 @@
                                 <a href="${pageContext.request.contextPath}/category-manage?category=${subcategory.id}">${subcategory.name}</a>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/sub-category-remove?category=${category.id}&sub-category=${subcategory.id}" class="delete_button">Remove »</a>
+                                <a href="${pageContext.request.contextPath}/sub-category-remove?category=${category.current.id}&sub-category=${subcategory.id}" class="delete_button">Remove »</a>
                             </td>
                         </tr>
                     </c:forEach>
