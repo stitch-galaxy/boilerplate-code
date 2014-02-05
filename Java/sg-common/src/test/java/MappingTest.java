@@ -18,7 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("spring/datamapper-config.xml")
+//@ContextConfiguration("classpath:com/stitchgalaxy/**/datamapper-config.xml")
+@ContextConfiguration("classpath*:spring/datamapper-config.xml")
 public class MappingTest {
     
     @Autowired

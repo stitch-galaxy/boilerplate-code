@@ -29,7 +29,7 @@
         <taglibs.version>1.1.2</taglibs.version>
         <jpa-version>1.0.2</jpa-version>
         <dozer-version>5.4.0</dozer-version>
-        <spring-version>3.2.3.RELEASE</spring-version>
+        <spring-version>4.0.0.RELEASE</spring-version>
     </properties>
     
 </project>

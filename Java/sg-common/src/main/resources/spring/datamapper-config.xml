@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.3.RELEASE.xsd
-">
-    <bean id="dozerMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper" scope="singleton" >
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <bean id="dozerMapper" class="org.dozer.DozerBeanMapper" scope="singleton" >
         <property name="mappingFiles">
             <list>
-                <value>dozer-bean-mapper-category.xml</value>
-                <value>dozer-global-configuration.xml</value>
+                <value>dozer/dozer-bean-mapper-category.xml</value>
+                <value>dozer/dozer-global-configuration.xml</value>
             </list>
         </property>
     </bean>
