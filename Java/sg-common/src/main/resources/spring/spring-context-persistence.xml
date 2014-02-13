@@ -2,7 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans" 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
     
     <context:property-placeholder properties-ref="persistence-properties"/>
   
@@ -13,6 +16,21 @@
         <property name="password" value="${connection.password}"/>
         <property name="initialSize" value="4"/>
         <property name="defaultAutoCommit" value="false"/>
-    </bean>    
+    </bean>
     
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:hibernate/hibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    <bean id="categoryRepository" class="com.stitchgalaxy.infrastructure.persistence.CategoryRepositoryHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+  
 </beans>

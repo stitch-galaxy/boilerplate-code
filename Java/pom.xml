@@ -31,6 +31,8 @@
         <dozer-version>5.4.0</dozer-version>
         <spring-version>4.0.0.RELEASE</spring-version>
         <commons-dbcp-version>1.4</commons-dbcp-version>
+        <spring-hibernate3-version>2.0.8</spring-hibernate3-version>
+        <hsqldb-version>1.8.0.10</hsqldb-version>
     </properties>
     
 </project>

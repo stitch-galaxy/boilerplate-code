@@ -6,7 +6,9 @@ package com.stitchgalaxy.dao;
  * and open the template in the editor.
  */
 
+import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.dto.*;
+import com.stitchgalaxy.infrastructure.persistence.CategoryRepositoryHibernate;
 import com.stitchgalaxy.service.DataMapper;
 import com.stitchgalaxy.service.TestData;
 import org.junit.Test;
@@ -18,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.apache.commons.dbcp.BasicDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -28,7 +31,7 @@ import java.sql.SQLException;
 public class DaoTest {
     
     @Autowired
-    protected BasicDataSource datasource;
+    protected CategoryRepositoryHibernate categoryRepository;
     
     public DaoTest() {
     }
@@ -36,8 +39,9 @@ public class DaoTest {
     @Test
     public void testCase() throws SQLException
     {
-        Connection test = datasource.getConnection();
-        test.close();
+        Category category = new Category();
+        category.setName("test");
+        categoryRepository.store(category);
     }
     
 }
