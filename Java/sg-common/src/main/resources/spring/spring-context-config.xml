@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    
+    <bean id="persistence-properties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="persistence.properties"/>
+    	<property name="properties">
+    		<props>
+		        <prop key='connection.driver_class'>org.hsqldb.jdbcDriver</prop>
+		        <prop key='connection.url'>jdbc:hsqldb:mem:sg</prop>
+		        <prop key='connection.username'>sa</prop>
+		        <prop key='connection.password'></prop>
+    		</props>
+    	</property>
+    </bean>
+    
+</beans>

@@ -1,3 +1,5 @@
+package com.stitchgalaxy.dto;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,8 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration("classpath:com/stitchgalaxy/**/datamapper-config.xml")
-@ContextConfiguration("classpath*:spring/datamapper-config.xml")
+@ContextConfiguration("classpath*:spring/spring-context-datamapper.xml")
 public class MappingTest {
     
     @Autowired
