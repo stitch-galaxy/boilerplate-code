@@ -40,16 +40,15 @@ public class DaoTest {
     }
     
     @Test
-    public void testCase2() throws SQLException, Exception
+    public void test1() throws SQLException, Exception
     {
         Category category = new Category();
         category.setName("test");
-        category.setId(1l);
         categoryRepository.store(category);
     }
     
     @Test
-    public void testCase0() throws SQLException, Exception
+    public void test0() throws SQLException, Exception
     {
         Category test = categoryRepository.find(1l);
         int i = 0;

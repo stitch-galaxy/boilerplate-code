@@ -8,6 +8,11 @@
   <class name="com.stitchgalaxy.domain.Category" table="category">
 
     <id name="id" column="id">
+        <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> 
+            <param name="sequence_name">category_sequence</param>
+            <param name="optimizer">none</param>
+            <param name="value_column">id</param> 
+         </generator>
     </id>
     <property name="name" column="name"/>
   </class>
