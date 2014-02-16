@@ -37,11 +37,19 @@ public class DaoTest {
     }
     
     @Test
-    public void testCase() throws SQLException
+    @Transactional
+    public void testCase() throws SQLException, Exception
     {
-        Category category = new Category();
-        category.setName("test");
-        categoryRepository.store(category);
+        try
+        {
+            Category category = new Category();
+            category.setName("test");
+            categoryRepository.store(category);
+        } 
+        catch (Exception e) 
+        {
+            throw e;
+        }
     }
     
 }
