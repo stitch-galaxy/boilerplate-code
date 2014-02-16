@@ -44,6 +44,7 @@ public class DaoTest {
         {
             Category category = new Category();
             category.setName("test");
+            category.setId(1l);
             categoryRepository.store(category);
         } 
         catch (Exception e) 
