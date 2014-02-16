@@ -16,7 +16,7 @@ import com.stitchgalaxy.domain.CategoryRepository;
 public class CategoryRepositoryHibernate extends HibernateRepository implements CategoryRepository {
 
     public Category find(long categoryId) {
-        return (Category) getSession().createQuery("from category where id = :id").setParameter("id", categoryId).uniqueResult();
+        return (Category) getSession().createQuery("from Category where id = :id").setParameter("id", categoryId).uniqueResult();
     }
 
     public void store(Category category) {

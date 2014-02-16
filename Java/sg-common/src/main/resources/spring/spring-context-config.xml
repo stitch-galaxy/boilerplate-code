@@ -8,7 +8,7 @@
     	<property name="properties">
     		<props>
 		        <prop key='connection.driver_class'>org.hsqldb.jdbcDriver</prop>
-		        <prop key='connection.url'>jdbc:hsqldb:mem:sg</prop>
+		        <prop key='connection.url'>jdbc:hsqldb:file:stitchgalaxydb</prop>
 		        <prop key='connection.username'>sa</prop>
 		        <prop key='connection.password'></prop>
     		</props>
