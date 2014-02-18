@@ -7,13 +7,22 @@
 <hibernate-mapping default-access="field">
   <class name="com.stitchgalaxy.domain.Category" table="category">
 
-    <id name="id" column="id">
+    <id name="id" column="id" type="long">
         <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> 
             <param name="sequence_name">category_sequence</param>
             <param name="optimizer">none</param>
-            <param name="value_column">id</param> 
-         </generator>
+            <param name="value_column">id</param>
+        </generator>
     </id>
-    <property name="name" column="name"/>
+    <property name="name" column="name" type="string" length="255"/>
+    <many-to-one name="parent" class="com.stitchgalaxy.domain.Category" lazy="proxy">
+        <column name="parent_id" not-null="false"/>
+    </many-to-one>
+    <set name="childs" table="category" inverse="true" lazy="true" fetch="select" cascade="all-delete-orphan">
+        <key>
+            <column name="parent_id" not-null="false" />
+        </key>
+        <one-to-many class="com.stitchgalaxy.domain.Category" />
+    </set>   
   </class>
 </hibernate-mapping>

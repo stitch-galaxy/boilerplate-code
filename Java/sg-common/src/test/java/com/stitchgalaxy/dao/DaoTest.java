@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath*:spring/spring-context-persistence-test.xml")
 @Transactional
-@TransactionConfiguration(defaultRollback = false)
+//@TransactionConfiguration(defaultRollback = false)
 public class DaoTest {
     
     @Autowired
@@ -40,18 +40,33 @@ public class DaoTest {
     }
     
     @Test
-    public void test1() throws SQLException, Exception
+    public void test() throws SQLException, Exception
     {
-        Category category = new Category();
-        category.setName("test");
-        categoryRepository.store(category);
+        Category parent = new Category();
+        parent.setName("parent");
+        categoryRepository.store(parent);
+        
+        
+        Category child1 = new Category();
+        child1.setName("child1");
+        
+        
+        Category child2 = new Category();
+        child2.setName("child2");
+        
+        
+        
+        child1.setParent(parent);
+        child2.setParent(parent);
+        parent.getChilds().add(child1);
+        parent.getChilds().add(child2);
+        
+        
+        categoryRepository.store(child1);
+        categoryRepository.store(child2);
+        categoryRepository.store(parent);
+        
+        Category found = categoryRepository.find(parent.getId());
+        assertSame(found, parent);
     }
-    
-    @Test
-    public void test0() throws SQLException, Exception
-    {
-        Category test = categoryRepository.find(1l);
-        int i = 0;
-    }
-    
 }
