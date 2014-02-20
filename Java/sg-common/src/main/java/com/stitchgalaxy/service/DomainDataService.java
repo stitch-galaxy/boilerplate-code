@@ -1,49 +1,33 @@
 package com.stitchgalaxy.service;
 
-import com.stitchgalaxy.domain.Category;
+import com.stitchgalaxy.domain.CategoryRepository;
 import com.stitchgalaxy.domain.Design;
 import com.stitchgalaxy.domain.Partner;
 import com.stitchgalaxy.domain.Product;
 import com.stitchgalaxy.domain.ProductLocalization;
 import com.stitchgalaxy.dto.CategoryInfoDTO;
-import com.stitchgalaxy.service.DataMapper;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
-import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.joda.time.LocalDate;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Hello world!
  *
  */
+@Transactional
 public final class DomainDataService 
 {
     private DataMapper dataMapper;
+    private CategoryRepository categoryRepository;
     
-    private DomainDataService()
-    {
-        dataMapper = new DataMapper();
-        dataMapper.setDataMapper(DozerBeanMapperWrapper.getInstance().getMapper());
+    public void setDataMapper(DataMapper dataMapper){
+        this.dataMapper = dataMapper;
     }
     
-    private static volatile DomainDataService instance;
-    
-    public static DomainDataService getInstance()
-    {
-        DomainDataService localInstance = instance;
-        if (localInstance == null)
-        {
-            synchronized (DomainDataService.class)
-            {
-                localInstance = instance;
-                if (localInstance == null)
-                {
-                    instance = localInstance = new DomainDataService();
-                }
-            }
-        }
-        return localInstance;
+    public void setCategoryRepository(CategoryRepository categoryRepository){
+        this.categoryRepository = categoryRepository;
     }
 
     //Localization
@@ -61,9 +45,8 @@ public final class DomainDataService
         return TestData.createProductLocalization();
     }
 
-    //Categories
     public CategoryInfoDTO getCategoryById(Long categoryId) {
-        return dataMapper.getCategoryInfoDTO(TestData.createProductCategory());
+        return dataMapper.getCategoryInfoDTO(categoryRepository.find(categoryId));
     }
 
     public void createSubcategory(Long categoryId, String name) {

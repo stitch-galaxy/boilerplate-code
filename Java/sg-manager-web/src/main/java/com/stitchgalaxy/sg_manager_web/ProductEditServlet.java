@@ -30,7 +30,7 @@ public class ProductEditServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
-            Product product = DomainDataService.getInstance().getProductById(productId);
+            Product product = DomainDataServiceUtils.getDomainDataService(this).getProductById(productId);
             request.setAttribute("product", product);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
@@ -47,7 +47,7 @@ public class ProductEditServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
-            Product product = DomainDataService.getInstance().getProductById(productId);
+            Product product = DomainDataServiceUtils.getDomainDataService(this).getProductById(productId);
 
             String name = request.getParameter("name");
             String sDate = request.getParameter("date");
@@ -84,7 +84,7 @@ public class ProductEditServlet extends HttpServlet {
             product.setTags(tags);
             product.setAvgColor(color);
 
-            DomainDataService.getInstance().storeProductData(product);
+            DomainDataServiceUtils.getDomainDataService(this).storeProductData(product);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

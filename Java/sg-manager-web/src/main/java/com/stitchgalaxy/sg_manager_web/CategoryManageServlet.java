@@ -27,7 +27,7 @@ public class CategoryManageServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Long categoryId = Long.parseLong(request.getParameter("category"));
-            CategoryInfoDTO category = DomainDataService.getInstance().getCategoryById(categoryId);
+            CategoryInfoDTO category = DomainDataServiceUtils.getDomainDataService(this).getCategoryById(categoryId);
             request.setAttribute("category", category);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
@@ -46,7 +46,7 @@ public class CategoryManageServlet extends HttpServlet {
         try {
             Long categoryId = Long.parseLong(request.getParameter("category"));
             String name = request.getParameter("name");
-            DomainDataService.getInstance().createSubcategory(categoryId, name);
+            DomainDataServiceUtils.getDomainDataService(this).createSubcategory(categoryId, name);
         } catch (NumberFormatException e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

@@ -24,7 +24,7 @@ public class ProductRemoveThumbnailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataService.getInstance().removeProductThumbnail(productId);
+            DomainDataServiceUtils.getDomainDataService(this).removeProductThumbnail(productId);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

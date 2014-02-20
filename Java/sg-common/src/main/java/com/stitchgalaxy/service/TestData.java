@@ -66,7 +66,7 @@ public class TestData {
         
         product.getDesigns().add(createProductDesign());
 
-        product.getCategories().add(createProductCategory());
+        product.getCategories().add(new Category(null, "l1_category"));
 
         product.setPrototypeUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
         product.setThumbnailUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
@@ -76,30 +76,10 @@ public class TestData {
         return product;
     }
     
-    public static Category createProductCategoryRaw()
-    {
-        Category category = new Category();
-        category.setId(1l);
-        category.setName("category");
-        
-        return category;
-    }
-    
-    public static Category createProductCategory()
-    {
-        Category category = new Category();
-        category.setId(1l);
-        category.setName("category");
-        
-        for(int i = 0; i < 10; ++i)
-        {
-            category.getChilds().add(createProductCategoryRaw());
-        }
-        
-        category.setParent(createProductCategoryRaw());
-        
-        return category;
-    }
+//    public static Category createProductCategory()
+//    {
+//        return new Category(null, "root");
+//    }
     
     public static Design createProductDesign()
     {

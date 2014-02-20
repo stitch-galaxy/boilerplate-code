@@ -25,7 +25,7 @@ public class ProductAuthorRemoveServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataService.getInstance().removeProductAuthor(productId);
+            DomainDataServiceUtils.getDomainDataService(this).removeProductAuthor(productId);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

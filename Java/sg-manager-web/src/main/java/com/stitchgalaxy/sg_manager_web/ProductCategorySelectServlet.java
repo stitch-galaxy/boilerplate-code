@@ -29,7 +29,7 @@ public class ProductCategorySelectServlet extends HttpServlet {
             Long categoryId = Long.parseLong(request.getParameter("category"));
             Long productId = Long.parseLong(request.getParameter("product"));
 
-            CategoryInfoDTO category = DomainDataService.getInstance().getCategoryById(categoryId);
+            CategoryInfoDTO category = DomainDataServiceUtils.getDomainDataService(this).getCategoryById(categoryId);
 
             request.setAttribute("category", category);
             request.setAttribute("productId", productId);

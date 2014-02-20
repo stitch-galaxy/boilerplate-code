@@ -6,6 +6,7 @@ package com.stitchgalaxy.dto;
  * and open the template in the editor.
  */
 
+import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.service.DataMapper;
 import com.stitchgalaxy.service.TestData;
 import org.junit.Test;
@@ -32,7 +33,23 @@ public class MappingTest {
     @Test
     public void testCase()
     {
-        mapper.getCategoryInfoDTO(TestData.createProductCategory());
+        Category l1 = new Category(null, "l1");
+        l1.setId(1l);
+        
+        Category l2 = new Category(l1, "l2");
+        l2.setId(2l);
+        l1.getChilds().add(l2);
+        
+        Category l3_1 = new Category(l2, "l3_1");
+        l3_1.setId(3l);
+        l2.getChilds().add(l3_1);
+        
+        Category l3_2 = new Category(l2, "l3_2");
+        l3_2.setId(4l);
+        l2.getChilds().add(l3_2);
+        
+        
+        CategoryInfoDTO dto = mapper.getCategoryInfoDTO(l2);
     }
     
 }

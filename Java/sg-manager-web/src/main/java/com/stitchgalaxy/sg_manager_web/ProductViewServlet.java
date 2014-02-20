@@ -28,7 +28,7 @@ public class ProductViewServlet extends HttpServlet {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
 
-            Product product = DomainDataService.getInstance().getProductById(productId);
+            Product product = DomainDataServiceUtils.getDomainDataService(this).getProductById(productId);
             request.setAttribute("product", product);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);

@@ -32,7 +32,7 @@ public class ProductPartnerSetServlet extends HttpServlet {
             } else if (request.getServletPath().equals("/product-set-translator")) {
                 request.setAttribute("action", "/product-assign-translator");
             }
-            List<Partner> partners = DomainDataService.getInstance().getAllPartners();
+            List<Partner> partners = DomainDataServiceUtils.getDomainDataService(this).getAllPartners();
             request.setAttribute("partners", partners);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
@@ -51,7 +51,7 @@ public class ProductPartnerSetServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             String uri = request.getParameter("uri");
-            DomainDataService.getInstance().addPartner(name, uri);
+            DomainDataServiceUtils.getDomainDataService(this).addPartner(name, uri);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

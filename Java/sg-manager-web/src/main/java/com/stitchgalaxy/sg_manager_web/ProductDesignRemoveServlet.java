@@ -28,7 +28,7 @@ public class ProductDesignRemoveServlet extends HttpServlet {
             Long designId = Long.parseLong(request.getParameter("design"));
 
             //TODO: remove design
-            DomainDataService.getInstance().removeProductDesign(productId, designId);
+            DomainDataServiceUtils.getDomainDataService(this).removeProductDesign(productId, designId);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

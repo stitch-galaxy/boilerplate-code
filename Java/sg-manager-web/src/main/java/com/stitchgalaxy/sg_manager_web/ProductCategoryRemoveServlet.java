@@ -26,7 +26,7 @@ public class ProductCategoryRemoveServlet extends HttpServlet {
         try {
             Long categoryId = Long.parseLong(request.getParameter("category"));
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataService.getInstance().removeProductFromCategory(categoryId, productId);
+            DomainDataServiceUtils.getDomainDataService(this).removeProductFromCategory(categoryId, productId);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

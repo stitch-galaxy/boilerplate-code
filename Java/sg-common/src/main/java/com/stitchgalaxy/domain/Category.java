@@ -7,15 +7,34 @@
 package com.stitchgalaxy.domain;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  *
  * @author Administrator
  */
-public class Category {
+public class Category implements Entity<Category>{
+    
+    private static final char path_delimeter = '/';
+    
+    public Category(Category parent, String name)
+    {
+        this.name = name;
+        if (parent != null)
+        {
+            this.path = parent.getFullPath();
+            this.parent = parent;
+        }
+        else
+        {
+            this.path = "";
+        }
+    }
+    
     private Long id;
     private String name;
+    private String path;
     
     private Category parent;
     
@@ -70,21 +89,49 @@ public class Category {
         return childs;
     }
     
+        /**
+     * @return the path
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * @param path the path to set
+     */
+    public void setPath(String path) {
+        this.path = path;
+    }
+    
+    public String getFullPath()
+    {
+        StringBuilder sb = new StringBuilder(path);
+        sb.append(path_delimeter);
+        sb.append(name);
+        return sb.toString();
+    }
+    
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return new HashCodeBuilder()
+                .append(name)
+                .append(path)
+                .toHashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || this.getClass() != obj.getClass()) {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
+        
         Category other = (Category) obj;
-        return other.id.equals(id);
-
+        return sameIdentityAs(other);
+    }
+    
+    public boolean sameIdentityAs(Category other) {
+        return other != null && new EqualsBuilder().
+                append(this.name, other.name).
+                append(this.path, other.path).
+                isEquals();
     }
 }

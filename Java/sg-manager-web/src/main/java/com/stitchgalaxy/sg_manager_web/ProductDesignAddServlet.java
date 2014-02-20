@@ -25,7 +25,7 @@ public class ProductDesignAddServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataService.getInstance().createDesign(productId);
+            DomainDataServiceUtils.getDomainDataService(this).createDesign(productId);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

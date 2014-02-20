@@ -30,7 +30,7 @@ public class ProductUploadThumbnailServlet extends HttpServlet {
             Long productId = Long.parseLong(request.getParameter("product"));
             Part filePart = request.getPart("file");
             InputStream filecontent = filePart.getInputStream();
-            DomainDataService.getInstance().uploadProductThumbnail(productId, filecontent);
+            DomainDataServiceUtils.getDomainDataService(this).uploadProductThumbnail(productId, filecontent);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

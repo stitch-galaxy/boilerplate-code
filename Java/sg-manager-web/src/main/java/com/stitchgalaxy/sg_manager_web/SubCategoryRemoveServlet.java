@@ -26,7 +26,7 @@ public class SubCategoryRemoveServlet extends HttpServlet {
         try {
             Long categoryId = Long.parseLong(request.getParameter("category"));
             Long subCategoryId = Long.parseLong(request.getParameter("sub-category"));
-            DomainDataService.getInstance().removeSubcategory(categoryId, subCategoryId);
+            DomainDataServiceUtils.getDomainDataService(this).removeSubcategory(categoryId, subCategoryId);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

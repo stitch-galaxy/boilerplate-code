@@ -26,7 +26,7 @@ public class ProductTranslatorAssignServlet extends HttpServlet {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
             Long partnerId = Long.parseLong(request.getParameter("partner"));
-            DomainDataService.getInstance().productAssignTranslator(productId, partnerId);
+            DomainDataServiceUtils.getDomainDataService(this).productAssignTranslator(productId, partnerId);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

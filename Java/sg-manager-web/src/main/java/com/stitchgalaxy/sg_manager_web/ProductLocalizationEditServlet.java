@@ -28,7 +28,7 @@ public class ProductLocalizationEditServlet extends HttpServlet {
         try {
             String locale = request.getParameter("locale");
             Long productId = Long.parseLong(request.getParameter("product"));
-            ProductLocalization localization = DomainDataService.getInstance().getProductLocalization(productId, locale);
+            ProductLocalization localization = DomainDataServiceUtils.getDomainDataService(this).getProductLocalization(productId, locale);
             request.setAttribute("localization", localization);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
@@ -47,7 +47,7 @@ public class ProductLocalizationEditServlet extends HttpServlet {
             String locale = request.getParameter("locale");
             Long productId = Long.parseLong(request.getParameter("product"));
 
-            ProductLocalization localization = DomainDataService.getInstance().getProductLocalization(productId, locale);
+            ProductLocalization localization = DomainDataServiceUtils.getDomainDataService(this).getProductLocalization(productId, locale);
 
             String name = request.getParameter("name");
             String description = request.getParameter("description");
@@ -57,7 +57,7 @@ public class ProductLocalizationEditServlet extends HttpServlet {
             localization.setDescription(description);
             localization.setTags(tags);
 
-            DomainDataService.getInstance().storeProductLocalization(localization);
+            DomainDataServiceUtils.getDomainDataService(this).storeProductLocalization(localization);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

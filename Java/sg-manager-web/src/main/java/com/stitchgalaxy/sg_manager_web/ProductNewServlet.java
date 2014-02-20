@@ -41,7 +41,7 @@ public class ProductNewServlet extends HttpServlet {
             String sPriceUsd = request.getParameter("price");
             BigDecimal price = new BigDecimal(sPriceUsd);
 
-            DomainDataService.getInstance().createNewProduct(name, date, price);
+            DomainDataServiceUtils.getDomainDataService(this).createNewProduct(name, date, price);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

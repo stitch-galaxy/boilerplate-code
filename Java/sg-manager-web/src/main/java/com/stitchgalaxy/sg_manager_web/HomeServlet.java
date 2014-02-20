@@ -27,7 +27,7 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            List<Product> products = DomainDataService.getInstance().getAllProducts();
+            List<Product> products = DomainDataServiceUtils.getDomainDataService(this).getAllProducts();
             request.setAttribute("products", products);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);

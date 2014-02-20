@@ -26,7 +26,7 @@ public class ProductCategoryAddServlet extends HttpServlet {
         try {
             Long categoryId = Long.parseLong(request.getParameter("category"));
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataService.getInstance().addProductToCategory(categoryId, productId);
+            DomainDataServiceUtils.getDomainDataService(this).addProductToCategory(categoryId, productId);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

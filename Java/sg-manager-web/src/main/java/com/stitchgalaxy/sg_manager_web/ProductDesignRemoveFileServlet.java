@@ -24,7 +24,7 @@ public class ProductDesignRemoveFileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Long designId = Long.parseLong(request.getParameter("design"));
-            DomainDataService.getInstance().removeDesignFile(designId);
+            DomainDataServiceUtils.getDomainDataService(this).removeDesignFile(designId);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

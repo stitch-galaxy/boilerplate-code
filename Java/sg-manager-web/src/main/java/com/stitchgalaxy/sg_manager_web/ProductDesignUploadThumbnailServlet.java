@@ -30,7 +30,7 @@ public class ProductDesignUploadThumbnailServlet extends HttpServlet {
             Long designId = Long.parseLong(request.getParameter("design"));
             Part filePart = request.getPart("file");
             InputStream filecontent = filePart.getInputStream();
-            DomainDataService.getInstance().uploadDesignThumbnail(designId, filecontent);
+            DomainDataServiceUtils.getDomainDataService(this).uploadDesignThumbnail(designId, filecontent);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

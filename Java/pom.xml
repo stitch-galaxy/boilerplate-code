@@ -17,16 +17,16 @@
   </modules>
     
     <properties>
-        <sg-common.version>1.0.0-SNAPSHOT</sg-common.version>
-        <sg-dao.version>1.0.0-SNAPSHOT</sg-dao.version>
-        <sg-manager-web.version>1.0.0-SNAPSHOT</sg-manager-web.version>
+        <sg-common-version>1.0.0-SNAPSHOT</sg-common-version>
+        <sg-dao-version>1.0.0-SNAPSHOT</sg-dao-version>
+        <sg-manager-web-version>1.0.0-SNAPSHOT</sg-manager-web-version>
         <joda-version>2.3</joda-version>
         <junit-version>4.10</junit-version>
-        <javaee-web-api.version>6.0</javaee-web-api.version>
-        <jsp-api.version>2.1</jsp-api.version>
-        <commons-lang3.version>3.0</commons-lang3.version>
-        <jstl.version>1.2</jstl.version>
-        <taglibs.version>1.1.2</taglibs.version>
+        <javaee-web-api-version>6.0</javaee-web-api-version>
+        <jsp-api-version>2.1</jsp-api-version>
+        <commons-lang3-version>3.0</commons-lang3-version>
+        <jstl-version>1.2</jstl-version>
+        <taglibs-version>1.1.2</taglibs-version>
         <dozer-version>5.4.0</dozer-version>
         <spring-version>4.0.0.RELEASE</spring-version>
         <commons-dbcp-version>1.4</commons-dbcp-version>
@@ -35,5 +35,21 @@
         <jta-version>1.1</jta-version>
         <hibernate-version>4.3.1.Final</hibernate-version>
     </properties>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.stitchgalaxy</groupId>
+                <artifactId>sg-common</artifactId>
+                <version>${sg-common-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.stitchgalaxy</groupId>
+                <artifactId>sg-dao</artifactId>
+                <version>${sg-dao-version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     
 </project>

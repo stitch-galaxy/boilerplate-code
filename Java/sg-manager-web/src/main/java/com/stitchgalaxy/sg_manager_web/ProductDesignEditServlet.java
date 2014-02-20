@@ -30,7 +30,7 @@ public class ProductDesignEditServlet extends HttpServlet {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
             Long designId = Long.parseLong(request.getParameter("design"));
-            Design design = DomainDataService.getInstance().getDesignById(designId);
+            Design design = DomainDataServiceUtils.getDomainDataService(this).getDesignById(designId);
             request.setAttribute("design", design);
             request.setAttribute("productId", productId);
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class ProductDesignEditServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Long designId = Long.parseLong(request.getParameter("design"));
-            Design design = DomainDataService.getInstance().getDesignById(designId);
+            Design design = DomainDataServiceUtils.getDomainDataService(this).getDesignById(designId);
 
             String sWidth = request.getParameter("width");
             Integer width = StringUtils.isNotEmpty(sWidth) ? Integer.parseInt(sWidth) : null;
@@ -68,7 +68,7 @@ public class ProductDesignEditServlet extends HttpServlet {
             design.setStitchesPerInch(stitchesPerInch);
             design.setThreads(threads);
 
-            DomainDataService.getInstance().storeDesignData(design);
+            DomainDataServiceUtils.getDomainDataService(this).storeDesignData(design);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

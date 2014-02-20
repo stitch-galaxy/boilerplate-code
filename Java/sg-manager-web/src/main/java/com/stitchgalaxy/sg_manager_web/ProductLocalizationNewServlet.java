@@ -34,7 +34,7 @@ public class ProductLocalizationNewServlet extends HttpServlet {
         try {
             String locale = request.getParameter("locale");
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataService.getInstance().addProductLocalization(productId, locale);
+            DomainDataServiceUtils.getDomainDataService(this).addProductLocalization(productId, locale);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();
