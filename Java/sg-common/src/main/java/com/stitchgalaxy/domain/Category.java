@@ -18,6 +18,9 @@ public class Category implements Entity<Category>{
     
     private static final char path_delimeter = '/';
     
+    public Category(){
+    }
+    
     public Category(Category parent, String name)
     {
         this.name = name;
@@ -25,6 +28,7 @@ public class Category implements Entity<Category>{
         {
             this.path = parent.getFullPath();
             this.parent = parent;
+            this.parent.childs.add(this);
         }
         else
         {

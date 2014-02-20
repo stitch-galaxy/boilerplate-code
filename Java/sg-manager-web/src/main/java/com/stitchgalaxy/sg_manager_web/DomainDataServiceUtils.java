@@ -8,8 +8,8 @@ package com.stitchgalaxy.sg_manager_web;
 
 import com.stitchgalaxy.service.DomainDataService;
 import javax.servlet.Servlet;
-//import org.springframework.web.context.WebApplicationContext;
-//import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  *
@@ -19,10 +19,9 @@ public class DomainDataServiceUtils {
     
     public static DomainDataService getDomainDataService(Servlet servlet)
     {
-//        WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(servlet.getServletConfig().getServletContext());
-//        DomainDataService service = (DomainDataService) ctx.getBean("dataservice");
-//        return service;
-        return null;
+        WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(servlet.getServletConfig().getServletContext());
+        DomainDataService service = (DomainDataService) ctx.getBean("dataservice");
+        return service;
     }
     
 }

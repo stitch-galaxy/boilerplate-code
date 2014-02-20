@@ -8,6 +8,7 @@ package com.stitchgalaxy.infrastructure.persistence;
 
 import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.domain.CategoryRepository;
+import java.util.List;
 
 /**
  *
@@ -21,5 +22,14 @@ public class CategoryRepositoryHibernate extends HibernateRepository implements 
 
     public void store(Category category) {
         getSession().saveOrUpdate(category);
+    }
+
+    public List<Category> getTopLeveCategories() {
+        List<Category> result = getSession().createQuery("from Category where parent_id is null").list();
+        return result;
+    }
+    
+    public void delete(Category category){
+        getSession().delete(category);
     }
 }

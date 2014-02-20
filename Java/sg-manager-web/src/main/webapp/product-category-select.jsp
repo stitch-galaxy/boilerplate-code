@@ -15,10 +15,16 @@
     </head>
     <body>
         <p>
-            <label for="parent">Parent</label>
-            <c:if test="${category.parent != null}">
-                <a href="${pageContext.request.contextPath}/product-category-select?product=${productId}&category=${category.parent.id}">${category.parent.name}</a> 
-            </c:if>
+            <c:choose>
+                <c:when test="${category.parent != null}">
+                    <label for="parent">Parent</label>
+                    <a href="${pageContext.request.contextPath}/product-category-select?product=${productId}&category=${category.parent.id}">${category.parent.name}</a> 
+                </c:when>
+                <c:otherwise>
+                    <label for="parent">Root</label>
+                    <a href="${pageContext.request.contextPath}/product-category-select?product=${productId}&category=${category.parent.id}">${category.parent.name}</a> 
+                </c:otherwise>
+            </c:choose>
         </p>
         <div class="datagrid">
             <table>

@@ -89,7 +89,7 @@
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>${hsqldb-version}</version>
-            <scope>test</scope>
+<!--<scope>test</scope>-->
         </dependency>
     </dependencies>
 </project>

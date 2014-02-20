@@ -5,6 +5,7 @@
     
     <bean id="persistence-properties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location" value="persistence.properties"/>
+        <property name="ignoreResourceNotFound" value="true"/>
     	<property name="properties">
     		<props>
 		        <prop key='connection.driver_class'>org.hsqldb.jdbcDriver</prop>

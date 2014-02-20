@@ -1,5 +1,6 @@
 package com.stitchgalaxy.service;
 
+import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.domain.CategoryRepository;
 import com.stitchgalaxy.domain.Design;
 import com.stitchgalaxy.domain.Partner;
@@ -8,6 +9,7 @@ import com.stitchgalaxy.domain.ProductLocalization;
 import com.stitchgalaxy.dto.CategoryInfoDTO;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 import org.joda.time.LocalDate;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Transactional
-public final class DomainDataService 
+public class DomainDataService 
 {
     private DataMapper dataMapper;
     private CategoryRepository categoryRepository;
@@ -45,14 +47,43 @@ public final class DomainDataService
         return TestData.createProductLocalization();
     }
 
+    public List<CategoryInfoDTO> getRootCategories() {
+        List<Category> categories = categoryRepository.getTopLeveCategories();
+        List<CategoryInfoDTO> result = new LinkedList<CategoryInfoDTO>();
+        for(Category c : categories)
+        {
+            result.add(dataMapper.getCategoryInfoDTO(c));
+        }
+        return result;
+    }
+    
+    public void createTopLevelСategory(String name) {
+        Category topLevelCategory = new Category(null, name);
+        categoryRepository.store(topLevelCategory);
+    }
+    
     public CategoryInfoDTO getCategoryById(Long categoryId) {
         return dataMapper.getCategoryInfoDTO(categoryRepository.find(categoryId));
     }
 
     public void createSubcategory(Long categoryId, String name) {
+        Category parent = categoryRepository.find(categoryId);
+        Category child = new Category(parent, name);
+        categoryRepository.store(parent);
     }
     
     public void removeSubcategory(Long categoryId, Long subCategoryId) {
+        Category parent = categoryRepository.find(categoryId);
+        Category child = categoryRepository.find(subCategoryId);
+        parent.getChilds().remove(child);
+        categoryRepository.delete(child);
+        categoryRepository.store(parent);
+    }
+    
+    public void removeTopLevelCategory(Long categoryId)
+    {
+        Category topLevel = categoryRepository.find(categoryId);
+        categoryRepository.delete(topLevel);
     }
     
     //Partners

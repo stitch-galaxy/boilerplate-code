@@ -17,8 +17,8 @@ import javax.servlet.annotation.WebServlet;
  *
  * @author tarasev
  */
-@WebServlet("/sub-category-remove")
-public class SubCategoryRemoveServlet extends HttpServlet {
+@WebServlet("/category-remove-subcategory")
+public class CategoryRemoveSubCategoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

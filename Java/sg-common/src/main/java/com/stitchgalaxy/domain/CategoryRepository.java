@@ -5,6 +5,9 @@
  */
 
 package com.stitchgalaxy.domain;
+
+import java.util.List;
+
 /**
  *
  * @author Administrator
@@ -13,5 +16,9 @@ public interface CategoryRepository {
     
     Category find(long categoryId);
     
+    List<Category> getTopLeveCategories();
+    
     void store(Category category);
+    
+    void delete(Category category);
 }

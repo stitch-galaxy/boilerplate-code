@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.sql.SQLException;
+import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -34,17 +35,28 @@ public class DaoTest {
     }
     
     @Test
-    public void test() throws SQLException, Exception
+    public void testStoreCascade() throws SQLException, Exception
     {
         Category l1 = new Category(null, "l1");
         Category l1_l2_1 = new Category(l1, "l1_l2_1");
-        l1.getChilds().add(l1_l2_1);
         Category l1_l2_2 = new Category(l1, "l1_l2_2");
-        l1.getChilds().add(l1_l2_2);
         
         categoryRepository.store(l1);
         
         Category found = categoryRepository.find(l1_l2_1.getId());
         assertEquals(found, l1_l2_1);
+    }
+    
+    @Test
+    public void testFindTopLevel() throws SQLException, Exception
+    {
+        Category l1 = new Category(null, "l1_1");
+        Category l2 = new Category(null, "l1_2");
+        
+        categoryRepository.store(l1);
+        categoryRepository.store(l2);
+        
+        List<Category> topLevelCategories = categoryRepository.getTopLeveCategories();
+        assertEquals(topLevelCategories.size(), 2);
     }
 }
