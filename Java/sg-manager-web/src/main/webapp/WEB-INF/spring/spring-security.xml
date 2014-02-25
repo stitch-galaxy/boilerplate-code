@@ -4,11 +4,10 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd"> 
 
-    <http access-denied-page="/error403.jsp"> 
-        <intercept-url pattern="/welcome" access="ROLE_ADMIN,ROLE_ANONYMOUS"/> 
-        <intercept-url pattern="/**" access="ROLE_ADMIN"/> 
-        <form-login login-page="/login.jsp" default-target-url="/home" authentication-failure-url="/login.jsp?error=true"/> 
-        <logout logout-url="/logout" logout-success-url="/welcome"/> 
+    <http access-denied-page="/accessDenied"> 
+        <intercept-url pattern="/category/view/topLevel" access="ROLE_ADMIN"/>
+        <form-login login-page="/login" default-target-url="" authentication-failure-url="/loginfailed"/>
+        <logout logout-success-url="/logout" />
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/> 
         <remember-me/> 
     </http> 

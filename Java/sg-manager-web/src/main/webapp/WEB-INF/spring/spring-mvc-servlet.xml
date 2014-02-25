@@ -23,4 +23,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
             <value>.jsp</value>
         </property>
     </bean>
+    
+    <mvc:view-controller path="/login" view-name="login"/>
+    <mvc:view-controller path="/accessDenied" view-name="error403"/>
 </beans>
