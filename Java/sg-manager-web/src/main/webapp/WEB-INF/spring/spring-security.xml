@@ -4,12 +4,22 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd"> 
 
+    <global-method-security pre-post-annotations="enabled"/>
+    
+    <http pattern="/css/**" security="none"/>
+    <http pattern="/images/**" security="none"/>
+    <http pattern="/login" security="none"/>
+    
     <http access-denied-page="/accessDenied"> 
-        <intercept-url pattern="/category/view/topLevel" access="ROLE_ADMIN"/>
+        <!--    <http access-denied-page="/accessDenied"> -->
+        <!--        <remember-me key="sgRememberKey" token-validity-seconds="2592000"/>-->
+        <!--        <intercept-url pattern="/login" access="permitAll()"/>
+        <intercept-url pattern="/logout" access="permitAll()"/>
+        <intercept-url pattern="/loginfailed" access="permitAll()"/>-->
+        <intercept-url pattern="/**" access="ROLE_ADMIN"/>
         <form-login login-page="/login" default-target-url="" authentication-failure-url="/loginfailed"/>
         <logout logout-success-url="/logout" />
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/> 
-        <remember-me/> 
     </http> 
   
     <authentication-manager> 

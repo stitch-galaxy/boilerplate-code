@@ -38,13 +38,13 @@
                 </tr>
                 <tr>
                     <td colspan='2'><input name="submit" type="submit"
-                                           value="submit" />
+                                           value="Login" />
                     </td>
                 </tr>
-                <tr>
+<!--                <tr>
                     <td colspan='2'><input name="reset" type="reset" />
                     </td>
-                </tr>
+                </tr>-->
             </table>
 
         </form>

@@ -34,6 +34,7 @@
         <url-pattern>/category/add</url-pattern>
         <url-pattern>/category/remove</url-pattern>
         <url-pattern>/login</url-pattern>
+        <url-pattern>/loginfailed</url-pattern>
         <url-pattern>/logout</url-pattern>
         <url-pattern>/accessDenied</url-pattern>
     </servlet-mapping>
