@@ -7,20 +7,13 @@ package com.stitchgalaxy.sg_manager_web;
 
 import com.stitchgalaxy.service.DomainDataService;
 import com.stitchgalaxy.dto.CategoryInfoDTO;
-import java.io.IOException;
 import java.util.List;
-import javax.jws.WebParam;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -31,11 +24,33 @@ public class CategoriesController {
 
     @Autowired DomainDataService domainDataService;
     
-    @RequestMapping(value = "/category/view/topLevel", method = RequestMethod.GET)
+    public static final String VIEW_TOPLEVEL_URL = "/category/view/topLevel";
+    public static final String ADD_TOPLEVEL_URL = "/category/add/topLevel";
+    public static final String REMOVE_TOPLEVEL_URL = "/category/remove/topLevel";
+    
+    @RequestMapping(value = VIEW_TOPLEVEL_URL, method = RequestMethod.GET)
     public String listTopLevelCategories(Model model) {
         List<CategoryInfoDTO> categories = domainDataService.getRootCategories();
         model.addAttribute("categories", categories);
+        model.addAttribute("postAction", ADD_TOPLEVEL_URL);
+        model.addAttribute("removeAction", REMOVE_TOPLEVEL_URL);
 
-        return "categories-manage-toplevel";
+        return "category-view-toplevel";
+    }
+    
+    @RequestMapping(value = ADD_TOPLEVEL_URL, method = RequestMethod.POST)
+    public String addTopLevelCategory(Model model, 
+            @RequestParam("name") String name)
+    {
+        domainDataService.createTopLevel—ategory(name);
+        return "redirect:" + VIEW_TOPLEVEL_URL;
+    }
+    
+    @RequestMapping(value = REMOVE_TOPLEVEL_URL, method = RequestMethod.GET)
+    public String removeTopLevelCategory(Model model, 
+            @RequestParam(value="category") Long categoryId)
+    {
+        domainDataService.removeTopLevelCategory(categoryId);
+        return "redirect:" + VIEW_TOPLEVEL_URL;
     }
 }

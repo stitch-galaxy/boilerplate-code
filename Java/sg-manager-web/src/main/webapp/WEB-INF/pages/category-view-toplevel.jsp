@@ -27,14 +27,14 @@
                                 <a href="${pageContext.request.contextPath}/category-manage?category=${subcategory.current.id}">${subcategory.current.name}</a>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/category-remove-toplevel?category=${subcategory.current.id}" class="delete_button">Remove »</a>
+                                <a href="${pageContext.request.contextPath}${removeAction}?category=${subcategory.current.id}" class="delete_button" met>Remove »</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
-        <form method="POST">
+        <form method="POST" action="${pageContext.request.contextPath}${postAction}">
             <fieldset>
                 <legend>Category parameters</legend>
                 <p> 
