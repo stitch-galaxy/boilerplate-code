@@ -23,7 +23,4 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
             <value>.jsp</value>
         </property>
     </bean>
-    
-    <import resource="security.xml" />
-    
 </beans>
