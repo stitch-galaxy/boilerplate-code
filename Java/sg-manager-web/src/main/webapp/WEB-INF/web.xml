@@ -12,6 +12,9 @@
         <url-pattern>/category/view/topLevel</url-pattern>
         <url-pattern>/category/add/topLevel</url-pattern>
         <url-pattern>/category/remove/topLevel</url-pattern>
+        <url-pattern>/category/view</url-pattern>
+        <url-pattern>/category/add</url-pattern>
+        <url-pattern>/category/remove</url-pattern>
     </servlet-mapping>
     
     <context-param>

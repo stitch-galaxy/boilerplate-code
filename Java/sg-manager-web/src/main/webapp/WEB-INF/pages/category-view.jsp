@@ -10,42 +10,54 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Manage top level categories</title>
+        <title>Manage category</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sg.css" type="text/css" />
     </head>
     <body>
         <p>
             <a href="${pageContext.request.contextPath}">Home</a> 
         </p>
+        <p>
+            <label for="parent">Parent</label>
+            <br/>
+            
+            <c:choose>
+                <c:when test="${category.parent != null}">
+                    <a href="${pageContext.request.contextPath}${viewAction}?category=${category.parent.id}">${category.parent.name}</a> 
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}${viewTopLevelAction}">Manage top level categories</a> 
+                </c:otherwise>
+            </c:choose>
+        </p>
         <div class="datagrid">
             <table>
                 <thead><tr><th>Category</th><th>Action</th></tr></thead>
                 <tbody>
-                    <c:forEach items="${categories}" var="subcategory" varStatus="loopStatus">
+                    <c:forEach items="${category.childs}" var="subcategory" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>
-                                <a href="${pageContext.request.contextPath}${viewAction}?category=${subcategory.current.id}">${subcategory.current.name}</a>
+                                <a href="${pageContext.request.contextPath}${viewAction}?category=${subcategory.id}">${subcategory.name}</a>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}${removeAction}?category=${subcategory.current.id}" class="delete_button">Remove »</a>
+                                <a href="${pageContext.request.contextPath}${removeAction}?category=${category.current.id}&sub-category=${subcategory.id}" class="delete_button">Remove »</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
-        <form method="POST" action="${pageContext.request.contextPath}${postAction}">
+        <form method="POST" action="${pageContext.request.contextPath}${postAction}?category=${category.current.id}">
             <fieldset>
-                <legend>Category parameters</legend>
+                <legend>Sub category parameters</legend>
                 <p> 
                     <label for="name">Name</label>
                     <input name="name" type="text" placeholder="Enter category name" required class="text_input"/>
                     <label class="text_input_validation"></label>
                 </p>
 
-                <p><input class="submit_add" type="submit" value="Add category"/></p>
+                <p><input class="submit_add" type="submit" value="Add subcategory"/></p>
             </fieldset>
-
         </form>
     </body>
 </html>

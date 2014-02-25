@@ -15,6 +15,7 @@
         </generator>
     </id>
     <property name="name" column="name" type="string" length="255"/>
+    <property name="path" column="path" type="string" length="1024"/>
     <many-to-one name="parent" class="com.stitchgalaxy.domain.Category" lazy="proxy">
         <column name="parent_id" not-null="false"/>
     </many-to-one>

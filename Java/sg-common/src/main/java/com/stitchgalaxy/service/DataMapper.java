@@ -39,7 +39,7 @@ public class DataMapper {
         if (category.getChilds() != null)
         {
             for (Category c : category.getChilds()) {
-                CategoryInfo child = mapper.map(category.getParent(), CategoryInfo.class);
+                CategoryInfo child = mapper.map(c, CategoryInfo.class);
                 destObject.getChilds().add(child);
             }
         }
