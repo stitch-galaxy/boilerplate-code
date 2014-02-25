@@ -22,29 +22,21 @@
             <groupId>com.stitchgalaxy</groupId>
             <artifactId>sg-dao</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring-version}</version>
-        </dependency>
+        <!-- ??? Do we need it ??? -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>${javaee-web-api-version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Servlet -->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
             <version>${jsp-api-version}</version>
             <scope>provided</scope>
         </dependency>
-
+        <!-- JSTL taglib-->
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
@@ -55,13 +47,33 @@
             <artifactId>jstl</artifactId>
             <version>${jstl-version}</version>
         </dependency>
-        
+        <!-- Spring -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit-version}</version>
-            <scope>test</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+        <dependency> 
+            <groupId>org.springframework.security</groupId> 
+            <artifactId>spring-security-core</artifactId>           
+            <version>${spring-security-version}</version> 
+        </dependency>  
+        <dependency> 
+            <groupId>org.springframework.security</groupId> 
+            <artifactId>spring-security-web</artifactId>           
+            <version>${spring-security-version}</version> 
+        </dependency> 
+        <dependency> 
+            <groupId>org.springframework.security</groupId> 
+            <artifactId>spring-security-config</artifactId>           
+            <version>${spring-security-version}</version> 
+        </dependency>
+        <!-- Useful stuff -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -72,6 +84,14 @@
             <artifactId>joda-time</artifactId>
             <version>${joda-version}</version>
         </dependency>
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+        
     </dependencies>
     <build>
         <finalName>sg-manager-web</finalName>

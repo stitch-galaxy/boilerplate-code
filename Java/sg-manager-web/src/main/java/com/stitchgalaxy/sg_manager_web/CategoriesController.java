@@ -51,16 +51,18 @@ public class CategoriesController {
             @RequestParam(value = "name") String name,
             RedirectAttributes redirectAttributes) {
             domainDataService.createSubcategory(categoryId, name);
-            redirectAttributes.addFlashAttribute("category", categoryId);
+            redirectAttributes.addAttribute("category", categoryId);
             return "redirect:" + VIEW_URL;
     }
     
     @RequestMapping(value = REMOVE_URL, method = RequestMethod.GET)
-    public String removeCategory(Model model, 
-            @RequestParam(value="category") Long categoryId,
-            @RequestParam(value="sub-category") Long subCategoryId)
+    public String removeCategory(Model model,
+            @RequestParam(value = "category") Long categoryId,
+            @RequestParam(value = "sub-category") Long subCategoryId,
+            RedirectAttributes redirectAttributes)
     {
         domainDataService.removeSubcategory(categoryId, subCategoryId);
+        redirectAttributes.addAttribute("category", categoryId);
         return "redirect:" + VIEW_URL;
     }
     
@@ -85,7 +87,7 @@ public class CategoriesController {
     
     @RequestMapping(value = REMOVE_TOPLEVEL_URL, method = RequestMethod.GET)
     public String removeTopLevelCategory(Model model, 
-            @RequestParam(value="category") Long categoryId)
+            @RequestParam(value="category") Long categoryId) throws Exception
     {
         domainDataService.removeTopLevelCategory(categoryId);
         return "redirect:" + VIEW_TOPLEVEL_URL;
