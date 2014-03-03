@@ -12,6 +12,15 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!-- Spring security -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <!-- Spring servlet dispatcher -->
     <servlet>
         <servlet-name>mvc-dispatcher</servlet-name>
@@ -20,7 +29,7 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
-                /WEB-INF/spring/spring-mvc-servlet.xml
+                /WEB-INF/spring/spring-mvc-dispatcher-servlet.xml
             </param-value>
         </init-param>
     </servlet>
@@ -38,14 +47,6 @@
         <url-pattern>/logout</url-pattern>
         <url-pattern>/accessDenied</url-pattern>
     </servlet-mapping>
-    <!-- Spring security -->
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    
 
 </web-app>
