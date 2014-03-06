@@ -26,4 +26,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     
     <mvc:view-controller path="/login" view-name="login"/>
     <mvc:view-controller path="/accessDenied" view-name="error403"/>
+    
+    <mvc:resources mapping="/css/**" location="/WEB-INF/css/"/>
+    <mvc:resources mapping="/images/**" location="/WEB-INF/images/"/>
+
 </beans>

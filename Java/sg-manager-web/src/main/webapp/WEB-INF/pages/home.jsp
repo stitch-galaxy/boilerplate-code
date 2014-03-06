@@ -15,7 +15,7 @@
     </head>
     <body>
         <p>
-            <a href="${pageContext.request.contextPath}/category/view/topLevel" class="edit_button">Manage categories »</a>
+            <a href="${pageContext.request.contextPath}${categoryViewTopLevelAction}" class="edit_button">Manage categories »</a>
         </p>
         <div class="datagrid">
             <table>
