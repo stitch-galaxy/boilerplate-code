@@ -11,16 +11,11 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <security:http pattern="/images/**" security="none"></security:http>
     
     <security:http pattern="/login" security="none"></security:http>
-    <security:http pattern="/logout" security="none"></security:http>
+<!--    <security:http pattern="/logout" security="none"></security:http>-->
     
-    <security:http access-denied-page="/accessDenied" >
+    <security:http access-denied-page="/accessDenied">
         <security:form-login login-page="/login" default-target-url="/home" authentication-failure-url="/loginfailed"/>
-        <security:logout logout-success-url="/logout"/>
-        <!--<security:anonymous enabled="true" granted-authority="ROLE_ANONYMOUS" username="ANONYMOUS"/>-->
-        <!--<security:remember-me key="sgRememberKey" token-validity-seconds="2592000"/>-->
-        <!--<security:intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <security:intercept-url pattern="/loginfailed" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <security:intercept-url pattern="/accessDenied" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+        <security:logout logout-url="/logout" logout-success-url="/home"/>
         <security:intercept-url pattern="/**" access="ROLE_ADMIN" />
     </security:http>
   
