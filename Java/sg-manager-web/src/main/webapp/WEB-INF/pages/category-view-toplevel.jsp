@@ -15,7 +15,7 @@
     </head>
     <body>
         <p>
-            <a href="${pageContext.request.contextPath}">Home</a> 
+            <a href="${pageContext.request.contextPath}${URL_HOME}">Home</a> 
         </p>
         <div class="datagrid">
             <table>
@@ -24,17 +24,17 @@
                     <c:forEach items="${categories}" var="subcategory" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>
-                                <a href="${pageContext.request.contextPath}${viewAction}?category=${subcategory.current.id}">${subcategory.current.name}</a>
+                                <a href="${pageContext.request.contextPath}${URL_CATEGORY_VIEW}?category=${subcategory.current.id}">${subcategory.current.name}</a>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}${removeAction}?category=${subcategory.current.id}" class="delete_button">Remove »</a>
+                                <a href="${pageContext.request.contextPath}${URL_CATEGORY_REMOVE_TOPLEVEL}?category=${subcategory.current.id}" class="delete_button">Remove »</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
-        <form method="POST" action="${pageContext.request.contextPath}${postAction}">
+        <form method="POST" action="${pageContext.request.contextPath}${URL_CATEGORY_ADD_TOPLEVEL}">
             <fieldset>
                 <legend>Category parameters</legend>
                 <p> 

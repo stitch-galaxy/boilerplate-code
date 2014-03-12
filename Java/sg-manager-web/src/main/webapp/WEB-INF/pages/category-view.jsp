@@ -15,7 +15,7 @@
     </head>
     <body>
         <p>
-            <a href="${pageContext.request.contextPath}">Home</a> 
+            <a href="${pageContext.request.contextPath}${URL_HOME}">Home</a> 
         </p>
         <p>
             <label for="parent">Parent</label>
@@ -23,10 +23,10 @@
             
             <c:choose>
                 <c:when test="${category.parent != null}">
-                    <a href="${pageContext.request.contextPath}${viewAction}?category=${category.parent.id}">${category.parent.name}</a> 
+                    <a href="${pageContext.request.contextPath}${URL_CATEGORY_VIEW}?category=${category.parent.id}">${category.parent.name}</a> 
                 </c:when>
                 <c:otherwise>
-                    <a href="${pageContext.request.contextPath}${viewTopLevelAction}">Manage top level categories</a> 
+                    <a href="${pageContext.request.contextPath}${URL_CATEGORY_VIEW_TOPLEVEL}">Manage top level categories</a> 
                 </c:otherwise>
             </c:choose>
         </p>
@@ -37,17 +37,17 @@
                     <c:forEach items="${category.childs}" var="subcategory" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>
-                                <a href="${pageContext.request.contextPath}${viewAction}?category=${subcategory.id}">${subcategory.name}</a>
+                                <a href="${pageContext.request.contextPath}${URL_CATEGORY_VIEW}?category=${subcategory.id}">${subcategory.name}</a>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}${removeAction}?category=${category.current.id}&sub-category=${subcategory.id}" class="delete_button">Remove »</a>
+                                <a href="${pageContext.request.contextPath}${URL_CATEGORY_REMOVE}?category=${category.current.id}&sub-category=${subcategory.id}" class="delete_button">Remove »</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
-        <form method="POST" action="${pageContext.request.contextPath}${postAction}?category=${category.current.id}">
+        <form method="POST" action="${pageContext.request.contextPath}${URL_CATEGORY_ADD}?category=${category.current.id}">
             <fieldset>
                 <legend>Sub category parameters</legend>
                 <p> 

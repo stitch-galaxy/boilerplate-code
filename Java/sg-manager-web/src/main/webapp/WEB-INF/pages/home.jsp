@@ -15,7 +15,7 @@
     </head>
     <body>
         <p>
-            <a href="${pageContext.request.contextPath}${categoryViewTopLevelAction}" class="edit_button">Manage categories »</a>
+            <a href="${pageContext.request.contextPath}${URL_CATEGORY_VIEW_TOPLEVEL}" class="edit_button">Manage categories »</a>
         </p>
         <div class="datagrid">
             <table>
@@ -24,7 +24,7 @@
                     <c:forEach items="${products}" var="product" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>
-                                <a href="${pageContext.request.contextPath}/product-view?product=${product.id}">${product.name}</a>
+                                <a href="${pageContext.request.contextPath}${URL_PRODUCT_VIEW}?product=${product.id}">${product.name}</a>
                             </td>
                             <td>${product.id}</td>
                         </tr>
@@ -33,7 +33,7 @@
             </table>
         </div>
         <p>
-            <a href="${pageContext.request.contextPath}/product-new" class="add_button">Add design »</a>
+            <a href="${pageContext.request.contextPath}${URL_PRODUCT_ADD}" class="add_button">Add product »</a>
         </p>
 
     </body>
