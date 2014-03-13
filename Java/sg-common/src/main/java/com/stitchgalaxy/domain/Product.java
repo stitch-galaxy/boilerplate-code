@@ -31,7 +31,10 @@ public class Product {
     private Long sales;
     private Long rating;
     private Long rates;
-    private Color avgColor;
+    private Integer avgColorRed;
+    private Integer avgColorGreen;
+    private Integer avgColorBlue;
+    
     private Integer complexity;
     private String tags;
     private final List<ProductLocalization> localizations = new LinkedList<ProductLocalization>();
@@ -205,14 +208,16 @@ public class Product {
      * @return the avgColor
      */
     public Color getAvgColor() {
-        return avgColor;
+        return new Color(getAvgColorRed(), getAvgColorGreen(), getAvgColorBlue());
     }
 
     /**
      * @param avgColor the avgColor to set
      */
     public void setAvgColor(Color avgColor) {
-        this.avgColor = avgColor;
+        this.setAvgColorRed((Integer) avgColor.getRed());
+        this.setAvgColorGreen((Integer) avgColor.getGreen());
+        this.setAvgColorBlue((Integer) avgColor.getBlue());
     }
 
     /**
@@ -318,5 +323,47 @@ public class Product {
      */
     public List<Category> getCategories() {
         return categories;
+    }
+
+    /**
+     * @return the avgColorRed
+     */
+    public Integer getAvgColorRed() {
+        return avgColorRed;
+    }
+
+    /**
+     * @param avgColorRed the avgColorRed to set
+     */
+    public void setAvgColorRed(Integer avgColorRed) {
+        this.avgColorRed = avgColorRed;
+    }
+
+    /**
+     * @return the avgColorGreen
+     */
+    public Integer getAvgColorGreen() {
+        return avgColorGreen;
+    }
+
+    /**
+     * @param avgColorGreen the avgColorGreen to set
+     */
+    public void setAvgColorGreen(Integer avgColorGreen) {
+        this.avgColorGreen = avgColorGreen;
+    }
+
+    /**
+     * @return the avgColorBlue
+     */
+    public Integer getAvgColorBlue() {
+        return avgColorBlue;
+    }
+
+    /**
+     * @param avgColorBlue the avgColorBlue to set
+     */
+    public void setAvgColorBlue(Integer avgColorBlue) {
+        this.avgColorBlue = avgColorBlue;
     }
 }

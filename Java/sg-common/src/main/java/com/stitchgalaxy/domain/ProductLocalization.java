@@ -11,6 +11,7 @@ package com.stitchgalaxy.domain;
  * @author tarasev
  */
 public class ProductLocalization {
+    private Long id;
     private String locale;
     private String name;
     private String description;
@@ -70,5 +71,19 @@ public class ProductLocalization {
      */
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }

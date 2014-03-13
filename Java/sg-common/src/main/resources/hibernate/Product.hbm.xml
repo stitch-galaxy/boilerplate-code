@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" package="com.stitchgalaxy.domain">
+    <class name="Product" table="product">
+        <id name="id" column="id" type="long">
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> 
+                <param name="sequence_name">product_sequence</param>
+                <param name="optimizer">none</param>
+                <param name="value_column">id</param>
+            </generator>
+        </id>
+        <property name="name" column="name" type="string" length="255"/>
+        <property name="blocked" column="blocked" type="boolean"/>
+        <property name="description" column="description" type="string" length="1024"/>
+        <property name="date" column="date" type="calendar_date"/>
+        <property name="priceUsd" column="priceUsd" type="big_decimal"/>
+        <property name="sales" column="sales" type="long"/>
+        <property name="rating" column="rating" type="long"/>
+        <property name="rates" column="rates" type="long"/>
+        <property name="complexity" column="complexity" type="integer"/>
+        <property name="tags" column="tags" type="string" length="1024"/>
+        <property name="prototypeUri" column="prototypeUri" type="string" length="1024"/>
+        <property name="thumbnailUri" column="thumbnailUri" type="string" length="1024"/>
+        <property name="largeImageUri" column="largeImageUri" type="string" length="1024"/>
+        <property name="completeProductUri" column="completeProductUri" type="string" length="1024"/>
+        <property name="avgColorRed" column="avgColorRed" type="integer"/>
+        <property name="avgColorGreen" column="avgColorGreen" type="integer"/>
+        <property name="avgColorBlue" column="avgColorBlue" type="integer"/>
+            
+        <many-to-one name="author" class="Partner" lazy="proxy">
+            <column name="author_id" not-null="false"/>
+        </many-to-one>
+            
+        <many-to-one name="translator" class="Partner" lazy="proxy">
+            <column name="translator_id" not-null="false"/>
+        </many-to-one>
+            
+        <list name="categories" table="product_category">
+            <key column="productId"/>
+            <many-to-many column="categoryId" class="Category"/>
+        </list>
+            
+    </class>
+</hibernate-mapping>

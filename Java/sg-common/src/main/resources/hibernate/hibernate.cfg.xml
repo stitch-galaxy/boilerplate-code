@@ -9,5 +9,6 @@
     <property name="hibernate.format_sql">true</property>
     <property name="hibernate.hbm2ddl.auto">create-drop</property>
     <mapping resource="hibernate/Category.hbm.xml"/>
+    <mapping resource="hibernate/Product.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
