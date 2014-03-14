@@ -6,11 +6,14 @@
 
 package com.stitchgalaxy.domain;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  *
  * @author tarasev
  */
-public class Partner {
+public class Partner implements Entity<Partner> {
     private Long id;
     private String name;
     private String uri;
@@ -55,6 +58,28 @@ public class Partner {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(name)
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
+        
+        Partner other = (Partner) obj;
+        return sameIdentityAs(other);
+    }
+    
+    public boolean sameIdentityAs(Partner other) {
+        return other != null && new EqualsBuilder().
+                append(this.name, other.name).
+                isEquals();
     }
     
 }

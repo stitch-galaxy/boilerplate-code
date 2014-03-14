@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" package="com.stitchgalaxy.domain">
+    <class name="Design" table="Design">
+        <id name="id" column="Id" type="long">
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> 
+                <param name="sequence_name">product_sequence</param>
+                <param name="optimizer">none</param>
+                <param name="value_column">id</param>
+            </generator>
+        </id>
+        <property name="width" column="Width" type="integer"/>
+        <property name="height" column="Height" type="integer"/>
+        <property name="colors" column="Colors" type="integer"/>
+        <property name="canvas" column="Canvas" type="string" length="100"/>
+        <property name="threads" column="Threads" type="string" length="100"/>
+        <property name="stitchesPerInch" column="StitchesPerInch" type="big_decimal"/>
+        <property name="locale" column="locale" type="string" length="100"/>
+        <property name="thumbnailUri" column="ThumbnailUri" type="string" length="1024"/>
+        <property name="fileUri" column="FileUri" type="string" length="1024"/>
+    </class>
+</hibernate-mapping>

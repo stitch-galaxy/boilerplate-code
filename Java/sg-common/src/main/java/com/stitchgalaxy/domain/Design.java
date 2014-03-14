@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  *
  * @author Administrator
  */
-public class Design {
+public class Design implements Entity<Design> {
     private Long id;
     private Integer width;
     private Integer height;
@@ -147,5 +147,9 @@ public class Design {
      */
     public void setFileUri(String fileUri) {
         this.fileUri = fileUri;
+    }
+
+    public boolean sameIdentityAs(Design other) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
