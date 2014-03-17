@@ -11,7 +11,6 @@
     <mapping resource="hibernate/Category.hbm.xml"/>
     <mapping resource="hibernate/Partner.hbm.xml"/>
     <mapping resource="hibernate/Product.hbm.xml"/>
-    <mapping resource="hibernate/Design.hbm.xml"/>
     <mapping resource="hibernate/ProductLocalization.hbm"/>
   </session-factory>
 </hibernate-configuration>

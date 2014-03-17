@@ -18,7 +18,7 @@ public interface ProductRepository {
     
     List<Product> getProducts();
     
-    void store(Category category);
+    void store(Product product);
     
-    void delete(Category category);
+    void delete(Product product);
 }

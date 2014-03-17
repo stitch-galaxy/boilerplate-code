@@ -59,12 +59,16 @@ public class TestData {
         product.setRates(2l);
         product.setRating(9l);
         product.setTags("tree\nowl");
-
+        product.setCanvas("Aida14");
+        product.setColors(20);
+        product.setHeight(100);
+        product.setStitchesPerInch(new BigDecimal("14.0"));
+        product.setThreads("DMC");
+        product.setWidth(200);
+        product.setThumbnailUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
+        product.setFileUri("http://www.mediacollege.com/internet/html/images/image1.jpg");
         
-        product.getLocalizations().add(createProductLocalization());
-
-        
-        product.getDesigns().add(createProductDesign());
+        product.getLocalizations().add(createProductLocalization());        
 
         product.getCategories().add(new Category(null, "l1_category"));
 

@@ -64,6 +64,7 @@ public class Partner implements Entity<Partner> {
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(name)
+                .append(uri)
                 .toHashCode();
     }
 
@@ -79,6 +80,7 @@ public class Partner implements Entity<Partner> {
     public boolean sameIdentityAs(Partner other) {
         return other != null && new EqualsBuilder().
                 append(this.name, other.name).
+                append(this.uri, other.uri).
                 isEquals();
     }
     

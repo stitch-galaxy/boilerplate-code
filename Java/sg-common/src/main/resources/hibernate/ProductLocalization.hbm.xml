@@ -6,17 +6,9 @@
 
 <hibernate-mapping default-access="field" package="com.stitchgalaxy.domain">
     <class name="ProductLocalization" table="ProductLocalization">
-        <id name="id" column="Id" type="long">
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> 
-                <param name="sequence_name">product_sequence</param>
-                <param name="optimizer">none</param>
-                <param name="value_column">id</param>
-            </generator>
-        </id>
         <property name="locale" column="Locale" type="string" length="20"/>
         <property name="name" column="Name" type="string" length="255"/>
         <property name="description" column="Description" type="string" length="1024"/>
         <property name="tags" column="Tags" type="string" length="1024"/>
-        <property name="locale" column="Locale" type="string" length="100"/>
     </class>
 </hibernate-mapping>

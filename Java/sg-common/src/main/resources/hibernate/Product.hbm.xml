@@ -27,9 +27,16 @@
         <property name="thumbnailUri" column="ThumbnailUri" type="string" length="1024"/>
         <property name="largeImageUri" column="LargeImageUri" type="string" length="1024"/>
         <property name="completeProductUri" column="CompleteProductUri" type="string" length="1024"/>
+        <property name="fileUri" column="FileUri" type="string" length="1024"/>
         <property name="avgColorRed" column="AvgColorRed" type="integer"/>
         <property name="avgColorGreen" column="AvgColorGreen" type="integer"/>
         <property name="avgColorBlue" column="AvgColorBlue" type="integer"/>
+        <property name="width" column="Width" type="integer"/>
+        <property name="height" column="Height" type="integer"/>
+        <property name="colors" column="Colors" type="integer"/>
+        <property name="canvas" column="Canvas" type="string" length="100"/>
+        <property name="threads" column="Threads" type="string" length="100"/>
+        <property name="stitchesPerInch" column="StitchesPerInch" type="big_decimal"/>
             
         <many-to-one name="author" class="Partner" lazy="proxy">
             <column name="AuthorId" not-null="false"/>
@@ -44,14 +51,9 @@
             <many-to-many column="CategoryId" class="Category"/>
         </list>
         
-        <list name="localizations" table="Product_ProductLocalization">
-            <key column="ProductId"/>
-            <many-to-many column="LocalizationId" class="ProductLocalization"/>
-        </list>
-        
-        <list name="designs" table="Product_Design">
-            <key column="ProductId"/>
-            <many-to-many column="DesignId" class="Design"/>
+        <set name="localizations">
+            <key column="ProductId" not-null="true"/>
+            <one-to-many class="ProductLocalization"/>
         </list>
             
     </class>

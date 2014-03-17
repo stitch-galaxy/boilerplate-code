@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.stitchgalaxy.domain;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  *
  * @author tarasev
  */
-public class ProductLocalization {
-    private Long id;
+public class ProductLocalization implements ValueObject<ProductLocalization> {
+
     private String locale;
     private String name;
     private String description;
@@ -73,17 +75,30 @@ public class ProductLocalization {
         this.tags = tags;
     }
 
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(locale)
+                .toHashCode();
     }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        ProductLocalization other = (ProductLocalization) obj;
+        return sameValueAs(other);
     }
+
+    public boolean sameValueAs(ProductLocalization other) {
+        return other != null && new EqualsBuilder().
+                append(this.locale, other.locale).
+                isEquals();
+    }
+
 }

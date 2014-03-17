@@ -7,18 +7,17 @@ package com.stitchgalaxy.domain;
 
 import java.awt.Color;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.LocalDate;
 
 /**
  *
  * @author tarasev
  */
-public class Product {
+public class Product implements Entity<Product> {
 
     private String name;
     private Long id;
@@ -34,16 +33,23 @@ public class Product {
     private Integer avgColorRed;
     private Integer avgColorGreen;
     private Integer avgColorBlue;
-    
+
+    private Integer width;
+    private Integer height;
+    private Integer colors;
+    private String canvas;
+    private String threads;
+    private BigDecimal stitchesPerInch;
+
     private Integer complexity;
     private String tags;
     private final List<ProductLocalization> localizations = new LinkedList<ProductLocalization>();
-    private final List<Design> designs = new LinkedList<Design>();
     private final List<Category> categories = new LinkedList<Category>();
     private String prototypeUri;
     private String thumbnailUri;
     private String largeImageUri;
     private String completeProductUri;
+    private String fileUri;
 
     /**
      * @return the name
@@ -79,9 +85,8 @@ public class Product {
     public Boolean isBlocked() {
         return blocked;
     }
-    
-    public boolean getBlocked()
-    {
+
+    public boolean getBlocked() {
         return blocked != null && blocked;
     }
 
@@ -312,13 +317,6 @@ public class Product {
     }
 
     /**
-     * @return the designs
-     */
-    public List<Design> getDesigns() {
-        return designs;
-    }
-
-    /**
      * @return the categories
      */
     public List<Category> getCategories() {
@@ -365,5 +363,129 @@ public class Product {
      */
     public void setAvgColorBlue(Integer avgColorBlue) {
         this.avgColorBlue = avgColorBlue;
+    }
+
+    /**
+     * @return the width
+     */
+    public Integer getWidth() {
+        return width;
+    }
+
+    /**
+     * @param width the width to set
+     */
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    /**
+     * @return the height
+     */
+    public Integer getHeight() {
+        return height;
+    }
+
+    /**
+     * @param height the height to set
+     */
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    /**
+     * @return the colors
+     */
+    public Integer getColors() {
+        return colors;
+    }
+
+    /**
+     * @param colors the colors to set
+     */
+    public void setColors(Integer colors) {
+        this.colors = colors;
+    }
+
+    /**
+     * @return the canvas
+     */
+    public String getCanvas() {
+        return canvas;
+    }
+
+    /**
+     * @param canvas the canvas to set
+     */
+    public void setCanvas(String canvas) {
+        this.canvas = canvas;
+    }
+
+    /**
+     * @return the threads
+     */
+    public String getThreads() {
+        return threads;
+    }
+
+    /**
+     * @param threads the threads to set
+     */
+    public void setThreads(String threads) {
+        this.threads = threads;
+    }
+
+    /**
+     * @return the stitchesPerInch
+     */
+    public BigDecimal getStitchesPerInch() {
+        return stitchesPerInch;
+    }
+
+    /**
+     * @param stitchesPerInch the stitchesPerInch to set
+     */
+    public void setStitchesPerInch(BigDecimal stitchesPerInch) {
+        this.stitchesPerInch = stitchesPerInch;
+    }
+
+    /**
+     * @return the fileUri
+     */
+    public String getFileUri() {
+        return fileUri;
+    }
+
+    /**
+     * @param fileUri the fileUri to set
+     */
+    public void setFileUri(String fileUri) {
+        this.fileUri = fileUri;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(id)
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Product other = (Product) obj;
+        return sameIdentityAs(other);
+    }
+
+    public boolean sameIdentityAs(Product other) {
+        return other != null && new EqualsBuilder().
+                append(this.id, other.id).
+                isEquals();
     }
 }

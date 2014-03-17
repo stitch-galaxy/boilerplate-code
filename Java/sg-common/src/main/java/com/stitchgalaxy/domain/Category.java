@@ -3,45 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.stitchgalaxy.domain;
 
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  *
  * @author Administrator
  */
-public class Category implements Entity<Category>{
-    
+public class Category implements Entity<Category> {
+
     private static final char path_delimeter = '/';
-    
-    public Category(){
+
+    public Category() {
     }
-    
-    public Category(Category parent, String name)
-    {
+
+    public Category(Category parent, String name) {
         this.name = name;
-        if (parent != null)
-        {
+        if (parent != null) {
             this.path = parent.getFullPath();
             this.parent = parent;
             this.parent.childs.add(this);
-        }
-        else
-        {
+        } else {
             this.path = "";
         }
     }
-    
+
     private Long id;
     private String name;
     private String path;
-    
+
     private Category parent;
-    
+
     private final Set<Category> childs = new HashSet<Category>();
 
     /**
@@ -92,8 +88,8 @@ public class Category implements Entity<Category>{
     public Set<Category> getChilds() {
         return childs;
     }
-    
-        /**
+
+    /**
      * @return the path
      */
     public String getPath() {
@@ -106,15 +102,14 @@ public class Category implements Entity<Category>{
     public void setPath(String path) {
         this.path = path;
     }
-    
-    public String getFullPath()
-    {
+
+    public String getFullPath() {
         StringBuilder sb = new StringBuilder(path);
         sb.append(path_delimeter);
         sb.append(name);
         return sb.toString();
     }
-    
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
@@ -125,13 +120,17 @@ public class Category implements Entity<Category>{
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || this.getClass() != obj.getClass()) return false;
-        
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
         Category other = (Category) obj;
         return sameIdentityAs(other);
     }
-    
+
     public boolean sameIdentityAs(Category other) {
         return other != null && new EqualsBuilder().
                 append(this.name, other.name).
