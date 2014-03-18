@@ -6,6 +6,7 @@
 
 package com.stitchgalaxy.infrastructure.persistence;
 
+
 import com.stitchgalaxy.domain.PartnerRepository;
 import com.stitchgalaxy.domain.Partner;
 import java.util.List;
@@ -27,5 +28,10 @@ public class PartnerRepositoryHibernate extends HibernateRepository implements P
     public void store(Partner partner)
     {
         getSession().saveOrUpdate(partner);
+    }
+    
+    public Partner find(Long partnerId)
+    {
+        return (Partner) getSession().createQuery("from Partner where id = :id").setParameter("id", partnerId).uniqueResult();
     }
 }

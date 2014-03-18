@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface PartnerRepository {
     
+    Partner find(Long partnerId);
     List<Partner> getPartners();
     void store(Partner partner);
 

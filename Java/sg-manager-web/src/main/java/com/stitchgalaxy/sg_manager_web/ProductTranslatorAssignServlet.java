@@ -5,6 +5,7 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dto.CommandAttachProductToPartner;
 import com.stitchgalaxy.service.DomainDataService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -26,7 +27,10 @@ public class ProductTranslatorAssignServlet extends HttpServlet {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
             Long partnerId = Long.parseLong(request.getParameter("partner"));
-            DomainDataServiceUtils.getDomainDataService(this).productAssignTranslator(productId, partnerId);
+            CommandAttachProductToPartner command = new CommandAttachProductToPartner();
+            command.setPartnerId(partnerId);
+            command.setProductId(productId);
+            DomainDataServiceUtils.getDomainDataService(this).productAssignTranslator(command);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

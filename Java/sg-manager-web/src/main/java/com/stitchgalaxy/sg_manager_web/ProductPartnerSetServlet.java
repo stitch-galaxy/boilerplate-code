@@ -7,6 +7,9 @@ package com.stitchgalaxy.sg_manager_web;
 
 import com.stitchgalaxy.service.DomainDataService;
 import com.stitchgalaxy.domain.Partner;
+import com.stitchgalaxy.dto.CommandCreatePartner;
+import com.stitchgalaxy.dto.CommandGetPartners;
+import com.stitchgalaxy.dto.PartnerInfo;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -32,7 +35,7 @@ public class ProductPartnerSetServlet extends HttpServlet {
             } else if (request.getServletPath().equals("/product-set-translator")) {
                 request.setAttribute("action", "/product-assign-translator");
             }
-            List<Partner> partners = DomainDataServiceUtils.getDomainDataService(this).getAllPartners();
+            List<PartnerInfo> partners = DomainDataServiceUtils.getDomainDataService(this).getAllPartners(new CommandGetPartners());
             request.setAttribute("partners", partners);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
@@ -51,7 +54,10 @@ public class ProductPartnerSetServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             String uri = request.getParameter("uri");
-            DomainDataServiceUtils.getDomainDataService(this).addPartner(name, uri);
+            CommandCreatePartner command = new CommandCreatePartner();
+            command.setName(name);
+            command.setUri(uri);
+            DomainDataServiceUtils.getDomainDataService(this).addPartner(command);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

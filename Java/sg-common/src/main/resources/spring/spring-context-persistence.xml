@@ -30,6 +30,14 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     
     <tx:annotation-driven transaction-manager="transactionManager"/>
     
+    <bean id="partnerRepository" class="com.stitchgalaxy.infrastructure.persistence.PartnerRepositoryHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="productRepository" class="com.stitchgalaxy.infrastructure.persistence.ProductRepositoryHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
     <bean id="categoryRepository" class="com.stitchgalaxy.infrastructure.persistence.CategoryRepositoryHibernate">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

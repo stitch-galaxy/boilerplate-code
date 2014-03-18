@@ -5,6 +5,7 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dto.CommandDetachProductFromCategory;
 import com.stitchgalaxy.service.DomainDataService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -26,7 +27,10 @@ public class ProductCategoryRemoveServlet extends HttpServlet {
         try {
             Long categoryId = Long.parseLong(request.getParameter("category"));
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataServiceUtils.getDomainDataService(this).removeProductFromCategory(categoryId, productId);
+            CommandDetachProductFromCategory command = new CommandDetachProductFromCategory();
+            command.setCategoryId(categoryId);
+            command.setProductId(productId);
+            DomainDataServiceUtils.getDomainDataService(this).removeProductFromCategory(command);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

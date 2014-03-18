@@ -5,6 +5,8 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dto.CommandUploadProductFile;
+import com.stitchgalaxy.dto.FileType;
 import com.stitchgalaxy.service.DomainDataService;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +32,11 @@ public class ProductUploadCompleteProductlServlet extends HttpServlet {
             Long productId = Long.parseLong(request.getParameter("product"));
             Part filePart = request.getPart("file");
             InputStream filecontent = filePart.getInputStream();
-            DomainDataServiceUtils.getDomainDataService(this).uploadProductCompleteProduct(productId, filecontent);
+            CommandUploadProductFile command = new CommandUploadProductFile();
+            command.setProductId(productId);
+            command.setFileContent(filecontent);
+            command.setFileType(FileType.COMPLETE_PRODUCT);
+            DomainDataServiceUtils.getDomainDataService(this).uploadProductFile(command);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

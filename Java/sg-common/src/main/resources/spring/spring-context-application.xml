@@ -12,6 +12,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="dataservice" class="com.stitchgalaxy.service.DomainDataService">
         <property name="dataMapper" ref="dataMapper"/> 
         <property name="categoryRepository" ref="categoryRepository"/> 
+        <property name="partnerRepository" ref="partnerRepository"/> 
+        <property name="productRepository" ref="productRepository"/> 
     </bean>
           
 </beans>

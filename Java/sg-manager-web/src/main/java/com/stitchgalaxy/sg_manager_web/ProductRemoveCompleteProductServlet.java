@@ -5,6 +5,8 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dto.CommandRemoveProductFile;
+import com.stitchgalaxy.dto.FileType;
 import com.stitchgalaxy.service.DomainDataService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -24,7 +26,10 @@ public class ProductRemoveCompleteProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataServiceUtils.getDomainDataService(this).removeProductCompleteProduct(productId);
+            CommandRemoveProductFile command = new CommandRemoveProductFile();
+            command.setProductId(productId);
+            command.setFileType(FileType.COMPLETE_PRODUCT);
+            DomainDataServiceUtils.getDomainDataService(this).removeProductFile(command);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

@@ -5,6 +5,7 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dto.CommandAttachProductToCategory;
 import com.stitchgalaxy.service.DomainDataService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -26,7 +27,11 @@ public class ProductCategoryAddServlet extends HttpServlet {
         try {
             Long categoryId = Long.parseLong(request.getParameter("category"));
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataServiceUtils.getDomainDataService(this).addProductToCategory(categoryId, productId);
+            
+            CommandAttachProductToCategory command = new CommandAttachProductToCategory();
+            command.setCategoryId(categoryId);
+            command.setProductId(productId);
+            DomainDataServiceUtils.getDomainDataService(this).addProductToCategory(command);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();
