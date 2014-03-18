@@ -14,10 +14,12 @@
         <module>sg-rest-api</module>
         <module>sg-manager-web</module>
         <module>sg-common</module>
+	<module>sg-cdn</module>
   </modules>
     
     <properties>
         <sg-common-version>1.0.0-SNAPSHOT</sg-common-version>
+	<sg-cdn-version>1.0.0-SNAPSHOT</sg-cdn-version>
         <sg-dao-version>1.0.0-SNAPSHOT</sg-dao-version>
         <sg-manager-web-version>1.0.0-SNAPSHOT</sg-manager-web-version>
         <joda-version>2.3</joda-version>
@@ -48,6 +50,11 @@
                 <groupId>com.stitchgalaxy</groupId>
                 <artifactId>sg-dao</artifactId>
                 <version>${sg-dao-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.stitchgalaxy</groupId>
+                <artifactId>sg-cdn</artifactId>
+                <version>${sg-cdn-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
