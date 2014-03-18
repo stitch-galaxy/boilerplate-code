@@ -5,6 +5,8 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dto.CommandStoreProductLocalization;
+import com.stitchgalaxy.dto.ProductLocalizationInfo;
 import com.stitchgalaxy.service.DomainDataService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -34,7 +36,14 @@ public class ProductLocalizationNewServlet extends HttpServlet {
         try {
             String locale = request.getParameter("locale");
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataServiceUtils.getDomainDataService(this).addProductLocalization(productId, locale);
+            
+            CommandStoreProductLocalization command = new CommandStoreProductLocalization();
+            command.setProductId(productId);
+            ProductLocalizationInfo localizationDto = new ProductLocalizationInfo();
+            localizationDto.setLocale(locale);
+            command.setProductLocalization(localizationDto);
+
+            DomainDataServiceUtils.getDomainDataService(this).storeProductLocalization(command);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

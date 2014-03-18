@@ -5,6 +5,7 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dto.CommandRemoveProductLocalization;
 import com.stitchgalaxy.service.DomainDataService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -26,7 +27,11 @@ public class ProductLocalizationRemoveServlet extends HttpServlet {
         try {
             String locale = request.getParameter("locale");
             Long productId = Long.parseLong(request.getParameter("product"));
-            DomainDataService.removeProductLocalization(productId, locale);
+            CommandRemoveProductLocalization command = new CommandRemoveProductLocalization();
+            command.setProductId(productId);
+            command.setLocale(locale);
+            DomainDataService service = DomainDataServiceUtils.getDomainDataService(this);
+            service.removeProductLocalization(command);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

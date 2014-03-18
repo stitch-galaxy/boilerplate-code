@@ -7,6 +7,9 @@ package com.stitchgalaxy.sg_manager_web;
 
 import com.stitchgalaxy.service.DomainDataService;
 import com.stitchgalaxy.domain.ProductLocalization;
+import com.stitchgalaxy.dto.CommandGetProductLocalization;
+import com.stitchgalaxy.dto.CommandStoreProductLocalization;
+import com.stitchgalaxy.dto.ProductLocalizationInfo;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,7 +31,10 @@ public class ProductLocalizationEditServlet extends HttpServlet {
         try {
             String locale = request.getParameter("locale");
             Long productId = Long.parseLong(request.getParameter("product"));
-            ProductLocalization localization = DomainDataServiceUtils.getDomainDataService(this).getProductLocalization(productId, locale);
+            CommandGetProductLocalization command = new CommandGetProductLocalization();
+            command.setProductId(productId);
+            command.setLocale(locale);
+            ProductLocalizationInfo localization = DomainDataServiceUtils.getDomainDataService(this).getProductLocalization(command);
             request.setAttribute("localization", localization);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
@@ -46,18 +52,22 @@ public class ProductLocalizationEditServlet extends HttpServlet {
         try {
             String locale = request.getParameter("locale");
             Long productId = Long.parseLong(request.getParameter("product"));
-
-            ProductLocalization localization = DomainDataServiceUtils.getDomainDataService(this).getProductLocalization(productId, locale);
-
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String tags = request.getParameter("tags");
+            
+            
+            CommandStoreProductLocalization command = new CommandStoreProductLocalization();
+            command.setProductId(productId);
+            ProductLocalizationInfo localizationDto = new ProductLocalizationInfo();
+            localizationDto.setLocale(locale);
+            localizationDto.setName(name);
+            localizationDto.setDescription(description);
+            localizationDto.setTags(tags);
+            command.setProductLocalization(localizationDto);
+            
 
-            localization.setName(name);
-            localization.setDescription(description);
-            localization.setTags(tags);
-
-            DomainDataServiceUtils.getDomainDataService(this).storeProductLocalization(localization);
+            DomainDataServiceUtils.getDomainDataService(this).storeProductLocalization(command);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);
             errorHandler.process();

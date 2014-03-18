@@ -7,8 +7,10 @@ package com.stitchgalaxy.domain;
 
 import java.awt.Color;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.LocalDate;
@@ -43,8 +45,8 @@ public class Product implements Entity<Product> {
 
     private Integer complexity;
     private String tags;
-    private final List<ProductLocalization> localizations = new LinkedList<ProductLocalization>();
-    private final List<Category> categories = new LinkedList<Category>();
+    private final Set<ProductLocalization> localizations = new HashSet<ProductLocalization>();
+    private final Set<Category> categories = new HashSet<Category>();
     private String prototypeUri;
     private String thumbnailUri;
     private String largeImageUri;
@@ -256,7 +258,7 @@ public class Product implements Entity<Product> {
     /**
      * @return the localizations
      */
-    public List<ProductLocalization> getLocalizations() {
+    public Set<ProductLocalization> getLocalizations() {
         return localizations;
     }
 
@@ -319,7 +321,7 @@ public class Product implements Entity<Product> {
     /**
      * @return the categories
      */
-    public List<Category> getCategories() {
+    public Set<Category> getCategories() {
         return categories;
     }
 

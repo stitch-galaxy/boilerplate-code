@@ -7,8 +7,12 @@
 package com.stitchgalaxy.service;
 
 import com.stitchgalaxy.domain.Category;
+import com.stitchgalaxy.domain.Partner;
+import com.stitchgalaxy.domain.ProductLocalization;
 import com.stitchgalaxy.dto.CategoryInfo;
 import com.stitchgalaxy.dto.CategoryInfoDTO;
+import com.stitchgalaxy.dto.PartnerInfo;
+import com.stitchgalaxy.dto.ProductLocalizationInfo;
 import java.util.List;
 import org.dozer.DozerBeanMapper;
 
@@ -44,5 +48,23 @@ public class DataMapper {
             }
         }
         return destObject;
+    }
+    
+    public ProductLocalizationInfo getProductLocalizationDTO(ProductLocalization localization)
+    {
+        ProductLocalizationInfo dto = mapper.map(localization, ProductLocalizationInfo.class);
+        return dto;
+    }
+    
+    public ProductLocalization getProductLocalization(ProductLocalizationInfo dto)
+    {
+        ProductLocalization localization = mapper.map(dto, ProductLocalization.class);
+        return localization;
+    }
+    
+    public PartnerInfo getPartner(Partner partner)
+    {
+        PartnerInfo dto = mapper.map(partner, PartnerInfo.class);
+        return dto;
     }
 }

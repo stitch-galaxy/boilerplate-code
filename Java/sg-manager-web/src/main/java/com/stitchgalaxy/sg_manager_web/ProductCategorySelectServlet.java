@@ -7,6 +7,7 @@ package com.stitchgalaxy.sg_manager_web;
 
 import com.stitchgalaxy.service.DomainDataService;
 import com.stitchgalaxy.dto.CategoryInfoDTO;
+import com.stitchgalaxy.dto.CommandGetCategory;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,7 +30,10 @@ public class ProductCategorySelectServlet extends HttpServlet {
             Long categoryId = Long.parseLong(request.getParameter("category"));
             Long productId = Long.parseLong(request.getParameter("product"));
 
-            CategoryInfoDTO category = DomainDataServiceUtils.getDomainDataService(this).getCategoryById(categoryId);
+            CommandGetCategory command = new CommandGetCategory();
+            command.setCategoryId(categoryId);
+            
+            CategoryInfoDTO category = DomainDataServiceUtils.getDomainDataService(this).getCategoryById(command);
 
             request.setAttribute("category", category);
             request.setAttribute("productId", productId);
