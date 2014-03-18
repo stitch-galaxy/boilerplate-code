@@ -6,6 +6,8 @@
 package com.stitchgalaxy.sg_manager_web;
 
 import com.stitchgalaxy.domain.Product;
+import com.stitchgalaxy.dto.CommandGetProducts;
+import com.stitchgalaxy.dto.ProductInfo;
 import com.stitchgalaxy.service.DomainDataService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,7 @@ public class HomeController {
     @RequestMapping(value = {"", "/", UrlConstants.URL_HOME}, method = RequestMethod.GET)
     public String home(ModelMap model) {
 
-        List<Product> products = domainDataService.getAllProducts();
+        List<ProductInfo> products = domainDataService.getAllProducts(new CommandGetProducts());
         model.addAttribute("products", products);
         UrlConstants.AddUrlConstants(model);
         

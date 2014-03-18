@@ -7,6 +7,8 @@ package com.stitchgalaxy.sg_manager_web;
 
 import com.stitchgalaxy.service.DomainDataService;
 import com.stitchgalaxy.domain.Product;
+import com.stitchgalaxy.dto.CommandGetProduct;
+import com.stitchgalaxy.dto.ProductInfo;
 import java.awt.Color;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -30,7 +32,9 @@ public class ProductEditServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
-            Product product = DomainDataServiceUtils.getDomainDataService(this).getProductById(productId);
+            CommandGetProduct command = new CommandGetProduct();
+            command.setProductId(productId);
+            ProductInfo product = DomainDataServiceUtils.getDomainDataService(this).getProductById(command);
             request.setAttribute("product", product);
         } catch (Exception e) {
             ErrorHandler errorHandler = new ErrorHandler(e, request, response, this);

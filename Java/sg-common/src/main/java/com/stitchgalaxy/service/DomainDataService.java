@@ -18,7 +18,9 @@ import com.stitchgalaxy.dto.CommandDetachProductFromCategory;
 import com.stitchgalaxy.dto.CommandDetachProductFromPartner;
 import com.stitchgalaxy.dto.CommandGetCategory;
 import com.stitchgalaxy.dto.CommandGetPartners;
+import com.stitchgalaxy.dto.CommandGetProduct;
 import com.stitchgalaxy.dto.CommandGetProductLocalization;
+import com.stitchgalaxy.dto.CommandGetProducts;
 import com.stitchgalaxy.dto.CommandGetRootCategories;
 import com.stitchgalaxy.dto.CommandRemoveProductFile;
 import com.stitchgalaxy.dto.CommandRemoveProductLocalization;
@@ -27,6 +29,7 @@ import com.stitchgalaxy.dto.CommandRemoveTopLevelCategory;
 import com.stitchgalaxy.dto.CommandStoreProductLocalization;
 import com.stitchgalaxy.dto.CommandUploadProductFile;
 import com.stitchgalaxy.dto.PartnerInfo;
+import com.stitchgalaxy.dto.ProductInfo;
 import com.stitchgalaxy.dto.ProductLocalizationInfo;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -49,7 +52,7 @@ public class DomainDataService {
     private static final String ERROR_PRODUCT_TRANSLATOR_NOT_ASSIGNED = "Translator not assigned";
     private static final String ERROR_PRODUCT_AUTHOR_NOT_ASSIGNED = "Author not assigned";
     private static final String ERROR_NO_SUCH_RESOURCE_TYPE = "Such resource does not exsist";
-    
+
     private static final String URL_PATTERN_COMPLETE_PRODUCT = "%i-cp.png";
     private static final String URL_PATTERN_DESIGN = "%i-design";
     private static final String URL_PATTERN_IMAGE = "%i-image.pmg";
@@ -263,8 +266,9 @@ public class DomainDataService {
 
     public void uploadProductFile(CommandUploadProductFile command) throws DomainDataServiceException {
         Product product = productRepository.find(command.getProductId());
-        if (product == null)
+        if (product == null) {
             throw new DomainDataServiceException(ERROR_PARTNER_NOT_FOUND);
+        }
         String uri;
         //TODO: get container uri
         StringBuilder sb = new StringBuilder("CONTAINTERURI");
@@ -289,18 +293,18 @@ public class DomainDataService {
                 uri = String.format(URL_PATTERN_THUMBNAIL, product.getId());
                 product.setThumbnailUri(sb.append(uri).toString());
                 break;
-           default:
-               throw new DomainDataServiceException(ERROR_NO_SUCH_RESOURCE_TYPE);
+            default:
+                throw new DomainDataServiceException(ERROR_NO_SUCH_RESOURCE_TYPE);
         }
         //TODO: add or update CDN content
         productRepository.store(product);
     }
-    
-    public void removeProductFile(CommandRemoveProductFile command) throws DomainDataServiceException
-    {
+
+    public void removeProductFile(CommandRemoveProductFile command) throws DomainDataServiceException {
         Product product = productRepository.find(command.getProductId());
-        if (product == null)
+        if (product == null) {
             throw new DomainDataServiceException(ERROR_PARTNER_NOT_FOUND);
+        }
         String uri;
         //TODO: get container uri
         StringBuilder sb = new StringBuilder("CONTAINTERURI");
@@ -325,20 +329,30 @@ public class DomainDataService {
                 uri = String.format(URL_PATTERN_THUMBNAIL, product.getId());
                 product.setThumbnailUri(null);
                 break;
-           default:
-               throw new DomainDataServiceException(ERROR_NO_SUCH_RESOURCE_TYPE);
+            default:
+                throw new DomainDataServiceException(ERROR_NO_SUCH_RESOURCE_TYPE);
         }
         sb.append(uri);
         //TODO: remove CDN content
         productRepository.store(product);
     }
-    
-    public List<Product> getAllProducts() {
-        return TestData.createProductsList();
+
+    public List<ProductInfo> getAllProducts(CommandGetProducts command) {
+        List<Product> products = productRepository.getProducts();
+        List<ProductInfo> dtos = new LinkedList<ProductInfo>();
+        for (Product p : products) {
+            dtos.add(dataMapper.getProductInfoDto(p));
+        }
+        return dtos;
     }
 
-    public Product getProductById(Long productId) {
-        return TestData.createProductData();
+    public ProductInfo getProductById(CommandGetProduct command) throws DomainDataServiceException {
+        Product product = productRepository.find(command.getProductId());
+        if (product == null) {
+            throw new DomainDataServiceException(ERROR_PRODUCT_NOT_FOUND);
+        }
+        ProductInfo info = dataMapper.getProductInfoDto(product);
+        return info;
     }
 
     public void createNewProduct(String name, LocalDate date, BigDecimal price) {
@@ -346,7 +360,6 @@ public class DomainDataService {
 
     public void storeProductData(Product product) {
     }
-    
 
     @Deprecated
     public void createDesign(Long productId) {
@@ -360,13 +373,11 @@ public class DomainDataService {
     @Deprecated
     public void storeDesignData(Design design) {
     }
-    
+
     @Deprecated
     public void removeProductDesign(Long productId, Long designId) {
     }
-    
-    
-    
+
     @Deprecated
     public void uploadDesignFile(Long designId, InputStream filecontent) {
     }
