@@ -6,6 +6,7 @@
 
 package com.stitchgalaxy.infrastructure.persistence;
 
+import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.domain.Product;
 import com.stitchgalaxy.domain.ProductRepository;
 import java.util.List;
@@ -17,19 +18,20 @@ import java.util.List;
 public class ProductRepositoryHibernate extends HibernateRepository implements ProductRepository {
 
     public Product find(long productId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (Product) getSession().createQuery("from Product where id = :id").setParameter("id", productId).uniqueResult();
     }
 
     public List<Product> getProducts() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Product> result = getSession().createQuery("from Product").list();
+        return result;
     }
 
     public void store(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        getSession().saveOrUpdate(product);
     }
 
     public void delete(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        getSession().delete(product);
     }
     
 }
