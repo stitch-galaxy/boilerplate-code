@@ -15,8 +15,8 @@
             <b>name</b>
         </field>
         <field>
-            <a>blocked</a>
-            <b>blocked</b>
+            <a is-accessible="true">blocked</a>
+            <b is-accessible="true">blocked</b>
         </field>
         <field>
             <a>description</a>

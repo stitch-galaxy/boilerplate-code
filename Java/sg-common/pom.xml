@@ -29,6 +29,16 @@
             <version>${joda-version}</version>
         </dependency>
         <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time-hibernate</artifactId>
+            <version>${joda-time-hibernate-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <version>${jadira-version}</version>
+        </dependency>
+        <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
             <version>${dozer-version}</version>
@@ -89,7 +99,7 @@
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>${hsqldb-version}</version>
-<!--<scope>test</scope>-->
+            <!--<scope>test</scope>-->
         </dependency>
     </dependencies>
 </project>

@@ -6,7 +6,6 @@
 
 package com.stitchgalaxy.infrastructure.persistence;
 
-import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.domain.Product;
 import com.stitchgalaxy.domain.ProductRepository;
 import java.util.List;

@@ -13,11 +13,11 @@
                 <param name="value_column">id</param>
             </generator>
         </id>
-        <property name="name" column="Name" type="string" length="255"/>
+        <property name="name" column="Name" type="string" length="255" not-null="true"/>
         <property name="blocked" column="Blocked" type="boolean"/>
         <property name="description" column="Description" type="string" length="1024"/>
-        <property name="date" column="Date" type="calendar_date"/>
-        <property name="priceUsd" column="PriceUsd" type="big_decimal"/>
+        <property name="date" column="Date" type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate" not-null="true"/>
+        <property name="priceUsd" column="PriceUsd" type="big_decimal" not-null="true"/>
         <property name="sales" column="Sales" type="long"/>
         <property name="rating" column="Rating" type="long"/>
         <property name="rates" column="Rates" type="long"/>

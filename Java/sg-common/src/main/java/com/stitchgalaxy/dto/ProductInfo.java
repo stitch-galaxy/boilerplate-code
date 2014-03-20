@@ -83,24 +83,6 @@ public class ProductInfo {
     }
 
     /**
-     * @return the blocked
-     */
-    public Boolean isBlocked() {
-        return blocked;
-    }
-
-    public boolean getBlocked() {
-        return blocked != null && blocked;
-    }
-
-    /**
-     * @param blocked the blocked to set
-     */
-    public void setBlocked(Boolean blocked) {
-        this.blocked = blocked;
-    }
-
-    /**
      * @return the description
      */
     public String getDescription() {
@@ -216,7 +198,12 @@ public class ProductInfo {
      * @return the avgColor
      */
     public Color getAvgColor() {
-        return new Color(getAvgColorRed(), getAvgColorGreen(), getAvgColorBlue());
+        if (getAvgColorRed() != null
+                && getAvgColorGreen() != null
+                && getAvgColorBlue() != null) {
+            return new Color(getAvgColorRed(), getAvgColorGreen(), getAvgColorBlue());
+        }
+        return null;
     }
 
     /**
@@ -464,5 +451,19 @@ public class ProductInfo {
      */
     public void setFileUri(String fileUri) {
         this.fileUri = fileUri;
+    }
+
+    /**
+     * @return the blocked
+     */
+    public Boolean getBlocked() {
+        return blocked;
+    }
+
+    /**
+     * @param blocked the blocked to set
+     */
+    public void setBlocked(Boolean blocked) {
+        this.blocked = blocked;
     }
 }

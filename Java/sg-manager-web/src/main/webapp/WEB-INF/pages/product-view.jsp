@@ -6,7 +6,7 @@
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.LinkedList"%>
-<%@page import="com.stitchgalaxy.domain.Product"%>
+<%@page import="com.stitchgalaxy.dto.ProductInfo"%>
 <%@page contentType="text/html" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -25,7 +25,7 @@
             <a href="${pageContext.request.contextPath}/">Home</a>
         </p>
         <%
-            Product product = (Product) request.getAttribute("product");
+            ProductInfo product = (ProductInfo) request.getAttribute("product");
         %>
         <h1>Product information</h1>
         <h3>Main parameters</h3>
@@ -61,7 +61,7 @@
                         <td>
                             Blocked
                         </td>
-                        <td>${product.isBlocked()}</td>
+                        <td>${product.blocked}</td>
                     </tr>
                     <tr class="alt">
                         <td>
@@ -135,13 +135,13 @@
                     </table>
                 </div>
                 <p>
-                    <a href="${pageContext.request.contextPath}/product-remove-author?product=${product.id}" class="delete_button">Delete »</a>
-                    <a href="${pageContext.request.contextPath}/product-set-author?product=${product.id}" class="edit_button">Change »</a>
+                    <a href="${pageContext.request.contextPath}${URL_PRODUCT_REMOVE_AUTHOR}?product=${product.id}" class="delete_button">Delete »</a>
+                    <a href="${pageContext.request.contextPath}${URL_PRODUCT_SELECT_AUTHOR}?product=${product.id}" class="edit_button">Change »</a>
                 </p>
             </c:when>
             <c:otherwise>
                 <p>
-                    <a href="${pageContext.request.contextPath}/product-set-author?product=${product.id}" class="add_button">Set »</a>
+                    <a href="${pageContext.request.contextPath}${URL_PRODUCT_SELECT_AUTHOR}?product=${product.id}" class="add_button">Set »</a>
                 </p>
             </c:otherwise>
         </c:choose>
@@ -156,19 +156,19 @@
                                 <td>
                                     ${product.translator.name}
                                 </td>
-                                <td><a href="${product.author.uri}" target="_blank">${product.translator.uri}</a></td>
+                                <td><a href="${product.translator.uri}" target="_blank">${product.translator.uri}</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <p>
-                    <a href="${pageContext.request.contextPath}/product-remove-translator?product=${product.id}" class="delete_button">Delete »</a>
-                    <a href="${pageContext.request.contextPath}/product-set-translator?product=${product.id}" class="edit_button">Change »</a>
+                    <a href="${pageContext.request.contextPath}${URL_PRODUCT_REMOVE_TRANSLATOR}?product=${product.id}" class="delete_button">Delete »</a>
+                    <a href="${pageContext.request.contextPath}${URL_PRODUCT_SELECT_TRANSLATOR}?product=${product.id}" class="edit_button">Change »</a>
                 </p>
             </c:when>
             <c:otherwise>
                 <p>
-                    <a href="${pageContext.request.contextPath}/product-set-translator?product=${product.id}" class="add_button">Set »</a>    
+                    <a href="${pageContext.request.contextPath}${URL_PRODUCT_SELECT_TRANSLATOR}?product=${product.id}" class="add_button">Set »</a>    
                 </p>
             </c:otherwise>
         </c:choose>
@@ -224,33 +224,6 @@
         <p>
             <a href="${pageContext.request.contextPath}/product-category-select?product=${product.id}&category=1" class="add_button">Add »</a>
         </p>
-        <h3>Products</h3>
-        <div class="datagrid">
-            <table>
-                <thead><tr><th>Design Id</th><th>Action</th><th>Action</th></tr></thead>
-                <tbody>
-                    <c:forEach var="design" items="${product.designs}" varStatus="loopStatus">
-                        <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
-                            <td>
-                                ${design.id}
-                            </td>
-                            <td>
-                                <a href="${pageContext.request.contextPath}/product-design-edit?product=${product.id}&design=${design.id}" class="edit_button">Edit »</a>
-                            </td>
-                            <td>
-                                <a href="${pageContext.request.contextPath}/product-design-remove?product=${product.id}&design=${design.id}" class="delete_button">Remove »</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <p>
-            <a href="${pageContext.request.contextPath}/product-design-add?product=${product.id}" class="add_button">Add »</a>
-        </p>
-
-
-
         <h3>Images</h3>
         <div class="img_control_container">
             <h5>Thumbnail</h5>

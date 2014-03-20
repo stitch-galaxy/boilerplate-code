@@ -12,6 +12,7 @@ import com.stitchgalaxy.dto.CategoryInfoDTO;
 import com.stitchgalaxy.dto.CommandAttachProductToCategory;
 import com.stitchgalaxy.dto.CommandAttachProductToPartner;
 import com.stitchgalaxy.dto.CommandCreatePartner;
+import com.stitchgalaxy.dto.CommandCreateProduct;
 import com.stitchgalaxy.dto.CommandCreateSubcategory;
 import com.stitchgalaxy.dto.CommandCreateTopLevelCategory;
 import com.stitchgalaxy.dto.CommandDetachProductFromCategory;
@@ -355,8 +356,14 @@ public class DomainDataService {
         return info;
     }
 
-    public void createNewProduct(String name, LocalDate date, BigDecimal price) {
+    public void createNewProduct(CommandCreateProduct command){
+        Product product = new Product();
+        product.setName(command.getName());
+        product.setPriceUsd(command.getPrice());
+        product.setDate(command.getDate());
+        productRepository.store(product);
     }
+    
 
     public void storeProductData(ProductInfo product) {
     }
