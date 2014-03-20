@@ -20,7 +20,6 @@
     <properties>
         <sg-common-version>1.0.0-SNAPSHOT</sg-common-version>
 	<sg-cdn-version>1.0.0-SNAPSHOT</sg-cdn-version>
-        <sg-dao-version>1.0.0-SNAPSHOT</sg-dao-version>
         <sg-manager-web-version>1.0.0-SNAPSHOT</sg-manager-web-version>
         <joda-version>2.3</joda-version>
         <junit-version>4.10</junit-version>
@@ -45,11 +44,6 @@
                 <groupId>com.stitchgalaxy</groupId>
                 <artifactId>sg-common</artifactId>
                 <version>${sg-common-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stitchgalaxy</groupId>
-                <artifactId>sg-dao</artifactId>
-                <version>${sg-dao-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.stitchgalaxy</groupId>

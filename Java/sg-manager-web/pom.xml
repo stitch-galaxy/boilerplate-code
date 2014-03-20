@@ -18,10 +18,6 @@
             <groupId>com.stitchgalaxy</groupId>
             <artifactId>sg-common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.stitchgalaxy</groupId>
-            <artifactId>sg-dao</artifactId>
-        </dependency>
         <!-- ??? Do we need it ??? -->
         <dependency>
             <groupId>javax</groupId>

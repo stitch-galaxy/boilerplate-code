@@ -8,6 +8,7 @@
                 <value>dozer/dozer-bean-mapper-category.xml</value>
                 <value>dozer/dozer-bean-mapper-partner.xml</value>
                 <value>dozer/dozer-bean-mapper-product-localization.xml</value>
+                <value>dozer/dozer-bean-mapper-product.xml</value>
                 <value>dozer/dozer-global-configuration.xml</value>
             </list>
         </property>
