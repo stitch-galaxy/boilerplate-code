@@ -51,7 +51,9 @@ public class ProductEditServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Long productId = Long.parseLong(request.getParameter("product"));
-            Product product = DomainDataServiceUtils.getDomainDataService(this).getProductById(productId);
+            CommandGetProduct command = new CommandGetProduct();
+            command.setProductId(productId);
+            ProductInfo product = DomainDataServiceUtils.getDomainDataService(this).getProductById(command);
 
             String name = request.getParameter("name");
             String sDate = request.getParameter("date");

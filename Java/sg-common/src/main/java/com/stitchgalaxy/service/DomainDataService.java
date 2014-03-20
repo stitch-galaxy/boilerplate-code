@@ -358,7 +358,7 @@ public class DomainDataService {
     public void createNewProduct(String name, LocalDate date, BigDecimal price) {
     }
 
-    public void storeProductData(Product product) {
+    public void storeProductData(ProductInfo product) {
     }
 
     @Deprecated
