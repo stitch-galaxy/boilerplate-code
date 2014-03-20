@@ -25,7 +25,7 @@ public class CategoryRepositoryHibernate extends HibernateRepository implements 
     }
 
     public List<Category> getTopLeveCategories() {
-        List<Category> result = getSession().createQuery("from Category where parent_id is null").list();
+        List<Category> result = getSession().createQuery("from Category where parentId is null").list();
         return result;
     }
     
