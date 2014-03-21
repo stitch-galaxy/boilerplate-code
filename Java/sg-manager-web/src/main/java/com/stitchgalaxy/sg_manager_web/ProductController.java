@@ -10,12 +10,14 @@ import com.stitchgalaxy.dto.CommandAttachProductToCategory;
 import com.stitchgalaxy.dto.CommandAttachProductToPartner;
 import com.stitchgalaxy.dto.CommandCreatePartner;
 import com.stitchgalaxy.dto.CommandCreateProduct;
+import com.stitchgalaxy.dto.CommandCreateSubcategory;
 import com.stitchgalaxy.dto.CommandDetachProductFromCategory;
 import com.stitchgalaxy.dto.CommandDetachProductFromPartner;
 import com.stitchgalaxy.dto.CommandGetCategory;
 import com.stitchgalaxy.dto.CommandGetPartners;
 import com.stitchgalaxy.dto.CommandGetProduct;
 import com.stitchgalaxy.dto.CommandGetRootCategory;
+import com.stitchgalaxy.dto.CommandRemoveSubcategory;
 import com.stitchgalaxy.dto.PartnerInfo;
 import com.stitchgalaxy.dto.ProductInfo;
 import com.stitchgalaxy.service.DomainDataService;
@@ -29,6 +31,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -160,28 +163,6 @@ public class ProductController {
     }
     
     
-    @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_CATEGORY, method = RequestMethod.GET)
-    public String selectCategory(Model model,
-            @RequestParam(value = "product") Long productId,
-            @RequestParam(value = "category", required = false) Long categoryId) throws DomainDataServiceException {
-        
-        CategoryInfoDTO category = null;
-        if (categoryId == null)
-        {
-            category = domainDataService.getRootCategory(new CommandGetRootCategory());
-        }
-        else
-        {
-            CommandGetCategory command = new CommandGetCategory();
-            command.setCategoryId(categoryId);
-            category = domainDataService.getCategoryById(command);
-        }
-        model.addAttribute("category", category);
-        model.addAttribute("product", productId);
-        UrlConstants.AddUrlConstants(model);
-        return "product-category-select";
-    }
-    
     @RequestMapping(value = UrlConstants.URL_PRODUCT_ATTACH_CATEGORY, method = RequestMethod.GET)
     public String attachCategory(Model model,
             @RequestParam(value = "product") Long productId,
@@ -204,6 +185,61 @@ public class ProductController {
         command.setProductId(productId);
         domainDataService.removeProductFromCategory(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
+    }
+    
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_CATEGORY, method = RequestMethod.GET)
+    public String selectCategory(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "category", required = false) Long categoryId) throws DomainDataServiceException {
+        
+        CategoryInfoDTO category = null;
+        if (categoryId == null)
+        {
+            category = domainDataService.getRootCategory(new CommandGetRootCategory());
+        }
+        else
+        {
+            CommandGetCategory command = new CommandGetCategory();
+            command.setCategoryId(categoryId);
+            category = domainDataService.getCategoryById(command);
+        }
+        model.addAttribute("category", category);
+        model.addAttribute("product", productId);
+        UrlConstants.AddUrlConstants(model);
+        return "category-view";
+    }
+    
+    
+    @RequestMapping(value = UrlConstants.URL_CATEGORY_ADD, method = RequestMethod.POST)
+    public String addCategory(Model model,
+            @RequestParam(value = "category") Long categoryId,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "name") String name,
+            RedirectAttributes redirectAttributes) throws DomainDataServiceException {
+
+        CommandCreateSubcategory command = new CommandCreateSubcategory();
+        command.setCategoryId(categoryId);
+        command.setName(name);
+        domainDataService.createSubcategory(command);
+        redirectAttributes.addAttribute("category", categoryId);
+
+        return "redirect:" + UrlConstants.URL_PRODUCT_SELECT_CATEGORY + "?product=" + productId + "&category=" + categoryId;
+    }
+
+    @RequestMapping(value = UrlConstants.URL_CATEGORY_REMOVE, method = RequestMethod.GET)
+    public String removeCategory(Model model,
+            @RequestParam(value = "category") Long categoryId,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "sub-category") Long subCategoryId,
+            RedirectAttributes redirectAttributes) throws DomainDataServiceException {
+        CommandRemoveSubcategory command = new CommandRemoveSubcategory();
+        command.setCategoryId(categoryId);
+        command.setSubCategoryId(subCategoryId);
+        domainDataService.removeSubcategory(command);
+        redirectAttributes.addAttribute("category", categoryId);
+
+        return "redirect:" + UrlConstants.URL_PRODUCT_SELECT_CATEGORY + "?product=" + productId + "&category=" + categoryId;
     }
     
 }

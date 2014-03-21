@@ -32,10 +32,10 @@
                 </tbody>
             </table>
         </div>
-        <p></p>
+        <p><a href="${pageContext.request.contextPath}${URL_PRODUCT_VIEW}?product=${productId}" class="delete_button">Cancel »</a></p>
         <form method="POST">
             <fieldset>
-                <legend>New author parameters</legend>
+                <legend>Add new partner</legend>
                 <p> 
                     <label for="name">Name</label>
                     <input name="name" type="text" placeholder="Enter author name" required class="text_input"/>

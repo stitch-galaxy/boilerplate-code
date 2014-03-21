@@ -22,7 +22,7 @@
     </head>
     <body>
         <p>
-            <a href="${pageContext.request.contextPath}/">Home</a>
+            <a href="${pageContext.request.contextPath}${URL_HOME}">Home</a>
         </p>
         <%
             ProductInfo product = (ProductInfo) request.getAttribute("product");
@@ -211,10 +211,10 @@
                     <c:forEach var="category" items="${product.categories}" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>
-                                ${category.name}
+                                ${category.current.name}
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}${URL_PRODUCT_DETACH_CATEGORY}?product=${product.id}&category=${category.id}" class="delete_button">Remove »</a>
+                                <a href="${pageContext.request.contextPath}${URL_PRODUCT_DETACH_CATEGORY}?product=${product.id}&category=${category.current.id}" class="delete_button">Remove »</a>
                             </td>
                         </tr>
                     </c:forEach>
