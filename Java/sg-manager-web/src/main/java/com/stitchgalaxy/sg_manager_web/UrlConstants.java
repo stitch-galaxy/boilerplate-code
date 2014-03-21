@@ -36,6 +36,11 @@ public class UrlConstants {
     public static final String URL_PRODUCT_ASSIGN_AUTHOR = "/product/author/assign";
     public static final String URL_PRODUCT_ASSIGN_TRANSLATOR = "/product/translator/assign";
     
+    
+    public static final String URL_PRODUCT_SELECT_CATEGORY = "/product/category/select";
+    public static final String URL_PRODUCT_ATTACH_CATEGORY = "/product/category/attach";
+    public static final String URL_PRODUCT_DETACH_CATEGORY = "/product/category/detach";
+    
     public static final String URL_LOGIN = "/login";
     public static final String URL_LOGIN_FAILED = "/loginfailed";
     public static final String URL_LOGOUT = "/logout";
@@ -60,6 +65,10 @@ public class UrlConstants {
         model.addAttribute("URL_PRODUCT_REMOVE_TRANSLATOR", URL_PRODUCT_REMOVE_TRANSLATOR);
         model.addAttribute("URL_PRODUCT_ASSIGN_AUTHOR", URL_PRODUCT_ASSIGN_AUTHOR);
         model.addAttribute("URL_PRODUCT_ASSIGN_TRANSLATOR", URL_PRODUCT_ASSIGN_TRANSLATOR);
+        
+        model.addAttribute("URL_PRODUCT_SELECT_CATEGORY", URL_PRODUCT_SELECT_CATEGORY);
+        model.addAttribute("URL_PRODUCT_ATTACH_CATEGORY", URL_PRODUCT_ATTACH_CATEGORY);
+        model.addAttribute("URL_PRODUCT_DETACH_CATEGORY", URL_PRODUCT_DETACH_CATEGORY);
     }
     
     public static class ModelWrapper

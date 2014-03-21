@@ -22,7 +22,7 @@
                         <tr class="${loopStatus.index % 2 == 0 ? '' : 'alt'}">
                             <td>${partner.name}</td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/${action}?<%out.print(request.getAttribute("javax.servlet.forward.query_string"));%>&partner=${partner.id}" class="edit_button">Select »</a>
+                                <a href="${pageContext.request.contextPath}${URL_PRODUCT_ASSIGN_AUTHOR}?product=${productId}&partner=${partner.id}" class="edit_button">Select »</a>
                             </td>
                             <td>
                                 <a href="${partner.uri}" target="_blank">${partner.uri}</a>

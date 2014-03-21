@@ -48,6 +48,14 @@
         <url-pattern>/product/add</url-pattern>
         <url-pattern>/product/edit</url-pattern>
         <url-pattern>/product/remove</url-pattern>
+        
+        <url-pattern>/product/author/select</url-pattern>
+        <url-pattern>/product/translator/select</url-pattern>
+        <url-pattern>/product/author/remove</url-pattern>
+        <url-pattern>/product/translator/remove</url-pattern>
+        <url-pattern>/product/author/assign</url-pattern>
+        <url-pattern>/product/translator/assign</url-pattern>
+        
         <!--        <url-pattern>/logout</url-pattern>-->
         <url-pattern>/accessDenied</url-pattern>
         <url-pattern>/home</url-pattern>

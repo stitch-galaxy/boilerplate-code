@@ -258,10 +258,10 @@ public class DomainDataService {
         if (product == null) {
             throw new DomainDataServiceException(ERROR_PRODUCT_NOT_FOUND);
         }
-        if (product.getTranslator() == null) {
+        if (product.getAuthor()== null) {
             throw new DomainDataServiceException(ERROR_PRODUCT_AUTHOR_NOT_ASSIGNED);
         }
-        product.setTranslator(null);
+        product.setAuthor(null);
         productRepository.store(product);
     }
 

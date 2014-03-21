@@ -5,7 +5,10 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dto.CommandAttachProductToPartner;
+import com.stitchgalaxy.dto.CommandCreatePartner;
 import com.stitchgalaxy.dto.CommandCreateProduct;
+import com.stitchgalaxy.dto.CommandDetachProductFromPartner;
 import com.stitchgalaxy.dto.CommandGetPartners;
 import com.stitchgalaxy.dto.CommandGetProduct;
 import com.stitchgalaxy.dto.PartnerInfo;
@@ -67,30 +70,96 @@ public class ProductController {
     public String selectAuthor(Model model,
             @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
         List<PartnerInfo> partners = domainDataService.getAllPartners(new CommandGetPartners());
+        model.addAttribute("productId", productId);
         model.addAttribute("partners", partners);
-        model.addAttribute("action", UrlConstants.URL_PRODUCT_ASSIGN_AUTHOR);
         UrlConstants.AddUrlConstants(model);
-        return "partners";
+        return "authors";
+    }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_AUTHOR, method = RequestMethod.POST)
+    public String addAuthor(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "uri") String uri) throws DomainDataServiceException {
+        CommandCreatePartner command = new CommandCreatePartner();
+        command.setName(name);
+        command.setUri(uri);
+        domainDataService.addPartner(command);
+        return selectAuthor(model, productId);
+    }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_ASSIGN_AUTHOR, method = RequestMethod.GET)
+    public String assignAuthor(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "partner") Long partnerId
+            ) throws DomainDataServiceException {
+        CommandAttachProductToPartner command = new CommandAttachProductToPartner();
+        command.setPartnerId(partnerId);
+        command.setProductId(productId);
+        domainDataService.productAssignAuthor(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
+    }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_REMOVE_AUTHOR, method = RequestMethod.GET)
+    public String removeAuthor(Model model,
+            @RequestParam(value = "product") Long productId
+            ) throws DomainDataServiceException {
+        CommandDetachProductFromPartner command = new CommandDetachProductFromPartner();
+        command.setProductId(productId);
+        domainDataService.removeProductAuthor(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
     }
     
     @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_TRANSLATOR, method = RequestMethod.GET)
     public String selectTranslator(Model model,
             @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
         List<PartnerInfo> partners = domainDataService.getAllPartners(new CommandGetPartners());
+        model.addAttribute("productId", productId);
         model.addAttribute("partners", partners);
-        model.addAttribute("action", UrlConstants.URL_PRODUCT_ASSIGN_TRANSLATOR);
         UrlConstants.AddUrlConstants(model);
-        return "partners";
+        return "translators";
     }
     
-    @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_AUTHOR, method = RequestMethod.POST)
-    public String addAuthor(Model model,
-            @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
-        List<PartnerInfo> partners = domainDataService.getAllPartners(new CommandGetPartners());
-        model.addAttribute("partners", partners);
-        model.addAttribute("action", UrlConstants.URL_PRODUCT_ASSIGN_AUTHOR);
-        UrlConstants.AddUrlConstants(model);
-        return "partners";
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_TRANSLATOR, method = RequestMethod.POST)
+    public String addTranslator(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "uri") String uri) throws DomainDataServiceException {
+        CommandCreatePartner command = new CommandCreatePartner();
+        command.setName(name);
+        command.setUri(uri);
+        domainDataService.addPartner(command);
+        return selectTranslator(model, productId);
     }
-
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_ASSIGN_TRANSLATOR, method = RequestMethod.GET)
+    public String assignTranslator(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "partner") Long partnerId
+            ) throws DomainDataServiceException {
+        CommandAttachProductToPartner command = new CommandAttachProductToPartner();
+        command.setPartnerId(partnerId);
+        command.setProductId(productId);
+        domainDataService.productAssignTranslator(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
+    }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_REMOVE_TRANSLATOR, method = RequestMethod.GET)
+    public String removeTranslator(Model model,
+            @RequestParam(value = "product") Long productId
+            ) throws DomainDataServiceException {
+        CommandDetachProductFromPartner command = new CommandDetachProductFromPartner();
+        command.setProductId(productId);
+        domainDataService.removeProductTranslator(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
+    }
+    
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_CATEGORY, method = RequestMethod.GET)
+    public String selectCategory(Model model,
+            @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
+        
+        UrlConstants.AddUrlConstants(model);
+        return "product-category-select";
+    }
 }
