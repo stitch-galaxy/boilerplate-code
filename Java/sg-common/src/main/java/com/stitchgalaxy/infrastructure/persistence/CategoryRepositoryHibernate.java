@@ -23,7 +23,13 @@ public class CategoryRepositoryHibernate extends HibernateRepository implements 
     public void store(Category category) {
         getSession().saveOrUpdate(category);
     }
+    
+    public Category getRootCategory()
+    {
+        return (Category) getSession().createQuery("from Category where parentId is null").uniqueResult();
+    }
 
+    @Deprecated
     public List<Category> getTopLeveCategories() {
         List<Category> result = getSession().createQuery("from Category where parentId is null").list();
         return result;

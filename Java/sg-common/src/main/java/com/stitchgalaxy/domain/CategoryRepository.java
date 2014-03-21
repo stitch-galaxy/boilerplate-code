@@ -16,6 +16,9 @@ public interface CategoryRepository {
     
     Category find(long categoryId);
     
+    Category getRootCategory();
+    
+    @Deprecated
     List<Category> getTopLeveCategories();
     
     void store(Category category);

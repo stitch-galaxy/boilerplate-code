@@ -214,7 +214,7 @@
                                 ${category.name}
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/product-category-remove?product=${product.id}&category=${category.id}" class="delete_button">Remove »</a>
+                                <a href="${pageContext.request.contextPath}${URL_PRODUCT_DETACH_CATEGORY}?product=${product.id}&category=${category.id}" class="delete_button">Remove »</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -222,7 +222,7 @@
             </table>
         </div>
         <p>
-            <a href="${pageContext.request.contextPath}/product-category-select?product=${product.id}&category=1" class="add_button">Add »</a>
+            <a href="${pageContext.request.contextPath}${URL_PRODUCT_SELECT_CATEGORY}?product=${product.id}" class="add_button">Add »</a>
         </p>
         <h3>Images</h3>
         <div class="img_control_container">

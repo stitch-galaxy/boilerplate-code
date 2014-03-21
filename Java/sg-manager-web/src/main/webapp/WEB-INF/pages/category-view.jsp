@@ -17,19 +17,18 @@
         <p>
             <a href="${pageContext.request.contextPath}${URL_HOME}">Home</a> 
         </p>
-        <p>
-            <label for="parent">Parent</label>
-            <br/>
-            
+        <h4>Category name: ${category.current.name}</h4>
             <c:choose>
-                <c:when test="${category.parent != null}">
+                
+                  <c:when test="${category.parent != null}">
+                      
+                <p>
+                    <label>Parent:</label>
                     <a href="${pageContext.request.contextPath}${URL_CATEGORY_VIEW}?category=${category.parent.id}">${category.parent.name}</a> 
+                    </p>
                 </c:when>
-                <c:otherwise>
-                    <a href="${pageContext.request.contextPath}${URL_CATEGORY_VIEW_TOPLEVEL}">Manage top level categories</a> 
-                </c:otherwise>
+                
             </c:choose>
-        </p>
         <div class="datagrid">
             <table>
                 <thead><tr><th>Category</th><th>Action</th></tr></thead>

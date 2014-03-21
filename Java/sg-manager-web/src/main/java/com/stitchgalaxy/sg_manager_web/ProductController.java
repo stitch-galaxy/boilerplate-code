@@ -5,12 +5,17 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
+import com.stitchgalaxy.dto.CategoryInfoDTO;
+import com.stitchgalaxy.dto.CommandAttachProductToCategory;
 import com.stitchgalaxy.dto.CommandAttachProductToPartner;
 import com.stitchgalaxy.dto.CommandCreatePartner;
 import com.stitchgalaxy.dto.CommandCreateProduct;
+import com.stitchgalaxy.dto.CommandDetachProductFromCategory;
 import com.stitchgalaxy.dto.CommandDetachProductFromPartner;
+import com.stitchgalaxy.dto.CommandGetCategory;
 import com.stitchgalaxy.dto.CommandGetPartners;
 import com.stitchgalaxy.dto.CommandGetProduct;
+import com.stitchgalaxy.dto.CommandGetRootCategory;
 import com.stitchgalaxy.dto.PartnerInfo;
 import com.stitchgalaxy.dto.ProductInfo;
 import com.stitchgalaxy.service.DomainDataService;
@@ -157,9 +162,48 @@ public class ProductController {
     
     @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_CATEGORY, method = RequestMethod.GET)
     public String selectCategory(Model model,
-            @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "category", required = false) Long categoryId) throws DomainDataServiceException {
         
+        CategoryInfoDTO category = null;
+        if (categoryId == null)
+        {
+            category = domainDataService.getRootCategory(new CommandGetRootCategory());
+        }
+        else
+        {
+            CommandGetCategory command = new CommandGetCategory();
+            command.setCategoryId(categoryId);
+            category = domainDataService.getCategoryById(command);
+        }
+        model.addAttribute("category", category);
+        model.addAttribute("product", productId);
         UrlConstants.AddUrlConstants(model);
         return "product-category-select";
     }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_ATTACH_CATEGORY, method = RequestMethod.GET)
+    public String attachCategory(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "category") Long categoryId) throws DomainDataServiceException {
+        
+        CommandAttachProductToCategory command = new CommandAttachProductToCategory();
+        command.setCategoryId(categoryId);
+        command.setProductId(productId);
+        domainDataService.addProductToCategory(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
+    }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_DETACH_CATEGORY, method = RequestMethod.GET)
+    public String detechCategory(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "category") Long categoryId) throws DomainDataServiceException {
+        
+        CommandDetachProductFromCategory command = new CommandDetachProductFromCategory();
+        command.setCategoryId(categoryId);
+        command.setProductId(productId);
+        domainDataService.removeProductFromCategory(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
+    }
+    
 }

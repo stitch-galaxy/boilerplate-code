@@ -23,6 +23,7 @@ import com.stitchgalaxy.dto.CommandGetProduct;
 import com.stitchgalaxy.dto.CommandGetProductLocalization;
 import com.stitchgalaxy.dto.CommandGetProducts;
 import com.stitchgalaxy.dto.CommandGetRootCategories;
+import com.stitchgalaxy.dto.CommandGetRootCategory;
 import com.stitchgalaxy.dto.CommandRemoveProductFile;
 import com.stitchgalaxy.dto.CommandRemoveProductLocalization;
 import com.stitchgalaxy.dto.CommandRemoveSubcategory;
@@ -120,6 +121,17 @@ public class DomainDataService {
         throw new DomainDataServiceException(ERROR_PRODUCT_LOCALIZATION_NOT_FOUND);
     }
 
+    public CategoryInfoDTO getRootCategory(CommandGetRootCategory command){
+        Category root = categoryRepository.getRootCategory();
+        if (root == null)
+        {
+            root = new Category(null, "Root");
+            categoryRepository.store(root);
+        }
+        return dataMapper.getCategoryInfoDTO(root);
+    }
+    
+    @Deprecated
     public List<CategoryInfoDTO> getRootCategories(CommandGetRootCategories command) {
         List<Category> categories = categoryRepository.getTopLeveCategories();
         List<CategoryInfoDTO> result = new LinkedList<CategoryInfoDTO>();
@@ -129,6 +141,7 @@ public class DomainDataService {
         return result;
     }
 
+    @Deprecated
     public void createTopLevelСategory(CommandCreateTopLevelCategory command) {
         Category topLevelCategory = new Category(null, command.getName());
         categoryRepository.store(topLevelCategory);
@@ -165,6 +178,7 @@ public class DomainDataService {
         categoryRepository.store(parent);
     }
 
+    @Deprecated
     public void removeTopLevelCategory(CommandRemoveTopLevelCategory command) throws DomainDataServiceException {
         Category topLevel = categoryRepository.find(command.getCategoryId());
         if (command == null) {

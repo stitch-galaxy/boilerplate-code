@@ -15,9 +15,7 @@ import org.springframework.ui.ModelMap;
  */
 public class UrlConstants {
     
-    public static final String URL_CATEGORY_VIEW_TOPLEVEL = "/category/view/topLevel";
-    public static final String URL_CATEGORY_ADD_TOPLEVEL = "/category/add/topLevel";
-    public static final String URL_CATEGORY_REMOVE_TOPLEVEL = "/category/remove/topLevel";
+    public static final String URL_CATEGORY_VIEW_ROOT = "/category/view/root";
     public static final String URL_CATEGORY_VIEW = "/category/view";
     public static final String URL_CATEGORY_ADD = "/category/add";
     public static final String URL_CATEGORY_REMOVE = "/category/remove";
@@ -37,7 +35,7 @@ public class UrlConstants {
     public static final String URL_PRODUCT_ASSIGN_TRANSLATOR = "/product/translator/assign";
     
     
-    public static final String URL_PRODUCT_SELECT_CATEGORY = "/product/category/select";
+    public static final String URL_PRODUCT_SELECT_CATEGORY = "/product/category/set";
     public static final String URL_PRODUCT_ATTACH_CATEGORY = "/product/category/attach";
     public static final String URL_PRODUCT_DETACH_CATEGORY = "/product/category/detach";
     
@@ -47,9 +45,7 @@ public class UrlConstants {
     
     public static void AddUrlConstants(ModelWrapper model)
     {
-        model.addAttribute("URL_CATEGORY_VIEW_TOPLEVEL", URL_CATEGORY_VIEW_TOPLEVEL);
-        model.addAttribute("URL_CATEGORY_ADD_TOPLEVEL", URL_CATEGORY_ADD_TOPLEVEL);
-        model.addAttribute("URL_CATEGORY_REMOVE_TOPLEVEL", URL_CATEGORY_REMOVE_TOPLEVEL);
+        model.addAttribute("URL_CATEGORY_VIEW_TOPLEVEL", URL_CATEGORY_VIEW_ROOT);
         model.addAttribute("URL_CATEGORY_VIEW", URL_CATEGORY_VIEW);
         model.addAttribute("URL_CATEGORY_ADD", URL_CATEGORY_ADD);
         model.addAttribute("URL_CATEGORY_REMOVE", URL_CATEGORY_REMOVE);
