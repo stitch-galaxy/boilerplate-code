@@ -14,9 +14,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sg.css" type="text/css" />
     </head>
     <body>
-        <p>
-            <a href="${pageContext.request.contextPath}${URL_CATEGORY_VIEW_TOPLEVEL}" class="edit_button">Manage categories »</a>
-        </p>
         <div class="datagrid">
             <table>
                 <thead><tr><th>Design name</th><th>Identifier</th></tr></thead>

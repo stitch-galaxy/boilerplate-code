@@ -16,10 +16,14 @@ import com.stitchgalaxy.dto.CommandDetachProductFromPartner;
 import com.stitchgalaxy.dto.CommandGetCategory;
 import com.stitchgalaxy.dto.CommandGetPartners;
 import com.stitchgalaxy.dto.CommandGetProduct;
+import com.stitchgalaxy.dto.CommandGetProductLocalization;
 import com.stitchgalaxy.dto.CommandGetRootCategory;
+import com.stitchgalaxy.dto.CommandRemoveProductLocalization;
 import com.stitchgalaxy.dto.CommandRemoveSubcategory;
+import com.stitchgalaxy.dto.CommandStoreProductLocalization;
 import com.stitchgalaxy.dto.PartnerInfo;
 import com.stitchgalaxy.dto.ProductInfo;
+import com.stitchgalaxy.dto.ProductLocalizationInfo;
 import com.stitchgalaxy.service.DomainDataService;
 import com.stitchgalaxy.service.DomainDataServiceException;
 import java.math.BigDecimal;
@@ -62,7 +66,7 @@ public class ProductController {
         UrlConstants.AddUrlConstants(model);
         return "product-new";
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_VIEW, method = RequestMethod.GET)
     public String getProduct(Model model,
             @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
@@ -73,7 +77,7 @@ public class ProductController {
         UrlConstants.AddUrlConstants(model);
         return "product-view";
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_AUTHOR, method = RequestMethod.GET)
     public String selectAuthor(Model model,
             @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
@@ -83,7 +87,7 @@ public class ProductController {
         UrlConstants.AddUrlConstants(model);
         return "authors";
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_AUTHOR, method = RequestMethod.POST)
     public String addAuthor(Model model,
             @RequestParam(value = "product") Long productId,
@@ -95,29 +99,29 @@ public class ProductController {
         domainDataService.addPartner(command);
         return selectAuthor(model, productId);
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_ASSIGN_AUTHOR, method = RequestMethod.GET)
     public String assignAuthor(Model model,
             @RequestParam(value = "product") Long productId,
             @RequestParam(value = "partner") Long partnerId
-            ) throws DomainDataServiceException {
+    ) throws DomainDataServiceException {
         CommandAttachProductToPartner command = new CommandAttachProductToPartner();
         command.setPartnerId(partnerId);
         command.setProductId(productId);
         domainDataService.productAssignAuthor(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_REMOVE_AUTHOR, method = RequestMethod.GET)
     public String removeAuthor(Model model,
             @RequestParam(value = "product") Long productId
-            ) throws DomainDataServiceException {
+    ) throws DomainDataServiceException {
         CommandDetachProductFromPartner command = new CommandDetachProductFromPartner();
         command.setProductId(productId);
         domainDataService.removeProductAuthor(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_TRANSLATOR, method = RequestMethod.GET)
     public String selectTranslator(Model model,
             @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
@@ -127,7 +131,7 @@ public class ProductController {
         UrlConstants.AddUrlConstants(model);
         return "translators";
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_TRANSLATOR, method = RequestMethod.POST)
     public String addTranslator(Model model,
             @RequestParam(value = "product") Long productId,
@@ -139,67 +143,62 @@ public class ProductController {
         domainDataService.addPartner(command);
         return selectTranslator(model, productId);
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_ASSIGN_TRANSLATOR, method = RequestMethod.GET)
     public String assignTranslator(Model model,
             @RequestParam(value = "product") Long productId,
             @RequestParam(value = "partner") Long partnerId
-            ) throws DomainDataServiceException {
+    ) throws DomainDataServiceException {
         CommandAttachProductToPartner command = new CommandAttachProductToPartner();
         command.setPartnerId(partnerId);
         command.setProductId(productId);
         domainDataService.productAssignTranslator(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_REMOVE_TRANSLATOR, method = RequestMethod.GET)
     public String removeTranslator(Model model,
             @RequestParam(value = "product") Long productId
-            ) throws DomainDataServiceException {
+    ) throws DomainDataServiceException {
         CommandDetachProductFromPartner command = new CommandDetachProductFromPartner();
         command.setProductId(productId);
         domainDataService.removeProductTranslator(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
     }
-    
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_ATTACH_CATEGORY, method = RequestMethod.GET)
     public String attachCategory(Model model,
             @RequestParam(value = "product") Long productId,
             @RequestParam(value = "category") Long categoryId) throws DomainDataServiceException {
-        
+
         CommandAttachProductToCategory command = new CommandAttachProductToCategory();
         command.setCategoryId(categoryId);
         command.setProductId(productId);
         domainDataService.addProductToCategory(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_DETACH_CATEGORY, method = RequestMethod.GET)
     public String detechCategory(Model model,
             @RequestParam(value = "product") Long productId,
             @RequestParam(value = "category") Long categoryId) throws DomainDataServiceException {
-        
+
         CommandDetachProductFromCategory command = new CommandDetachProductFromCategory();
         command.setCategoryId(categoryId);
         command.setProductId(productId);
         domainDataService.removeProductFromCategory(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId.toString();
     }
-    
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_SELECT_CATEGORY, method = RequestMethod.GET)
     public String selectCategory(Model model,
             @RequestParam(value = "product") Long productId,
             @RequestParam(value = "category", required = false) Long categoryId) throws DomainDataServiceException {
-        
+
         CategoryInfoDTO category = null;
-        if (categoryId == null)
-        {
+        if (categoryId == null) {
             category = domainDataService.getRootCategory(new CommandGetRootCategory());
-        }
-        else
-        {
+        } else {
             CommandGetCategory command = new CommandGetCategory();
             command.setCategoryId(categoryId);
             category = domainDataService.getCategoryById(command);
@@ -209,8 +208,7 @@ public class ProductController {
         UrlConstants.AddUrlConstants(model);
         return "category-view";
     }
-    
-    
+
     @RequestMapping(value = UrlConstants.URL_CATEGORY_ADD, method = RequestMethod.POST)
     public String addCategory(Model model,
             @RequestParam(value = "category") Long categoryId,
@@ -241,5 +239,66 @@ public class ProductController {
 
         return "redirect:" + UrlConstants.URL_PRODUCT_SELECT_CATEGORY + "?product=" + productId + "&category=" + categoryId;
     }
+
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_LOCALIZATION_REMOVE, method = RequestMethod.GET)
+    public String removeLocalization(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "locale") String locale) throws DomainDataServiceException {
+        CommandRemoveProductLocalization command = new CommandRemoveProductLocalization();
+        command.setLocale(locale);
+        command.setProductId(productId);
+        domainDataService.removeProductLocalization(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
+
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_LOCALIZATION_NEW, method = RequestMethod.GET)
+    public String addLocalizationForm(Model model,
+            @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
+        return "product-localization-new";
+    }
+
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_LOCALIZATION_NEW, method = RequestMethod.POST)
+    public String addLocalization(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "locale") String locale) throws DomainDataServiceException {
+        CommandStoreProductLocalization command = new CommandStoreProductLocalization();
+        command.setProductId(productId);
+        ProductLocalizationInfo li = new ProductLocalizationInfo();
+        li.setLocale(locale);
+        command.setProductLocalization(li);
+        domainDataService.storeProductLocalization(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
     
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_LOCALIZATION_EDIT, method = RequestMethod.GET)
+    public String getProductLocalization(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "locale") String locale) throws DomainDataServiceException {
+        CommandGetProductLocalization command = new CommandGetProductLocalization();
+        command.setProductId(productId);
+        command.setLocale(locale);
+        ProductLocalizationInfo li = domainDataService.getProductLocalization(command);
+        model.addAttribute("locale", li);
+        return "product-localization-edit";
+    }
+
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_LOCALIZATION_EDIT, method = RequestMethod.POST)
+    public String editProductLocalization(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "locale") String locale,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "description") String description,
+            @RequestParam(value = "tags") String tags) throws DomainDataServiceException {
+        CommandStoreProductLocalization command = new CommandStoreProductLocalization();
+        command.setProductId(productId);
+        ProductLocalizationInfo li = new ProductLocalizationInfo();
+        li.setLocale(locale);
+        li.setName(name);
+        li.setDescription(description);
+        li.setTags(tags);
+        command.setProductLocalization(li);
+        domainDataService.storeProductLocalization(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
+
 }

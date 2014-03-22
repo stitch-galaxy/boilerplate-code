@@ -38,6 +38,10 @@ public class UrlConstants {
     public static final String URL_PRODUCT_SELECT_CATEGORY = "/product/category/set";
     public static final String URL_PRODUCT_ATTACH_CATEGORY = "/product/category/attach";
     public static final String URL_PRODUCT_DETACH_CATEGORY = "/product/category/detach";
+   
+    public static final String URL_PRODUCT_LOCALIZATION_REMOVE = "/product/localization/remove";
+    public static final String URL_PRODUCT_LOCALIZATION_NEW = "/product/localization/new";
+    public static final String URL_PRODUCT_LOCALIZATION_EDIT = "/product/localization/edit";
     
     public static final String URL_LOGIN = "/login";
     public static final String URL_LOGIN_FAILED = "/loginfailed";
@@ -65,6 +69,10 @@ public class UrlConstants {
         model.addAttribute("URL_PRODUCT_SELECT_CATEGORY", URL_PRODUCT_SELECT_CATEGORY);
         model.addAttribute("URL_PRODUCT_ATTACH_CATEGORY", URL_PRODUCT_ATTACH_CATEGORY);
         model.addAttribute("URL_PRODUCT_DETACH_CATEGORY", URL_PRODUCT_DETACH_CATEGORY);
+        
+        model.addAttribute("URL_PRODUCT_LOCALIZATION_REMOVE", URL_PRODUCT_LOCALIZATION_REMOVE);
+        model.addAttribute("URL_PRODUCT_LOCALIZATION_NEW", URL_PRODUCT_LOCALIZATION_NEW);
+        model.addAttribute("URL_PRODUCT_LOCALIZATION_EDIT", URL_PRODUCT_LOCALIZATION_EDIT);
     }
     
     public static class ModelWrapper

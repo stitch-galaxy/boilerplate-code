@@ -105,6 +105,7 @@ public class DomainDataService {
         //How does it work ?
         product.getLocalizations().remove(localization);
         product.getLocalizations().add(localization);
+        productRepository.store(product);
     }
 
     public ProductLocalizationInfo getProductLocalization(CommandGetProductLocalization command) throws DomainDataServiceException {

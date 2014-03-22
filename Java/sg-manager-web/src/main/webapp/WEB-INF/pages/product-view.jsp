@@ -183,10 +183,10 @@
                                 ${localization.locale}
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/product-localization-edit?product=${product.id}&localization=${localization.locale}" class="edit_button">Edit »</a> 
+                                <a href="${pageContext.request.contextPath}${URL_PRODUCT_LOCALIZATION_EDIT}?product=${product.id}&locale=${localization.locale}" class="edit_button">Edit »</a> 
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/product-localization-remove?product=${product.id}&localization=${localization.locale}" class="delete_button">Delete »</a> 
+                                <a href="${pageContext.request.contextPath}${URL_PRODUCT_LOCALIZATION_REMOVE}?product=${product.id}&locale=${localization.locale}" class="delete_button">Delete »</a> 
                             </td>
                             <td>${localization.name}</td>
                             <td>
@@ -201,7 +201,7 @@
             </table>
         </div>
         <p>
-            <a href="${pageContext.request.contextPath}/product-localization-new?product=${product.id}" class="add_button">Add »</a>
+            <a href="${pageContext.request.contextPath}${URL_PRODUCT_LOCALIZATION_NEW}?product=${product.id}" class="add_button">Add »</a>
         </p>
         <h3>Categories</h3>
         <div class="datagrid">

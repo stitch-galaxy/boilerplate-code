@@ -8,14 +8,15 @@ package com.stitchgalaxy.dao;
 
 import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.infrastructure.persistence.CategoryRepositoryHibernate;
-import org.junit.Test;
+import java.sql.SQLException;
+import java.util.List;
 import static org.junit.Assert.*;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import java.sql.SQLException;
-import java.util.List;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -25,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath*:spring/test-spring-context-persistence.xml")
 @Transactional
-//@TransactionConfiguration(defaultRollback = false)
 public class DaoTest {
     
     @Autowired
