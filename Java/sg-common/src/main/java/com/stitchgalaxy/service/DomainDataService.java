@@ -90,6 +90,7 @@ public class DomainDataService {
         for (ProductLocalization localization : product.getLocalizations()) {
             if (localization.getLocale().equals(command.getLocale())) {
                 product.getLocalizations().remove(localization);
+                productRepository.store(product);
                 return;
             }
         }
@@ -102,8 +103,14 @@ public class DomainDataService {
             throw new DomainDataServiceException(ERROR_PRODUCT_NOT_FOUND);
         }
         ProductLocalization localization = dataMapper.getProductLocalization(command.getProductLocalization());
-        //How does it work ?
-        product.getLocalizations().remove(localization);
+        for(ProductLocalization l : product.getLocalizations())
+        {
+            if (l.getLocale().equals(localization.getLocale()))
+            {
+                product.getLocalizations().remove(l);
+                break;
+            }
+        }
         product.getLocalizations().add(localization);
         productRepository.store(product);
     }

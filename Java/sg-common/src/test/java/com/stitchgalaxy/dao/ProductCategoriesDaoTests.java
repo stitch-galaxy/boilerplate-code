@@ -5,7 +5,6 @@ package com.stitchgalaxy.dao;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.domain.Product;
 import com.stitchgalaxy.domain.ProductLocalization;
@@ -33,47 +32,57 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath*:spring/test-spring-context-persistence.xml")
-@Transactional
 @TransactionConfiguration(defaultRollback = false, transactionManager = "transactionManager")
-public class ProductCategoriesDaoTests extends AbstractTransactionalJUnit4SpringContextTests  {
-    
+public class ProductCategoriesDaoTests extends AbstractTransactionalJUnit4SpringContextTests {
+
     @Autowired
     protected ProductRepositoryHibernate productRepository;
-    
+
     public ProductCategoriesDaoTests() {
     }
-    
+
     @Test
-    public void testStoreCascade() throws SQLException, Exception
-    {
+    public void test() throws SQLException, Exception {
+        Long productId = createProduct();
+        createLocalization(productId);
+        updateLocalization(productId);
+        Product product = productRepository.find(productId);
+        assertEquals(product.getLocalizations().size(), 1);
+        for (ProductLocalization l : product.getLocalizations()) {
+            assertEquals(l.getName(), "test");
+        }
+    }
+
+    @Transactional
+    public void createLocalization(Long productId) {
+        Product product = productRepository.find(productId);
+        ProductLocalization localization = new ProductLocalization();
+        localization.setLocale("test");
+        product.getLocalizations().clear();
+        product.getLocalizations().add(localization);
+        productRepository.store(product);
+    }
+
+    @Transactional
+    public void updateLocalization(Long productId) {
+        Product product = productRepository.find(productId);
+        ProductLocalization localization = new ProductLocalization();
+        localization.setLocale("test");
+        localization.setName("test");
+        localization.setDescription("test");
+        localization.setTags("test");
+        product.getLocalizations().clear();
+        product.getLocalizations().add(localization);
+        productRepository.store(product);
+    }
+
+    @Transactional
+    public Long createProduct() {
         Product product = new Product();
         product.setName("test");
         product.setPriceUsd(new BigDecimal(BigInteger.ONE));
         product.setDate(LocalDate.now());
         productRepository.store(product);
-        
-        
-        ProductLocalization localization = new ProductLocalization();
-        localization.setLocale("test");
-        //How does it work ?
-        product.getLocalizations().remove(localization);
-        product.getLocalizations().add(localization);
-        productRepository.store(product);
-        
-        ProductLocalization localization1 = new ProductLocalization();
-        localization.setLocale("test");
-        localization.setName("test");
-                
-        //How does it work ?
-        product.getLocalizations().remove(localization);
-        product.getLocalizations().add(localization);
-        productRepository.store(product);
-        
-        
-        Product newProduct = productRepository.find(product.getId());
-        for (ProductLocalization loc : newProduct.getLocalizations())
-        {
-            int i = 0;
-        }
+        return product.getId();
     }
 }

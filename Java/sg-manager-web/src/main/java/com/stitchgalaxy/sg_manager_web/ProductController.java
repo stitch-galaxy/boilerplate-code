@@ -257,6 +257,8 @@ public class ProductController {
         return "product-localization-new";
     }
 
+    private final String EMPTY_STRING = "";
+    
     @RequestMapping(value = UrlConstants.URL_PRODUCT_LOCALIZATION_NEW, method = RequestMethod.POST)
     public String addLocalization(Model model,
             @RequestParam(value = "product") Long productId,
@@ -265,6 +267,9 @@ public class ProductController {
         command.setProductId(productId);
         ProductLocalizationInfo li = new ProductLocalizationInfo();
         li.setLocale(locale);
+        li.setDescription(EMPTY_STRING);
+        li.setName(EMPTY_STRING);
+        li.setTags(EMPTY_STRING);
         command.setProductLocalization(li);
         domainDataService.storeProductLocalization(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
@@ -300,5 +305,7 @@ public class ProductController {
         domainDataService.storeProductLocalization(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
     }
+    
+    
 
 }

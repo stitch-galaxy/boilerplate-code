@@ -19,16 +19,16 @@
                 <legend>Localization parameters</legend>
                 <p> 
                     <label for="name">Name</label>
-                    <input name="name" type="text" placeholder="Enter design name" required class="text_input" value="${localization.name}"/>
+                    <input name="name" type="text" placeholder="Enter design name" required class="text_input" value="${locale.name}"/>
                     <label class="text_input_validation"></label>
                 </p>
                 <p> 
                     <label for="description">Description</label>
-                    <textarea name="description" cols="100">${localization.description}</textarea>
+                    <textarea name="description" cols="100">${locale.description}</textarea>
                 </p>
                 <p> 
                     <label for="tags">tags</label>
-                    <textarea name="tags" cols="100">${localization.tags}</textarea>
+                    <textarea name="tags" cols="100">${locale.tags}</textarea>
                 </p>
 
                 <p><input class="submit_edit" type="submit" value="save"/></p>

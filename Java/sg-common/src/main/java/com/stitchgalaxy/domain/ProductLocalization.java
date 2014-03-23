@@ -79,6 +79,9 @@ public class ProductLocalization implements ValueObject<ProductLocalization> {
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(locale)
+                .append(name)
+                .append(description)
+                .append(tags)
                 .toHashCode();
     }
 
@@ -98,6 +101,9 @@ public class ProductLocalization implements ValueObject<ProductLocalization> {
     public boolean sameValueAs(ProductLocalization other) {
         return other != null && new EqualsBuilder().
                 append(this.locale, other.locale).
+                append(this.name, other.name).
+                append(this.description, other.description).
+                append(this.tags, other.tags).
                 isEquals();
     }
 

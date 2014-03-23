@@ -234,7 +234,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/product-upload-thumbnail?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}${URL_PRODUCT_UPLOAD_THUMBNAIL}?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -242,7 +242,7 @@
                 <c:choose>
                     <c:when test="${product.thumbnailUri != null}">
                         <div>
-                            <a href="${pageContext.request.contextPath}/product-remove-thumbnail?product=${product.id}" class="delete_button">Remove »</a>
+                            <a href="${pageContext.request.contextPath}${URL_PRODUCT_REMOVE_THUMBNAIL}?product=${product.id}" class="delete_button">Remove »</a>
                         </div>
                     </c:when>
                 </c:choose>
@@ -259,7 +259,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/product-upload-prototype?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}${URL_PRODUCT_UPLOAD_PROTOTYPE}?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -267,7 +267,7 @@
                 <c:choose>
                     <c:when test="${product.prototypeUri != null}">
                         <div>
-                            <a href="${pageContext.request.contextPath}/product-remove-prototype?product=${product.id}" class="delete_button">Remove »</a>
+                            <a href="${pageContext.request.contextPath}${URL_PRODUCT_REMOVE_PROTOTYPE}?product=${product.id}" class="delete_button">Remove »</a>
                         </div>
                     </c:when>
                 </c:choose>
@@ -284,7 +284,7 @@
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/product-upload-large-image?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}${URL_PRODUCT_UPLOAD_IMAGE}?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
@@ -292,7 +292,7 @@
                 <c:choose>
                     <c:when test="${product.largeImageUri != null}">
                         <div>
-                            <a href="${pageContext.request.contextPath}/product-remove-large-image?product=${product.id}" class="delete_button">Remove »</a>
+                            <a href="${pageContext.request.contextPath}${URL_PRODUCT_REMOVE_IMAGE}?product=${product.id}" class="delete_button">Remove »</a>
                         </div>
                     </c:when>
                 </c:choose>
@@ -301,27 +301,35 @@
         <div class="images_separator">
         </div>
         <div class="img_control_container">
-            <h5>Complete product</h5>
-            <div class="image_container" style="background-image: url(${product.completeProductUri});">
-                <a href="${product.completeProductUri}" class="image_hyperlink" target="_blank"></a>
-            </div>
+            <h5>Design file</h5>
+            <c:choose>
+                <c:when test="${product.fileUri != null}">
+                    <div class="image_container" style="background-image: url(${pageContext.request.contextPath}/images/data.png);">
+                        <a href="${product.fileUri}" class="image_hyperlink" target="_blank"></a>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="image_container" style="background-image: url(${pageContext.request.contextPath}/images/no_data.png);">
+                    </div>
+                </c:otherwise>
+            </c:choose>
             <p>        
             </p>
             <div>
                 <div class="file_upload"   style="float: left;">
-                    <form action="${pageContext.request.contextPath}/product-upload-complete-product?product=${product.id}" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}${URL_PRODUCT_UPLOAD_DESIGN}?product=${product.id}" method="post" enctype="multipart/form-data">
                         <span>Upload »</span>
                         <input type="file" name="file" class="upload" onchange="this.form.submit()"/>
                     </form>
                 </div>
                 <c:choose>
-                    <c:when test="${product.completeProductUri != null}">
+                    <c:when test="${product.fileUri != null}">
                         <div>
-                            <a href="${pageContext.request.contextPath}/product-remove-complete-product?product=${product.id}" class="delete_button">Remove »</a>
+                            <a href="${pageContext.request.contextPath}${URL_PRODUCT_REMOVE_DESIGN}?product=${product.id}" class="delete_button">Remove »</a>
                         </div>
                     </c:when>
                 </c:choose>
             </div>
-        </div>         
+        </div>  
     </body>
 </html>

@@ -47,6 +47,19 @@ public class UrlConstants {
     public static final String URL_LOGIN_FAILED = "/loginfailed";
     public static final String URL_LOGOUT = "/logout";
     
+    
+    public static final String URL_PRODUCT_UPLOAD_THUMBNAIL = "/product/thumbnail/upload";
+    public static final String URL_PRODUCT_REMOVE_THUMBNAIL = "/product/thumbnail/remove";
+    public static final String URL_PRODUCT_UPLOAD_IMAGE = "/product/image/upload";
+    public static final String URL_PRODUCT_REMOVE_IMAGE = "/product/image/remove";
+    public static final String URL_PRODUCT_UPLOAD_COMPLETE_PRODUCT = "/product/completeProduct/upload";
+    public static final String URL_PRODUCT_REMOVE_COMPLETE_PRODUCT = "/product/completeProduct/remove";
+    public static final String URL_PRODUCT_UPLOAD_PROTOTYPE = "/product/prototype/upload";
+    public static final String URL_PRODUCT_REMOVE_PROTOTYPE = "/product/prototype/remove";
+    public static final String URL_PRODUCT_UPLOAD_DESIGN = "/product/design/upload";
+    public static final String URL_PRODUCT_REMOVE_DESIGN = "/product/design/remove";
+    
+    
     public static void AddUrlConstants(ModelWrapper model)
     {
         model.addAttribute("URL_CATEGORY_VIEW_TOPLEVEL", URL_CATEGORY_VIEW_ROOT);
@@ -73,6 +86,17 @@ public class UrlConstants {
         model.addAttribute("URL_PRODUCT_LOCALIZATION_REMOVE", URL_PRODUCT_LOCALIZATION_REMOVE);
         model.addAttribute("URL_PRODUCT_LOCALIZATION_NEW", URL_PRODUCT_LOCALIZATION_NEW);
         model.addAttribute("URL_PRODUCT_LOCALIZATION_EDIT", URL_PRODUCT_LOCALIZATION_EDIT);
+        
+        model.addAttribute("URL_PRODUCT_UPLOAD_THUMBNAIL", URL_PRODUCT_UPLOAD_THUMBNAIL);
+        model.addAttribute("URL_PRODUCT_REMOVE_THUMBNAIL", URL_PRODUCT_REMOVE_THUMBNAIL);
+        model.addAttribute("URL_PRODUCT_UPLOAD_IMAGE", URL_PRODUCT_UPLOAD_IMAGE);
+        model.addAttribute("URL_PRODUCT_REMOVE_IMAGE", URL_PRODUCT_REMOVE_IMAGE);
+        model.addAttribute("URL_PRODUCT_UPLOAD_COMPLETE_PRODUCT", URL_PRODUCT_UPLOAD_COMPLETE_PRODUCT);
+        model.addAttribute("URL_PRODUCT_REMOVE_COMPLETE_PRODUCT", URL_PRODUCT_REMOVE_COMPLETE_PRODUCT);
+        model.addAttribute("URL_PRODUCT_UPLOAD_PROTOTYPE", URL_PRODUCT_UPLOAD_PROTOTYPE);
+        model.addAttribute("URL_PRODUCT_REMOVE_PROTOTYPE", URL_PRODUCT_REMOVE_PROTOTYPE);
+        model.addAttribute("URL_PRODUCT_UPLOAD_DESIGN", URL_PRODUCT_UPLOAD_PROTOTYPE);
+        model.addAttribute("URL_PRODUCT_REMOVE_DESIGN", URL_PRODUCT_REMOVE_PROTOTYPE);
     }
     
     public static class ModelWrapper

@@ -54,10 +54,10 @@
         <set name="localizations" table="ProductLocalization" lazy="true">
             <key column="ProductId" not-null="true"/>
             <composite-element class="ProductLocalization">
-                <property name="locale" column="Locale" type="string" length="20"/>
-                <property name="name" column="Name" type="string" length="255"/>
-                <property name="description" column="Description" type="string" length="1024"/>
-                <property name="tags" column="Tags" type="string" length="1024"/>
+                <property name="locale" column="Locale" type="string" length="20" not-null="true"/>
+                <property name="name" column="Name" type="string" length="255" not-null="true"/>
+                <property name="description" column="Description" type="string" length="1024" not-null="true"/>
+                <property name="tags" column="Tags" type="string" length="1024" not-null="true"/>
             </composite-element>
         </set>
             
