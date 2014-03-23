@@ -61,6 +61,17 @@
         <url-pattern>/home</url-pattern>
         <url-pattern>/</url-pattern>
         <url-pattern></url-pattern>
+        
+        <url-pattern>/product/thumbnail/upload</url-pattern>
+        <url-pattern>/product/thumbnail/remove</url-pattern>
+        <url-pattern>/product/image/upload</url-pattern>
+        <url-pattern>/product/image/remove</url-pattern>
+        <url-pattern>/product/completeProduct/upload</url-pattern>
+        <url-pattern>/product/completeProduct/remove</url-pattern>
+        <url-pattern>/product/prototype/upload</url-pattern>
+        <url-pattern>/product/prototype/remove</url-pattern>
+        <url-pattern>/product/design/upload</url-pattern>
+        <url-pattern>/product/design/remove</url-pattern>
     </servlet-mapping>
     
 
