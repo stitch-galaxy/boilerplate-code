@@ -32,8 +32,11 @@ import com.stitchgalaxy.service.DomainDataServiceException;
 import static com.stitchgalaxy.sg_manager_web.UrlConstants.URL_PRODUCT_REMOVE_THUMBNAIL;
 import static com.stitchgalaxy.sg_manager_web.UrlConstants.URL_PRODUCT_UPLOAD_THUMBNAIL;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -266,7 +269,7 @@ public class ProductController {
     }
 
     private final String EMPTY_STRING = "";
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_LOCALIZATION_NEW, method = RequestMethod.POST)
     public String addLocalization(Model model,
             @RequestParam(value = "product") Long productId,
@@ -282,7 +285,7 @@ public class ProductController {
         domainDataService.storeProductLocalization(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_LOCALIZATION_EDIT, method = RequestMethod.GET)
     public String getProductLocalization(Model model,
             @RequestParam(value = "product") Long productId,
@@ -313,8 +316,7 @@ public class ProductController {
         domainDataService.storeProductLocalization(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
     }
-    
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_UPLOAD_THUMBNAIL, method = RequestMethod.POST)
     public String uploadThumbnail(Model model,
             @RequestParam(value = "product") Long productId,
@@ -322,11 +324,12 @@ public class ProductController {
         CommandUploadProductFile command = new CommandUploadProductFile();
         command.setProductId(productId);
         command.setFileType(FileType.THUMBNAIL);
-        command.setFileContent(file.getInputStream());
+        InputStream filecontent = file.getInputStream();
+        command.setFileContent(filecontent);
         domainDataService.uploadProductFile(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
     }
-    
+
     @RequestMapping(value = UrlConstants.URL_PRODUCT_REMOVE_THUMBNAIL, method = RequestMethod.GET)
     public String removeThumbnail(Model model,
             @RequestParam(value = "product") Long productId) throws DomainDataServiceException {

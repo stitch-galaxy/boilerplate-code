@@ -55,11 +55,11 @@ public class DomainDataService {
     private static final String ERROR_PRODUCT_AUTHOR_NOT_ASSIGNED = "Author not assigned";
     private static final String ERROR_NO_SUCH_RESOURCE_TYPE = "Such resource does not exsist";
 
-    private static final String URL_PATTERN_COMPLETE_PRODUCT = "%i-cp.png";
-    private static final String URL_PATTERN_DESIGN = "%i-design";
-    private static final String URL_PATTERN_IMAGE = "%i-image.pmg";
-    private static final String URL_PATTERN_PROTOTYPE = "%i-prototype.png";
-    private static final String URL_PATTERN_THUMBNAIL = "%i-thumbnail.png";
+    private static final String URL_PATTERN_COMPLETE_PRODUCT = "%d-cp.png";
+    private static final String URL_PATTERN_DESIGN = "%d-design";
+    private static final String URL_PATTERN_IMAGE = "%d-image.pmg";
+    private static final String URL_PATTERN_PROTOTYPE = "%d-prototype.png";
+    private static final String URL_PATTERN_THUMBNAIL = "%d-thumbnail.png";
 
     private DataMapper dataMapper;
     private CategoryRepository categoryRepository;
