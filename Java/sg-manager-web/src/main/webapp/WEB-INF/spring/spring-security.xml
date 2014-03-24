@@ -13,7 +13,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <security:http pattern="/login" security="none"></security:http>
 <!--    <security:http pattern="/logout" security="none"></security:http>-->
     
-    <security:http access-denied-page="/accessDenied">
+    <security:http access-denied-page="/accessDenied" disable-url-rewriting="true">
         <security:form-login login-page="/login" default-target-url="/home" authentication-failure-url="/loginfailed"/>
         <security:logout logout-url="/logout" logout-success-url="/home"/>
         <security:intercept-url pattern="/**" access="ROLE_ADMIN" />

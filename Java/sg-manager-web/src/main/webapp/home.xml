@@ -1,0 +1,24 @@
+<window title="Home" width="600px" border="normal" apply="org.zkoss.bind.BindComposer"
+        viewModel="@id('vm') @init('com.stitchgalaxy.sg_manager_web.HomeViewModel')">
+    <listbox sclass="product-list" vflex="true" hflex="1"
+             model="@load(vm.productList)" selectedItem="@bind(vm.selectedProduct)" >
+        <auxhead>
+            <auxheader colspan="4" class="topic">Contributor List</auxheader>
+        </auxhead>
+        <listhead>
+            <listheader label="Id" width="80px" align="center" />
+            <listheader label="Name" align="center" />
+            <listheader label="Date" width="80px" align="center" />
+            <listheader label="Price" width="80px" align="center" />
+        </listhead>
+        <template name="model" var="product">
+            <listitem>
+                <listcell label="@load(product.id)" />
+                <listcell label="@load(product.name)" />
+                <listcell label="@load(product.date)" />
+                <listcell label="@load(product.price)" />
+            </listitem>
+        </template>
+ 
+    </listbox>
+</window>
