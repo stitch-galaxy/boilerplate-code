@@ -339,4 +339,96 @@ public class ProductController {
         domainDataService.removeProductFile(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
     }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_UPLOAD_IMAGE, method = RequestMethod.POST)
+    public String uploadImage(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam("file") Part file) throws DomainDataServiceException, IOException {
+        CommandUploadProductFile command = new CommandUploadProductFile();
+        command.setProductId(productId);
+        command.setFileType(FileType.IMAGE);
+        InputStream filecontent = file.getInputStream();
+        command.setFileContent(filecontent);
+        domainDataService.uploadProductFile(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
+
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_REMOVE_IMAGE, method = RequestMethod.GET)
+    public String removeImage(Model model,
+            @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
+        CommandRemoveProductFile command = new CommandRemoveProductFile();
+        command.setProductId(productId);
+        command.setFileType(FileType.IMAGE);
+        domainDataService.removeProductFile(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_UPLOAD_PROTOTYPE, method = RequestMethod.POST)
+    public String uploadPrototype(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam("file") Part file) throws DomainDataServiceException, IOException {
+        CommandUploadProductFile command = new CommandUploadProductFile();
+        command.setProductId(productId);
+        command.setFileType(FileType.PROTOTYPE);
+        InputStream filecontent = file.getInputStream();
+        command.setFileContent(filecontent);
+        domainDataService.uploadProductFile(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
+
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_REMOVE_PROTOTYPE, method = RequestMethod.GET)
+    public String removePrototype(Model model,
+            @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
+        CommandRemoveProductFile command = new CommandRemoveProductFile();
+        command.setProductId(productId);
+        command.setFileType(FileType.PROTOTYPE);
+        domainDataService.removeProductFile(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_UPLOAD_COMPLETE_PRODUCT, method = RequestMethod.POST)
+    public String uploadCompleteProduct(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam("file") Part file) throws DomainDataServiceException, IOException {
+        CommandUploadProductFile command = new CommandUploadProductFile();
+        command.setProductId(productId);
+        command.setFileType(FileType.COMPLETE_PRODUCT);
+        InputStream filecontent = file.getInputStream();
+        command.setFileContent(filecontent);
+        domainDataService.uploadProductFile(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
+
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_REMOVE_COMPLETE_PRODUCT, method = RequestMethod.GET)
+    public String removeCompleteProduct(Model model,
+            @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
+        CommandRemoveProductFile command = new CommandRemoveProductFile();
+        command.setProductId(productId);
+        command.setFileType(FileType.COMPLETE_PRODUCT);
+        domainDataService.removeProductFile(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_UPLOAD_DESIGN, method = RequestMethod.POST)
+    public String uploadDesign(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam("file") Part file) throws DomainDataServiceException, IOException {
+        CommandUploadProductFile command = new CommandUploadProductFile();
+        command.setProductId(productId);
+        command.setFileType(FileType.DESIGN);
+        InputStream filecontent = file.getInputStream();
+        command.setFileContent(filecontent);
+        domainDataService.uploadProductFile(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
+
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_REMOVE_DESIGN, method = RequestMethod.GET)
+    public String removeDesign(Model model,
+            @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
+        CommandRemoveProductFile command = new CommandRemoveProductFile();
+        command.setProductId(productId);
+        command.setFileType(FileType.DESIGN);
+        domainDataService.removeProductFile(command);
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
 }
