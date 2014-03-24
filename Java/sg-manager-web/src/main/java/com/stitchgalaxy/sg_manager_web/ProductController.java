@@ -431,4 +431,39 @@ public class ProductController {
         domainDataService.removeProductFile(command);
         return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
     }
+    
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_EDIT, method = RequestMethod.GET)
+    public String getProductDetails(Model model,
+            @RequestParam(value = "product") Long productId) throws DomainDataServiceException {
+        CommandGetProduct command = new CommandGetProduct();
+        command.setProductId(productId);
+        ProductInfo product = domainDataService.getProductById(command);
+        model.addAttribute("product", product);
+        UrlConstants.AddUrlConstants(model);
+        return "product-edit";
+    }
+
+    @RequestMapping(value = UrlConstants.URL_PRODUCT_EDIT, method = RequestMethod.POST)
+    public String editProductInformation(Model model,
+            @RequestParam(value = "product") Long productId,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "price") BigDecimal price,
+            @RequestParam(value = "date") String sDate,
+            @RequestParam(value = "blocked") Boolean blocked,
+            @RequestParam(value = "description") String description,
+            @RequestParam(value = "sales") Long sales,
+            @RequestParam(value = "rates") Long rates,
+            @RequestParam(value = "rating") Long rating,
+            @RequestParam(value = "complexity") Integer complexity,
+            @RequestParam(value = "tags") String tags,
+            @RequestParam(value = "color") String sAvgColor,
+            @RequestParam(value = "width") Integer width,
+            @RequestParam(value = "height") Integer height,
+            @RequestParam(value = "colors") Integer colors,
+            @RequestParam(value = "canvas") String canvas,
+            @RequestParam(value = "threads") String threads,
+            @RequestParam(value = "stitchesPerInch") BigDecimal stitchesPerInch
+    ) throws DomainDataServiceException {
+        return "redirect:" + UrlConstants.URL_PRODUCT_VIEW + "?product=" + productId;
+    }
 }

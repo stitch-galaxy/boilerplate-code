@@ -112,11 +112,47 @@
                         </td>
                         <td><div style="width: 100%; height:100%; overflow: auto;">${fn:replace(product.tags, newLineChar, "<br/>")}</div></td>
                     </tr>
+                    <tr class="alt">
+                        <td>
+                            Width
+                        </td>
+                        <td>${product.width}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Height
+                        </td>
+                        <td>${product.height}</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>
+                            Colors
+                        </td>
+                        <td>${product.colors}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Canvas
+                        </td>
+                        <td>${product.canvas}</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>
+                            Threads
+                        </td>
+                        <td>${product.threads}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Stitches per inch
+                        </td>
+                        <td>${product.stitchesPerInch}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
         <p>
-            <a href="${pageContext.request.contextPath}/product-edit?product=${product.id}" class="edit_button">Edit »</a>
+            <a href="${pageContext.request.contextPath}${URL_PRODUCT_EDIT}?product=${product.id}" class="edit_button">Edit »</a>
         </p>
         <h3>Author information</h3>
         <c:choose>
