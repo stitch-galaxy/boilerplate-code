@@ -37,45 +37,20 @@
             </param-value>
         </init-param>
     </servlet>
+    
+    <servlet>
+        <servlet-name>jsp</servlet-name>
+        <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
+        <servlet-name>jsp</servlet-name>
+        <url-pattern>/WEB-INF/pages/*</url-pattern>
+    </servlet-mapping>
+ 
+    <servlet-mapping>
         <servlet-name>mvc-dispatcher</servlet-name>
-        <url-pattern>/category/view/topLevel</url-pattern>
-        <url-pattern>/category/add/topLevel</url-pattern>
-        <url-pattern>/category/remove/topLevel</url-pattern>
-        <url-pattern>/category/view</url-pattern>
-        <url-pattern>/category/add</url-pattern>
-        <url-pattern>/category/remove</url-pattern>
-        <url-pattern>/login</url-pattern>
-        <url-pattern>/loginfailed</url-pattern>        
-        <url-pattern>/product/view</url-pattern>
-        <url-pattern>/product/add</url-pattern>
-        <url-pattern>/product/edit</url-pattern>
-        <url-pattern>/product/remove</url-pattern>
-        
-        <url-pattern>/product/author/select</url-pattern>
-        <url-pattern>/product/translator/select</url-pattern>
-        <url-pattern>/product/author/remove</url-pattern>
-        <url-pattern>/product/translator/remove</url-pattern>
-        <url-pattern>/product/author/assign</url-pattern>
-        <url-pattern>/product/translator/assign</url-pattern>
-        
-        <!--        <url-pattern>/logout</url-pattern>-->
-        <url-pattern>/accessDenied</url-pattern>
-        <url-pattern>/home</url-pattern>
-        <url-pattern>/</url-pattern>
-        <url-pattern></url-pattern>
-        
-        <url-pattern>/product/thumbnail/upload</url-pattern>
-        <url-pattern>/product/thumbnail/remove</url-pattern>
-        <url-pattern>/product/image/upload</url-pattern>
-        <url-pattern>/product/image/remove</url-pattern>
-        <url-pattern>/product/completeProduct/upload</url-pattern>
-        <url-pattern>/product/completeProduct/remove</url-pattern>
-        <url-pattern>/product/prototype/upload</url-pattern>
-        <url-pattern>/product/prototype/remove</url-pattern>
-        <url-pattern>/product/design/upload</url-pattern>
-        <url-pattern>/product/design/remove</url-pattern>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
     
 
