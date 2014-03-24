@@ -38,6 +38,7 @@
         <hsqldb-version>1.8.0.10</hsqldb-version>
         <jta-version>1.1</jta-version>
         <hibernate-version>4.3.1.Final</hibernate-version>
+        <zk-version>3.1</zk-version>
     </properties>
     
     <dependencyManagement>

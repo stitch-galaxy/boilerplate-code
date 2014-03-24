@@ -13,6 +13,12 @@
     <packaging>war</packaging>
     <name>Web manager</name>
     <url>http://maven.apache.org</url>
+    <repositories>
+        <repository>
+            <id>zk repository</id>
+            <url>http://mavensync.zkoss.org/maven2</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>com.stitchgalaxy</groupId>
@@ -68,6 +74,44 @@
             <groupId>org.springframework.security</groupId> 
             <artifactId>spring-security-config</artifactId>           
             <version>${spring-security-version}</version> 
+        </dependency>
+        <!--ZK-->
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zkspring-core</artifactId>
+            <version>${zk-version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>logback-classic</artifactId>
+                    <groupId>ch.qos.logback</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-web</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zkspring-webflow</artifactId>
+            <version>${zk-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zkspring-security</artifactId>
+            <version>${zk-version}</version>
         </dependency>
         <!-- Useful stuff -->
         <dependency>
