@@ -46,17 +46,4 @@ public class DaoTest {
         Category found = categoryRepository.find(l1_l2_1.getId());
         assertEquals(found, l1_l2_1);
     }
-    
-    @Test
-    public void testFindTopLevel() throws SQLException, Exception
-    {
-        Category l1 = new Category(null, "l1_1");
-        Category l2 = new Category(null, "l1_2");
-        
-        categoryRepository.store(l1);
-        categoryRepository.store(l2);
-        
-        List<Category> topLevelCategories = categoryRepository.getTopLeveCategories();
-        assertEquals(topLevelCategories.size(), 2);
-    }
 }

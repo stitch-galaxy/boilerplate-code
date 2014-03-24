@@ -28,12 +28,6 @@ public class CategoryRepositoryHibernate extends HibernateRepository implements 
     {
         return (Category) getSession().createQuery("from Category where parentId is null").uniqueResult();
     }
-
-    @Deprecated
-    public List<Category> getTopLeveCategories() {
-        List<Category> result = getSession().createQuery("from Category where parentId is null").list();
-        return result;
-    }
     
     public void delete(Category category){
         getSession().delete(category);

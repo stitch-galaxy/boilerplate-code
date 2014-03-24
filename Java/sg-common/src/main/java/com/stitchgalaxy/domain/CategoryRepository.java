@@ -18,9 +18,6 @@ public interface CategoryRepository {
     
     Category getRootCategory();
     
-    @Deprecated
-    List<Category> getTopLeveCategories();
-    
     void store(Category category);
     
     void delete(Category category);

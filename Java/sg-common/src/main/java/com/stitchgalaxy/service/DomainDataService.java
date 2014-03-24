@@ -2,7 +2,6 @@ package com.stitchgalaxy.service;
 
 import com.stitchgalaxy.domain.Category;
 import com.stitchgalaxy.domain.CategoryRepository;
-import com.stitchgalaxy.domain.Design;
 import com.stitchgalaxy.domain.Partner;
 import com.stitchgalaxy.domain.PartnerRepository;
 import com.stitchgalaxy.domain.Product;
@@ -14,7 +13,6 @@ import com.stitchgalaxy.dto.CommandAttachProductToPartner;
 import com.stitchgalaxy.dto.CommandCreatePartner;
 import com.stitchgalaxy.dto.CommandCreateProduct;
 import com.stitchgalaxy.dto.CommandCreateSubcategory;
-import com.stitchgalaxy.dto.CommandCreateTopLevelCategory;
 import com.stitchgalaxy.dto.CommandDetachProductFromCategory;
 import com.stitchgalaxy.dto.CommandDetachProductFromPartner;
 import com.stitchgalaxy.dto.CommandGetCategory;
@@ -22,22 +20,17 @@ import com.stitchgalaxy.dto.CommandGetPartners;
 import com.stitchgalaxy.dto.CommandGetProduct;
 import com.stitchgalaxy.dto.CommandGetProductLocalization;
 import com.stitchgalaxy.dto.CommandGetProducts;
-import com.stitchgalaxy.dto.CommandGetRootCategories;
 import com.stitchgalaxy.dto.CommandGetRootCategory;
 import com.stitchgalaxy.dto.CommandRemoveProductFile;
 import com.stitchgalaxy.dto.CommandRemoveProductLocalization;
 import com.stitchgalaxy.dto.CommandRemoveSubcategory;
-import com.stitchgalaxy.dto.CommandRemoveTopLevelCategory;
 import com.stitchgalaxy.dto.CommandStoreProductLocalization;
 import com.stitchgalaxy.dto.CommandUploadProductFile;
 import com.stitchgalaxy.dto.PartnerInfo;
 import com.stitchgalaxy.dto.ProductInfo;
 import com.stitchgalaxy.dto.ProductLocalizationInfo;
-import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
-import org.joda.time.LocalDate;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -138,22 +131,6 @@ public class DomainDataService {
         }
         return dataMapper.getCategoryInfoDTO(root);
     }
-    
-    @Deprecated
-    public List<CategoryInfoDTO> getRootCategories(CommandGetRootCategories command) {
-        List<Category> categories = categoryRepository.getTopLeveCategories();
-        List<CategoryInfoDTO> result = new LinkedList<CategoryInfoDTO>();
-        for (Category c : categories) {
-            result.add(dataMapper.getCategoryInfoDTO(c));
-        }
-        return result;
-    }
-
-    @Deprecated
-    public void createTopLevelСategory(CommandCreateTopLevelCategory command) {
-        Category topLevelCategory = new Category(null, command.getName());
-        categoryRepository.store(topLevelCategory);
-    }
 
     public CategoryInfoDTO getCategoryById(CommandGetCategory command) throws DomainDataServiceException {
         Category category = categoryRepository.find(command.getCategoryId());
@@ -184,15 +161,6 @@ public class DomainDataService {
         parent.getChilds().remove(child);
         categoryRepository.delete(child);
         categoryRepository.store(parent);
-    }
-
-    @Deprecated
-    public void removeTopLevelCategory(CommandRemoveTopLevelCategory command) throws DomainDataServiceException {
-        Category topLevel = categoryRepository.find(command.getCategoryId());
-        if (command == null) {
-            throw new DomainDataServiceException(ERROR_CATEGORY_NOT_FOUND);
-        }
-        categoryRepository.delete(topLevel);
     }
 
     public void addPartner(CommandCreatePartner command) {
@@ -389,38 +357,4 @@ public class DomainDataService {
 
     public void storeProductData(ProductInfo product) {
     }
-
-    @Deprecated
-    public void createDesign(Long productId) {
-    }
-
-    @Deprecated
-    public Design getDesignById(Long designId) {
-        return TestData.createProductDesign();
-    }
-
-    @Deprecated
-    public void storeDesignData(Design design) {
-    }
-
-    @Deprecated
-    public void removeProductDesign(Long productId, Long designId) {
-    }
-
-    @Deprecated
-    public void uploadDesignFile(Long designId, InputStream filecontent) {
-    }
-
-    @Deprecated
-    public void uploadDesignThumbnail(Long designId, InputStream filecontent) {
-    }
-
-    @Deprecated
-    public void removeDesignFile(Long designId) {
-    }
-
-    @Deprecated
-    public void removeDesignThumbnail(Long designId) {
-    }
-
 }
