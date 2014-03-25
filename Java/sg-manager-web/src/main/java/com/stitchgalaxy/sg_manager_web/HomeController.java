@@ -5,7 +5,6 @@
  */
 package com.stitchgalaxy.sg_manager_web;
 
-import com.stitchgalaxy.domain.Product;
 import com.stitchgalaxy.dto.CommandGetProducts;
 import com.stitchgalaxy.dto.ProductInfo;
 import com.stitchgalaxy.service.DomainDataService;
