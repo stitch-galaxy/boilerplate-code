@@ -10,6 +10,15 @@
         </param-value>
     </context-param>
     <listener>
+        <description>
+            Used to cleanup when a session is destroyed</description>
+        <display-name>ZK Session cleaner</display-name>
+        <listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.zkoss.spring.web.context.CoreContextListener</listener-class>
+    </listener>
+    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <!-- Spring security -->
@@ -65,7 +74,7 @@
     <servlet-mapping>
         <servlet-name>zkLoader</servlet-name>
         <url-pattern>*.zul</url-pattern>
-        <url-pattern>/hello.zul</url-pattern>
+        <url-pattern>/home.zul</url-pattern>
     </servlet-mapping>
  
     <servlet-mapping>
