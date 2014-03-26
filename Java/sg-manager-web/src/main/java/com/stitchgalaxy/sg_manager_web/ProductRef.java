@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  *
  * @author Administrator
  */
-public class Product {
+public class ProductRef {
     private Long id;
     private String name;
     private String date;
