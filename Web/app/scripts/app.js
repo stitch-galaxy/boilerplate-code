@@ -1,8 +1,8 @@
 'use strict';
 
-var app = angular.module('sgManager', ['ngCookies', 'ngResource', 'ngSanitize', 'ngRoute']);
+var app = angular.module('sgManager', ['ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'base64']);
 
-app.config(function ($routeProvider) {
+app.config(function ($routeProvider, $httpProvider) {
   $routeProvider
   .when('/home', {
     templateUrl: 'views/home.html',
@@ -15,6 +15,9 @@ app.config(function ($routeProvider) {
   .otherwise({
     redirectTo: '/home'
   });
+
+  $httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
 app.run(function($rootScope, $location, AuthenticationService) {

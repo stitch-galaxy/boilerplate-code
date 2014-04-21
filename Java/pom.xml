@@ -12,6 +12,7 @@
 	<modules>
 		<module>design_builder</module>
 		<module>sg-manager-web</module>
+		<module>sg-manager-api</module>
 		<module>sg-common</module>
 		<module>sg-cdn</module>
 	</modules>
@@ -19,7 +20,9 @@
 	<properties>
 		<sg-common-version>1.0.0-SNAPSHOT</sg-common-version>
 		<sg-cdn-version>1.0.0-SNAPSHOT</sg-cdn-version>
+		<sg-manager-api-version>1.0.0-SNAPSHOT</sg-manager-api-version>
 		<sg-manager-web-version>1.0.0-SNAPSHOT</sg-manager-web-version>
+                <cors-filter-version>1.9.2</cors-filter-version>
 		<joda-version>2.3</joda-version>
 		<joda-time-hibernate-version>1.3</joda-time-hibernate-version>
 		<jadira-version>3.0.0.CR1</jadira-version>

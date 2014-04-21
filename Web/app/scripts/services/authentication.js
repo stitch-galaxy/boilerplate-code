@@ -18,22 +18,22 @@ app.factory('SessionService', function(){
   };
 });
 
-app.factory('AuthenticationService', function($http, $location, SessionService) {
-  var cacheSession = function() {
-    SessionService.set('authenticated', true);
+app.factory('AuthenticationService', function($http, $location, $base64, SessionService) {
+  var cacheSession = function(credentials) {
+    SessionService.set('credentials', credentials);
   };
   var uncacheSession = function() {
-    SessionService.unset('authenticated');
-  };
-
-  var doNothing = function() {
+    SessionService.unset('credentials');
   };
 
 
   return {
     login: function(credentials) {
-      cacheSession();
-      $location.path('/home');
+      var login = $http({method: 'GET', url: 'localhost:8080/login', headers: {'Authorization': 'Basic ' + $base64.encode('admin' + ':' + 'admin')}});
+      //var login = $http.post("localhost:8080/login", sanitizeCredentials(credentials));
+
+      login.success(cacheSession(credentials));
+      return login;
     },
     logout: function() {
       uncacheSession();
