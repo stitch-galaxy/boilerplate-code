@@ -51,13 +51,6 @@
             <artifactId>spring-security-config</artifactId>           
             <version>${spring-security-version}</version> 
         </dependency>
-        <!-- CORS support-->
-        <dependency>
-            <groupId>com.thetransactioncompany</groupId>
-            <artifactId>cors-filter</artifactId>
-            <version>${cors-filter-version}</version>
-        </dependency>
-        
         <!-- Useful stuff -->
         <dependency>
             <groupId>org.apache.commons</groupId>

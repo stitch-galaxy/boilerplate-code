@@ -29,7 +29,8 @@ app.factory('AuthenticationService', function($http, $location, $base64, Session
 
   return {
     login: function(credentials) {
-      var login = $http({method: 'GET', url: 'localhost:8080/login', headers: {'Authorization': 'Basic ' + $base64.encode('admin' + ':' + 'admin')}});
+      $http.defaults.useXDomain = true;
+      var login = $http({method: 'GET', url: 'http://localhost:8080/sg-manager-api/login', headers: {'Authorization': 'Basic ' + $base64.encode('admin' + ':' + 'admin')}});
       //var login = $http.post("localhost:8080/login", sanitizeCredentials(credentials));
 
       login.success(cacheSession(credentials));

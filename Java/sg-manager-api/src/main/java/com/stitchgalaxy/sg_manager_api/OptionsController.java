@@ -9,18 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class LoginController {
-    
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public @ResponseBody String login(HttpServletResponse response) {
+public class OptionsController {
+
+    @RequestMapping(method = RequestMethod.OPTIONS, value = "/**")
+    public void loginOptions(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-        return "login";
-
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Authorization");
     }
 }
