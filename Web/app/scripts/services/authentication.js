@@ -33,7 +33,9 @@ app.factory('AuthenticationService', function($http, $location, $base64, Session
       var login = $http({method: 'GET', url: 'http://localhost:8080/sg-manager-api/login', headers: {'Authorization': 'Basic ' + $base64.encode('admin' + ':' + 'admin')}});
       //var login = $http.post("localhost:8080/login", sanitizeCredentials(credentials));
 
-      login.success(cacheSession(credentials));
+      login.success(function() {
+        cacheSession(credentials);}
+       );
       return login;
     },
     logout: function() {
