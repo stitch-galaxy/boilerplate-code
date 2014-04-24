@@ -34,15 +34,15 @@ app.factory('AuthenticationService', function($http, $location, $base64, Session
       //var login = $http.post("localhost:8080/login", sanitizeCredentials(credentials));
 
       login.success(function() {
-        cacheSession(credentials);}
-       );
+        cacheSession(credentials);
+      });
       return login;
     },
     logout: function() {
       uncacheSession();
     },
     isLoggedIn: function() {
-      return SessionService.get('authenticated');
+      return SessionService.get('credentials');
     }
   };
 });

@@ -12,19 +12,24 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    
+    <!-- CORS -->
+    <filter>
+        <filter-name>corsFilterChain</filter-name>
+        <filter-class>com.stitchgalaxy.sg_manager_api.CorsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>corsFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <!-- Spring security -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
-    
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-
     <!-- Spring servlet dispatcher -->
     <servlet>
         <servlet-name>mvc-dispatcher</servlet-name>
@@ -45,10 +50,8 @@
             <param-value>true</param-value>
         </init-param>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>mvc-dispatcher</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
 </web-app>
