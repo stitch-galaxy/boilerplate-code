@@ -5,44 +5,35 @@ var app = angular.module('sgManager');
 
 app.factory('SessionService', function(){
   return {
-    get: function(key)
+    getCredentials: function()
     {
-      return sessionStorage.getItem(key);
+      return sessionStorage.getItem('credentials');
     },
-    set: function(key, val) {
-      return sessionStorage.setItem(key, val);
+    setCredentials: function(val) {
+      return sessionStorage.setItem('credentials', val);
     },
-    unset: function(key) {
-      return sessionStorage.remove(key);
+    removeCredentials: function() {
+      return sessionStorage.remove('credentials');
     }
   };
 });
 
 app.factory('AuthenticationService', function($http, $location, $base64, SessionService) {
-  var cacheSession = function(credentials) {
-    SessionService.set('credentials', credentials);
-  };
-  var uncacheSession = function() {
-    SessionService.unset('credentials');
-  };
-
-
   return {
     login: function(credentials) {
-      $http.defaults.useXDomain = true;
-      var login = $http({method: 'GET', url: 'https://localhost/test/login', headers: {'Authorization': 'Basic ' + $base64.encode('admin' + ':' + 'admin')}});
-      //var login = $http.post("localhost:8080/login", sanitizeCredentials(credentials));
+
+      var login = $http({method: 'GET', url: 'https://localhost/test/login', headers: {'Authorization': 'Basic ' + $base64.encode(credentials.email + ':' + credentials.password)}});
 
       login.success(function() {
-        cacheSession(credentials);
+        SessionService.setCredentials(credentials);
       });
       return login;
     },
     logout: function() {
-      uncacheSession();
+      SessionService.removeCredentials();
     },
     isLoggedIn: function() {
-      return SessionService.get('credentials');
+      return SessionService.getCredentials();
     }
   };
 });
