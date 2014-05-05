@@ -1,0 +1,12 @@
+{
+  "name": "sg-manager",
+  "version": "1.0.0",
+  "dependencies": {
+    "angular": "1.2.15",
+    "angular-resource": "1.2.15",
+    "angular-cookies": "1.2.15",
+    "angular-sanitize": "1.2.15",
+    "angular-route": "1.2.15",
+    "angular-base64": "2.0.1"
+  }
+}
