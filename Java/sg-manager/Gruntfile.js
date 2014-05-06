@@ -20,15 +20,30 @@ module.exports = function (grunt) {
     },
 
     watch: {
+      bower: {
+        files: ['bower.json'],
+        tasks: ['bowerInstall']
+      },
       js: {
         files: ['<%= app.src %>/scripts/{,*/}*.js'],
         tasks: ['newer:jshint:all']
       },
       gruntfile: {
         files: ['Gruntfile.js']
+      },
+      compass: {
+        files: ['<%= app.src %>/sass/{,*/}*.{scss,sass}'],
+        tasks: ['compass:app']
       }
+
     },
 
+    // Automatically inject Bower components into the app
+    bowerInstall: {
+      app: {
+        src: ['<%= app.src %>/*.html']
+      }
+    },
 
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
@@ -41,6 +56,28 @@ module.exports = function (grunt) {
         '<%= app.src %>/scripts/{,*/}*.js'
       ]
     },
+
+    // Compiles Sass to CSS and generates necessary files if requested
+    compass: {
+      options: {
+        sassDir: '<%= app.src %>/sass',
+        cssDir: '<%= app.src %>/styles',
+        generatedImagesDir: '<%= app.src %>/images/generated',
+        imagesDir: '<%= app.src %>/images',
+        javascriptsDir: '<%= app.src %>/scripts',
+        fontsDir: '<%= app.src %>/sass/fonts',
+        importPath: '<%= app.src %>/bower_components',
+        httpImagesPath: '/images',
+        httpGeneratedImagesPath: '/images/generated',
+        httpFontsPath: '/styles/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        raw: 'Sass::Script::Number.precision = 10\n'
+      },
+      app: {
+      }
+    },
+
 
     // Empties folders to start fresh
     clean: {
@@ -63,5 +100,3 @@ module.exports = function (grunt) {
     'watch'
   ]);
 };
-
-
