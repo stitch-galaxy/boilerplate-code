@@ -1,0 +1,9 @@
+<div class="container">
+
+      <form class="form-signin" role="form" name="LoginForm" novalidate>
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="email" class="form-control" placeholder="Email address" required autofocus ng-model="credentials.email" name="Email">
+        <input type="password" class="form-control" placeholder="Password" required ng-model="credentials.password" name="Password">
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login(credentials)" ng-disabled="LoginBtnDisabled">Sign in</button>
+      </form>
+    </div>

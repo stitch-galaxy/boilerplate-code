@@ -13,7 +13,9 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:css({.tmp,app}) styles/main.css -->
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/login.css" />
     <!-- endbuild -->
   </head>
   <body ng-app="sgManager">
@@ -32,10 +34,15 @@
     <script src="bower_components/angular-base64/angular-base64.js"></script>
     <script src="bower_components/angular-base64/angular-base64.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <!-- build:js scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/home.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/services/authentication.js"></script>
     <!-- endbuild -->
 </body>
 </html>
