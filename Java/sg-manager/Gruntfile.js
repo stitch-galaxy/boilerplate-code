@@ -32,7 +32,7 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc',
         reporter: require('jshint-stylish')
       },
-      all: [
+      app: [
         'Gruntfile.js',
         '<%= app.src %>/scripts/{,*/}*.js'
       ]
@@ -134,7 +134,7 @@ module.exports = function (grunt) {
     // using the Angular long form for dependency injection. It doesn't work on
     // things like resolve or inject so those have to be done manually.
     ngmin: {
-      dist: {
+      target: {
         files: [{
           expand: true,
           cwd: '.tmp/concat/scripts',
@@ -149,7 +149,7 @@ module.exports = function (grunt) {
       options: {
         browsers: ['last 1 version']
       },
-      dist: {
+      target: {
         files: [{
           expand: true,
           cwd: 'styles/',
@@ -162,7 +162,7 @@ module.exports = function (grunt) {
 
     // Renames files for browser caching purposes
     rev: {
-      dist: {
+      target: {
         files: {
           src: [
             '<%= app.target %>/scripts/{,*/}*.js',
@@ -175,7 +175,7 @@ module.exports = function (grunt) {
     },
 
     imagemin: {
-      dist: {
+      target: {
         files: [{
           expand: true,
           cwd: '<%= app.src %>/images',
@@ -186,7 +186,7 @@ module.exports = function (grunt) {
     },
 
     svgmin: {
-      dist: {
+      target: {
         files: [{
           expand: true,
           cwd: '<%= app.src %>/images',
@@ -216,16 +216,16 @@ module.exports = function (grunt) {
     'compass',
     'imagemin',
     'svgmin',
-    'copy:target',
+    'copy',
     'cdnify',
-//    'useminPrepare',
-//    'autoprefixer',
-//    'concat',
-//    'ngmin',
-//    'cssmin',
-//    'uglify',
-//    'rev',
-//    'usemin'
+    'useminPrepare',
+    'autoprefixer',
+    'concat',
+    'ngmin',
+    'cssmin',
+    'uglify',
+    'rev',
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
