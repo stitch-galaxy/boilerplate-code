@@ -206,6 +206,39 @@ module.exports = function (grunt) {
       }
     },
 
+    htmlmin: {
+      target: {
+        options: {
+          collapseWhitespace: true,
+          collapseBooleanAttributes: true,
+          removeCommentsFromCDATA: true,
+          removeOptionalTags: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= app.target %>',
+          src: ['*.html', 'views/{,*/}*.html'],
+          dest: '<%= app.target %>'
+        }]
+      }
+    },
+
+
+    devUpdate: {
+        main: {
+            options: {
+                updateType: 'force',
+                reportUpdated: false,
+                semver: false,
+                packages: {
+                    devDependencies: true,
+                    dependencies: true
+                },
+                packageJson: null
+            }
+        }
+    },
+
 
   });
 
@@ -225,7 +258,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'htmlmin'
   ]);
 
   grunt.registerTask('default', [
