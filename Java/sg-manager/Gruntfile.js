@@ -32,7 +32,7 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc',
         reporter: require('jshint-stylish')
       },
-      all: [
+      app: [
         'Gruntfile.js',
         '<%= app.src %>/scripts/{,*/}*.js'
       ]
@@ -76,9 +76,8 @@ module.exports = function (grunt) {
       }
     },
 
-
     copy: {
-      target: {
+      sourcesForMinifiedVersion: {
         files: [{
           expand: true,
           dot: true,
@@ -88,12 +87,38 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'views/{,*/}*.html',
-            'images/{,*/}*.{webp}',
-            'fonts/*'
+            'views/**',
           ]
         }]
-      }
+      },
+      sourcesForNonMinifiedVersion: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= app.src %>',
+          dest: '<%= app.target %>',
+          src: [
+            '*.{ico,png,txt}',
+            '.htaccess',
+            '*.html',
+            'views/**',
+            'scripts/**',
+            'bower_components/**',
+          ]
+        }]
+      },
+      devConfig: {
+        src: '<%= app.src %>/etc/dev.js',
+        dest: '<%= app.src %>/scripts/services/config.js'
+      },
+      prodConfig: {
+        src: '<%= app.src %>/etc/prod.js',
+        dest: '<%= app.src %>/scripts/services/config.js'
+      },
+      uatConfig: {
+        src: '<%= app.src %>/etc/uat.js',
+        dest: '<%= app.src %>/scripts/services/config.js'
+      },
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
@@ -134,7 +159,7 @@ module.exports = function (grunt) {
     // using the Angular long form for dependency injection. It doesn't work on
     // things like resolve or inject so those have to be done manually.
     ngmin: {
-      dist: {
+      target: {
         files: [{
           expand: true,
           cwd: '.tmp/concat/scripts',
@@ -149,7 +174,7 @@ module.exports = function (grunt) {
       options: {
         browsers: ['last 1 version']
       },
-      dist: {
+      target: {
         files: [{
           expand: true,
           cwd: 'styles/',
@@ -159,10 +184,9 @@ module.exports = function (grunt) {
       }
     },
 
-
     // Renames files for browser caching purposes
     rev: {
-      dist: {
+      target: {
         files: {
           src: [
             '<%= app.target %>/scripts/{,*/}*.js',
@@ -175,7 +199,7 @@ module.exports = function (grunt) {
     },
 
     imagemin: {
-      dist: {
+      target: {
         files: [{
           expand: true,
           cwd: '<%= app.src %>/images',
@@ -186,7 +210,7 @@ module.exports = function (grunt) {
     },
 
     svgmin: {
-      dist: {
+      target: {
         files: [{
           expand: true,
           cwd: '<%= app.src %>/images',
@@ -206,17 +230,56 @@ module.exports = function (grunt) {
       }
     },
 
+    htmlmin: {
+      target: {
+        options: {
+          collapseWhitespace: true,
+          collapseBooleanAttributes: true,
+          removeCommentsFromCDATA: true,
+          removeOptionalTags: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= app.target %>',
+          src: ['*.html', 'views/{,*/}*.html'],
+          dest: '<%= app.target %>'
+        }]
+      }
+    },
+
+    devUpdate: {
+        main: {
+            options: {
+                updateType: 'force',
+                reportUpdated: false,
+                semver: false,
+                packages: {
+                    devDependencies: true,
+                    dependencies: true
+                },
+                packageJson: null
+            }
+        }
+    },
+
 
   });
 
-  grunt.registerTask('build', [
+  grunt.registerTask('prepareBuild', [
     'clean',
     'bowerInstall',
     'jshint',
     'compass',
     'imagemin',
     'svgmin',
-    'copy:target',
+  ]);
+
+  grunt.registerTask('copyWithoutMinification', [
+    'copy:sourcesForNonMinifiedVersion',
+  ]);
+
+  grunt.registerTask('copyAndMinify', [
+    'copy:sourcesForMinifiedVersion',
     'cdnify',
     'useminPrepare',
     'autoprefixer',
@@ -225,10 +288,23 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'htmlmin'
+  ]);
+
+  grunt.registerTask('dev', [
+    'copy:devConfig',
+    'prepareBuild',
+    'copyWithoutMinification',
+  ]);
+
+  grunt.registerTask('devMinified', [
+    'copy:devConfig',
+    'prepareBuild',
+    'copyAndMinify',
   ]);
 
   grunt.registerTask('default', [
-    'build'
+    'dev'
   ]);
 };
