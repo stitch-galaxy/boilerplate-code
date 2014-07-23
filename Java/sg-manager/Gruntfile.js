@@ -218,14 +218,14 @@ module.exports = function (grunt) {
     'svgmin',
     'copy:target',
     'cdnify',
-//    'useminPrepare',
-//    'autoprefixer',
-//    'concat',
-//    'ngmin',
-//    'cssmin',
-//    'uglify',
-//    'rev',
-//    'usemin'
+    'useminPrepare',
+    'autoprefixer',
+    'concat',
+    'ngmin',
+    'cssmin',
+    'uglify',
+    'rev',
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
