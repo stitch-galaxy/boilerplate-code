@@ -15,9 +15,11 @@
 		<module>sg-manager-api</module>
 		<module>sg-common</module>
 		<module>sg-cdn</module>
+                <module>sg-data</module>
 	</modules>
 
 	<properties>
+                <sg-data-version>1.0.0-SNAPSHOT</sg-data-version>
 		<sg-common-version>1.0.0-SNAPSHOT</sg-common-version>
 		<sg-cdn-version>1.0.0-SNAPSHOT</sg-cdn-version>
 		<sg-manager-api-version>1.0.0-SNAPSHOT</sg-manager-api-version>
