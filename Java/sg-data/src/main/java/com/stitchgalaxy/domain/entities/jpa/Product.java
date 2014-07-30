@@ -6,40 +6,153 @@
 package com.stitchgalaxy.domain.entities.jpa;
 
 import java.math.BigDecimal;
-import javax.annotation.Generated;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 /**
  *
  * @author tarasev
  */
-@Entity
+@Entity(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name="id")
     private Long id;
-    private String name;
+    
+    @Column(name="blocked", nullable = false)
     private Boolean blocked;
+    
+    @Column(name="price")
     private BigDecimal price;
+    
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @Column(name="date")
     private LocalDate date;
     
+    @Column(name="width")
     private Integer width;
+    
+    @Column(name="height")
     private Integer height;
+    
+    @Column(name="colors")
     private Integer colors;
     
-    private String canvas;
-    private BigDecimal stitchesPerInch;
-    private String threads;
-    
+    @Column(name="complexity")
     private Integer complexity;
     
-    private String prototypeUrl;
-    private String thumbnailUrl;
-    private String imageUrl;
-    private String completeProductUrl;
-    private String fileUrl;
+    @ManyToOne
+    @JoinColumn(name="canvas_code")
+    private Canvas canvas;
+    
+    @ManyToOne
+    @JoinColumn(name="thread_code")
+    private Thread thread;
+
+    /**
+     * @return the price
+     */
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    /**
+     * @return the width
+     */
+    public Integer getWidth() {
+        return width;
+    }
+
+    /**
+     * @param width the width to set
+     */
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    /**
+     * @return the height
+     */
+    public Integer getHeight() {
+        return height;
+    }
+
+    /**
+     * @param height the height to set
+     */
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    /**
+     * @return the colors
+     */
+    public Integer getColors() {
+        return colors;
+    }
+
+    /**
+     * @param colors the colors to set
+     */
+    public void setColors(Integer colors) {
+        this.colors = colors;
+    }
+
+    /**
+     * @return the complexity
+     */
+    public Integer getComplexity() {
+        return complexity;
+    }
+
+    /**
+     * @param complexity the complexity to set
+     */
+    public void setComplexity(Integer complexity) {
+        this.complexity = complexity;
+    }
+
+    /**
+     * @return the blocked
+     */
+    public Boolean getBlocked() {
+        return blocked;
+    }
+
+    /**
+     * @param blocked the blocked to set
+     */
+    public void setBlocked(Boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    /**
+     * @return the date
+     */
+    public LocalDate getDate() {
+        return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }
