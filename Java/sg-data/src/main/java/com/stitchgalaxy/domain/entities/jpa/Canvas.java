@@ -21,7 +21,11 @@ import javax.persistence.Table;
 @Entity(name = "canvas")
 public class Canvas {
     @Id
-    @Column(name="code")
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name="id")
+    private Integer id;
+    
+    @Column(name="code", unique = true, nullable = false)
     private String code;
     
     @Column(name="stitches_per_inch", nullable = false)
@@ -53,6 +57,20 @@ public class Canvas {
      */
     public void setStitchesPerInch(BigDecimal stitchesPerInch) {
         this.stitchesPerInch = stitchesPerInch;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
     
 }

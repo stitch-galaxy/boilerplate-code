@@ -9,13 +9,13 @@ package com.stitchgalaxy.domain.enumerations;
  *
  * @author tarasev
  */
-public enum TextType {
+public enum TextFieldType {
 
     PRODUCT_NAME(1);
 
     private int value;
 
-    TextType(int value) {
+    TextFieldType(int value) {
         this.value = value;
     }
 
@@ -23,9 +23,9 @@ public enum TextType {
         return value;
     }
 
-    public static TextType parse(int id) {
-        TextType fileType = null; // Default
-        for (TextType item : TextType.values()) {
+    public static TextFieldType parse(int id) {
+        TextFieldType fileType = null; // Default
+        for (TextFieldType item : TextFieldType.values()) {
             if (item.getValue() == id) {
                 fileType = item;
                 break;

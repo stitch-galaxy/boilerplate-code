@@ -6,6 +6,7 @@
 package com.stitchgalaxy.domain.entities.jpa;
 
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -31,11 +34,11 @@ public class Product {
     @Column(name="blocked", nullable = false)
     private Boolean blocked;
     
-    @Column(name="price")
+    @Column(name="price", nullable = false)
     private BigDecimal price;
     
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @Column(name="date")
+    @Column(name="date", nullable = false)
     private LocalDate date;
     
     @Column(name="width")
@@ -50,13 +53,21 @@ public class Product {
     @Column(name="complexity")
     private Integer complexity;
     
-    @ManyToOne
-    @JoinColumn(name="canvas_code")
-    private Canvas canvas;
-    
-    @ManyToOne
-    @JoinColumn(name="thread_code")
-    private Thread thread;
+//    @ManyToOne
+//    @JoinColumn(name="canvas_id")
+//    private Canvas canvas;
+//    
+//    @ManyToOne
+//    @JoinColumn(name="thread_id")
+//    private Thread thread;
+//    
+//    @OneToMany
+//    @JoinColumn(name="product_id", referencedColumnName = "id")
+//    private List<File> files;
+//    
+//    @OneToOne
+//    @JoinColumn(name="text_field_name_id")
+//    private TextField name;
 
     /**
      * @return the price
@@ -154,5 +165,19 @@ public class Product {
      */
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }

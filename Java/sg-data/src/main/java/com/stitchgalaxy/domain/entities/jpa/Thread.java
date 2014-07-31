@@ -20,7 +20,11 @@ import javax.persistence.Table;
 @Entity(name = "thread")
 public class Thread {
     @Id
-    @Column(name="code", nullable = false)
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name="id")
+    private Integer id;
+    
+    @Column(name="code", unique = true, nullable = false)
     private String code;
 
     /**
@@ -35,5 +39,19 @@ public class Thread {
      */
     public void setCode(String code) {
         this.code = code;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

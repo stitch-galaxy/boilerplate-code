@@ -8,6 +8,8 @@ package com.stitchgalaxy.domain.entities.jpa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -17,7 +19,11 @@ import javax.persistence.Id;
 @Entity(name = "locale")
 public class Locale {
     @Id
-    @Column(name="code")
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "id")
+    private Long id;
+    
+    @Column(name="code", unique = true, nullable = false)
     private String code;
     
     @Column(name="english_name", nullable = false)

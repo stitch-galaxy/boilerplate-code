@@ -8,7 +8,9 @@ package com.stitchgalaxy.domain.service;
 
 import com.stitchgalaxy.domain.entities.jpa.Product;
 import com.stitchgalaxy.domain.entities.jpa.ProductRepository;
+import java.math.BigDecimal;
 import java.nio.file.AccessDeniedException;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ public class SitchGalaxyService {
     {
         Product p = new Product();
         p.setBlocked(Boolean.TRUE);
+        p.setPrice(BigDecimal.ZERO);
+        p.setDate(new LocalDate(2014, 1, 1));
         productRepository.save(p);
     }
 }
