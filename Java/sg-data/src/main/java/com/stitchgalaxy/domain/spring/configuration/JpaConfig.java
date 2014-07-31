@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.stitchgalaxy.domain.test;
+package com.stitchgalaxy.domain.spring.configuration;
 
-import com.stitchgalaxy.domain.entities.jpa.ProductRepository;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -17,8 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -42,6 +38,9 @@ public class JpaConfig {
     @Value( "${jdbc.password}" ) private String password;
     @Value( "${hibernate.dialect}" ) private String hibernateDialect;
     @Value( "${hibernate.hbm2ddl.auto}" ) private String hibernateHbm2ddlAuto;
+    @Value( "${hibernate.show_sql}" ) private Boolean hibernateShowSql;
+    @Value( "${hibernate.format_sql}" ) private Boolean hibernateFormatSql;
+    
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
@@ -61,8 +60,8 @@ public class JpaConfig {
         //no caching
         factory.getJpaPropertyMap().put("cache.provider_class", "org.hibernate.cache.NoCacheProvider");
         //show and format sql during logging
-        factory.getJpaPropertyMap().put("hibernate.show_sql", true);
-        factory.getJpaPropertyMap().put("hibernate.format_sql", true);
+        factory.getJpaPropertyMap().put("hibernate.show_sql", hibernateShowSql);
+        factory.getJpaPropertyMap().put("hibernate.format_sql", hibernateFormatSql);
         //dialect
         factory.getJpaPropertyMap().put("hibernate.dialect", hibernateDialect);
         //db schema

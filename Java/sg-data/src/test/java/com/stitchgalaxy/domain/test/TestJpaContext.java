@@ -8,8 +8,8 @@ package com.stitchgalaxy.domain.test;
  */
 
 import com.stitchgalaxy.domain.service.SitchGalaxyService;
+import com.stitchgalaxy.domain.spring.configuration.JpaConfig;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

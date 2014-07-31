@@ -16,6 +16,7 @@
 		<module>sg-common</module>
 		<module>sg-cdn</module>
                 <module>sg-data</module>
+                <module>sg-rest-api</module>
 	</modules>
 
 	<properties>
@@ -24,28 +25,45 @@
 		<sg-cdn-version>1.0.0-SNAPSHOT</sg-cdn-version>
 		<sg-manager-api-version>1.0.0-SNAPSHOT</sg-manager-api-version>
 		<sg-manager-web-version>1.0.0-SNAPSHOT</sg-manager-web-version>
+
+		<spring-version>4.0.6.RELEASE</spring-version>
+                <spring-data-jpa-version>1.6.1.RELEASE</spring-data-jpa-version>
+                <spring-boot-starter-data-jpa-version>1.1.4.RELEASE</spring-boot-starter-data-jpa-version>
+
+
+		<junit-version>4.10</junit-version>
 		<joda-version>2.3</joda-version>
 		<joda-time-hibernate-version>1.3</joda-time-hibernate-version>
-		<jadira-version>3.0.0.CR1</jadira-version>
-		<junit-version>4.10</junit-version>
+		<hibernate-version>4.3.6.Final</hibernate-version>
+                <commons-dbcp-version>1.4</commons-dbcp-version>
+                <hsqldb-version>1.8.0.10</hsqldb-version>
+                <mysql-connector-java-version>5.1.31</mysql-connector-java-version>
+                <log4j-version>1.2.17</log4j-version>
+                <usertype.core-version>3.2.0.GA</usertype.core-version>
+
+                <!--Use or get rid of these dependencides-->
 		<javaee-web-api-version>6.0</javaee-web-api-version>
 		<jsp-api-version>2.1</jsp-api-version>
 		<commons-lang3-version>3.0</commons-lang3-version>
 		<jstl-version>1.2</jstl-version>
 		<taglibs-version>1.1.2</taglibs-version>
 		<dozer-version>5.4.0</dozer-version>
-		<spring-version>4.0.0.RELEASE</spring-version>
+
 		<spring-security-version>3.2.1.RELEASE</spring-security-version>
-		<commons-dbcp-version>1.4</commons-dbcp-version>
+		
 		<spring-hibernate3-version>2.0.8</spring-hibernate3-version>
-		<hsqldb-version>1.8.0.10</hsqldb-version>
 		<jta-version>1.1</jta-version>
-		<hibernate-version>4.3.1.Final</hibernate-version>
+
 		<zk-version>3.1</zk-version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+                        <dependency>
+				<groupId>com.stitchgalaxy</groupId>
+				<artifactId>sg-data</artifactId>
+				<version>${sg-data-version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.stitchgalaxy</groupId>
 				<artifactId>sg-common</artifactId>
