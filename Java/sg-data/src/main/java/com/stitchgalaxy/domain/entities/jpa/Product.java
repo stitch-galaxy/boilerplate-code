@@ -53,21 +53,21 @@ public class Product {
     @Column(name="complexity")
     private Integer complexity;
     
-//    @ManyToOne
-//    @JoinColumn(name="canvas_id")
-//    private Canvas canvas;
-//    
-//    @ManyToOne
-//    @JoinColumn(name="thread_id")
-//    private Thread thread;
-//    
-//    @OneToMany
-//    @JoinColumn(name="product_id", referencedColumnName = "id")
-//    private List<File> files;
-//    
-//    @OneToOne
-//    @JoinColumn(name="text_field_name_id")
-//    private TextField name;
+    @ManyToOne
+    @JoinColumn(name="canvas_id")
+    private Canvas canvas;
+    
+    @ManyToOne
+    @JoinColumn(name="thread_id")
+    private Thread thread;
+    
+    @OneToMany
+    @JoinColumn(name="product_id", referencedColumnName = "id")
+    private List<File> files;
+    
+    @OneToOne
+    @JoinColumn(name="text_field_name_id")
+    private TextField name;
 
     /**
      * @return the price

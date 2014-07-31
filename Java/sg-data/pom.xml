@@ -48,12 +48,6 @@
             <artifactId>usertype.core</artifactId>
             <version>3.2.0.GA</version>
         </dependency>
-        <!--jpa-->
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
-        </dependency>
         <!--orm-->
         <dependency>
             <groupId>org.hibernate</groupId>

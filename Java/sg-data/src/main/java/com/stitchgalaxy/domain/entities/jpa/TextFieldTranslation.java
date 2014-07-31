@@ -26,9 +26,9 @@ public class TextFieldTranslation {
     @Column(name="id")
     private Long id;
     
-//    @ManyToOne
-//    @JoinColumn(name="locale_id", nullable = false)
-//    private Locale locale;
+    @ManyToOne
+    @JoinColumn(name="locale_id", nullable = false)
+    private Locale locale;
     
     @Column(name="value", nullable = false)
     private String value;

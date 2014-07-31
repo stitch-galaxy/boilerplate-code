@@ -41,9 +41,9 @@ public class TextField {
         this.textFieldType = textFieldType.getValue();
     }
     
-//    @ManyToOne
-//    @JoinColumn(name="base_locale_id", nullable = false)
-//    private Locale baseLocale;
+    @ManyToOne
+    @JoinColumn(name="base_locale_id", nullable = false)
+    private Locale baseLocale;
     
     @Column(name="base_value", nullable = false)
     private String baseValue;
@@ -51,7 +51,7 @@ public class TextField {
     @Column(name="force_translation")
     private Boolean forceTranslation;
     
-//    @OneToMany
-//    @JoinColumn(name="text_field_id", referencedColumnName = "id")
-//    private List<TextFieldTranslation> translations;
+    @OneToMany
+    @JoinColumn(name="text_field_id", referencedColumnName = "id")
+    private List<TextFieldTranslation> translations;
 }
