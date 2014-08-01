@@ -143,3 +143,4 @@ Podfile.lock
 .classpath
 .project
 .settings
+/0/stitchgalaxy-war/target/
