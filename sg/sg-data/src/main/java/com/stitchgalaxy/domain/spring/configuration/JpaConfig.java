@@ -32,7 +32,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 @EnableJpaRepositories(basePackages = "com.stitchgalaxy.domain.entities.jpa")
 @ComponentScan(basePackages = "com.stitchgalaxy.domain.service")
 @EnableTransactionManagement
-@PropertySource("classpath:/com.stitchgalaxy.domain.persistence.jpa.properties")
+@PropertySource("classpath:/com/stitchgalaxy/configuration/properties/${com.sg.environment:test}/domain.jpa.properties")
 public class JpaConfig {
     
     @Value( "${jdbc.url}" ) private String jdbcUrl;
@@ -40,9 +40,9 @@ public class JpaConfig {
     @Value( "${jdbc.username}" ) private String username;
     @Value( "${jdbc.password}" ) private String password;
     @Value( "${hibernate.dialect}" ) private String hibernateDialect;
-    @Value( "${hibernate.hbm2ddl.auto}" ) private String hibernateHbm2ddlAuto;
-    @Value( "${hibernate.show_sql}" ) private Boolean hibernateShowSql;
-    @Value( "${hibernate.format_sql}" ) private Boolean hibernateFormatSql;
+    @Value( "${hibernate.hbm2ddl.auto:}" ) private String hibernateHbm2ddlAuto;
+    @Value( "${hibernate.show_sql:false}" ) private Boolean hibernateShowSql;
+    @Value( "${hibernate.format_sql:false}" ) private Boolean hibernateFormatSql;
 
     @Bean
     public static StitchGalaxyService stitchGalaxyService() {
@@ -74,7 +74,8 @@ public class JpaConfig {
         //dialect
         factory.getJpaPropertyMap().put("hibernate.dialect", hibernateDialect);
         //db schema
-        factory.getJpaPropertyMap().put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
+        if (hibernateHbm2ddlAuto != null && !hibernateHbm2ddlAuto.isEmpty())
+            factory.getJpaPropertyMap().put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
         factory.afterPropertiesSet();
 
         return factory.getObject();

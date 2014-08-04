@@ -8,5 +8,6 @@
     
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+        <property name="com.sg.environment" value="prod"/>
     </system-properties>
 </appengine-web-app>
