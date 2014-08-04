@@ -3,11 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>stitchgalaxy</artifactId>
-        <groupId>com.stitchgalaxy</groupId>
+        <artifactId>sg</artifactId>
+        <groupId>com.sg</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.stitchgalaxy</groupId>
+    <groupId>com.sg</groupId>
     <artifactId>sg-rest-api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -22,19 +22,7 @@
 
 
     <dependencies>
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <!--GAE-->
         <!-- Compile/runtime dependencies -->
         <dependency>
             <groupId>com.google.appengine</groupId>
@@ -61,21 +49,9 @@
             <scope>test</scope>
         </dependency>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <!--project dependencies-->
         <dependency>
-            <groupId>com.stitchgalaxy</groupId>
+            <groupId>com.sg</groupId>
             <artifactId>sg-data</artifactId>
         </dependency>
         <!-- Spring -->
@@ -109,6 +85,12 @@
             <artifactId>spring-security-config</artifactId>           
             <version>${spring-security-version}</version> 
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson-mapper-asl-version}</version>
+        </dependency>
+
         <!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -119,9 +101,6 @@
     </dependencies>
     <build>
         <finalName>sg-rest-api</finalName>
-
-
-
 
         <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory> 
                                    
@@ -144,7 +123,5 @@
                 </configuration>
             </plugin>
         </plugins>
-
-
     </build>
 </project>

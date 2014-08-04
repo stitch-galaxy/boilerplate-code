@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>stitchgalaxy</artifactId>
-        <groupId>com.stitchgalaxy</groupId>
+        <artifactId>sg</artifactId>
+        <groupId>com.sg</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>sg-data</artifactId>
@@ -107,5 +107,24 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java-version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>${dozer-version}</version>
+        </dependency>
     </dependencies>
+    <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.17</version>
+        <configuration>
+          <systemPropertyVariables>
+            <com.sg.environment>test</com.sg.environment>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
