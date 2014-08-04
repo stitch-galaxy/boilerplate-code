@@ -7,7 +7,7 @@ package com.stitchgalaxy.domain.test;
  * and open the template in the editor.
  */
 
-import com.stitchgalaxy.domain.service.SitchGalaxyService;
+import com.stitchgalaxy.domain.service.StitchGalaxyService;
 import com.stitchgalaxy.domain.spring.configuration.JpaConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 public class TestJpaContext {
     
     @Autowired
-    SitchGalaxyService service;
+    StitchGalaxyService service;
             
     public TestJpaContext() {
     }

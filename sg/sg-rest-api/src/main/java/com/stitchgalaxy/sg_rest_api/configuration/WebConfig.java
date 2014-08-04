@@ -11,15 +11,19 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  *
  * @author tarasev
  */
+//http://www.mkyong.com/spring-security/spring-security-hello-world-annotation-example/
+//http://www.luckyryan.com/2013/02/07/migrate-spring-mvc-servlet-xml-to-java-config/
+//http://www.robinhowlett.com/blog/2013/02/13/spring-app-migration-from-xml-to-java-based-config/
 @Configuration
 @EnableWebMvc
 @ComponentScan({/*"com.stitchgalaxy.sg_rest_api.configuration",*/"com.stitchgalaxy.sg_rest_api.controllers"})
 @Import(JpaConfig.class)
-public class WebConfig {
+public class WebConfig extends WebMvcConfigurerAdapter {
     
 }

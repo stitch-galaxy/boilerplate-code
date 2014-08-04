@@ -6,6 +6,7 @@
 
 package com.stitchgalaxy.domain.entities.jpa;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author tarasev
  */
 @Repository
+@Qualifier("productRepository")
 public interface ProductRepository extends CrudRepository<Product, Long> {
 }

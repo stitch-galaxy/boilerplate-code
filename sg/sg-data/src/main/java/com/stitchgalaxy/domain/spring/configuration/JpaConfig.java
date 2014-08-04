@@ -5,6 +5,7 @@
  */
 package com.stitchgalaxy.domain.spring.configuration;
 
+import com.stitchgalaxy.domain.service.StitchGalaxyService;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +21,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  *
@@ -40,11 +43,17 @@ public class JpaConfig {
     @Value( "${hibernate.hbm2ddl.auto}" ) private String hibernateHbm2ddlAuto;
     @Value( "${hibernate.show_sql}" ) private Boolean hibernateShowSql;
     @Value( "${hibernate.format_sql}" ) private Boolean hibernateFormatSql;
-    
+
+    @Bean
+    public static StitchGalaxyService stitchGalaxyService() {
+        return new StitchGalaxyService();
+    }        
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
+        
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        return configurer;
     }
     
     @Bean
@@ -81,8 +90,6 @@ public class JpaConfig {
         ds.setInitialSize(4);
         ds.setDefaultAutoCommit(false);
         return ds;
-        //EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        //return builder.setType(EmbeddedDatabaseType.HSQL).build();
     }
 
     @Bean
@@ -90,6 +97,14 @@ public class JpaConfig {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory());
         return txManager;
+    }
+    
+    @Bean
+    public TransactionTemplate transactionTemplate()
+    {
+        TransactionTemplate template = new TransactionTemplate(transactionManager());
+        template.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        return template;
     }
     
     @Bean 
