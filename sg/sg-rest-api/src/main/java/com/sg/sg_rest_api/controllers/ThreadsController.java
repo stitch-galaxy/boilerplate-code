@@ -6,22 +6,29 @@
 
 package com.sg.sg_rest_api.controllers;
 
-import com.sg.domain.service.StitchGalaxyService;
-import javax.servlet.http.HttpServletResponse;
+import com.sg.domain.dto.ThreadDto;
+import com.sg.domain.service.SgService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class LoginController {
+public class ThreadsController {
     
     @Autowired
-    StitchGalaxyService service;
+    SgService service;
     
-    @RequestMapping(value = "/addProduct", method = RequestMethod.GET)
-    public @ResponseBody String addUser(HttpServletResponse response) {
-        return service.addProduct().toString();
+    @RequestMapping(value = "/addThread", method = RequestMethod.POST)
+    public void addThread(@RequestBody ThreadDto dto) {
+        service.addThread(dto);
+    }
+    
+    @RequestMapping(value = "/getAllThreads", method = RequestMethod.GET)
+    public @ResponseBody List<ThreadDto> getThreads() {
+        return service.getAllThreads();
     }
 }

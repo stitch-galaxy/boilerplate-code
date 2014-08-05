@@ -5,9 +5,12 @@
  */
 package com.sg.domain.spring.configuration;
 
-import com.sg.domain.service.StitchGalaxyService;
+import com.sg.domain.service.JpaServiceImpl;
+import com.sg.domain.service.SgService;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -44,9 +47,14 @@ public class Jpa {
     @Value( "${hibernate.show_sql:false}" ) private Boolean hibernateShowSql;
     @Value( "${hibernate.format_sql:false}" ) private Boolean hibernateFormatSql;
 
+    @Bean(name = "mapper")
+    public static Mapper mapper() {
+        return new DozerBeanMapper();
+    }
+    
     @Bean
-    public static StitchGalaxyService stitchGalaxyService() {
-        return new StitchGalaxyService();
+    public static SgService stitchGalaxyService() {
+        return new JpaServiceImpl();
     }        
 
     @Bean
