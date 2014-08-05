@@ -7,6 +7,8 @@
 package com.sg.domain.service;
 
 import com.sg.domain.dto.ThreadDto;
+import com.sg.domain.dto.ThreadRefDto;
+import com.sg.domain.dto.ThreadUpdateDto;
 import java.util.List;
 
 /**
@@ -15,7 +17,8 @@ import java.util.List;
  */
 public interface SgService {
     
-    public void addThread(ThreadDto thread);
-    public List<ThreadDto> getAllThreads();
-    
+    public void createThread(ThreadDto thread);
+    public void deleteThread(ThreadRefDto thread);
+    public void updateThread(ThreadUpdateDto thread);
+    public List<ThreadDto> listThreads();   
 }

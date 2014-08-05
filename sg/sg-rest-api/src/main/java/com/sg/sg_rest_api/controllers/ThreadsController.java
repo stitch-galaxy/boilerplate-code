@@ -7,6 +7,7 @@
 package com.sg.sg_rest_api.controllers;
 
 import com.sg.domain.dto.ThreadDto;
+import com.sg.domain.dto.ThreadRefDto;
 import com.sg.domain.service.SgService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,18 @@ public class ThreadsController {
     @Autowired
     SgService service;
     
-    @RequestMapping(value = "/addThread", method = RequestMethod.POST)
-    public void addThread(@RequestBody ThreadDto dto) {
-        service.addThread(dto);
+    @RequestMapping(value = RequestPath.REQUEST_THREAD_ADD, method = RequestMethod.POST)
+    public @ResponseBody void addThread(@RequestBody ThreadDto dto) {
+        service.createThread(dto);
     }
     
-    @RequestMapping(value = "/getAllThreads", method = RequestMethod.GET)
+    @RequestMapping(value = RequestPath.REQUEST_THREAD_LIST, method = RequestMethod.GET)
     public @ResponseBody List<ThreadDto> getThreads() {
-        return service.getAllThreads();
+        return service.listThreads();
+    }
+    
+    @RequestMapping(value = RequestPath.REQUEST_THREAD_DELETE, method = RequestMethod.PUT)
+    public @ResponseBody void deleteThread(@RequestBody ThreadRefDto dto) {
+        service.deleteThread(dto);
     }
 }

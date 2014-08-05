@@ -6,6 +6,8 @@
 package com.sg.domain.service;
 
 import com.sg.domain.dto.ThreadDto;
+import com.sg.domain.dto.ThreadRefDto;
+import com.sg.domain.dto.ThreadUpdateDto;
 import com.sg.domain.entities.jpa.ProductRepository;
 import com.sg.domain.entities.jpa.ThreadsRepository;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.dozer.Mapper;
 import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -36,12 +39,29 @@ public class JpaServiceImpl implements SgService {
 
     @Resource(name = "transactionTemplate")
     private TransactionTemplate transactionTemplate;
-
-    public void addThread(final ThreadDto dto) {
+    
+    public void deleteThread(final ThreadRefDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
-                    addThreadImpl(dto);
+                    deleteThreadImpl(dto);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    private void deleteThreadImpl(ThreadRefDto dto) {
+        Thread thread = threadsRepository.findByCode(dto.getCode());
+        threadsRepository.delete(thread.getId());
+    }
+    
+    public void createThread(final ThreadDto dto) {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    createThreadImpl(dto);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -49,16 +69,16 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    private void addThreadImpl(ThreadDto dto) {
+    private void createThreadImpl(ThreadDto dto) {
         Thread thread = mapper.map(dto, Thread.class);
         threadsRepository.save(thread);
     }
 
-    public List<ThreadDto> getAllThreads() {
+    public List<ThreadDto> listThreads() {
         return transactionTemplate.execute(new TransactionCallback<List<ThreadDto>>() {
             public List<ThreadDto> doInTransaction(TransactionStatus status) {
                 try {
-                    return getAllThreadsImpl();
+                    return listThreadsImpl();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -66,7 +86,7 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    private List<ThreadDto> getAllThreadsImpl() {
+    private List<ThreadDto> listThreadsImpl() {
         List<ThreadDto> result = new ArrayList<ThreadDto>();
         Iterable<Thread> threads = threadsRepository.findAll();
         for (Thread t : threads) {
@@ -75,38 +95,22 @@ public class JpaServiceImpl implements SgService {
         return result;
     }
 
-//    public void addProductSimple() {
-//        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-//            protected void doInTransactionWithoutResult(TransactionStatus status) {
-//                try {
-//                    addProductImpl();
-//                } catch (Exception e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        });
-//    }
-//    
-//    public Long addProduct() {
-//        return transactionTemplate.execute(new TransactionCallback<Long>() {
-//            public Long doInTransaction(TransactionStatus status) {
-//                try {
-//                    return addProductImpl();
-//                } catch (Exception e) {
-//                    throw new RuntimeException(e);
-//                }
-//                
-//            }
-//        });
-//    }
-//
-//    public Long addProductImpl() {
-//        Product p = new Product();
-//        p.setBlocked(Boolean.TRUE);
-//        p.setPrice(BigDecimal.ZERO);
-//        p.setDate(new LocalDate(2014, 1, 1));
-//        productRepository.save(p);
-//        
-//        return p.getId();
-//    }
+    public void updateThread(final ThreadUpdateDto dto) {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    updateThreadImpl(dto);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    private void updateThreadImpl(ThreadUpdateDto dto) {
+        Thread thread = threadsRepository.findByCode(dto.getThreadRef().getCode());
+        mapper.map(dto.getThread(), thread);
+        threadsRepository.save(thread);
+    }
+    
 }
