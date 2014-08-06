@@ -15,5 +15,11 @@ public class RequestPath {
     public static final String REQUEST_THREAD_ADD = "/rest/thread/create";
     public static final String REQUEST_THREAD_DELETE = "/rest/thread/delete";
     public static final String REQUEST_THREAD_LIST = "/rest/threads";
+    public static final String REQUEST_THREAD_UPDATE = "/rest/thread/update";
+    
+    public static final String REQUEST_CANVAS_ADD = "/rest/canvas/create";
+    public static final String REQUEST_CANVAS_DELETE = "/rest/canvas/delete";
+    public static final String REQUEST_CANVAS_LIST = "/rest/canvases";
+    public static final String REQUEST_CANVAS_UPDATE = "/rest/canvas/update";
     
 }
