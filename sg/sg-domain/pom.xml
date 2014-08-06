@@ -7,8 +7,8 @@
         <groupId>com.sg</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>sg-data</artifactId>
-    <name>Data</name>
+    <artifactId>sg-domain</artifactId>
+    <name>domain</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

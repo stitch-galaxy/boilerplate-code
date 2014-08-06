@@ -11,7 +11,7 @@
     <artifactId>sg-rest-api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>RestApi</name>
+    <name>rest_api</name>
     <url>http://maven.apache.org</url>
 
 
@@ -52,7 +52,7 @@
         <!--project dependencies-->
         <dependency>
             <groupId>com.sg</groupId>
-            <artifactId>sg-data</artifactId>
+            <artifactId>sg-domain</artifactId>
         </dependency>
         <!-- Spring -->
         <dependency>

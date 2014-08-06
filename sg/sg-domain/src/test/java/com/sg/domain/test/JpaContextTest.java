@@ -8,7 +8,9 @@ package com.sg.domain.test;
  */
 
 import com.sg.domain.service.SgService;
-import com.sg.domain.spring.configuration.Jpa;
+import com.sg.domain.spring.configuration.JpaConfig;
+import com.sg.domain.spring.configuration.JpaServiceConfig;
+import com.sg.domain.spring.configuration.MapperConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = Jpa.class)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {JpaConfig.class, MapperConfig.class, JpaServiceConfig.class})
 public class JpaContextTest {
     
     @Autowired

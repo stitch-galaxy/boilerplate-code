@@ -14,7 +14,9 @@ import com.sg.domain.dto.ThreadDto;
 import com.sg.domain.dto.ThreadRefDto;
 import com.sg.domain.dto.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
-import com.sg.domain.spring.configuration.Jpa;
+import com.sg.domain.spring.configuration.JpaConfig;
+import com.sg.domain.spring.configuration.JpaServiceConfig;
+import com.sg.domain.spring.configuration.MapperConfig;
 import java.math.BigDecimal;
 import java.util.List;
 import junit.framework.Assert;
@@ -30,7 +32,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = Jpa.class)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {JpaConfig.class, MapperConfig.class, JpaServiceConfig.class})
 public class JpaServiceTest {
     
     @Autowired

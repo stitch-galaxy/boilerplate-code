@@ -37,13 +37,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 @Configuration
 @EnableJpaRepositories(basePackageClasses = {ThreadsRepository.class, CanvasesRepository.class, ProductRepository.class})
 //@EnableJpaRepositories(basePackages = "com.sg.domain.entities.jpa")
-//replaced with the direct bean instantiation
-//@ComponentScan(basePackages = "com.sg.domain.service")
-//@ComponentScan(basePackageClasses = {JpaServiceImpl.class})
 //GAE do not support @Transactional annotation because where is a class on a call stack which is not in a white list
 //@EnableTransactionManagement
 @PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment:test}/domain.jpa.properties")
-public class Jpa {
+public class JpaConfig {
     
     @Value( "${jdbc.url}" ) private String jdbcUrl;
     @Value( "${jdbc.driverClassName}" ) private String driverClassName;
@@ -52,17 +49,7 @@ public class Jpa {
     @Value( "${hibernate.dialect}" ) private String hibernateDialect;
     @Value( "${hibernate.hbm2ddl.auto:}" ) private String hibernateHbm2ddlAuto;
     @Value( "${hibernate.show_sql:false}" ) private Boolean hibernateShowSql;
-    @Value( "${hibernate.format_sql:false}" ) private Boolean hibernateFormatSql;
-
-    @Bean(name = "mapper")
-    public static Mapper mapper() {
-        return new DozerBeanMapper();
-    }
-    
-    @Bean
-    public static SgService stitchGalaxyService() {
-        return new JpaServiceImpl();
-    }        
+    @Value( "${hibernate.format_sql:false}" ) private Boolean hibernateFormatSql;      
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {

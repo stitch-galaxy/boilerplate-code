@@ -10,7 +10,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <appengine.target.version>1.9.7</appengine.target.version>
 
-                <sg-data-version>1.0.0-SNAPSHOT</sg-data-version>
+                <sg-domain-version>1.0.0-SNAPSHOT</sg-domain-version>
 		<sg-common-version>1.0.0-SNAPSHOT</sg-common-version>
 		<sg-cdn-version>1.0.0-SNAPSHOT</sg-cdn-version>
 		<sg-manager-api-version>1.0.0-SNAPSHOT</sg-manager-api-version>
@@ -39,8 +39,8 @@
 		<dependencies>
                         <dependency>
 				<groupId>com.sg</groupId>
-				<artifactId>sg-data</artifactId>
-				<version>${sg-data-version}</version>
+				<artifactId>sg-domain</artifactId>
+				<version>${sg-domain-version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -59,7 +59,7 @@
   </build>
   <modules>
     <module>sg-ear</module>
-    <module>sg-data</module>
+    <module>sg-domain</module>
     <module>sg-rest-api</module>
   </modules>
 </project>
