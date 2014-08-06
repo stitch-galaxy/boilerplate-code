@@ -24,22 +24,22 @@ public class CanvasesController {
     @Autowired
     SgService service;
     
-    @RequestMapping(value = RequestPath.REQUEST_THREAD_ADD, method = RequestMethod.POST)
+    @RequestMapping(value = RequestPath.REQUEST_CANVAS_ADD, method = RequestMethod.POST)
     public @ResponseBody void create(@RequestBody CanvasDto dto) {
         service.create(dto);
     }
     
-    @RequestMapping(value = RequestPath.REQUEST_THREAD_LIST, method = RequestMethod.GET)
+    @RequestMapping(value = RequestPath.REQUEST_CANVAS_LIST, method = RequestMethod.GET)
     public @ResponseBody List<CanvasDto> list() {
         return service.listCanvases();
     }
     
-    @RequestMapping(value = RequestPath.REQUEST_THREAD_DELETE, method = RequestMethod.PUT)
+    @RequestMapping(value = RequestPath.REQUEST_CANVAS_DELETE, method = RequestMethod.PUT)
     public @ResponseBody void delete(@RequestBody CanvasRefDto dto) {
         service.delete(dto);
     }
     
-    @RequestMapping(value = RequestPath.REQUEST_THREAD_UPDATE, method = RequestMethod.PUT)
+    @RequestMapping(value = RequestPath.REQUEST_CANVAS_UPDATE, method = RequestMethod.PUT)
     public @ResponseBody void update(@RequestBody CanvasUpdateDto dto) {
         service.update(dto);
     }

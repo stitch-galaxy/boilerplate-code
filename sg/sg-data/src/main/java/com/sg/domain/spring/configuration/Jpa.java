@@ -5,6 +5,9 @@
  */
 package com.sg.domain.spring.configuration;
 
+import com.sg.domain.entities.jpa.CanvasesRepository;
+import com.sg.domain.entities.jpa.ProductRepository;
+import com.sg.domain.entities.jpa.ThreadsRepository;
 import com.sg.domain.service.JpaServiceImpl;
 import com.sg.domain.service.SgService;
 import javax.persistence.EntityManagerFactory;
@@ -32,9 +35,13 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author tarasev
  */
 @Configuration
-@EnableJpaRepositories(basePackages = "com.sg.domain.entities.jpa")
-@ComponentScan(basePackages = "com.sg.domain.service")
-@EnableTransactionManagement
+@EnableJpaRepositories(basePackageClasses = {ThreadsRepository.class, CanvasesRepository.class, ProductRepository.class})
+//@EnableJpaRepositories(basePackages = "com.sg.domain.entities.jpa")
+//replaced with the direct bean instantiation
+//@ComponentScan(basePackages = "com.sg.domain.service")
+//@ComponentScan(basePackageClasses = {JpaServiceImpl.class})
+//GAE do not support @Transactional annotation because where is a class on a call stack which is not in a white list
+//@EnableTransactionManagement
 @PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment:test}/domain.jpa.properties")
 public class Jpa {
     

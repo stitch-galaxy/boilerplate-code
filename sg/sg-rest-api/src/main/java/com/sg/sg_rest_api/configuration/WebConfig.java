@@ -7,6 +7,8 @@
 package com.sg.sg_rest_api.configuration;
 
 import com.sg.domain.spring.configuration.Jpa;
+import com.sg.sg_rest_api.controllers.CanvasesController;
+import com.sg.sg_rest_api.controllers.ThreadsController;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -22,7 +24,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //http://www.robinhowlett.com/blog/2013/02/13/spring-app-migration-from-xml-to-java-based-config/
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.sg.sg_rest_api.controllers")
+@ComponentScan(basePackageClasses = {CanvasesController.class, ThreadsController.class})
+//@ComponentScan("com.sg.sg_rest_api.controllers")
 @Import(Jpa.class)
 public class WebConfig extends WebMvcConfigurerAdapter {
     
