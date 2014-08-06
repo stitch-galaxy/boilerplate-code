@@ -33,6 +33,9 @@
                 <spring-security-version>3.2.1.RELEASE</spring-security-version>
                 <jackson-mapper-asl-version>1.9.13</jackson-mapper-asl-version>
                 <dozer-version>5.5.1</dozer-version>
+                <hamcrest-all-version>1.3</hamcrest-all-version>
+                <mockito-core-version>1.9.5</mockito-core-version>
+                <json-path-version>0.9.1</json-path-version>
   </properties>
 
 	<dependencyManagement>
