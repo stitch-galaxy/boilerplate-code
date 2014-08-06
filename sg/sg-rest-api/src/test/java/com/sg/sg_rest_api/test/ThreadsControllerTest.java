@@ -57,19 +57,21 @@ public class ThreadsControllerTest {
     @Test
     public void test() throws Exception {
         ThreadDto first = new ThreadDto();
-        first.setCode("Aida 14");
+        first.setCode(AIDA_14);
 
         ThreadDto second = new ThreadDto();
-        first.setCode("Aida 18");
+        second.setCode(AIDA_18);
         when(serviceMock.listThreads()).thenReturn(Arrays.asList(first, second));
 
         mockMvc.perform(get(RequestPath.REQUEST_THREAD_LIST))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(2)));
-                //.andExpect(jsonPath("$[0].code", is("Aida 14")))
-                //.andExpect(jsonPath("$[1].code", is("Aida 18")));
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].code", is(AIDA_14)))
+                .andExpect(jsonPath("$[1].code", is(AIDA_18)));
         verify(serviceMock, times(1)).listThreads();
         verifyNoMoreInteractions(serviceMock);
     }
+    private static final String AIDA_18 = "Aida 18";
+    private static final String AIDA_14 = "Aida 14";
 }

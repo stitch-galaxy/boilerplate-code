@@ -31,7 +31,8 @@ public class ThreadsController {
     
     @RequestMapping(value = RequestPath.REQUEST_THREAD_LIST, method = RequestMethod.GET)
     public @ResponseBody List<ThreadDto> list() {
-        return service.listThreads();
+        List<ThreadDto> result = service.listThreads();
+        return result;
     }
     
     @RequestMapping(value = RequestPath.REQUEST_THREAD_DELETE, method = RequestMethod.PUT)
