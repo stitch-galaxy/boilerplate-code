@@ -10,36 +10,36 @@ package com.sg.domain.dto;
  *
  * @author tarasev
  */
-public class ThreadUpdateDto {
+public class CanvasUpdateDto {
     
-    private ThreadRefDto ref;
-    private ThreadDto dto;
+    private CanvasRefDto ref;
+    private CanvasDto dto;
 
     /**
      * @return the ref
      */
-    public ThreadRefDto getRef() {
+    public CanvasRefDto getRef() {
         return ref;
     }
 
     /**
      * @param ref the ref to set
      */
-    public void setRef(ThreadRefDto ref) {
+    public void setRef(CanvasRefDto ref) {
         this.ref = ref;
     }
 
     /**
      * @return the dto
      */
-    public ThreadDto getDto() {
+    public CanvasDto getDto() {
         return dto;
     }
 
     /**
      * @param dto the dto to set
      */
-    public void setDto(ThreadDto dto) {
+    public void setDto(CanvasDto dto) {
         this.dto = dto;
     }
     

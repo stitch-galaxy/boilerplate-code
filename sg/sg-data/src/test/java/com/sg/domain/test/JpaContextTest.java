@@ -7,7 +7,7 @@ package com.sg.domain.test;
  * and open the template in the editor.
  */
 
-import com.sg.domain.service.JpaServiceImpl;
+import com.sg.domain.service.SgService;
 import com.sg.domain.spring.configuration.Jpa;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,13 +25,13 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 public class JpaContextTest {
     
     @Autowired
-    JpaServiceImpl service;
-            
+    SgService service;
+          
+    
     public JpaContextTest() {
     }
     
     @Test
-    public void testCase()
-    {
+    public void emptyTest(){
     }
 }

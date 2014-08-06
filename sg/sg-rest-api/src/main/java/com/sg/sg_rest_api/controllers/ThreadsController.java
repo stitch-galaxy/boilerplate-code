@@ -25,7 +25,7 @@ public class ThreadsController {
     
     @RequestMapping(value = RequestPath.REQUEST_THREAD_ADD, method = RequestMethod.POST)
     public @ResponseBody void addThread(@RequestBody ThreadDto dto) {
-        service.createThread(dto);
+        service.create(dto);
     }
     
     @RequestMapping(value = RequestPath.REQUEST_THREAD_LIST, method = RequestMethod.GET)
@@ -35,6 +35,6 @@ public class ThreadsController {
     
     @RequestMapping(value = RequestPath.REQUEST_THREAD_DELETE, method = RequestMethod.PUT)
     public @ResponseBody void deleteThread(@RequestBody ThreadRefDto dto) {
-        service.deleteThread(dto);
+        service.delete(dto);
     }
 }

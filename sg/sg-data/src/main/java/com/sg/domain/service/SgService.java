@@ -6,6 +6,9 @@
 
 package com.sg.domain.service;
 
+import com.sg.domain.dto.CanvasDto;
+import com.sg.domain.dto.CanvasRefDto;
+import com.sg.domain.dto.CanvasUpdateDto;
 import com.sg.domain.dto.ThreadDto;
 import com.sg.domain.dto.ThreadRefDto;
 import com.sg.domain.dto.ThreadUpdateDto;
@@ -17,8 +20,14 @@ import java.util.List;
  */
 public interface SgService {
     
-    public void createThread(ThreadDto thread);
-    public void deleteThread(ThreadRefDto thread);
-    public void updateThread(ThreadUpdateDto thread);
+    public void create(ThreadDto dto);
+    public void delete(ThreadRefDto dto);
+    public void update(ThreadUpdateDto dto);
     public List<ThreadDto> listThreads();   
+    
+    public void create(CanvasDto dto);
+    public void delete(CanvasRefDto dto);
+    public void update(CanvasUpdateDto dto);
+    public List<CanvasDto> listCanvases();   
+    
 }

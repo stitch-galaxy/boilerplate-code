@@ -12,9 +12,8 @@ import java.math.BigDecimal;
  *
  * @author tarasev
  */
-public class CanvasDto {
+public class CanvasRefDto {
     private String code;
-    private BigDecimal stitchesPerInch;
 
     /**
      * @return the code
@@ -28,19 +27,5 @@ public class CanvasDto {
      */
     public void setCode(String code) {
         this.code = code;
-    }
-
-    /**
-     * @return the stitchesPerInch
-     */
-    public BigDecimal getStitchesPerInch() {
-        return stitchesPerInch;
-    }
-
-    /**
-     * @param stitchesPerInch the stitchesPerInch to set
-     */
-    public void setStitchesPerInch(BigDecimal stitchesPerInch) {
-        this.stitchesPerInch = stitchesPerInch;
     }
 }
