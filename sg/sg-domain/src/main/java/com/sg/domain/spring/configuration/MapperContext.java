@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @author tarasev
  */
 @Configuration
-public class MapperConfig {
+public class MapperContext {
 
     @Bean(name = "mapper")
     public static org.dozer.Mapper mapper() {

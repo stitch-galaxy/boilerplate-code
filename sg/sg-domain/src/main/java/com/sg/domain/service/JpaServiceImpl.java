@@ -21,6 +21,7 @@ import org.dozer.Mapper;
 import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import java.util.ArrayList;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -30,6 +31,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
  * @author tarasev
  */
 //@Transactional annotation prevent spring context to be initialized on GAE
+@Service
 public class JpaServiceImpl implements SgService {
 
     @Resource(name = "productRepository")

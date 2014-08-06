@@ -1,7 +1,7 @@
-package com.sg.domain.spring.configuration;
+package com.sg.sg_rest_api.test;
 
-import com.sg.domain.service.JpaServiceImpl;
 import com.sg.domain.service.SgService;
+import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,19 +10,16 @@ import org.springframework.context.annotation.Configuration;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  *
  * @author tarasev
  */
 @Configuration
-//replaced with the direct bean instantiation
-//@ComponentScan(basePackages = "com.sg.domain.service")
-//@ComponentScan(basePackageClasses = {JpaServiceImpl.class})
-public class JpaServiceConfig {
-
+public class ServiceMockContext {
     @Bean
-    public static SgService service() {
-        return new JpaServiceImpl();
+    public SgService service() {
+        return Mockito.mock(SgService.class);
     }
-
+    
 }

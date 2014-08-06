@@ -6,9 +6,9 @@
 
 package com.sg.sg_rest_api.configuration;
 
-import com.sg.domain.spring.configuration.JpaConfig;
-import com.sg.domain.spring.configuration.JpaServiceConfig;
-import com.sg.domain.spring.configuration.MapperConfig;
+import com.sg.domain.spring.configuration.JpaContext;
+import com.sg.domain.spring.configuration.JpaServiceContext;
+import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.sg_rest_api.controllers.CanvasesController;
 import com.sg.sg_rest_api.controllers.ThreadsController;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,7 +28,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 @ComponentScan(basePackageClasses = {CanvasesController.class, ThreadsController.class})
 //@ComponentScan("com.sg.sg_rest_api.controllers")
-@Import({JpaConfig.class, MapperConfig.class, JpaServiceConfig.class})
-public class WebConfig extends WebMvcConfigurerAdapter {
+@Import({JpaContext.class, MapperContext.class, JpaServiceContext.class})
+public class WebApplicationContext extends WebMvcConfigurerAdapter {
     
 }

@@ -40,7 +40,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 //GAE do not support @Transactional annotation because where is a class on a call stack which is not in a white list
 //@EnableTransactionManagement
 @PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment:test}/domain.jpa.properties")
-public class JpaConfig {
+public class JpaContext {
     
     @Value( "${jdbc.url}" ) private String jdbcUrl;
     @Value( "${jdbc.driverClassName}" ) private String driverClassName;
