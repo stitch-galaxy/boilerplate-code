@@ -41,49 +41,49 @@ public class LoggerFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-        ResettableStreamHttpServletRequest wrappedRequest = new ResettableStreamHttpServletRequest(
-                (HttpServletRequest) request);
-        StringBuilder sb = new StringBuilder();
-        //General header
-        sb.append(System.lineSeparator());
-        sb.append("Incoming request:");
-        //Request url
-        sb.append(System.lineSeparator());
-        sb.append("Request url: ");
-        sb.append(wrappedRequest.getRequestURL());
-        //Method
-        sb.append(System.lineSeparator());
-        sb.append("Method: ");
-        sb.append(wrappedRequest.getMethod());
-        //Parameters
-        if (wrappedRequest.getParameterNames().hasMoreElements()) {
+
+        if (request.getClass().isInstance(HttpServletRequest.class)) {
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+            StringBuilder sb = new StringBuilder();
+            //General header
             sb.append(System.lineSeparator());
-            sb.append("Parameters: ");
-            Enumeration enParams = wrappedRequest.getParameterNames();
-            while (enParams.hasMoreElements()) {
-                sb.append(System.lineSeparator());
-                String paramName = (String) enParams.nextElement();
-                sb.append(paramName);
-                sb.append(" : ");
-                sb.append(wrappedRequest.getParameter(paramName));
-            }
-        }
-        //Attributes
-        if (wrappedRequest.getAttributeNames().hasMoreElements()) {
+            sb.append("Incoming request:");
+            //Request url
             sb.append(System.lineSeparator());
-            sb.append("Attributes: ");
-            Enumeration enAttribs = wrappedRequest.getAttributeNames();
-            while (enAttribs.hasMoreElements()) {
+            sb.append("Request url: ");
+            sb.append(httpRequest.getRequestURL());
+            //Method
+            sb.append(System.lineSeparator());
+            sb.append("Method: ");
+            sb.append(httpRequest.getMethod());
+            //Parameters
+            if (httpRequest.getParameterNames().hasMoreElements()) {
                 sb.append(System.lineSeparator());
-                String attribName = (String) enAttribs.nextElement();
-                sb.append(attribName);
-                sb.append(" : ");
-                sb.append(wrappedRequest.getAttribute(attribName));
+                sb.append("Parameters: ");
+                Enumeration enParams = httpRequest.getParameterNames();
+                while (enParams.hasMoreElements()) {
+                    sb.append(System.lineSeparator());
+                    String paramName = (String) enParams.nextElement();
+                    sb.append(paramName);
+                    sb.append(" : ");
+                    sb.append(httpRequest.getParameter(paramName));
+                }
             }
-        }
-        //Headers
-        if (wrappedRequest.getClass().isInstance(HttpServletRequest.class)) {
-            HttpServletRequest httpRequest = (HttpServletRequest) wrappedRequest;
+            //Attributes
+            if (httpRequest.getAttributeNames().hasMoreElements()) {
+                sb.append(System.lineSeparator());
+                sb.append("Attributes: ");
+                Enumeration enAttribs = httpRequest.getAttributeNames();
+                while (enAttribs.hasMoreElements()) {
+                    sb.append(System.lineSeparator());
+                    String attribName = (String) enAttribs.nextElement();
+                    sb.append(attribName);
+                    sb.append(" : ");
+                    sb.append(httpRequest.getAttribute(attribName));
+                }
+            }
+            //Headers
             if (httpRequest.getHeaderNames().hasMoreElements()) {
                 sb.append(System.lineSeparator());
                 sb.append("Headers: ");
@@ -132,21 +132,25 @@ public class LoggerFilter implements Filter {
                     sb.append(httpRequest.getUserPrincipal().getName());
                 }
             }
+            //Body
+            ResettableStreamHttpServletRequest wrappedRequest = new ResettableStreamHttpServletRequest((HttpServletRequest) request);
+            String body = IOUtils.toString(wrappedRequest.getReader());
+            if (body != null && !body.isEmpty()) {
+                sb.append(System.lineSeparator());
+                sb.append("Body: ");
+                sb.append(System.lineSeparator());
+                sb.append(body);
+            }
+            wrappedRequest.resetInputStream();
+
+            LOGGER.info(sb.toString());
+            chain.doFilter(wrappedRequest, response);
         }
-        //Body
-        String body = IOUtils.toString(wrappedRequest.getReader());
-        if (body != null && !body.isEmpty())
+        else
         {
-            sb.append(System.lineSeparator());
-            sb.append("Body: ");
-            sb.append(System.lineSeparator());
-            sb.append(body);
+            LOGGER.info("Non http request");
+            chain.doFilter(request, response);
         }
-        wrappedRequest.resetInputStream();
-
-        LOGGER.info(sb.toString());
-        chain.doFilter(wrappedRequest, response);
-
     }
 
     public void init(FilterConfig arg0) throws ServletException {
