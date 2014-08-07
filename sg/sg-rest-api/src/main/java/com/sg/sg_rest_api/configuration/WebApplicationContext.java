@@ -30,5 +30,4 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //@ComponentScan("com.sg.sg_rest_api.controllers")
 @Import({JpaContext.class, MapperContext.class, JpaServiceContext.class})
 public class WebApplicationContext extends WebMvcConfigurerAdapter {
-    
 }

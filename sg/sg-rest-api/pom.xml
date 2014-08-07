@@ -134,6 +134,12 @@
             <version>${json-path-version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io-version}</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <finalName>sg-rest-api</finalName>

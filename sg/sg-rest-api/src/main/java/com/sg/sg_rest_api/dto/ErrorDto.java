@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.sg_rest_api.controllers;
+package com.sg.sg_rest_api.dto;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -19,6 +19,10 @@ public class ErrorDto {
     
     private String message;
     
+    @JsonIgnore
+    private String exceptionMessage;
+    
+    @JsonIgnore
     private String stackTrace;
 
     /**
@@ -36,17 +40,17 @@ public class ErrorDto {
     }
 
     /**
-     * @return the message
+     * @return the exceptionMessage
      */
-    public String getMessage() {
-        return message;
+    public String getExceptionMessage() {
+        return exceptionMessage;
     }
 
     /**
-     * @param message the message to set
+     * @param exceptionMessage the exceptionMessage to set
      */
-    public void setMessage(String message) {
-        this.message = message;
+    public void setExceptionMessage(String exceptionMessage) {
+        this.exceptionMessage = exceptionMessage;
     }
 
     /**
@@ -61,6 +65,20 @@ public class ErrorDto {
      */
     public void setStackTrace(String stackTrace) {
         this.stackTrace = stackTrace;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
     }
     
 }
