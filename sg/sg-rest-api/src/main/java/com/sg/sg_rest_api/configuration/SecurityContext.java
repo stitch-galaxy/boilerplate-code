@@ -36,6 +36,8 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
         http.httpBasic()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/rest/thread/create").hasRole("ADMIN")
+                .antMatchers("/**").permitAll()
                 .anyRequest().hasRole("ADMIN");
     }
 
