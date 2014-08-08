@@ -44,7 +44,7 @@ public class LoggerFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
-        if (request.getClass().isInstance(HttpServletRequest.class)) {
+        if (request instanceof HttpServletRequest) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
 
             StringBuilder sb = new StringBuilder();
@@ -105,12 +105,13 @@ public class LoggerFilter implements Filter {
                 sb.append(httpRequest.getAuthType());
             }
             //Cookies
-            if (httpRequest.getCookies().length > 0) {
+            if (httpRequest.getCookies() != null && httpRequest.getCookies().length > 0) {
                 sb.append(System.lineSeparator());
                 sb.append("Cookies: ");
                 for (Cookie cookie : httpRequest.getCookies()) {
                     sb.append(System.lineSeparator());
                     sb.append(cookie.getName());
+                    sb.append(" : ");
                     sb.append(cookie.getValue());
                 }
             }
