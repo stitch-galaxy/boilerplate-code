@@ -6,6 +6,7 @@
 package com.sg.sg_rest_api.test;
 
 import com.sg.domain.service.SgService;
+import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.sg_rest_api.configuration.WebApplicationContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +20,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebApplicationContext.class})
 @WebAppConfiguration
+@ContextConfiguration(classes = {WebApplicationContext.class, ServletContext.class})
 public class WebApplicationContextTest {
 
     @Autowired

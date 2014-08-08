@@ -7,6 +7,7 @@
 package com.sg.sg_rest_api.controllers;
 
 import javax.servlet.http.HttpServletResponse;
+//import org.springframework.config.java.context.JavaConfigWebApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ public class OptionsController {
 
     @RequestMapping(method = RequestMethod.OPTIONS, value = "/**")
     public @ResponseBody void loginOptions(HttpServletResponse response) {
+        //new JavaConfigWebApplicationContext();
     }
 }
 

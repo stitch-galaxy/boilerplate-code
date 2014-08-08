@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.sg.sg_rest_api.test;
+package com.sg.sg_rest_api.configuration;
 
+import com.sg.sg_rest_api.controllers.CanvasesController;
+import com.sg.sg_rest_api.controllers.ThreadsController;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -17,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 @EnableWebMvc
-@Import({ServiceMockContext.class})
-public class WebApplicationTestContext extends WebMvcConfigurerAdapter {
-    
+//@ComponentScan(basePackageClasses = {CanvasesController.class, ThreadsController.class})
+@ComponentScan("com.sg.sg_rest_api.controllers")
+public class ServletContext extends WebMvcConfigurerAdapter {
 }

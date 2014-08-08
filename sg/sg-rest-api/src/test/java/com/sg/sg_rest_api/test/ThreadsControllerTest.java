@@ -7,6 +7,7 @@ package com.sg.sg_rest_api.test;
 
 import com.sg.domain.dto.ThreadDto;
 import com.sg.domain.service.SgService;
+import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.sg_rest_api.controllers.RequestPath;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,8 +33,8 @@ import org.springframework.web.context.WebApplicationContext;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebApplicationTestContext.class})
 @WebAppConfiguration
+@ContextConfiguration(classes = {WebApplicationTestContext.class, ServletContext.class})
 public class ThreadsControllerTest {
 
     private MockMvc mockMvc;
