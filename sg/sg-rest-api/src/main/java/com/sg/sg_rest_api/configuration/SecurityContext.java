@@ -10,8 +10,8 @@ package com.sg.sg_rest_api.configuration;
  * @author tarasev
  */
 import com.sg.sg_rest_api.controllers.CustomUserDetailsService;
+import com.sg.sg_rest_api.security.AuthenticationTokenProcessingFilter;
 import com.sg.sg_rest_api.security.UnauthorizedEntryPoint;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +21,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -36,24 +40,34 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        http
+                .csrf().disable()
+                .addFilterBefore(authenticationTokenProcessingFilter(), DefaultLoginPageGeneratingFilter.class)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint())
+                .exceptionHandling().defaultAuthenticationEntryPointFor(unauthorizedEntryPoint(), AnyRequestMatcher.INSTANCE)
                 .and()
-                .httpBasic()
-                .and()
+                //.and()
+                //.httpBasic()
                 .authorizeRequests()
                 .antMatchers("/rest/thread/create").hasRole("ADMIN")
-                .antMatchers("/**").permitAll()
-                .anyRequest().hasRole("ADMIN");
+                .antMatchers("/**").permitAll();
+        
     }
     
     @Bean
     public UnauthorizedEntryPoint unauthorizedEntryPoint()
     {
         UnauthorizedEntryPoint ep = new UnauthorizedEntryPoint();
-        ep.setRealmName("Unauthorized access");
+        ep.setRealmName("Stitch galaxy");
         return ep;
+    }
+    
+    @Bean 
+    public AuthenticationTokenProcessingFilter authenticationTokenProcessingFilter()
+    {
+        return new AuthenticationTokenProcessingFilter();
+        
     }
 
 }
