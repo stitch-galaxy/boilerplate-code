@@ -37,6 +37,7 @@
                 <mockito-core-version>1.9.5</mockito-core-version>
                 <json-path-version>0.9.1</json-path-version>
                 <commons-io-version>1.3.2</commons-io-version>
+                <jasypt-version>1.9.2</jasypt-version>
   </properties>
 
 	<dependencyManagement>

@@ -6,6 +6,8 @@
 
 package com.sg.sg_rest_api.test;
 
+import com.sg.domain.spring.configuration.MapperContext;
+import com.sg.sg_rest_api.configuration.SecurityContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 @EnableWebMvc
-@Import({ServiceMockContext.class})
+@Import({MapperContext.class, ServiceMockContext.class, SecurityContext.class})
 public class WebApplicationTestContext extends WebMvcConfigurerAdapter {
     
 }

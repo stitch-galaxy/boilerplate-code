@@ -7,12 +7,12 @@ package com.sg.domain.test;
  * and open the template in the editor.
  */
 
-import com.sg.domain.dto.CanvasDto;
-import com.sg.domain.dto.CanvasRefDto;
-import com.sg.domain.dto.CanvasUpdateDto;
-import com.sg.domain.dto.ThreadDto;
-import com.sg.domain.dto.ThreadRefDto;
-import com.sg.domain.dto.ThreadUpdateDto;
+import com.sg.dto.CanvasDto;
+import com.sg.dto.CanvasRefDto;
+import com.sg.dto.CanvasUpdateDto;
+import com.sg.dto.ThreadDto;
+import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
 import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;

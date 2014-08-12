@@ -6,7 +6,7 @@
 
 package com.sg.sg_rest_api.controllers;
 
-import com.sg.sg_rest_api.dto.ErrorDto;
+import com.sg.dto.ErrorDto;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.UUID;
@@ -33,24 +33,20 @@ public class RestErrorHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public ErrorDto processValidationError(Exception ex) {        
+    public ErrorDto processException(Exception ex) {        
+        String refNumber = UUID.randomUUID().toString().toUpperCase();
         StringBuilder sb = new StringBuilder();
-        sb.append("Error ref number: ");
-        sb.append(UUID.randomUUID().toString().toUpperCase());
-        
-        String message = sb.toString();
-        
-        LOGGER.error(message, ex);
+        sb.append("Exception refNumber: ");
+        sb.append(refNumber);
+        LOGGER.error(sb.toString(), ex);
         
         ErrorDto dto = new ErrorDto();
-        dto.setMessage(message);
-        dto.setException(ex);
-        dto.setExceptionMessage(ex.getMessage());
+        dto.setError(ex.getMessage());
+        dto.setRefNumber(refNumber);
         
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        ex.printStackTrace(pw);
-        dto.setStackTrace(sw.toString());
+//        StringWriter sw = new StringWriter();
+//        PrintWriter pw = new PrintWriter(sw);
+//        ex.printStackTrace(pw);
         
         return dto;
     }

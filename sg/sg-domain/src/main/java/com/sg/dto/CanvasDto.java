@@ -4,14 +4,17 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.dto;
+package com.sg.dto;
+
+import java.math.BigDecimal;
 
 /**
  *
  * @author tarasev
  */
-public class ThreadDto {
+public class CanvasDto {
     private String code;
+    private BigDecimal stitchesPerInch;
 
     /**
      * @return the code
@@ -25,5 +28,19 @@ public class ThreadDto {
      */
     public void setCode(String code) {
         this.code = code;
+    }
+
+    /**
+     * @return the stitchesPerInch
+     */
+    public BigDecimal getStitchesPerInch() {
+        return stitchesPerInch;
+    }
+
+    /**
+     * @param stitchesPerInch the stitchesPerInch to set
+     */
+    public void setStitchesPerInch(BigDecimal stitchesPerInch) {
+        this.stitchesPerInch = stitchesPerInch;
     }
 }

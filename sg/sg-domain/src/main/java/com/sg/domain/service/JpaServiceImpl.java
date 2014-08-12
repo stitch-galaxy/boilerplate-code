@@ -5,12 +5,13 @@
  */
 package com.sg.domain.service;
 
-import com.sg.domain.dto.CanvasDto;
-import com.sg.domain.dto.CanvasRefDto;
-import com.sg.domain.dto.CanvasUpdateDto;
-import com.sg.domain.dto.ThreadDto;
-import com.sg.domain.dto.ThreadRefDto;
-import com.sg.domain.dto.ThreadUpdateDto;
+import com.sg.dto.CanvasDto;
+import com.sg.dto.CanvasRefDto;
+import com.sg.dto.CanvasUpdateDto;
+import com.sg.dto.ThreadDto;
+import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadUpdateDto;
+import com.sg.dto.UserDto;
 import com.sg.domain.entities.jpa.Canvas;
 import com.sg.domain.entities.jpa.CanvasesRepository;
 import com.sg.domain.entities.jpa.ProductRepository;
@@ -20,6 +21,8 @@ import javax.annotation.Resource;
 import org.dozer.Mapper;
 import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
+import com.sg.domain.entities.jpa.User;
+import com.sg.domain.entities.jpa.UsersRepository;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -39,16 +42,19 @@ public class JpaServiceImpl implements SgService {
 
     @Resource(name = "threadsRepository")
     ThreadsRepository threadsRepository;
-    
+
     @Resource(name = "canvasesRepository")
     CanvasesRepository canvasesRepository;
+
+    @Resource(name = "usersRepository")
+    UsersRepository usersRepository;
 
     @Resource(name = "mapper")
     Mapper mapper;
 
     @Resource(name = "transactionTemplate")
     private TransactionTemplate transactionTemplate;
-    
+
     public void delete(final ThreadRefDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
@@ -60,12 +66,12 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private void deleteThreadImpl(ThreadRefDto dto) {
         Thread thread = threadsRepository.findByCode(dto.getCode());
         threadsRepository.delete(thread.getId());
     }
-    
+
     public void create(final ThreadDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
@@ -115,7 +121,7 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private void updateThreadImpl(ThreadUpdateDto dto) {
         Thread thread = threadsRepository.findByCode(dto.getRef().getCode());
         mapper.map(dto.getDto(), thread);
@@ -133,7 +139,7 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private void createCanvasImpl(CanvasDto dto) {
         Canvas canvas = mapper.map(dto, Canvas.class);
         canvasesRepository.save(canvas);
@@ -150,7 +156,7 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private void deleteCanvasImpl(CanvasRefDto dto) {
         Canvas canvas = canvasesRepository.findByCode(dto.getCode());
         canvasesRepository.delete(canvas);
@@ -167,7 +173,7 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private void updateCanvasImpl(CanvasUpdateDto dto) {
         Canvas canvas = canvasesRepository.findByCode(dto.getRef().getCode());
         mapper.map(dto.getDto(), canvas);
@@ -185,7 +191,7 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private List<CanvasDto> listCanvasesImpl() {
         List<CanvasDto> result = new ArrayList<CanvasDto>();
         Iterable<Canvas> canvases = canvasesRepository.findAll();
@@ -194,5 +200,22 @@ public class JpaServiceImpl implements SgService {
         }
         return result;
     }
-    
+
+    public UserDto getUserByEmail(final String email) {
+        return transactionTemplate.execute(new TransactionCallback<UserDto>() {
+            public UserDto doInTransaction(TransactionStatus status) {
+                try {
+                    return getUserByEmailImpl(email);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+    public UserDto getUserByEmailImpl(String email) {
+        User user = usersRepository.findByEmail(email);
+        return mapper.map(user, UserDto.class);
+    }
+
 }

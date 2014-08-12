@@ -6,9 +6,9 @@
 
 package com.sg.sg_rest_api.controllers;
 
-import com.sg.domain.dto.ThreadDto;
-import com.sg.domain.dto.ThreadRefDto;
-import com.sg.domain.dto.ThreadUpdateDto;
+import com.sg.dto.ThreadDto;
+import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

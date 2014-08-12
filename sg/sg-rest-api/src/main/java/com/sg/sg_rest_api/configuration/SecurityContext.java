@@ -9,35 +9,36 @@ package com.sg.sg_rest_api.configuration;
  *
  * @author tarasev
  */
-import com.sg.sg_rest_api.controllers.CustomUserDetailsService;
+import com.sg.sg_rest_api.controllers.RequestPath;
 import com.sg.sg_rest_api.security.AuthenticationTokenProcessingFilter;
+import com.sg.sg_rest_api.security.Roles;
+import com.sg.sg_rest_api.security.Security;
 import com.sg.sg_rest_api.security.UnauthorizedEntryPoint;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment}/security.properties")
 public class SecurityContext extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService);
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        return configurer;
     }
-
+    
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -47,19 +48,17 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().defaultAuthenticationEntryPointFor(unauthorizedEntryPoint(), AnyRequestMatcher.INSTANCE)
                 .and()
-                //.and()
-                //.httpBasic()
                 .authorizeRequests()
-                .antMatchers("/rest/thread/create").hasRole("ADMIN")
-                .antMatchers("/**").permitAll();
-        
+                .antMatchers(RequestPath.REST_SECURE_ADMIN_PATH + "/**").hasRole(Roles.ROLE_ADMIN)
+                .antMatchers(RequestPath.REST_SECURE_USER_PATH + "/**").hasRole(Roles.ROLE_USER)
+                .anyRequest().permitAll();
     }
     
     @Bean
     public UnauthorizedEntryPoint unauthorizedEntryPoint()
     {
         UnauthorizedEntryPoint ep = new UnauthorizedEntryPoint();
-        ep.setRealmName("Stitch galaxy");
+        ep.setRealmName(UnauthorizedEntryPoint.REALM_NAME);
         return ep;
     }
     
@@ -68,6 +67,12 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
     {
         return new AuthenticationTokenProcessingFilter();
         
+    }
+    
+    @Bean
+    public Security security()
+    {
+        return new Security();
     }
 
 }

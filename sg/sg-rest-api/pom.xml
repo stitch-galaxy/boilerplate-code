@@ -91,21 +91,14 @@
             <artifactId>spring-security-config</artifactId>           
             <version>${spring-security-version}</version> 
         </dependency>
-<!--        <dependency> 
-            <groupId>org.springframework.javaconfig</groupId> 
-            <artifactId>spring-javaconfig</artifactId>           
-            <version>1.0.0.m3</version> 
-        </dependency>-->
-<!--        <dependency> 
-            <groupId>org.springframework</groupId> 
-            <artifactId>spring-context</artifactId>           
-            <version>4.0.6.RELEASE</version> 
+        <!--Encryption-->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>${jasypt-version}</version>
+            <scope>compile</scope>
         </dependency>
-        <dependency> 
-            <groupId>org.springframework</groupId> 
-            <artifactId>spring-context-support</artifactId>           
-            <version>4.0.6.RELEASE</version> 
-        </dependency>-->
+        <!--JSON serializtion-->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>

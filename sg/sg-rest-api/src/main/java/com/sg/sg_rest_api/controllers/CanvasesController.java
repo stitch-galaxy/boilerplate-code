@@ -6,9 +6,9 @@
 
 package com.sg.sg_rest_api.controllers;
 
-import com.sg.domain.dto.CanvasDto;
-import com.sg.domain.dto.CanvasRefDto;
-import com.sg.domain.dto.CanvasUpdateDto;
+import com.sg.dto.CanvasDto;
+import com.sg.dto.CanvasRefDto;
+import com.sg.dto.CanvasUpdateDto;
 import com.sg.domain.service.SgService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

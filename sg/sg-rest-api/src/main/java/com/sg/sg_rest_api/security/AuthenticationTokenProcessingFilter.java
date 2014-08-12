@@ -9,8 +9,9 @@ package com.sg.sg_rest_api.security;
  *
  * @author tarasev
  */
-import com.sg.sg_rest_api.controllers.CustomUserDetailsService;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,29 +21,39 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
+@Component
 public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    Security security;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-            ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest httpRequest = this.getAsHttpRequest(request);
 
-        String authToken = this.extractAuthTokenFromRequest(httpRequest);
-        //TODO: validate token and get userDetails
-        if (authToken != null) {
-            UserDetails userDetails = this.customUserDetailsService.loadUserByUsername("test");
-            UsernamePasswordAuthenticationToken authentication
-                    = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        String encryptedAuthToken = this.extractAuthTokenFromRequest(httpRequest);
+        if (encryptedAuthToken != null) {
+            try {
+                AuthToken authToken = security.getTokenFromString(encryptedAuthToken);
+                //TODO: check expiration
+                
+                UserDetails userDetails = createUserDetails(authToken);
+                
+                UsernamePasswordAuthenticationToken authentication
+                        = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (Exception e) {
+            }
         }
 
         chain.doFilter(request, response);
@@ -66,5 +77,17 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
         }
 
         return authToken;
+    }
+
+    private UserDetails createUserDetails(AuthToken authToken) {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        for (String role : authToken.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
+
+        return new User(
+                authToken.getEmail(),
+                null,
+                authorities);
     }
 }

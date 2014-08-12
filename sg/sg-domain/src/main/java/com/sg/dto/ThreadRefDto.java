@@ -4,15 +4,13 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.dto;
-
-import java.math.BigDecimal;
+package com.sg.dto;
 
 /**
  *
  * @author tarasev
  */
-public class CanvasRefDto {
+public class ThreadRefDto {
     private String code;
 
     /**

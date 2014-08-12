@@ -5,10 +5,12 @@
  */
 package com.sg.sg_rest_api.test;
 
-import com.sg.domain.dto.ThreadDto;
+import com.sg.dto.ThreadDto;
 import com.sg.domain.service.SgService;
+import com.sg.domain.service.SgServiceLayerException;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.sg_rest_api.controllers.RequestPath;
+import java.io.IOException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,15 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import javax.servlet.http.HttpServletResponse;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import static org.hamcrest.Matchers.*;
 import org.junit.Before;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -75,4 +81,45 @@ public class ThreadsControllerTest {
     }
     private static final String AIDA_18 = "Aida 18";
     private static final String AIDA_14 = "Aida 14";
+    
+    @Test
+    public void testCreate() throws IOException, Exception {
+        ThreadDto threadDto = new ThreadDto();
+        threadDto.setCode(AIDA_14);
+        
+        ObjectMapper mapper = new ObjectMapper();
+        
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_ADD)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(threadDto)))
+                .andExpect(status().isOk())
+                .andExpect(content().bytes(new byte[0]));
+        verify(serviceMock, times(1)).create(threadDto);
+        verifyNoMoreInteractions(serviceMock);
+    }
+    
+    @Test
+    public void testCreateWithError() throws Exception
+    {
+        ThreadDto threadDto = new ThreadDto();
+        threadDto.setCode(AIDA_14);
+        
+        ObjectMapper mapper = new ObjectMapper();
+        
+        doThrow(new SgServiceLayerException(THREAD_ALREADY_EXISTS)).when(serviceMock).create(threadDto);
+        
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_ADD)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(threadDto)))
+                .andExpect(status().is(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
+                .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.error", is(THREAD_ALREADY_EXISTS)))
+                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())));
+        
+        verify(serviceMock, times(1)).create(threadDto);
+        verifyNoMoreInteractions(serviceMock);
+    }
+    public static final String THREAD_ALREADY_EXISTS = "Thread already exists";
 }

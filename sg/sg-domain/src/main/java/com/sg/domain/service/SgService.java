@@ -6,12 +6,13 @@
 
 package com.sg.domain.service;
 
-import com.sg.domain.dto.CanvasDto;
-import com.sg.domain.dto.CanvasRefDto;
-import com.sg.domain.dto.CanvasUpdateDto;
-import com.sg.domain.dto.ThreadDto;
-import com.sg.domain.dto.ThreadRefDto;
-import com.sg.domain.dto.ThreadUpdateDto;
+import com.sg.dto.CanvasDto;
+import com.sg.dto.CanvasRefDto;
+import com.sg.dto.CanvasUpdateDto;
+import com.sg.dto.ThreadDto;
+import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadUpdateDto;
+import com.sg.dto.UserDto;
 import java.util.List;
 
 /**
@@ -29,5 +30,7 @@ public interface SgService {
     public void delete(CanvasRefDto dto);
     public void update(CanvasUpdateDto dto);
     public List<CanvasDto> listCanvases();   
+    
+    public UserDto getUserByEmail(String email);
     
 }

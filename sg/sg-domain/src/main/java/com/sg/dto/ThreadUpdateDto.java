@@ -4,42 +4,42 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.dto;
+package com.sg.dto;
 
 /**
  *
  * @author tarasev
  */
-public class CanvasUpdateDto {
+public class ThreadUpdateDto {
     
-    private CanvasRefDto ref;
-    private CanvasDto dto;
+    private ThreadRefDto ref;
+    private ThreadDto dto;
 
     /**
      * @return the ref
      */
-    public CanvasRefDto getRef() {
+    public ThreadRefDto getRef() {
         return ref;
     }
 
     /**
      * @param ref the ref to set
      */
-    public void setRef(CanvasRefDto ref) {
+    public void setRef(ThreadRefDto ref) {
         this.ref = ref;
     }
 
     /**
      * @return the dto
      */
-    public CanvasDto getDto() {
+    public ThreadDto getDto() {
         return dto;
     }
 
     /**
      * @param dto the dto to set
      */
-    public void setDto(CanvasDto dto) {
+    public void setDto(ThreadDto dto) {
         this.dto = dto;
     }
     
