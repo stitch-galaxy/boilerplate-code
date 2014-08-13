@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class AuthToken {
     private String email;
-    private List<String> roles;
+    private List<String> authorities;
 
     /**
      * @return the email
@@ -31,16 +31,16 @@ public class AuthToken {
     }
 
     /**
-     * @return the roles
+     * @return the authorities
      */
-    public List<String> getRoles() {
-        return roles;
+    public List<String> getAuthorities() {
+        return authorities;
     }
 
     /**
-     * @param roles the roles to set
+     * @param authorities the authorities to set
      */
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
     }
 }

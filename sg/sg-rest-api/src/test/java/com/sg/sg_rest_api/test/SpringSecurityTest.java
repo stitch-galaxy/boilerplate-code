@@ -3,19 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sg.sg_rest_api.test;
 
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationIntegrationTestContext;
 import com.sg.domain.service.SgService;
-import com.sg.domain.service.SgServiceLayerException;
 import com.sg.dto.ThreadDto;
+import com.sg.enumerations.CustomHttpHeaders;
+import com.sg.enumerations.Roles;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.sg_rest_api.controllers.RequestPath;
-import static com.sg.sg_rest_api.test.ExceptionHandlingTest.THREAD_ALREADY_EXISTS;
+import com.sg.sg_rest_api.security.AuthToken;
+import com.sg.sg_rest_api.security.Security;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -27,7 +30,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -56,10 +58,15 @@ import org.springframework.web.context.WebApplicationContext;
 @ContextConfiguration(classes = {WebApplicationIntegrationTestContext.class, ServletContext.class})
 public class SpringSecurityTest {
 
+    private static final String AIDA_14 = "Aida 14";
+
     private MockMvc mockMvc;
 
     @Autowired
     private SgService serviceMock;
+
+    @Autowired
+    Security security;
 
     @Resource
     private FilterChainProxy springSecurityFilterChain;
@@ -83,7 +90,7 @@ public class SpringSecurityTest {
     public void testUnsecureResource() throws Exception {
         ThreadDto dto = new ThreadDto();
         dto.setCode(AIDA_14);
-        
+
         when(serviceMock.listThreads()).thenReturn(Arrays.asList(dto));
 
         mockMvc.perform(get(RequestPath.REQUEST_THREAD_LIST))
@@ -94,10 +101,9 @@ public class SpringSecurityTest {
         verify(serviceMock, times(1)).listThreads();
         verifyNoMoreInteractions(serviceMock);
     }
-    private static final String AIDA_14 = "Aida 14";
 
     @Test
-    public void testRequestSecureResourceWithoutAuthToken() throws IOException, Exception {
+    public void testSecureResourceWithoutAuthToken() throws IOException, Exception {
         ThreadDto threadDto = new ThreadDto();
         threadDto.setCode(AIDA_14);
 
@@ -113,4 +119,50 @@ public class SpringSecurityTest {
                 .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
         verifyNoMoreInteractions(serviceMock);
     }
+
+    @Test
+    public void testSecureResourceWithAuthToken() throws IOException, Exception {
+
+        AuthToken token = new AuthToken();
+        token.setEmail("test@example.com");
+        List<String> authorities = new ArrayList<String>();
+        authorities.add(Roles.ROLE_AUTHORITY_PREFIX + Roles.ROLE_ADMIN);
+        token.setAuthorities(authorities);
+        String authToken = security.getTokenString(token);
+
+        ThreadDto threadDto = new ThreadDto();
+        threadDto.setCode(AIDA_14);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_ADD)
+                .header(CustomHttpHeaders.X_AUTH_TOKEN, authToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(threadDto)))
+                .andExpect(status().isOk())
+                .andExpect(content().bytes(new byte[0]));
+        verify(serviceMock, times(1)).create(threadDto);
+        verifyNoMoreInteractions(serviceMock);
+    }
+
+    @Test
+    public void testSecureResourceWithBadAuthToken() throws IOException, Exception {
+        ThreadDto threadDto = new ThreadDto();
+        threadDto.setCode(AIDA_14);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_ADD)
+                .header(CustomHttpHeaders.X_AUTH_TOKEN, BAD_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(threadDto)))
+                .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
+        verifyNoMoreInteractions(serviceMock);
+    }
+    public static final String BAD_TOKEN = "BAD_TOKEN";
 }

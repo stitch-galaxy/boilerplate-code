@@ -9,6 +9,7 @@ import com.sg.dto.UserDto;
 import com.sg.domain.service.SgService;
 import com.sg.dto.SigninDto;
 import com.sg.dto.SinginAttempthResultDto;
+import com.sg.enumerations.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,8 @@ import com.sg.enumerations.SigninStatus;
 import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -55,7 +58,13 @@ public class SigninSignupController {
                 
                 AuthToken token = new AuthToken();
                 token.setEmail(userDto.getEmail());
-                token.setRoles(userDto.getRoles());
+                List<String> authorities = new ArrayList<String>();
+                for (String r : userDto.getRoles())
+                {
+                    authorities.add(Roles.ROLE_AUTHORITY_PREFIX + r);
+                }
+                
+                token.setAuthorities(authorities);
                 //TODO: add expiration
                 
                 result.setAuthToken(security.getTokenString(token));

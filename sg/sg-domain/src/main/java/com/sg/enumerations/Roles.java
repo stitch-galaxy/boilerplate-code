@@ -4,13 +4,14 @@
  * and open the template in the editor.
  */
 
-package com.sg.sg_rest_api.security;
+package com.sg.enumerations;
 
 /**
  *
  * @author tarasev
  */
 public class Roles {
+    public static final String ROLE_AUTHORITY_PREFIX = "ROLE_";
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_USER = "USER";
 }

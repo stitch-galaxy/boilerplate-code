@@ -9,6 +9,7 @@ package com.sg.sg_rest_api.security;
  *
  * @author tarasev
  */
+import com.sg.enumerations.CustomHttpHeaders;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,7 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 
     private String extractAuthTokenFromRequest(HttpServletRequest httpRequest) {
         /* Get token from header */
-        String authToken = httpRequest.getHeader("X-Auth-Token");
+        String authToken = httpRequest.getHeader(CustomHttpHeaders.X_AUTH_TOKEN);
 
         /* If token not found get it from request parameter */
         if (authToken == null) {
@@ -78,16 +79,17 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 
         return authToken;
     }
+    
 
     private UserDetails createUserDetails(AuthToken authToken) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (String role : authToken.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role));
+        for (String a : authToken.getAuthorities()) {
+            authorities.add(new SimpleGrantedAuthority(a));
         }
 
         return new User(
                 authToken.getEmail(),
-                null,
+                "",
                 authorities);
     }
 }

@@ -11,7 +11,7 @@ package com.sg.sg_rest_api.configuration;
  */
 import com.sg.sg_rest_api.controllers.RequestPath;
 import com.sg.sg_rest_api.security.AuthenticationTokenProcessingFilter;
-import com.sg.sg_rest_api.security.Roles;
+import com.sg.enumerations.Roles;
 import com.sg.sg_rest_api.security.Security;
 import com.sg.sg_rest_api.security.UnauthorizedEntryPoint;
 
