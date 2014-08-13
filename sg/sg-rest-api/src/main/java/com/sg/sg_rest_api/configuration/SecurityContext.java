@@ -28,17 +28,8 @@ import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment}/security.properties")
 public class SecurityContext extends WebSecurityConfigurerAdapter {
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
-
-        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        return configurer;
-    }
-    
-    
+        
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -67,12 +58,6 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
     {
         return new AuthenticationTokenProcessingFilter();
         
-    }
-    
-    @Bean
-    public Security security()
-    {
-        return new Security();
     }
 
 }

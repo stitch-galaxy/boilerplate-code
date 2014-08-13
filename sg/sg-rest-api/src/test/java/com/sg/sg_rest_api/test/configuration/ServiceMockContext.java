@@ -1,4 +1,4 @@
-package com.sg.sg_rest_api.test;
+package com.sg.sg_rest_api.test.configuration;
 
 import com.sg.domain.service.SgService;
 import org.mockito.Mockito;

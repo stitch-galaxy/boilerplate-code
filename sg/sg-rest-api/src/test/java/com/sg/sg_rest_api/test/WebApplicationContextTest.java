@@ -5,12 +5,10 @@
  */
 package com.sg.sg_rest_api.test;
 
-import com.sg.domain.service.SgService;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.sg_rest_api.configuration.WebApplicationContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -23,11 +21,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebApplicationContext.class, ServletContext.class})
 public class WebApplicationContextTest {
-
-    @Autowired
-    private SgService serviceMock;
-
+    
     @Test
-    public void emptyTest() {
+    public void testContext() {
     }
 }

@@ -25,6 +25,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //http://www.robinhowlett.com/blog/2013/02/13/spring-app-migration-from-xml-to-java-based-config/
 @Configuration
 @EnableWebMvc
-@Import({JpaContext.class, MapperContext.class, JpaServiceContext.class, SecurityContext.class})
+@Import({JpaContext.class, MapperContext.class, JpaServiceContext.class, CryptographyContext.class, SecurityContext.class})
 public class WebApplicationContext extends WebMvcConfigurerAdapter {
 }
