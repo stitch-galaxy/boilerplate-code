@@ -6,12 +6,14 @@
 
 package com.sg.sg_rest_api.test;
 
+import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationIntegrationTestContext;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.SgServiceLayerException;
 import com.sg.dto.ThreadDto;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.sg_rest_api.controllers.RequestPath;
+import static com.sg.sg_rest_api.test.ExceptionHandlingTest.THREAD_ALREADY_EXISTS;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.annotation.Resource;
@@ -78,28 +80,24 @@ public class SpringSecurityTest {
     }
 
     @Test
-    public void test() throws Exception {
-        ThreadDto first = new ThreadDto();
-        first.setCode(AIDA_14);
-
-        ThreadDto second = new ThreadDto();
-        second.setCode(AIDA_18);
-        when(serviceMock.listThreads()).thenReturn(Arrays.asList(first, second));
+    public void testUnsecureResource() throws Exception {
+        ThreadDto dto = new ThreadDto();
+        dto.setCode(AIDA_14);
+        
+        when(serviceMock.listThreads()).thenReturn(Arrays.asList(dto));
 
         mockMvc.perform(get(RequestPath.REQUEST_THREAD_LIST))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].code", is(AIDA_14)))
-                .andExpect(jsonPath("$[1].code", is(AIDA_18)));
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].code", is(AIDA_14)));
         verify(serviceMock, times(1)).listThreads();
         verifyNoMoreInteractions(serviceMock);
     }
-    private static final String AIDA_18 = "Aida 18";
     private static final String AIDA_14 = "Aida 14";
 
     @Test
-    public void testCreate() throws IOException, Exception {
+    public void testRequestSecureResourceWithoutAuthToken() throws IOException, Exception {
         ThreadDto threadDto = new ThreadDto();
         threadDto.setCode(AIDA_14);
 
@@ -109,32 +107,10 @@ public class SpringSecurityTest {
                 post(RequestPath.REQUEST_THREAD_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(threadDto)))
-                .andExpect(status().isOk())
-                .andExpect(content().bytes(new byte[0]));
-        verify(serviceMock, times(1)).create(threadDto);
+                .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
         verifyNoMoreInteractions(serviceMock);
     }
-
-    @Test
-    public void testCreateWithError() throws Exception {
-        ThreadDto threadDto = new ThreadDto();
-        threadDto.setCode(AIDA_14);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        doThrow(new SgServiceLayerException(THREAD_ALREADY_EXISTS)).when(serviceMock).create(threadDto);
-
-        mockMvc.perform(
-                post(RequestPath.REQUEST_THREAD_ADD)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(threadDto)))
-                .andExpect(status().is(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
-                .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.error", is(THREAD_ALREADY_EXISTS)))
-                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())));
-
-        verify(serviceMock, times(1)).create(threadDto);
-        verifyNoMoreInteractions(serviceMock);
-    }
-    public static final String THREAD_ALREADY_EXISTS = "Thread already exists";
 }

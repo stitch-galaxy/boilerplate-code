@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sg.sg_rest_api.controllers;
 
 import com.sg.dto.ErrorDto;
+import com.sg.sg_rest_api.utils.Utils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.UUID;
@@ -24,30 +24,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ControllerAdvice
 public class RestErrorHandler {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(RestErrorHandler.class);
-    
+
     //TODO: different http statuses for different exception classes
     //TODO: interceptor which log request totally
     //https://gist.github.com/calo81/2071634
-    
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public ErrorDto processException(Exception ex) {        
-        String refNumber = UUID.randomUUID().toString().toUpperCase();
-        StringBuilder sb = new StringBuilder();
-        sb.append("Exception refNumber: ");
-        sb.append(refNumber);
-        LOGGER.error(sb.toString(), ex);
-        
-        ErrorDto dto = new ErrorDto();
-        dto.setError(ex.getMessage());
-        dto.setRefNumber(refNumber);
-        
-//        StringWriter sw = new StringWriter();
-//        PrintWriter pw = new PrintWriter(sw);
-//        ex.printStackTrace(pw);
-        
-        return dto;
+    public ErrorDto processException(Exception ex) {
+        return Utils.logExceptionAndCreateErrorDto(LOGGER, ex);
     }
 }

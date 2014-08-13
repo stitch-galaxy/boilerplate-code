@@ -9,9 +9,14 @@ package com.sg.sg_rest_api.security;
  *
  * @author tarasev
  */
+import com.sg.dto.ErrorDto;
 import com.sg.dto.UnautohrizedAccessDto;
+import com.sg.sg_rest_api.utils.CustomMediaTypes;
+import com.sg.sg_rest_api.utils.Utils;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 import javax.servlet.ServletException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -35,20 +41,17 @@ import org.springframework.stereotype.Component;
 public class UnauthorizedEntryPoint extends BasicAuthenticationEntryPoint {
 
     public final static String REALM_NAME = "realm";
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(UnauthorizedEntryPoint.class);
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx) throws IOException, ServletException {
-        //response.addHeader("WWW-Authenticate", "Basic realm=\"" + getRealmName() + "\"");
-        LOGGER.debug("HTTP Status 401 - " +  authEx.getMessage() + " : " + request.getRequestURI());
-        
+
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType(CustomMediaTypes.APPLICATION_JSON_UTF8.toString());
         
-        UnautohrizedAccessDto dto = new UnautohrizedAccessDto();
-        dto.setMessage(authEx.getMessage());
-        dto.setRequestUri(request.getRequestURI());
-        
+        ErrorDto dto = Utils.logExceptionAndCreateErrorDto(LOGGER, authEx);
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getWriter(), dto);
     }

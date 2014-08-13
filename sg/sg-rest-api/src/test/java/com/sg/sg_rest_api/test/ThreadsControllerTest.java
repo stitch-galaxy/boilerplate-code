@@ -5,6 +5,7 @@
  */
 package com.sg.sg_rest_api.test;
 
+import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
 import com.sg.dto.ThreadDto;
 import com.sg.domain.service.SgService;
@@ -71,7 +72,7 @@ public class ThreadsControllerTest {
 
         mockMvc.perform(get(RequestPath.REQUEST_THREAD_LIST))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].code", is(AIDA_14)))
                 .andExpect(jsonPath("$[1].code", is(AIDA_18)));
@@ -97,6 +98,4 @@ public class ThreadsControllerTest {
         verify(serviceMock, times(1)).create(threadDto);
         verifyNoMoreInteractions(serviceMock);
     }
-
-    
 }

@@ -5,6 +5,7 @@
  */
 package com.sg.sg_rest_api.test;
 
+import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.SgServiceLayerException;
 import com.sg.dto.ThreadDto;
@@ -81,9 +82,9 @@ public class ExceptionHandlingTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(threadDto)))
                 .andExpect(status().is(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
-                .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", is(THREAD_ALREADY_EXISTS)))
-                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())));
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
 
         verify(serviceMock, times(1)).create(threadDto);
         verifyNoMoreInteractions(serviceMock);
