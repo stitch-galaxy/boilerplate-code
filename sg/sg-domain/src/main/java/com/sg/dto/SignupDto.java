@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.sg.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -11,8 +12,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  *
  * @author tarasev
  */
-public class SigninDto {
-
+public class SignupDto {
     private String email;
     private String password;
 
@@ -43,7 +43,7 @@ public class SigninDto {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -53,10 +53,11 @@ public class SigninDto {
             return false;
         }
 
-        SigninDto other = (SigninDto) obj;
+        SignupDto other = (SignupDto) obj;
         return new EqualsBuilder().
                 append(this.email, other.email).
                 append(this.password, other.password).
                 isEquals();
+
     }
 }

@@ -9,7 +9,7 @@ package com.sg.sg_rest_api.security;
  *
  * @author tarasev
  */
-import com.sg.enumerations.CustomHttpHeaders;
+import com.sg.constants.CustomHttpHeaders;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

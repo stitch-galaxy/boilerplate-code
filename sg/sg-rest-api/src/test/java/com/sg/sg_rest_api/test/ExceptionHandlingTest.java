@@ -10,7 +10,7 @@ import com.sg.domain.service.SgService;
 import com.sg.domain.service.SgServiceLayerException;
 import com.sg.dto.ThreadDto;
 import com.sg.sg_rest_api.configuration.ServletContext;
-import com.sg.sg_rest_api.controllers.RequestPath;
+import com.sg.constants.RequestPath;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
 import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;

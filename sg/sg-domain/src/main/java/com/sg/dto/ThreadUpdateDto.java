@@ -6,6 +6,8 @@
 
 package com.sg.dto;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 /**
  *
  * @author tarasev
@@ -41,6 +43,22 @@ public class ThreadUpdateDto {
      */
     public void setDto(ThreadDto dto) {
         this.dto = dto;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        ThreadUpdateDto other = (ThreadUpdateDto) obj;
+        return new EqualsBuilder().
+                append(this.dto, other.dto).
+                append(this.ref, other.ref).
+                isEquals();
     }
     
 }

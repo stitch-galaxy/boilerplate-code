@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.enumerations;
+package com.sg.constants;
 
 /**
  *
@@ -14,4 +14,5 @@ public class SigninStatus {
     public static final int STATUS_SUCCESS = 0;
     public static final int STATUS_USER_NOT_FOUND = 1;
     public static final int STATUS_WRONG_PASSWORD = 2;
+    public static final int STATUS_EMAIL_NOT_VERIFIED = 3;
 }

@@ -5,6 +5,7 @@
  */
 package com.sg.domain.service;
 
+import com.sg.constants.Roles;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
@@ -23,6 +24,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.User;
 import com.sg.domain.entities.jpa.UsersRepository;
+import com.sg.dto.SignupDto;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -61,7 +63,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     deleteThreadImpl(dto);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new SgServiceLayerException(e);
                 }
             }
         });
@@ -78,7 +80,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     createThreadImpl(dto);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new SgServiceLayerException(e);
                 }
             }
         });
@@ -95,7 +97,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     return listThreadsImpl();
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new SgServiceLayerException(e);
                 }
             }
         });
@@ -116,7 +118,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     updateThreadImpl(dto);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new SgServiceLayerException(e);
                 }
             }
         });
@@ -134,7 +136,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     createCanvasImpl(dto);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new SgServiceLayerException(e);
                 }
             }
         });
@@ -151,7 +153,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     deleteCanvasImpl(dto);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new SgServiceLayerException(e);
                 }
             }
         });
@@ -168,7 +170,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     updateCanvasImpl(dto);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new SgServiceLayerException(e);
                 }
             }
         });
@@ -186,7 +188,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     return listCanvasesImpl();
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new SgServiceLayerException(e);
                 }
             }
         });
@@ -207,7 +209,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     return getUserByEmailImpl(email);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new SgServiceLayerException(e);
                 }
             }
         });
@@ -216,6 +218,24 @@ public class JpaServiceImpl implements SgService {
     public UserDto getUserByEmailImpl(String email) {
         User user = usersRepository.findByEmail(email);
         return mapper.map(user, UserDto.class);
+    }
+
+    public void create(final UserDto dto) {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    createImpl(dto);
+                } catch (Exception e) {
+                    throw new SgServiceLayerException(e);
+                }
+            }
+        });
+
+    }
+
+    public void createImpl(UserDto dto) {
+        User user = mapper.map(dto, User.class);
+        usersRepository.save(user);
     }
 
 }

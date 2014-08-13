@@ -6,6 +6,7 @@
 
 package com.sg.sg_rest_api.controllers;
 
+import com.sg.constants.RequestPath;
 import com.sg.dto.ThreadDto;
 import com.sg.dto.ThreadRefDto;
 import com.sg.dto.ThreadUpdateDto;

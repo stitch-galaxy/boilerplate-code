@@ -7,6 +7,7 @@
 package com.sg.dto;
 
 import java.math.BigDecimal;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
  *
@@ -42,5 +43,21 @@ public class CanvasDto {
      */
     public void setStitchesPerInch(BigDecimal stitchesPerInch) {
         this.stitchesPerInch = stitchesPerInch;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        CanvasDto other = (CanvasDto) obj;
+        return new EqualsBuilder().
+                append(this.code, other.code).
+                append(this.stitchesPerInch, other.stitchesPerInch).
+                isEquals();
     }
 }

@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 
-package com.sg.enumerations;
+package com.sg.constants;
 
 /**
  *
  * @author tarasev
  */
-public class CustomHttpHeaders {
-    public static final String X_AUTH_TOKEN = "X-Auth-Token";
+public class SignupStatus {
+    public static final int STATUS_SUCCESS = 0;
+    public static final int STATUS_EMAIL_ALREADY_REGISTERED = 1;
 }

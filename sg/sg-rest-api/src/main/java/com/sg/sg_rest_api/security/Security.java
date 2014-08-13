@@ -28,7 +28,8 @@ public class Security {
         textEncryptor.setPassword(secret);
         
         ObjectMapper mapper = new ObjectMapper();
-        return textEncryptor.encrypt(mapper.writeValueAsString(token));
+        String json = mapper.writeValueAsString(token);
+        return textEncryptor.encrypt(json);
     }
     
     public AuthToken getTokenFromString(String encryptedToken) throws IOException

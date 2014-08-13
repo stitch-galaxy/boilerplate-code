@@ -9,6 +9,7 @@ package com.sg.domain.service;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
+import com.sg.dto.SignupDto;
 import com.sg.dto.ThreadDto;
 import com.sg.dto.ThreadRefDto;
 import com.sg.dto.ThreadUpdateDto;
@@ -32,5 +33,7 @@ public interface SgService {
     public List<CanvasDto> listCanvases();   
     
     public UserDto getUserByEmail(String email);
+    
+    public void create(UserDto dto);
     
 }

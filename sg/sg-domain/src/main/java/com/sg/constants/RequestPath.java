@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.sg_rest_api.controllers;
+package com.sg.constants;
 
 /**
  *

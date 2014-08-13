@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sg.dto;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
  *
  * @author tarasev
  */
 public class SinginAttempthResultDto {
+
     private int status;
     private String authToken;
-    private String message;
 
     /**
      * @return the status
@@ -43,17 +44,19 @@ public class SinginAttempthResultDto {
         this.authToken = authToken;
     }
 
-    /**
-     * @return the message
-     */
-    public String getMessage() {
-        return message;
-    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
 
-    /**
-     * @param message the message to set
-     */
-    public void setMessage(String message) {
-        this.message = message;
+        SinginAttempthResultDto other = (SinginAttempthResultDto) obj;
+        return new EqualsBuilder().
+                append(this.authToken, other.authToken).
+                append(this.status, other.status).
+                isEquals();
     }
 }

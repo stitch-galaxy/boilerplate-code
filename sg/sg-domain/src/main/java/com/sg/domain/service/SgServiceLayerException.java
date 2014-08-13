@@ -11,6 +11,10 @@ package com.sg.domain.service;
  */
 public class SgServiceLayerException extends RuntimeException {
 
+    public SgServiceLayerException(Throwable cause) {
+        super(cause);
+    }
+    
     public SgServiceLayerException(String message) {
         super(message);
     }

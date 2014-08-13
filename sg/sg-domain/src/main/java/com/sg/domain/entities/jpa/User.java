@@ -31,8 +31,11 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password", unique = true, nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
+    
+    @Column(name = "emailVerified", nullable = false)
+    private Boolean emailVerified;
 
     @ElementCollection
     @CollectionTable(
@@ -96,6 +99,20 @@ public class User {
      */
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    /**
+     * @return the emailVerified
+     */
+    public Boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    /**
+     * @param emailVerified the emailVerified to set
+     */
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
     
     

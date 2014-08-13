@@ -11,22 +11,22 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  *
  * @author tarasev
  */
-public class ThreadRefDto {
+public class SingupAttempthResultDto {
 
-    private String code;
+    private int status;
 
     /**
-     * @return the code
+     * @return the status
      */
-    public String getCode() {
-        return code;
+    public int getStatus() {
+        return status;
     }
 
     /**
-     * @param code the code to set
+     * @param status the status to set
      */
-    public void setCode(String code) {
-        this.code = code;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override
@@ -38,9 +38,9 @@ public class ThreadRefDto {
             return false;
         }
 
-        ThreadRefDto other = (ThreadRefDto) obj;
+        SingupAttempthResultDto other = (SingupAttempthResultDto) obj;
         return new EqualsBuilder().
-                append(this.code, other.code).
+                append(this.status, other.status).
                 isEquals();
     }
 }

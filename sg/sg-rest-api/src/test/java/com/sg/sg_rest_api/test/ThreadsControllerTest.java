@@ -10,7 +10,7 @@ import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
 import com.sg.dto.ThreadDto;
 import com.sg.domain.service.SgService;
 import com.sg.sg_rest_api.configuration.ServletContext;
-import com.sg.sg_rest_api.controllers.RequestPath;
+import com.sg.constants.RequestPath;
 import java.io.IOException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
