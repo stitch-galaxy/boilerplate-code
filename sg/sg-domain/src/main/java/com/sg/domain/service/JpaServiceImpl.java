@@ -12,7 +12,7 @@ import com.sg.dto.CanvasUpdateDto;
 import com.sg.dto.ThreadDto;
 import com.sg.dto.ThreadRefDto;
 import com.sg.dto.ThreadUpdateDto;
-import com.sg.dto.UserDto;
+import com.sg.dto.AccountDto;
 import com.sg.domain.entities.jpa.Canvas;
 import com.sg.domain.entities.jpa.CanvasesRepository;
 import com.sg.domain.entities.jpa.ProductRepository;
@@ -22,8 +22,8 @@ import javax.annotation.Resource;
 import org.dozer.Mapper;
 import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
-import com.sg.domain.entities.jpa.User;
-import com.sg.domain.entities.jpa.UsersRepository;
+import com.sg.domain.entities.jpa.Account;
+import com.sg.domain.entities.jpa.AccountsRepository;
 import com.sg.dto.SignupDto;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
@@ -48,8 +48,8 @@ public class JpaServiceImpl implements SgService {
     @Resource(name = "canvasesRepository")
     CanvasesRepository canvasesRepository;
 
-    @Resource(name = "usersRepository")
-    UsersRepository usersRepository;
+    @Resource(name = "accountsRepository")
+    AccountsRepository accountsRepository;
 
     @Resource(name = "mapper")
     Mapper mapper;
@@ -203,9 +203,9 @@ public class JpaServiceImpl implements SgService {
         return result;
     }
 
-    public UserDto getUserByEmail(final String email) {
-        return transactionTemplate.execute(new TransactionCallback<UserDto>() {
-            public UserDto doInTransaction(TransactionStatus status) {
+    public AccountDto getUserByEmail(final String email) {
+        return transactionTemplate.execute(new TransactionCallback<AccountDto>() {
+            public AccountDto doInTransaction(TransactionStatus status) {
                 try {
                     return getUserByEmailImpl(email);
                 } catch (Exception e) {
@@ -215,12 +215,12 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    public UserDto getUserByEmailImpl(String email) {
-        User user = usersRepository.findByEmail(email);
-        return mapper.map(user, UserDto.class);
+    public AccountDto getUserByEmailImpl(String email) {
+        Account user = accountsRepository.findByEmail(email);
+        return mapper.map(user, AccountDto.class);
     }
 
-    public void create(final UserDto dto) {
+    public void create(final AccountDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -233,9 +233,9 @@ public class JpaServiceImpl implements SgService {
 
     }
 
-    public void createImpl(UserDto dto) {
-        User user = mapper.map(dto, User.class);
-        usersRepository.save(user);
+    public void createImpl(AccountDto dto) {
+        Account user = mapper.map(dto, Account.class);
+        accountsRepository.save(user);
     }
 
 }

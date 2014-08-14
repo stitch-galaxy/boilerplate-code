@@ -14,7 +14,7 @@ import com.sg.constants.Roles;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
 import com.sg.constants.TokenExpirationType;
-import com.sg.dto.UserDto;
+import com.sg.dto.AccountDto;
 import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
 import java.io.IOException;
@@ -126,7 +126,7 @@ public class SpringSecurityTest {
     @Test
     public void testSecureResourceWithAuthToken() throws IOException, Exception {
 
-        UserDto dto = new UserDto();
+        AccountDto dto = new AccountDto();
         dto.setEmail("test@example.com");
         dto.setPassword("password");
         List<String> roles = new ArrayList<String>();
@@ -155,7 +155,7 @@ public class SpringSecurityTest {
     @Test
     public void testExpiredAuthToken() throws IOException, Exception {
 
-        UserDto dto = new UserDto();
+        AccountDto dto = new AccountDto();
         dto.setEmail("test@example.com");
         dto.setPassword("password");
         List<String> roles = new ArrayList<String>();

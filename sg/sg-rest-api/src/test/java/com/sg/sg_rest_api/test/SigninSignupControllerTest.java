@@ -7,7 +7,6 @@ package com.sg.sg_rest_api.test;
 
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
-import com.sg.dto.ThreadDto;
 import com.sg.domain.service.SgService;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
@@ -16,12 +15,11 @@ import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
 import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
-import com.sg.dto.UserDto;
+import com.sg.dto.AccountDto;
 import com.sg.sg_rest_api.mail.MailService;
 import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
 import com.sg.sg_rest_api.security.SgSecurityException;
-import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,10 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -89,11 +84,12 @@ public class SigninSignupControllerTest {
     public void testSignupResentConfirmationEmail() throws Exception {
         SignupDto dto = new SignupDto();
         dto.setEmail(USER_EMAIL);
-        dto.setPassword(USER_PASSWORD);
+        dto.setUserFirstName(USER_FIRST_NAME);
+        dto.setUserLastName(USER_LAST_NAME);
 
         ObjectMapper mapper = new ObjectMapper();
         
-        UserDto userDto = new UserDto();
+        AccountDto userDto = new AccountDto();
         userDto.setEmail(USER_EMAIL);
         userDto.setEmailVerified(Boolean.FALSE);
         userDto.setPassword(USER_PASSWORD);
@@ -120,11 +116,12 @@ public class SigninSignupControllerTest {
     public void testUserSignupAlreadyRegistred() throws Exception {
         SignupDto dto = new SignupDto();
         dto.setEmail(USER_EMAIL);
-        dto.setPassword(USER_PASSWORD);
+        dto.setUserFirstName(USER_FIRST_NAME);
+        dto.setUserLastName(USER_LAST_NAME);
 
         ObjectMapper mapper = new ObjectMapper();
         
-        UserDto userDto = new UserDto();
+        AccountDto userDto = new AccountDto();
         userDto.setEmail(USER_EMAIL);
         userDto.setEmailVerified(Boolean.TRUE);
         userDto.setPassword(USER_PASSWORD);
@@ -150,14 +147,17 @@ public class SigninSignupControllerTest {
     public void testUserSignupSuccessfully() throws Exception {
         SignupDto dto = new SignupDto();
         dto.setEmail(USER_EMAIL);
-        dto.setPassword(USER_PASSWORD);
+        dto.setUserFirstName(USER_FIRST_NAME);
+        dto.setUserLastName(USER_LAST_NAME);
 
         ObjectMapper mapper = new ObjectMapper();
         
-        UserDto userDto = new UserDto();
+        AccountDto userDto = new AccountDto();
         userDto.setEmail(USER_EMAIL);
         userDto.setEmailVerified(Boolean.FALSE);
-        userDto.setPassword(USER_PASSWORD);
+        userDto.setUserFirstName(USER_FIRST_NAME);
+        userDto.setUserLastName(USER_LAST_NAME);
+        
         List<String> roles = new ArrayList<String>();
         roles.add(Roles.ROLE_USER);
         userDto.setRoles(roles);
@@ -174,6 +174,8 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).create(userDto);
         verifyNoMoreInteractions(serviceMock);
     }
+    public static final String USER_LAST_NAME = "Tarasov";
+    public static final String USER_FIRST_NAME = "Evgeny";
     
 
     @Test
@@ -205,7 +207,7 @@ public class SigninSignupControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        UserDto userDto = new UserDto();
+        AccountDto userDto = new AccountDto();
         userDto.setEmail(USER_EMAIL);
         userDto.setEmailVerified(Boolean.FALSE);
         userDto.setPassword(USER_PASSWORD);
@@ -234,7 +236,7 @@ public class SigninSignupControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        UserDto userDto = new UserDto();
+        AccountDto userDto = new AccountDto();
         userDto.setEmail(USER_EMAIL);
         userDto.setEmailVerified(Boolean.TRUE);
         userDto.setPassword(USER_PASSWORD);
@@ -263,7 +265,7 @@ public class SigninSignupControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        UserDto userDto = new UserDto();
+        AccountDto userDto = new AccountDto();
         userDto.setEmail(USER_EMAIL);
         userDto.setEmailVerified(Boolean.TRUE);
         userDto.setPassword(USER_PASSWORD);

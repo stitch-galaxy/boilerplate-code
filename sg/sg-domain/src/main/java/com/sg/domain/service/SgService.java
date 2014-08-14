@@ -12,7 +12,7 @@ import com.sg.dto.CanvasUpdateDto;
 import com.sg.dto.ThreadDto;
 import com.sg.dto.ThreadRefDto;
 import com.sg.dto.ThreadUpdateDto;
-import com.sg.dto.UserDto;
+import com.sg.dto.AccountDto;
 import java.util.List;
 
 /**
@@ -31,8 +31,8 @@ public interface SgService {
     public void update(CanvasUpdateDto dto);
     public List<CanvasDto> listCanvases();   
     
-    public UserDto getUserByEmail(String email);
+    public AccountDto getUserByEmail(String email);
     
-    public void create(UserDto dto);
+    public void create(AccountDto dto);
     
 }

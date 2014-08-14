@@ -14,7 +14,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class SignupDto {
     private String email;
-    private String password;
+    private String userFirstName;
+    private String userLastName;
 
     /**
      * @return the email
@@ -29,20 +30,6 @@ public class SignupDto {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
     
     @Override
     public boolean equals(Object obj) {
@@ -56,8 +43,37 @@ public class SignupDto {
         SignupDto other = (SignupDto) obj;
         return new EqualsBuilder().
                 append(this.email, other.email).
-                append(this.password, other.password).
+                append(this.userFirstName, other.userFirstName).
+                append(this.userLastName, other.userLastName).
                 isEquals();
 
+    }
+
+    /**
+     * @return the userFirstName
+     */
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    /**
+     * @param userFirstName the userFirstName to set
+     */
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    /**
+     * @return the userLastName
+     */
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    /**
+     * @param userLastName the userLastName to set
+     */
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 }

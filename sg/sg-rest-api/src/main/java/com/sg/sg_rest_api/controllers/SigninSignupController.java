@@ -6,7 +6,7 @@
 package com.sg.sg_rest_api.controllers;
 
 import com.sg.constants.RequestPath;
-import com.sg.dto.UserDto;
+import com.sg.dto.AccountDto;
 import com.sg.domain.service.SgService;
 import com.sg.dto.SigninDto;
 import com.sg.dto.SinginAttempthResultDto;
@@ -49,7 +49,7 @@ public class SigninSignupController {
     public @ResponseBody
     SinginAttempthResultDto signin(@RequestBody SigninDto dto) throws IOException {
         SinginAttempthResultDto result = new SinginAttempthResultDto();
-        UserDto userDto = service.getUserByEmail(dto.getEmail());
+        AccountDto userDto = service.getUserByEmail(dto.getEmail());
         if (userDto == null) {
             result.setStatus(SigninStatus.STATUS_USER_NOT_FOUND);
         } else {
@@ -72,7 +72,7 @@ public class SigninSignupController {
     public @ResponseBody
     SingupAttempthResultDto signupUser(@RequestBody SignupDto dto) throws IOException {
         SingupAttempthResultDto result = new SingupAttempthResultDto();
-        UserDto userDto = service.getUserByEmail(dto.getEmail());
+        AccountDto userDto = service.getUserByEmail(dto.getEmail());
         if (userDto != null) {
             if (userDto.getEmailVerified() == Boolean.TRUE)
             {
@@ -87,10 +87,11 @@ public class SigninSignupController {
                 result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
             }
         } else {
-            userDto = new UserDto();
+            userDto = new AccountDto();
             userDto.setEmail(dto.getEmail());
-            userDto.setPassword(dto.getPassword());
             userDto.setEmailVerified(Boolean.FALSE);
+            userDto.setUserFirstName(dto.getUserFirstName());
+            userDto.setUserLastName(dto.getUserLastName());
             List<String> roles = new ArrayList<String>();
             roles.add(Roles.ROLE_USER);
             userDto.setRoles(roles);

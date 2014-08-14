@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author tarasev
  */
 @Repository
-@Qualifier("usersRepository")
-public interface UsersRepository extends CrudRepository<User, Long> {
-    User findByEmail(String email);
+@Qualifier("accountsRepository")
+public interface AccountsRepository extends CrudRepository<Account, Long> {
+    Account findByEmail(String email);
 }

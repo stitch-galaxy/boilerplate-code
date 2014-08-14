@@ -8,7 +8,7 @@ package com.sg.sg_rest_api.security;
 import com.sg.constants.Roles;
 import com.sg.constants.TokenExpirationIntervals;
 import com.sg.constants.TokenExpirationType;
-import com.sg.dto.UserDto;
+import com.sg.dto.AccountDto;
 import java.util.ArrayList;
 import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -26,7 +26,7 @@ public class AuthToken {
 
     private long expirationMillis;
 
-    public AuthToken(UserDto dto, TokenExpirationType expirationType) {
+    public AuthToken(AccountDto dto, TokenExpirationType expirationType) {
         this.email = dto.getEmail();
         List<String> authorities = new ArrayList<String>();
         for (String r : dto.getRoles()) {
