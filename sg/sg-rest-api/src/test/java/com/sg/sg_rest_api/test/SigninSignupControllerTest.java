@@ -21,6 +21,7 @@ import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
 import com.sg.sg_rest_api.security.SgSecurityException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,16 @@ public class SigninSignupControllerTest {
     private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
     
     @Test
-    public void testSignupResentConfirmationEmail() throws Exception {
+    public void testUserSignupResentConfirmationEmail() throws Exception {
+        testSignupResentConfirationEmail(RequestPath.REQUEST_SIGNUP_USER, Roles.ROLE_USER);
+    }
+    
+    @Test
+    public void testAdminSignupResentConfirmationEmail() throws Exception {
+        testSignupResentConfirationEmail(RequestPath.REQUEST_SIGNUP_ADMIN_USER, Roles.ROLE_USER, Roles.ROLE_ADMIN);
+    }
+
+    private void testSignupResentConfirationEmail(String requestPath, String ... roles) throws Exception {
         SignupDto dto = new SignupDto();
         dto.setEmail(USER_EMAIL);
         dto.setUserFirstName(USER_FIRST_NAME);
@@ -98,14 +108,12 @@ public class SigninSignupControllerTest {
         accountDto.setEmail(USER_EMAIL);
         accountDto.setEmailVerified(Boolean.FALSE);
         accountDto.setPassword(USER_PASSWORD);
-        List<String> roles = new ArrayList<String>();
-        roles.add(Roles.ROLE_USER);
-        roles.add(Roles.ROLE_ADMIN);
-        accountDto.setRoles(roles);
+        
+        accountDto.setRoles(Arrays.asList(roles));
 
         when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
 
-        mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
+        mockMvc.perform(post(requestPath)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
@@ -119,6 +127,15 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testUserSignupAlreadyRegistred() throws Exception {
+        testSignupAlreadyRegistred(RequestPath.REQUEST_SIGNUP_USER, Roles.ROLE_ADMIN);
+    }
+    
+    @Test
+    public void testAdminSignupAlreadyRegistred() throws Exception {
+        testSignupAlreadyRegistred(RequestPath.REQUEST_SIGNUP_ADMIN_USER, Roles.ROLE_USER, Roles.ROLE_ADMIN);
+    }
+
+    private void testSignupAlreadyRegistred(String requestPath, String ... roles) throws Exception {
         SignupDto dto = new SignupDto();
         dto.setEmail(USER_EMAIL);
         dto.setUserFirstName(USER_FIRST_NAME);
@@ -132,14 +149,11 @@ public class SigninSignupControllerTest {
         accountDto.setEmail(USER_EMAIL);
         accountDto.setEmailVerified(Boolean.TRUE);
         accountDto.setPassword(USER_PASSWORD);
-        List<String> roles = new ArrayList<String>();
-        roles.add(Roles.ROLE_USER);
-        roles.add(Roles.ROLE_ADMIN);
-        accountDto.setRoles(roles);
+        accountDto.setRoles(Arrays.asList(roles));
 
         when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
 
-        mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
+        mockMvc.perform(post(requestPath)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
@@ -152,6 +166,15 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testUserSignupSuccessfully() throws Exception {
+        testSignupSucceded(RequestPath.REQUEST_SIGNUP_USER, Roles.ROLE_USER);
+    }
+    
+    @Test
+    public void testAdminSignupSuccessfully() throws Exception {
+        testSignupSucceded(RequestPath.REQUEST_SIGNUP_ADMIN_USER, Roles.ROLE_USER, Roles.ROLE_ADMIN);
+    }
+
+    private void testSignupSucceded(String requestPath, String ... roles) throws Exception {
         SignupDto dto = new SignupDto();
         dto.setEmail(USER_EMAIL);
         dto.setUserFirstName(USER_FIRST_NAME);
@@ -167,13 +190,11 @@ public class SigninSignupControllerTest {
         accountDto.setUserFirstName(USER_FIRST_NAME);
         accountDto.setUserLastName(USER_LAST_NAME);
         
-        List<String> roles = new ArrayList<String>();
-        roles.add(Roles.ROLE_USER);
-        accountDto.setRoles(roles);
+        accountDto.setRoles(Arrays.asList(roles));
 
         when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(null);
 
-        mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
+        mockMvc.perform(post(requestPath)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
@@ -183,6 +204,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).create(accountDto);
         verifyNoMoreInteractions(serviceMock);
     }
+    
     public static final String USER_LAST_NAME = "Tarasov";
     public static final String USER_FIRST_NAME = "Evgeny";
     
