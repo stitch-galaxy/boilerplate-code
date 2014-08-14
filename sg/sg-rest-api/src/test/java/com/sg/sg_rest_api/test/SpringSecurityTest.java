@@ -13,6 +13,7 @@ import com.sg.constants.CustomHttpHeaders;
 import com.sg.constants.Roles;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
+import com.sg.dto.UserDto;
 import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
 import java.io.IOException;
@@ -123,11 +124,14 @@ public class SpringSecurityTest {
     @Test
     public void testSecureResourceWithAuthToken() throws IOException, Exception {
 
-        AuthToken token = new AuthToken();
-        token.setEmail("test@example.com");
-        List<String> authorities = new ArrayList<String>();
-        authorities.add(Roles.ROLE_AUTHORITY_PREFIX + Roles.ROLE_ADMIN);
-        token.setAuthorities(authorities);
+        UserDto dto = new UserDto();
+        dto.setEmail("test@example.com");
+        dto.setPassword("password");
+        List<String> roles = new ArrayList<String>();
+        roles.add(Roles.ROLE_ADMIN);
+        dto.setRoles(roles);
+        
+        AuthToken token = new AuthToken(dto);
         String authToken = security.getTokenString(token);
 
         ThreadDto threadDto = new ThreadDto();

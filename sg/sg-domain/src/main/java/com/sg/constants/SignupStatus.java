@@ -13,4 +13,5 @@ package com.sg.constants;
 public class SignupStatus {
     public static final int STATUS_SUCCESS = 0;
     public static final int STATUS_EMAIL_ALREADY_REGISTERED = 1;
+    public static final int STATUS_CONFIRMATION_EMAIL_RESENT = 2;
 }

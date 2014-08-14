@@ -17,8 +17,10 @@ import com.sg.constants.SignupStatus;
 import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
 import com.sg.dto.UserDto;
+import com.sg.sg_rest_api.mail.MailService;
 import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
+import com.sg.sg_rest_api.security.SgSecurityException;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.Test;
@@ -62,6 +64,9 @@ public class SigninSignupControllerTest {
     Security security;
 
     @Autowired
+    private MailService mailServiceMock;
+    
+    @Autowired
     private SgService serviceMock;
 
     @Autowired
@@ -73,14 +78,15 @@ public class SigninSignupControllerTest {
         //are managed by the Spring container. If we would not reset them,
         //stubbing and verified behavior would "leak" from one test to another.
         Mockito.reset(serviceMock);
+        Mockito.reset(mailServiceMock);
+        
 
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .build();
     }
     
-    
     @Test
-    public void testUserSignupAlreadyRegistred() throws Exception {
+    public void testSignupResentConfirmationEmail() throws Exception {
         SignupDto dto = new SignupDto();
         dto.setEmail(USER_EMAIL);
         dto.setPassword(USER_PASSWORD);
@@ -103,9 +109,41 @@ public class SigninSignupControllerTest {
                 .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT)));
+        verify(serviceMock, times(1)).getUserByEmail(dto.getEmail());
+        verify(mailServiceMock, times(1)).sendEmailVerificationEmail(anyString(), eq(USER_EMAIL));
+        verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(mailServiceMock);
+    }
+    
+    @Test
+    public void testUserSignupAlreadyRegistred() throws Exception {
+        SignupDto dto = new SignupDto();
+        dto.setEmail(USER_EMAIL);
+        dto.setPassword(USER_PASSWORD);
+
+        ObjectMapper mapper = new ObjectMapper();
+        
+        UserDto userDto = new UserDto();
+        userDto.setEmail(USER_EMAIL);
+        userDto.setEmailVerified(Boolean.TRUE);
+        userDto.setPassword(USER_PASSWORD);
+        List<String> roles = new ArrayList<String>();
+        roles.add(Roles.ROLE_USER);
+        roles.add(Roles.ROLE_ADMIN);
+        userDto.setRoles(roles);
+
+        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(userDto);
+
+        mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(dto)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED)));
         verify(serviceMock, times(1)).getUserByEmail(dto.getEmail());
         verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(mailServiceMock);
     }
     
     @Test
@@ -281,8 +319,8 @@ public class SigninSignupControllerTest {
             AuthToken token;
             try {
                 token = security.getTokenFromString(encryptedToken);
-            } catch (IOException ex) {
-                reason = "Can not decrypt token";
+            } catch (SgSecurityException e) {
+                reason = e.getMessage();
                 return false;
             }
             

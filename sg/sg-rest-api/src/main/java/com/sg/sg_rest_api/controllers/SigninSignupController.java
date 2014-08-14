@@ -21,6 +21,7 @@ import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
 import com.sg.dto.SignupDto;
 import com.sg.dto.SingupAttempthResultDto;
+import com.sg.sg_rest_api.mail.MailService;
 import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
 import java.io.IOException;
@@ -34,6 +35,9 @@ import java.util.List;
 @Controller
 public class SigninSignupController {
 
+    @Autowired
+    MailService mailService;
+    
     @Autowired
     SgService service;
 
@@ -55,16 +59,8 @@ public class SigninSignupController {
             } else {
                 result.setStatus(SigninStatus.STATUS_SUCCESS);
 
-                AuthToken token = new AuthToken();
-                token.setEmail(userDto.getEmail());
-                List<String> authorities = new ArrayList<String>();
-                for (String r : userDto.getRoles()) {
-                    authorities.add(Roles.ROLE_AUTHORITY_PREFIX + r);
-                }
-
-                token.setAuthorities(authorities);
-                //TODO: add expiration
-
+                AuthToken token = new AuthToken(userDto);
+                
                 result.setAuthToken(security.getTokenString(token));
             }
         }
@@ -77,7 +73,18 @@ public class SigninSignupController {
         SingupAttempthResultDto result = new SingupAttempthResultDto();
         UserDto userDto = service.getUserByEmail(dto.getEmail());
         if (userDto != null) {
-            result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
+            if (userDto.getEmailVerified() == Boolean.TRUE)
+            {
+                result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
+            }
+            else
+            {
+                AuthToken authToken = new AuthToken(userDto);
+                
+                
+                mailService.sendEmailVerificationEmail(security.getTokenString(authToken), dto.getEmail());
+                result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
+            }
         } else {
             userDto = new UserDto();
             userDto.setEmail(dto.getEmail());
@@ -86,10 +93,15 @@ public class SigninSignupController {
             List<String> roles = new ArrayList<String>();
             roles.add(Roles.ROLE_USER);
             userDto.setRoles(roles);
+            
+            AuthToken authToken = new AuthToken(userDto);
+            
+            mailService.sendEmailVerificationEmail(security.getTokenString(authToken), dto.getEmail());
+            
             service.create(userDto);
             result.setStatus(SignupStatus.STATUS_SUCCESS);
         }
         return result;
-    }
-
+    } 
+    
 }
