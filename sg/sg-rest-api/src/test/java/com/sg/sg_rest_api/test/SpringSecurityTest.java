@@ -29,6 +29,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import org.joda.time.Instant;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -123,10 +124,13 @@ public class SpringSecurityTest {
         verifyNoMoreInteractions(serviceMock);
     }
 
+    private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
+    
     @Test
     public void testSecureResourceWithAuthToken() throws IOException, Exception {
 
         AccountDto dto = new AccountDto();
+        dto.setUserBirthDate(USER_BIRTH_DATE);
         dto.setEmail("test@example.com");
         dto.setPassword("password");
         List<String> roles = new ArrayList<String>();
@@ -156,6 +160,7 @@ public class SpringSecurityTest {
     public void testExpiredAuthToken() throws IOException, Exception {
 
         AccountDto dto = new AccountDto();
+        dto.setUserBirthDate(USER_BIRTH_DATE);
         dto.setEmail("test@example.com");
         dto.setPassword("password");
         List<String> roles = new ArrayList<String>();

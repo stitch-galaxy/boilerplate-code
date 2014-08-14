@@ -1,4 +1,4 @@
-package com.sg.domain.test;
+package com.sg.domain.test.jpa;
 
 
 /*
@@ -7,6 +7,7 @@ package com.sg.domain.test;
  * and open the template in the editor.
  */
 
+import com.sg.constants.Roles;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
@@ -17,9 +18,12 @@ import com.sg.domain.service.SgService;
 import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
+import com.sg.dto.AccountDto;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
+import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +50,7 @@ public class JpaServiceTest {
     {
         canvasesTest();
         threadsTest();
+        accountsTest();
     }
     
     private static final String AIDA_14 = "Aida 14";
@@ -58,26 +63,24 @@ public class JpaServiceTest {
     
     private void canvasesTest()
     {
-        CanvasDto dto;
-        CanvasUpdateDto updateDto;
-        CanvasRefDto refDto;
-        List<CanvasDto> list;
+        List<CanvasDto> list = new ArrayList<CanvasDto>();
         
-        dto = new CanvasDto();
+        CanvasDto dto = new CanvasDto();
         dto.setCode(AIDA_15);
         dto.setStitchesPerInch(new BigDecimal(15));
         service.create(dto);
+        list.add(dto);
         
         dto = new CanvasDto();
         dto.setCode(AIDA_18);
         dto.setStitchesPerInch(new BigDecimal(18));
         service.create(dto);
+        list.add(dto);
         
-        list = service.listCanvases();
-        Assert.assertEquals(2, list.size());
+        Assert.assertEquals(list, service.listCanvases());
         
-        updateDto = new CanvasUpdateDto();
-        refDto = new CanvasRefDto();
+        CanvasUpdateDto updateDto = new CanvasUpdateDto();
+        CanvasRefDto refDto = new CanvasRefDto();
         dto = new CanvasDto();
         
         refDto.setCode(AIDA_15);
@@ -95,34 +98,28 @@ public class JpaServiceTest {
         
         service.delete(refDto);
         
-        list = service.listCanvases();
-        Assert.assertEquals(1, list.size());
-
-        dto = list.get(0);
-        Assert.assertEquals(AIDA_14, dto.getCode());
-        Assert.assertEquals(dto.getStitchesPerInch(), new BigDecimal(14));
+        list = new ArrayList<CanvasDto>();
+        list.add(dto);
+        Assert.assertEquals(list, service.listCanvases());
     }
     
 
     private void threadsTest() {
-        ThreadDto dto;
-        ThreadUpdateDto updateDto;
-        ThreadRefDto refDto;
-        List<ThreadDto> list;
+        List<ThreadDto> list = new ArrayList<ThreadDto>();
         
-        dto = new ThreadDto();
+        ThreadDto dto = new ThreadDto();
         dto.setCode(DMC_ERROR);
         service.create(dto);
-        
+        list.add(dto);
         dto = new ThreadDto();
         dto.setCode(ANCHOR);
         service.create(dto);
+        list.add(dto);
         
-        list = service.listThreads();
-        Assert.assertEquals(2, list.size());
+        Assert.assertEquals(list, service.listThreads());
         
-        updateDto = new ThreadUpdateDto();
-        refDto = new ThreadRefDto();
+        ThreadUpdateDto updateDto = new ThreadUpdateDto();
+        ThreadRefDto refDto = new ThreadRefDto();
         dto = new ThreadDto();
         
         refDto.setCode(DMC_ERROR);
@@ -139,11 +136,34 @@ public class JpaServiceTest {
         
         service.delete(refDto);
         
-        list = service.listThreads();
-        Assert.assertEquals(1, list.size());
-
-        dto = list.get(0);
-        Assert.assertEquals(DMC, dto.getCode());
+        list = new ArrayList<ThreadDto>();
+        list.add(dto);
+        
+        Assert.assertEquals(list, service.listThreads());
     }
+    
+    private void accountsTest()
+    {
+        AccountDto dto = new AccountDto();
+        dto.setEmail(USER_EMAIL);
+        dto.setEmailVerified(Boolean.FALSE);
+        List<String> roles = new ArrayList<String>();
+        roles.add(Roles.ROLE_ADMIN);
+        roles.add(Roles.ROLE_USER);
+        dto.setRoles(roles);
+        dto.setUserBirthDate(USER_BIRTH_DATE);
+        dto.setUserFirstName(USER_FIRST_NAME);
+        dto.setUserLastName(USER_LAST_NAME);
+        
+        service.create(dto);
+        
+        AccountDto found = service.getUserByEmail(USER_EMAIL);
+        
+        Assert.assertEquals(dto, found);
+    }
+    private static final String USER_LAST_NAME = "Tarasova";
+    private static final String USER_FIRST_NAME = "Nadezhda";
+    private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
+    private static final String USER_EMAIL = "test@example.com";
     
 }

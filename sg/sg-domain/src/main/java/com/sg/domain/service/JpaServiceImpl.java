@@ -5,7 +5,6 @@
  */
 package com.sg.domain.service;
 
-import com.sg.constants.Roles;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
@@ -19,13 +18,12 @@ import com.sg.domain.entities.jpa.ProductRepository;
 import com.sg.domain.entities.jpa.ThreadsRepository;
 import java.util.List;
 import javax.annotation.Resource;
-import org.dozer.Mapper;
 import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
 import com.sg.domain.entities.jpa.AccountsRepository;
-import com.sg.dto.SignupDto;
 import java.util.ArrayList;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -52,7 +50,7 @@ public class JpaServiceImpl implements SgService {
     AccountsRepository accountsRepository;
 
     @Resource(name = "mapper")
-    Mapper mapper;
+    MapperFacade mapper;
 
     @Resource(name = "transactionTemplate")
     private TransactionTemplate transactionTemplate;

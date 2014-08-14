@@ -38,6 +38,8 @@
                 <json-path-version>0.9.1</json-path-version>
                 <commons-io-version>1.3.2</commons-io-version>
                 <jasypt-version>1.9.2</jasypt-version>
+                <orika-core-version>1.4.5</orika-core-version>
+                <commons-lang3-version>3.3.2</commons-lang3-version>
   </properties>
 
 	<dependencyManagement>

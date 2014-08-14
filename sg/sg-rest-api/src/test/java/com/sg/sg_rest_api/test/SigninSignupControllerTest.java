@@ -35,6 +35,7 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 
 import static org.hamcrest.Matchers.*;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
@@ -80,25 +81,29 @@ public class SigninSignupControllerTest {
                 .build();
     }
     
+    private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
+    
     @Test
     public void testSignupResentConfirmationEmail() throws Exception {
         SignupDto dto = new SignupDto();
         dto.setEmail(USER_EMAIL);
         dto.setUserFirstName(USER_FIRST_NAME);
         dto.setUserLastName(USER_LAST_NAME);
+        dto.setUserBirthDate(USER_BIRTH_DATE);
 
         ObjectMapper mapper = new ObjectMapper();
         
-        AccountDto userDto = new AccountDto();
-        userDto.setEmail(USER_EMAIL);
-        userDto.setEmailVerified(Boolean.FALSE);
-        userDto.setPassword(USER_PASSWORD);
+        AccountDto accountDto = new AccountDto();
+        accountDto.setUserBirthDate(USER_BIRTH_DATE);
+        accountDto.setEmail(USER_EMAIL);
+        accountDto.setEmailVerified(Boolean.FALSE);
+        accountDto.setPassword(USER_PASSWORD);
         List<String> roles = new ArrayList<String>();
         roles.add(Roles.ROLE_USER);
         roles.add(Roles.ROLE_ADMIN);
-        userDto.setRoles(roles);
+        accountDto.setRoles(roles);
 
-        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(userDto);
+        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -118,19 +123,21 @@ public class SigninSignupControllerTest {
         dto.setEmail(USER_EMAIL);
         dto.setUserFirstName(USER_FIRST_NAME);
         dto.setUserLastName(USER_LAST_NAME);
+        dto.setUserBirthDate(USER_BIRTH_DATE);
 
         ObjectMapper mapper = new ObjectMapper();
         
-        AccountDto userDto = new AccountDto();
-        userDto.setEmail(USER_EMAIL);
-        userDto.setEmailVerified(Boolean.TRUE);
-        userDto.setPassword(USER_PASSWORD);
+        AccountDto accountDto = new AccountDto();
+        accountDto.setUserBirthDate(USER_BIRTH_DATE);
+        accountDto.setEmail(USER_EMAIL);
+        accountDto.setEmailVerified(Boolean.TRUE);
+        accountDto.setPassword(USER_PASSWORD);
         List<String> roles = new ArrayList<String>();
         roles.add(Roles.ROLE_USER);
         roles.add(Roles.ROLE_ADMIN);
-        userDto.setRoles(roles);
+        accountDto.setRoles(roles);
 
-        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(userDto);
+        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -149,18 +156,20 @@ public class SigninSignupControllerTest {
         dto.setEmail(USER_EMAIL);
         dto.setUserFirstName(USER_FIRST_NAME);
         dto.setUserLastName(USER_LAST_NAME);
+        dto.setUserBirthDate(USER_BIRTH_DATE);
 
         ObjectMapper mapper = new ObjectMapper();
         
-        AccountDto userDto = new AccountDto();
-        userDto.setEmail(USER_EMAIL);
-        userDto.setEmailVerified(Boolean.FALSE);
-        userDto.setUserFirstName(USER_FIRST_NAME);
-        userDto.setUserLastName(USER_LAST_NAME);
+        AccountDto accountDto = new AccountDto();
+        accountDto.setUserBirthDate(USER_BIRTH_DATE);
+        accountDto.setEmail(USER_EMAIL);
+        accountDto.setEmailVerified(Boolean.FALSE);
+        accountDto.setUserFirstName(USER_FIRST_NAME);
+        accountDto.setUserLastName(USER_LAST_NAME);
         
         List<String> roles = new ArrayList<String>();
         roles.add(Roles.ROLE_USER);
-        userDto.setRoles(roles);
+        accountDto.setRoles(roles);
 
         when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(null);
 
@@ -171,7 +180,7 @@ public class SigninSignupControllerTest {
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)));
         verify(serviceMock, times(1)).getUserByEmail(dto.getEmail());
-        verify(serviceMock, times(1)).create(userDto);
+        verify(serviceMock, times(1)).create(accountDto);
         verifyNoMoreInteractions(serviceMock);
     }
     public static final String USER_LAST_NAME = "Tarasov";
@@ -207,16 +216,17 @@ public class SigninSignupControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        AccountDto userDto = new AccountDto();
-        userDto.setEmail(USER_EMAIL);
-        userDto.setEmailVerified(Boolean.FALSE);
-        userDto.setPassword(USER_PASSWORD);
+        AccountDto accountDto = new AccountDto();
+        accountDto.setUserBirthDate(USER_BIRTH_DATE);
+        accountDto.setEmail(USER_EMAIL);
+        accountDto.setEmailVerified(Boolean.FALSE);
+        accountDto.setPassword(USER_PASSWORD);
         List<String> roles = new ArrayList<String>();
         roles.add(Roles.ROLE_USER);
         roles.add(Roles.ROLE_ADMIN);
-        userDto.setRoles(roles);
+        accountDto.setRoles(roles);
 
-        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(userDto);
+        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -236,16 +246,17 @@ public class SigninSignupControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        AccountDto userDto = new AccountDto();
-        userDto.setEmail(USER_EMAIL);
-        userDto.setEmailVerified(Boolean.TRUE);
-        userDto.setPassword(USER_PASSWORD);
+        AccountDto accountDto = new AccountDto();
+        accountDto.setUserBirthDate(USER_BIRTH_DATE);
+        accountDto.setEmail(USER_EMAIL);
+        accountDto.setEmailVerified(Boolean.TRUE);
+        accountDto.setPassword(USER_PASSWORD);
         List<String> roles = new ArrayList<String>();
         roles.add(Roles.ROLE_USER);
         roles.add(Roles.ROLE_ADMIN);
-        userDto.setRoles(roles);
+        accountDto.setRoles(roles);
 
-        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(userDto);
+        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -265,16 +276,17 @@ public class SigninSignupControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        AccountDto userDto = new AccountDto();
-        userDto.setEmail(USER_EMAIL);
-        userDto.setEmailVerified(Boolean.TRUE);
-        userDto.setPassword(USER_PASSWORD);
+        AccountDto accountDto = new AccountDto();
+        accountDto.setUserBirthDate(USER_BIRTH_DATE);
+        accountDto.setEmail(USER_EMAIL);
+        accountDto.setEmailVerified(Boolean.TRUE);
+        accountDto.setPassword(USER_PASSWORD);
         List<String> roles = new ArrayList<String>();
         roles.add(Roles.ROLE_USER);
         roles.add(Roles.ROLE_ADMIN);
-        userDto.setRoles(roles);
+        accountDto.setRoles(roles);
 
-        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(userDto);
+        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
 
         TokenMatcher tokenMatcher = new TokenMatcher(security);
         tokenMatcher.setEmail(USER_EMAIL);

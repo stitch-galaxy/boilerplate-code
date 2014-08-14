@@ -14,7 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
 
 /**
  *
@@ -27,6 +28,11 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
     private Long id;
+    
+    @Column(name="user_birth_date")
+    
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate userBirthDate;
 
     @Column(name="user_first_name")
     private String userFirstName;
@@ -147,6 +153,20 @@ public class Account {
      */
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    /**
+     * @return the userBirthDate
+     */
+    public LocalDate getUserBirthDate() {
+        return userBirthDate;
+    }
+
+    /**
+     * @param userBirthDate the userBirthDate to set
+     */
+    public void setUserBirthDate(LocalDate userBirthDate) {
+        this.userBirthDate = userBirthDate;
     }
     
     

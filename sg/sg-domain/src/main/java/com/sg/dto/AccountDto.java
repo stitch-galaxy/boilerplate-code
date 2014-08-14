@@ -8,6 +8,7 @@ package com.sg.dto;
 
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.joda.time.LocalDate;
 
 /**
  *
@@ -20,6 +21,7 @@ public class AccountDto {
     private Boolean emailVerified;
     private String userFirstName;
     private String userLastName;
+    private LocalDate userBirthDate;
 
     /**
      * @return the email
@@ -92,6 +94,9 @@ public class AccountDto {
                 append(this.password, other.password).
                 append(this.emailVerified, other.emailVerified).
                 append(this.roles, other.roles).
+                append(this.userFirstName, other.userFirstName).
+                append(this.userLastName, other.userLastName).
+                append(this.userBirthDate, other.userBirthDate).
                 isEquals();
     }
 
@@ -121,5 +126,19 @@ public class AccountDto {
      */
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    /**
+     * @return the userBirthDate
+     */
+    public LocalDate getUserBirthDate() {
+        return userBirthDate;
+    }
+
+    /**
+     * @param userBirthDate the userBirthDate to set
+     */
+    public void setUserBirthDate(LocalDate userBirthDate) {
+        this.userBirthDate = userBirthDate;
     }
 }

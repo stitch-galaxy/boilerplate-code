@@ -12,8 +12,6 @@ import com.sg.domain.service.JpaServiceImpl;
 import com.sg.domain.service.SgService;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -1,4 +1,4 @@
-package com.sg.domain.test;
+package com.sg.domain.test.jpa;
 
 
 /*
