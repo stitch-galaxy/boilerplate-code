@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
+import com.sg.constants.TokenExpirationType;
 import com.sg.dto.SignupDto;
 import com.sg.dto.SingupAttempthResultDto;
 import com.sg.sg_rest_api.mail.MailService;
@@ -59,7 +60,7 @@ public class SigninSignupController {
             } else {
                 result.setStatus(SigninStatus.STATUS_SUCCESS);
 
-                AuthToken token = new AuthToken(userDto);
+                AuthToken token = new AuthToken(userDto, TokenExpirationType.USER_SESSION_TOKEN);
                 
                 result.setAuthToken(security.getTokenString(token));
             }
@@ -79,7 +80,7 @@ public class SigninSignupController {
             }
             else
             {
-                AuthToken authToken = new AuthToken(userDto);
+                AuthToken authToken = new AuthToken(userDto, TokenExpirationType.NEVER_EXPIRES);
                 
                 
                 mailService.sendEmailVerificationEmail(security.getTokenString(authToken), dto.getEmail());
@@ -94,7 +95,7 @@ public class SigninSignupController {
             roles.add(Roles.ROLE_USER);
             userDto.setRoles(roles);
             
-            AuthToken authToken = new AuthToken(userDto);
+            AuthToken authToken = new AuthToken(userDto, TokenExpirationType.NEVER_EXPIRES);
             
             mailService.sendEmailVerificationEmail(security.getTokenString(authToken), dto.getEmail());
             

@@ -13,6 +13,7 @@ import com.sg.constants.CustomHttpHeaders;
 import com.sg.constants.Roles;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
+import com.sg.constants.TokenExpirationType;
 import com.sg.dto.UserDto;
 import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
@@ -27,6 +28,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
+import org.joda.time.Instant;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -130,8 +132,8 @@ public class SpringSecurityTest {
         List<String> roles = new ArrayList<String>();
         roles.add(Roles.ROLE_ADMIN);
         dto.setRoles(roles);
-        
-        AuthToken token = new AuthToken(dto);
+
+        AuthToken token = new AuthToken(dto, TokenExpirationType.USER_SESSION_TOKEN);
         String authToken = security.getTokenString(token);
 
         ThreadDto threadDto = new ThreadDto();
@@ -147,6 +149,37 @@ public class SpringSecurityTest {
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(new byte[0]));
         verify(serviceMock, times(1)).create(threadDto);
+        verifyNoMoreInteractions(serviceMock);
+    }
+
+    @Test
+    public void testExpiredAuthToken() throws IOException, Exception {
+
+        UserDto dto = new UserDto();
+        dto.setEmail("test@example.com");
+        dto.setPassword("password");
+        List<String> roles = new ArrayList<String>();
+        roles.add(Roles.ROLE_ADMIN);
+        dto.setRoles(roles);
+
+        AuthToken token = new AuthToken(dto, TokenExpirationType.USER_SESSION_TOKEN);
+        token.setExpirationMillis(Instant.now().getMillis() - 1);
+        String authToken = security.getTokenString(token);
+
+        ThreadDto threadDto = new ThreadDto();
+        threadDto.setCode(AIDA_14);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_ADD)
+                .header(CustomHttpHeaders.X_AUTH_TOKEN, authToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(threadDto)))
+                .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
         verifyNoMoreInteractions(serviceMock);
     }
 
