@@ -7,7 +7,7 @@ package com.sg.sg_rest_api.test;
 
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.domain.service.SgService;
-import com.sg.domain.service.SgServiceLayerException;
+import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.ThreadDto;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
@@ -75,7 +75,7 @@ public class ExceptionHandlingTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgServiceLayerException(THREAD_ALREADY_EXISTS)).when(serviceMock).create(threadDto);
+        doThrow(new SgServiceLayerRuntimeException(THREAD_ALREADY_EXISTS)).when(serviceMock).create(threadDto);
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_ADD)

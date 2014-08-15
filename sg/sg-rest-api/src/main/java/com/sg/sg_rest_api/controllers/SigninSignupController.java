@@ -5,6 +5,7 @@
  */
 package com.sg.sg_rest_api.controllers;
 
+import com.sg.constants.CompleteSignupStatus;
 import com.sg.constants.RequestPath;
 import com.sg.dto.AccountDto;
 import com.sg.domain.service.SgService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
 import com.sg.constants.TokenExpirationType;
+import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.dto.CompleteSignupAttempthResultDto;
 import com.sg.dto.CompleteSignupDto;
 import com.sg.dto.SignupDto;
@@ -29,6 +31,7 @@ import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
 import java.io.IOException;
 import java.util.Arrays;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -105,8 +108,18 @@ public class SigninSignupController {
     @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.GET)
     public @ResponseBody
     CompleteSignupAttempthResultDto completeSignup(@RequestBody CompleteSignupDto dto) {
-        //SecurityContextHolder.getContext().getAuthentication().getPrincipal().;
+        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         CompleteSignupAttempthResultDto attemptResult = new CompleteSignupAttempthResultDto();
+
+        try {
+            service.completeSignup(userId, dto);
+        } catch (SgSignupAlreadyCompletedException e) {
+            attemptResult.setStatus(CompleteSignupStatus.STATUS_ALREADY_COMPLETED);
+            return attemptResult;
+        }
+
+        attemptResult.setStatus(CompleteSignupStatus.STATUS_SUCCESS);
         return attemptResult;
     }
 

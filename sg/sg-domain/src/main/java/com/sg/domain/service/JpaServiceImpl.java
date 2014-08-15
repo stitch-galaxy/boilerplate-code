@@ -5,6 +5,7 @@
  */
 package com.sg.domain.service;
 
+import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
@@ -22,6 +23,9 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
 import com.sg.domain.entities.jpa.AccountsRepository;
+import com.sg.domain.service.exception.CheckedExceptionWrapper;
+import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
+import com.sg.dto.CompleteSignupDto;
 import com.sg.dto.SignupDto;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +67,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     deleteThreadImpl(dto);
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
@@ -80,7 +84,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     createThreadImpl(dto);
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
@@ -97,7 +101,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     return listThreadsImpl();
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
@@ -118,7 +122,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     updateThreadImpl(dto);
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
@@ -136,7 +140,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     createCanvasImpl(dto);
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
@@ -153,7 +157,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     deleteCanvasImpl(dto);
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
@@ -170,7 +174,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     updateCanvasImpl(dto);
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
@@ -188,7 +192,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     return listCanvasesImpl();
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
@@ -209,7 +213,7 @@ public class JpaServiceImpl implements SgService {
                 try {
                     return getUserByEmailImpl(email);
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
@@ -219,25 +223,69 @@ public class JpaServiceImpl implements SgService {
         Account user = accountsRepository.findByEmail(email);
         return mapper.map(user, AccountDto.class);
     }
-    
-    public Long signup(final SignupDto dto, final String ... roles)
-    {
+
+    public Long signup(final SignupDto dto, final String... roles) {
         return transactionTemplate.execute(new TransactionCallback<Long>() {
             public Long doInTransaction(TransactionStatus status) {
                 try {
                     return signupImpl(dto, roles);
                 } catch (Exception e) {
-                    throw new SgServiceLayerException(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
     }
 
-    public Long signupImpl(SignupDto dto, String ... roles) {
+    public void doSomething(int a) {
+        try {
+            executeInTx(new SomeSuperMethod() {
+
+                public void execute(Object... arguments) {
+                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+            }, a);
+        } catch (Exception e) {
+        }
+    }
+
+    public void executeInTx(final SomeSuperMethod method, final Object... args) throws Exception {
+        Object result = transactionTemplate.execute(new TransactionCallback() {
+            public Object doInTransaction(TransactionStatus status) {
+                try {
+                    method.execute(args);
+                    return null;
+                } catch (Exception e) {
+                    status.setRollbackOnly();
+                    return e;
+                }
+            }
+        });
+
+        if (result != null && result instanceof Exception) {
+            throw (Exception) result;
+        }
+    }
+
+    public Long signupImpl(SignupDto dto, String... roles) {
         Account user = mapper.map(dto, Account.class);
         user.setEmailVerified(Boolean.FALSE);
         user.setRoles(Arrays.asList(roles));
         return accountsRepository.save(user).getId();
+    }
+
+    public void completeSignup(final Long userId, final CompleteSignupDto dto) {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    completeSignupImpl(userId, dto);
+                } catch (Exception e) {
+                    throw new CheckedExceptionWrapper(e);
+                }
+            }
+        });
+    }
+
+    public void completeSignupImpl(Long userId, CompleteSignupDto dto) {
     }
 
 }

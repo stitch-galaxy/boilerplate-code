@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.service;
+package com.sg.domain.service.exception;
 
 /**
  *
  * @author tarasev
  */
-public class SgServiceLayerException extends RuntimeException {
+public class SgServiceLayerException extends Exception {
 
     public SgServiceLayerException(Throwable cause) {
         super(cause);

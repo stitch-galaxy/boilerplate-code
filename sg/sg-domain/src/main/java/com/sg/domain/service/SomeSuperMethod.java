@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package com.sg.constants;
+package com.sg.domain.service;
 
 /**
  *
  * @author tarasev
  */
-public class CompleteSignupStatus {
-    public static final int STATUS_SUCCESS = 0;
-    public static final int STATUS_ALREADY_COMPLETED = 1;
+public interface SomeSuperMethod {
+
+    public void execute(Object ... arguments);
 }

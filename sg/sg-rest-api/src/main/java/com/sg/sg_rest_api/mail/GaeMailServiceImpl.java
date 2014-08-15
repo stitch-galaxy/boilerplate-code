@@ -6,7 +6,7 @@
 
 package com.sg.sg_rest_api.mail;
 
-import com.sg.domain.service.SgServiceLayerException;
+import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.Session;
@@ -38,7 +38,7 @@ public class GaeMailServiceImpl implements MailService {
         }
         catch(Exception e)
         {
-            throw new SgServiceLayerException(e);
+            throw new SgServiceLayerRuntimeException(e);
         }
     }
     
