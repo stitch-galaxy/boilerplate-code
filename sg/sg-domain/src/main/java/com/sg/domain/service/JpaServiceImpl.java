@@ -22,7 +22,9 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
 import com.sg.domain.entities.jpa.AccountsRepository;
+import com.sg.dto.SignupDto;
 import java.util.ArrayList;
+import java.util.Arrays;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -217,23 +219,25 @@ public class JpaServiceImpl implements SgService {
         Account user = accountsRepository.findByEmail(email);
         return mapper.map(user, AccountDto.class);
     }
-
-    public void create(final AccountDto dto) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
+    
+    public Long signup(final SignupDto dto, final String ... roles)
+    {
+        return transactionTemplate.execute(new TransactionCallback<Long>() {
+            public Long doInTransaction(TransactionStatus status) {
                 try {
-                    createImpl(dto);
+                    return signupImpl(dto, roles);
                 } catch (Exception e) {
                     throw new SgServiceLayerException(e);
                 }
             }
         });
-
     }
 
-    public void createImpl(AccountDto dto) {
+    public Long signupImpl(SignupDto dto, String ... roles) {
         Account user = mapper.map(dto, Account.class);
-        accountsRepository.save(user);
+        user.setEmailVerified(Boolean.FALSE);
+        user.setRoles(Arrays.asList(roles));
+        return accountsRepository.save(user).getId();
     }
 
 }

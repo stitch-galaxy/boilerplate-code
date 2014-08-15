@@ -19,8 +19,10 @@ import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.dto.AccountDto;
+import com.sg.dto.SignupDto;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import junit.framework.Assert;
 import org.joda.time.LocalDate;
@@ -144,22 +146,26 @@ public class JpaServiceTest {
     
     private void accountsTest()
     {
-        AccountDto dto = new AccountDto();
+        SignupDto dto = new SignupDto();
         dto.setEmail(USER_EMAIL);
-        dto.setEmailVerified(Boolean.FALSE);
-        List<String> roles = new ArrayList<String>();
-        roles.add(Roles.ROLE_ADMIN);
-        roles.add(Roles.ROLE_USER);
-        dto.setRoles(roles);
         dto.setUserBirthDate(USER_BIRTH_DATE);
         dto.setUserFirstName(USER_FIRST_NAME);
         dto.setUserLastName(USER_LAST_NAME);
         
-        service.create(dto);
+        Long id = service.signup(dto, Roles.ROLE_ADMIN, Roles.ROLE_USER);
         
         AccountDto found = service.getUserByEmail(USER_EMAIL);
         
-        Assert.assertEquals(dto, found);
+        AccountDto expected = new AccountDto();
+        expected.setId(id);
+        expected.setEmail(USER_EMAIL);
+        expected.setEmailVerified(Boolean.FALSE);
+        expected.setRoles(Arrays.asList(new String[]{Roles.ROLE_ADMIN, Roles.ROLE_USER}));
+        expected.setUserBirthDate(USER_BIRTH_DATE);
+        expected.setUserFirstName(USER_FIRST_NAME);
+        expected.setUserLastName(USER_LAST_NAME);
+        
+        Assert.assertEquals(expected, found);
     }
     private static final String USER_LAST_NAME = "Tarasova";
     private static final String USER_FIRST_NAME = "Nadezhda";

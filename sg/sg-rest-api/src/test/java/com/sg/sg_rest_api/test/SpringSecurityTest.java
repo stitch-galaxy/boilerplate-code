@@ -128,16 +128,7 @@ public class SpringSecurityTest {
     
     @Test
     public void testSecureResourceWithAuthToken() throws IOException, Exception {
-
-        AccountDto dto = new AccountDto();
-        dto.setUserBirthDate(USER_BIRTH_DATE);
-        dto.setEmail("test@example.com");
-        dto.setPassword("password");
-        List<String> roles = new ArrayList<String>();
-        roles.add(Roles.ROLE_ADMIN);
-        dto.setRoles(roles);
-
-        AuthToken token = new AuthToken(dto, TokenExpirationType.USER_SESSION_TOKEN);
+        AuthToken token = new AuthToken(USER_ID, Arrays.asList(new String[]{Roles.ROLE_ADMIN, Roles.ROLE_USER}), TokenExpirationType.USER_SESSION_TOKEN);
         String authToken = security.getTokenString(token);
 
         ThreadDto threadDto = new ThreadDto();
@@ -155,19 +146,11 @@ public class SpringSecurityTest {
         verify(serviceMock, times(1)).create(threadDto);
         verifyNoMoreInteractions(serviceMock);
     }
+    public static final long USER_ID = 1L;
 
     @Test
     public void testExpiredAuthToken() throws IOException, Exception {
-
-        AccountDto dto = new AccountDto();
-        dto.setUserBirthDate(USER_BIRTH_DATE);
-        dto.setEmail("test@example.com");
-        dto.setPassword("password");
-        List<String> roles = new ArrayList<String>();
-        roles.add(Roles.ROLE_ADMIN);
-        dto.setRoles(roles);
-
-        AuthToken token = new AuthToken(dto, TokenExpirationType.USER_SESSION_TOKEN);
+        AuthToken token = new AuthToken(USER_ID, Arrays.asList(new String[]{Roles.ROLE_ADMIN, Roles.ROLE_USER}), TokenExpirationType.USER_SESSION_TOKEN);
         token.setExpirationMillis(Instant.now().getMillis() - 1);
         String authToken = security.getTokenString(token);
 

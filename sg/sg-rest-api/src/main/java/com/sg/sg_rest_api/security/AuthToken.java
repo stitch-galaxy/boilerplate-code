@@ -26,10 +26,10 @@ public class AuthToken {
 
     private long expirationMillis;
 
-    public AuthToken(AccountDto dto, TokenExpirationType expirationType) {
-        this.email = dto.getEmail();
+    public AuthToken(Long userId, List<String> roles, TokenExpirationType expirationType) {
+        this.userId = userId;
         List<String> authorities = new ArrayList<String>();
-        for (String r : dto.getRoles()) {
+        for (String r : roles) {
             authorities.add(Roles.ROLE_AUTHORITY_PREFIX + r);
         }
         setAuthorities(authorities);
@@ -49,22 +49,8 @@ public class AuthToken {
         }
     }
 
-    private String email;
+    private Long userId;
     private List<String> authorities;
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     /**
      * @return the authorities
@@ -103,5 +89,19 @@ public class AuthToken {
      */
     public void setExpirationMillis(long expirationMillis) {
         this.expirationMillis = expirationMillis;
+    }
+
+    /**
+     * @return the userId
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

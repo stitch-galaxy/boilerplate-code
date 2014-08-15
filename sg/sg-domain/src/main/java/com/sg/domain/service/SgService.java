@@ -13,6 +13,7 @@ import com.sg.dto.ThreadDto;
 import com.sg.dto.ThreadRefDto;
 import com.sg.dto.ThreadUpdateDto;
 import com.sg.dto.AccountDto;
+import com.sg.dto.SignupDto;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface SgService {
     public List<CanvasDto> listCanvases();   
     
     public AccountDto getUserByEmail(String email);
-    
-    public void create(AccountDto dto);
+    public Long signup(SignupDto dto, String ... roles);
+    //public void create(AccountDto dto);
     
 }

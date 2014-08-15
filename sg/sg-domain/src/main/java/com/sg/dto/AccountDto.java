@@ -15,6 +15,7 @@ import org.joda.time.LocalDate;
  * @author tarasev
  */
 public class AccountDto {
+    private Long id;
     private String email;
     private String password;
     private List<String> roles;
@@ -90,6 +91,7 @@ public class AccountDto {
 
         AccountDto other = (AccountDto) obj;
         return new EqualsBuilder().
+                append(this.getId(), other.getId()).
                 append(this.email, other.email).
                 append(this.password, other.password).
                 append(this.emailVerified, other.emailVerified).
@@ -140,5 +142,19 @@ public class AccountDto {
      */
     public void setUserBirthDate(LocalDate userBirthDate) {
         this.userBirthDate = userBirthDate;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }

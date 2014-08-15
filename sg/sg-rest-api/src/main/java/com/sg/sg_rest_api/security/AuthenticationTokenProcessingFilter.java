@@ -25,8 +25,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
@@ -45,12 +43,13 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
         if (encryptedAuthToken != null) {
             try {
                 AuthToken authToken = security.getTokenFromString(encryptedAuthToken);
-                //TODO: check expiration
-                
-                UserDetails userDetails = createUserDetails(authToken);
-                
+
+                List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+                for (String a : authToken.getAuthorities()) {
+                    authorities.add(new SimpleGrantedAuthority(a));
+                }
                 UsernamePasswordAuthenticationToken authentication
-                        = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        = new UsernamePasswordAuthenticationToken(null, authToken.getUserId(), authorities);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
@@ -78,18 +77,5 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
         }
 
         return authToken;
-    }
-    
-
-    private UserDetails createUserDetails(AuthToken authToken) {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (String a : authToken.getAuthorities()) {
-            authorities.add(new SimpleGrantedAuthority(a));
-        }
-
-        return new User(
-                authToken.getEmail(),
-                "",
-                authorities);
     }
 }

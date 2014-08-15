@@ -104,6 +104,7 @@ public class SigninSignupControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         
         AccountDto accountDto = new AccountDto();
+        accountDto.setId(USER_ID);
         accountDto.setUserBirthDate(USER_BIRTH_DATE);
         accountDto.setEmail(USER_EMAIL);
         accountDto.setEmailVerified(Boolean.FALSE);
@@ -145,6 +146,7 @@ public class SigninSignupControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         
         AccountDto accountDto = new AccountDto();
+        accountDto.setId(USER_ID);
         accountDto.setUserBirthDate(USER_BIRTH_DATE);
         accountDto.setEmail(USER_EMAIL);
         accountDto.setEmailVerified(Boolean.TRUE);
@@ -163,6 +165,7 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(serviceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
+    private static final long USER_ID = 1L;
     
     @Test
     public void testUserSignupSuccessfully() throws Exception {
@@ -182,15 +185,6 @@ public class SigninSignupControllerTest {
         dto.setUserBirthDate(USER_BIRTH_DATE);
 
         ObjectMapper mapper = new ObjectMapper();
-        
-        AccountDto accountDto = new AccountDto();
-        accountDto.setUserBirthDate(USER_BIRTH_DATE);
-        accountDto.setEmail(USER_EMAIL);
-        accountDto.setEmailVerified(Boolean.FALSE);
-        accountDto.setUserFirstName(USER_FIRST_NAME);
-        accountDto.setUserLastName(USER_LAST_NAME);
-        
-        accountDto.setRoles(Arrays.asList(roles));
 
         when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(null);
 
@@ -201,7 +195,7 @@ public class SigninSignupControllerTest {
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)));
         verify(serviceMock, times(1)).getUserByEmail(dto.getEmail());
-        verify(serviceMock, times(1)).create(accountDto);
+        verify(serviceMock, times(1)).signup(dto, roles);
         verifyNoMoreInteractions(serviceMock);
     }
     
@@ -299,6 +293,7 @@ public class SigninSignupControllerTest {
         ObjectMapper mapper = new ObjectMapper();
 
         AccountDto accountDto = new AccountDto();
+        accountDto.setId(USER_ID);
         accountDto.setUserBirthDate(USER_BIRTH_DATE);
         accountDto.setEmail(USER_EMAIL);
         accountDto.setEmailVerified(Boolean.TRUE);
@@ -311,7 +306,7 @@ public class SigninSignupControllerTest {
         when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
 
         TokenMatcher tokenMatcher = new TokenMatcher(security);
-        tokenMatcher.setEmail(USER_EMAIL);
+        tokenMatcher.setUserId(USER_ID);
         List<String> authorities = new ArrayList<String>();
         for (String r : roles) {
             authorities.add(Roles.ROLE_AUTHORITY_PREFIX + r);
@@ -337,7 +332,7 @@ public class SigninSignupControllerTest {
     {
         private Security security;
         
-        private String email;
+        private Long userId;
         private List<String> authorities;
         
         private String reason;
@@ -360,9 +355,9 @@ public class SigninSignupControllerTest {
                 return false;
             }
             
-            if (!email.equals(token.getEmail()))
+            if (!userId.equals(token.getUserId()))
             {
-                reason = "Non expected email";
+                reason = "Non expected userId";
                 return false;
             }
             if (!authorities.equals(token.getAuthorities()))
@@ -378,20 +373,6 @@ public class SigninSignupControllerTest {
         }
 
         /**
-         * @return the email
-         */
-        public String getEmail() {
-            return email;
-        }
-
-        /**
-         * @param email the email to set
-         */
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        /**
          * @return the authorities
          */
         public List<String> getAuthorities() {
@@ -403,6 +384,20 @@ public class SigninSignupControllerTest {
          */
         public void setAuthorities(List<String> authorities) {
             this.authorities = authorities;
+        }
+
+        /**
+         * @return the userId
+         */
+        public Long getUserId() {
+            return userId;
+        }
+
+        /**
+         * @param userId the userId to set
+         */
+        public void setUserId(Long userId) {
+            this.userId = userId;
         }
         
     }

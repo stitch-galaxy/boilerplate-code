@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
 import com.sg.constants.TokenExpirationType;
+import com.sg.dto.CompleteSignupAttempthResultDto;
+import com.sg.dto.CompleteSignupDto;
 import com.sg.dto.SignupDto;
 import com.sg.dto.SingupAttempthResultDto;
 import com.sg.sg_rest_api.mail.MailService;
 import com.sg.sg_rest_api.security.AuthToken;
 import com.sg.sg_rest_api.security.Security;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  *
@@ -61,8 +61,7 @@ public class SigninSignupController {
             } else {
                 result.setStatus(SigninStatus.STATUS_SUCCESS);
 
-                AuthToken token = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN);
-
+                AuthToken token = new AuthToken(accountDto.getId(), accountDto.getRoles(), TokenExpirationType.USER_SESSION_TOKEN);
                 result.setAuthToken(security.getTokenString(token));
             }
         }
@@ -81,35 +80,34 @@ public class SigninSignupController {
         return sinupUserWithRoles(dto, Roles.ROLE_USER, Roles.ROLE_ADMIN);
     }
 
-    private SingupAttempthResultDto sinupUserWithRoles(SignupDto dto, String ... roles) throws IOException {
+    private SingupAttempthResultDto sinupUserWithRoles(SignupDto dto, String... roles) throws IOException {
         SingupAttempthResultDto result = new SingupAttempthResultDto();
         AccountDto accountDto = service.getUserByEmail(dto.getEmail());
         if (accountDto != null) {
             if (accountDto.getEmailVerified() == Boolean.TRUE) {
                 result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
             } else {
-                AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.NEVER_EXPIRES);
+                AuthToken authToken = new AuthToken(accountDto.getId(), accountDto.getRoles(), TokenExpirationType.NEVER_EXPIRES);
 
                 mailService.sendEmailVerificationEmail(security.getTokenString(authToken), dto.getEmail());
                 result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
             }
         } else {
-            accountDto = new AccountDto();
-            accountDto.setEmail(dto.getEmail());
-            accountDto.setEmailVerified(Boolean.FALSE);
-            accountDto.setUserFirstName(dto.getUserFirstName());
-            accountDto.setUserLastName(dto.getUserLastName());
-            accountDto.setUserBirthDate(dto.getUserBirthDate());
-            accountDto.setRoles(Arrays.asList(roles));
+            Long userId = service.signup(dto, roles);
 
-            AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.NEVER_EXPIRES);
-
+            AuthToken authToken = new AuthToken(userId, Arrays.asList(roles), TokenExpirationType.NEVER_EXPIRES);
             mailService.sendEmailVerificationEmail(security.getTokenString(authToken), dto.getEmail());
-
-            service.create(accountDto);
             result.setStatus(SignupStatus.STATUS_SUCCESS);
         }
         return result;
+    }
+
+    @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.GET)
+    public @ResponseBody
+    CompleteSignupAttempthResultDto completeSignup(@RequestBody CompleteSignupDto dto) {
+        //SecurityContextHolder.getContext().getAuthentication().getPrincipal().;
+        CompleteSignupAttempthResultDto attemptResult = new CompleteSignupAttempthResultDto();
+        return attemptResult;
     }
 
 }
