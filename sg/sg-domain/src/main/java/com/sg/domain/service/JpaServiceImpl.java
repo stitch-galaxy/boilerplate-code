@@ -30,7 +30,8 @@ import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
-import com.sg.domain.service.exception.SgSignupEmailAlreadyRegisteredException;
+import com.sg.domain.service.exception.SgEmailAlreadySignedUpCompletellyException;
+import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.CompleteSignupDto;
@@ -291,13 +292,21 @@ public class JpaServiceImpl implements SgService {
     }
 
     public void signupImpl(SignupDto dto, String... roles) {
-        if (accountsRepository.findByEmail(dto.getEmail()) != null) {
-            throw new SgSignupEmailAlreadyRegisteredException(dto.getEmail());
+        Account account = accountsRepository.findByEmail(dto.getEmail());
+        if (account != null) {
+            if (account.getEmailVerified() == Boolean.FALSE)
+            {
+                throw new SgSignupForRegisteredButNonVerifiedEmailException(dto.getEmail());
+            }
+            else
+            {
+                throw new SgEmailAlreadySignedUpCompletellyException(dto.getEmail());
+            }
         }
-        Account user = mapper.map(dto, Account.class);
-        user.setEmailVerified(Boolean.FALSE);
-        user.setRoles(Arrays.asList(roles));
-        accountsRepository.save(user);
+        account = mapper.map(dto, Account.class);
+        account.setEmailVerified(Boolean.FALSE);
+        account.setRoles(Arrays.asList(roles));
+        accountsRepository.save(account);
     }
     
     public Long getAccountIdByRegistrationEmail(final String email) {

@@ -8,8 +8,10 @@ package com.sg.domain.service;
 import com.sg.constants.Roles;
 import com.sg.constants.TokenExpirationIntervals;
 import com.sg.constants.TokenExpirationType;
+import com.sg.dto.AccountDto;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.joda.time.Instant;
 
@@ -19,20 +21,19 @@ import org.joda.time.Instant;
  */
 public class AuthToken {
 
-    //TODO: add expiration
+    //Need public constructor for JSON serialization
     public AuthToken() {
     }
 
     private long expirationMillis;
 
-    public AuthToken(Long accountId, List<String> roles, TokenExpirationType expirationType) {
-        this.accountId = accountId;
+    public AuthToken(AccountDto dto, TokenExpirationType expirationType) {
+        this.accountId = dto.getId();
         List<String> authorities = new ArrayList<String>();
-        for (String r : roles) {
+        for (String r : dto.getRoles()) {
             authorities.add(Roles.ROLE_AUTHORITY_PREFIX + r);
         }
         setAuthorities(authorities);
-
         Instant now = Instant.now();
         expirationMillis = now.getMillis();
         switch (expirationType) {
@@ -102,5 +103,22 @@ public class AuthToken {
      */
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        AuthToken other = (AuthToken) obj;
+        return new EqualsBuilder().
+                append(this.accountId, other.accountId).
+                append(this.authorities, other.authorities).
+                append(this.expirationMillis, other.expirationMillis).
+                isEquals();
     }
 }

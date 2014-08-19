@@ -10,10 +10,10 @@ package com.sg.domain.service.exception;
  *
  * @author tarasev
  */
-public class SgSignupEmailAlreadyRegisteredException extends SgServiceLayerRuntimeException {
-    public SgSignupEmailAlreadyRegisteredException(String email)
+public class SgSignupForRegisteredButNonVerifiedEmailException extends SgServiceLayerRuntimeException {
+    public SgSignupForRegisteredButNonVerifiedEmailException(String email)
     {
-        super("Email already registered: " + email);
+        super("Email already signed up but not verified: " + email);
     }
     
 }

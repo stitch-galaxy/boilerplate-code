@@ -20,7 +20,8 @@ import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
-import com.sg.domain.service.exception.SgSignupEmailAlreadyRegisteredException;
+import com.sg.domain.service.exception.SgEmailAlreadySignedUpCompletellyException;
+import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.domain.spring.configuration.JpaContext;
@@ -316,9 +317,18 @@ public class JpaServiceTest {
         
         try{
             service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupEmailAlreadyRegisteredException.class.getName());
+            Assert.fail("Expected " + SgSignupForRegisteredButNonVerifiedEmailException.class.getName());
         }
-        catch(SgSignupEmailAlreadyRegisteredException e){
+        catch(SgSignupForRegisteredButNonVerifiedEmailException e){
+        }
+        
+        service.completeSignup(accountId, completeSignupDto);
+        
+        try{
+            service.signupUser(signupDto);
+            Assert.fail("Expected " + SgEmailAlreadySignedUpCompletellyException.class.getName());
+        }
+        catch(SgEmailAlreadySignedUpCompletellyException e){
         }
     }
     
@@ -340,9 +350,18 @@ public class JpaServiceTest {
         
         try{
             service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupEmailAlreadyRegisteredException.class.getName());
+            Assert.fail("Expected " + SgSignupForRegisteredButNonVerifiedEmailException.class.getName());
         }
-        catch(SgSignupEmailAlreadyRegisteredException e){
+        catch(SgSignupForRegisteredButNonVerifiedEmailException e){
+        }
+        
+        service.completeSignup(accountId, completeSignupDto);
+        
+        try{
+            service.signupUser(signupDto);
+            Assert.fail("Expected " + SgEmailAlreadySignedUpCompletellyException.class.getName());
+        }
+        catch(SgEmailAlreadySignedUpCompletellyException e){
         }
     }
     

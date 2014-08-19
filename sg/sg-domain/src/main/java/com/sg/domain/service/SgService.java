@@ -12,7 +12,8 @@ import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
-import com.sg.domain.service.exception.SgSignupEmailAlreadyRegisteredException;
+import com.sg.domain.service.exception.SgEmailAlreadySignedUpCompletellyException;
+import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.CanvasDto;
@@ -43,8 +44,8 @@ public interface SgService {
     public void update(CanvasUpdateDto dto) throws SgCanvasNotFoundException, SgCanvasAlreadyExistsException;
     public List<CanvasDto> listCanvases();   
    
-    public void signupUser(SignupDto dto) throws SgSignupEmailAlreadyRegisteredException;
-    public void signupAdmin(SignupDto dto) throws SgSignupEmailAlreadyRegisteredException;
+    public void signupUser(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgEmailAlreadySignedUpCompletellyException;
+    public void signupAdmin(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgEmailAlreadySignedUpCompletellyException;
     
     public Long getAccountIdByRegistrationEmail(String email) throws SgAccountNotFoundException;
     public void completeSignup(Long accountId, CompleteSignupDto dto) throws SgAccountNotFoundException, SgSignupAlreadyCompletedException;

@@ -32,7 +32,8 @@ import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCryptoException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
-import com.sg.domain.service.exception.SgSignupEmailAlreadyRegisteredException;
+import com.sg.domain.service.exception.SgEmailAlreadySignedUpCompletellyException;
+import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import java.io.IOException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -57,29 +58,23 @@ public class SigninSignupController {
     SingupAttempthResultDto signupUser(@RequestBody SignupDto dto) throws SgCryptoException {
         SingupAttempthResultDto result = new SingupAttempthResultDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
-        AccountDto accountDto;
-        try{
+        try {
             service.signupUser(dto);
-            Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
-            accountDto = service.getAccountInfo(accountId);
+            
+        } catch (SgEmailAlreadySignedUpCompletellyException e) {
+            result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
+            return result;
         }
-        catch(SgSignupEmailAlreadyRegisteredException e){
-            Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
-            accountDto = service.getAccountInfo(accountId);
-            if (accountDto.getEmailVerified() == Boolean.TRUE)
-            {
-                result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
-                return result;
-            }
-            else
-            {
-                result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
-            }
+        catch (SgSignupForRegisteredButNonVerifiedEmailException e)
+        {
+            result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
-        AuthToken authToken = new AuthToken(accountDto.getId(), accountDto.getRoles(), TokenExpirationType.NEVER_EXPIRES);
+        Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
+        AccountDto accountDto = service.getAccountInfo(accountId);
+        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN);
         String token = security.getTokenString(authToken);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
-        
+
         return result;
     }
 
@@ -88,29 +83,23 @@ public class SigninSignupController {
     SingupAttempthResultDto signupAdmin(@RequestBody SignupDto dto) throws IOException, SgCryptoException {
         SingupAttempthResultDto result = new SingupAttempthResultDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
-        AccountDto accountDto;
-        try{
+        try {
             service.signupAdmin(dto);
-            Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
-            accountDto = service.getAccountInfo(accountId);
+            
+        } catch (SgEmailAlreadySignedUpCompletellyException e) {
+            result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
+            return result;
         }
-        catch(SgSignupEmailAlreadyRegisteredException e){
-            Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
-            accountDto = service.getAccountInfo(accountId);
-            if (accountDto.getEmailVerified() == Boolean.TRUE)
-            {
-                result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
-                return result;
-            }
-            else
-            {
-                result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
-            }
+        catch (SgSignupForRegisteredButNonVerifiedEmailException e)
+        {
+            result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
-        AuthToken authToken = new AuthToken(accountDto.getId(), accountDto.getRoles(), TokenExpirationType.NEVER_EXPIRES);
+        Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
+        AccountDto accountDto = service.getAccountInfo(accountId);
+        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN);
         String token = security.getTokenString(authToken);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
-        
+
         return result;
     }
 
@@ -126,8 +115,7 @@ public class SigninSignupController {
         } catch (SgAccountNotFoundException e) {
             attemptResult.setStatus(CompleteSignupStatus.STATUS_ACCOUNT_NOT_FOUND);
             return attemptResult;
-        }
-        catch (SgSignupAlreadyCompletedException ex) {
+        } catch (SgSignupAlreadyCompletedException ex) {
             attemptResult.setStatus(CompleteSignupStatus.STATUS_ALREADY_COMPLETED);
             return attemptResult;
         }
@@ -135,29 +123,23 @@ public class SigninSignupController {
         attemptResult.setStatus(CompleteSignupStatus.STATUS_SUCCESS);
         return attemptResult;
     }
-    
+
     @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
     public @ResponseBody
     SinginAttempthResultDto signin(@RequestBody SigninDto dto) throws IOException {
         SinginAttempthResultDto result = new SinginAttempthResultDto();
-        
-        try{
+
+        try {
             service.signIn(dto);
-        }
-        catch(SgAccountNotFoundException e)
-        {
+        } catch (SgAccountNotFoundException e) {
             result.setStatus(SigninStatus.STATUS_WRONG_PASSWORD);
-        }
-        catch(SgInvalidPasswordException e)
-        {
+        } catch (SgInvalidPasswordException e) {
             result.setStatus(SigninStatus.STATUS_WRONG_PASSWORD);
-        }
-        catch(SgEmailNonVerifiedException e)
-        {
+        } catch (SgEmailNonVerifiedException e) {
             result.setStatus(SigninStatus.STATUS_EMAIL_NOT_VERIFIED);
         }
         result.setStatus(SigninStatus.STATUS_SUCCESS);
-        
+
         return result;
     }
 

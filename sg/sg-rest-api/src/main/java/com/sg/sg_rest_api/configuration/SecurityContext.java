@@ -12,13 +12,10 @@ package com.sg.sg_rest_api.configuration;
 import com.sg.constants.RequestPath;
 import com.sg.sg_rest_api.security.AuthenticationTokenProcessingFilter;
 import com.sg.constants.Roles;
-import com.sg.domain.service.SgCryptoServiceImpl;
 import com.sg.sg_rest_api.security.UnauthorizedEntryPoint;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
