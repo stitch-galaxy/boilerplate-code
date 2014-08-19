@@ -355,7 +355,7 @@ public class SigninSignupControllerTest {
                 return false;
             }
             
-            if (!userId.equals(token.getUserId()))
+            if (!userId.equals(token.getAccountId()))
             {
                 reason = "Non expected userId";
                 return false;

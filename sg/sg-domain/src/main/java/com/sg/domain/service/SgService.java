@@ -9,6 +9,8 @@ package com.sg.domain.service;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
+import com.sg.domain.service.exception.SgEmailNonVerifiedException;
+import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupEmailAlreadyRegisteredException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
@@ -21,6 +23,7 @@ import com.sg.dto.ThreadRefDto;
 import com.sg.dto.ThreadUpdateDto;
 import com.sg.dto.CompleteSignupDto;
 import com.sg.dto.AccountDto;
+import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
 import java.util.List;
 
@@ -47,4 +50,6 @@ public interface SgService {
     public void completeSignup(Long accountId, CompleteSignupDto dto) throws SgAccountNotFoundException, SgSignupAlreadyCompletedException;
     
     public AccountDto getAccountInfo(Long accountId) throws SgAccountNotFoundException;
+    
+    public void signIn(SigninDto dto) throws SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;
 }

@@ -51,7 +51,7 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
                     authorities.add(new SimpleGrantedAuthority(a));
                 }
                 UsernamePasswordAuthenticationToken authentication
-                        = new UsernamePasswordAuthenticationToken(null, authToken.getUserId(), authorities);
+                        = new UsernamePasswordAuthenticationToken(null, authToken.getAccountId(), authorities);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {

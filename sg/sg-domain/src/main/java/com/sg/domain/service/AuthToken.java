@@ -25,8 +25,8 @@ public class AuthToken {
 
     private long expirationMillis;
 
-    public AuthToken(Long userId, List<String> roles, TokenExpirationType expirationType) {
-        this.userId = userId;
+    public AuthToken(Long accountId, List<String> roles, TokenExpirationType expirationType) {
+        this.accountId = accountId;
         List<String> authorities = new ArrayList<String>();
         for (String r : roles) {
             authorities.add(Roles.ROLE_AUTHORITY_PREFIX + r);
@@ -48,7 +48,7 @@ public class AuthToken {
         }
     }
 
-    private Long userId;
+    private Long accountId;
     private List<String> authorities;
 
     /**
@@ -91,16 +91,16 @@ public class AuthToken {
     }
 
     /**
-     * @return the userId
+     * @return the accountId
      */
-    public Long getUserId() {
-        return userId;
+    public Long getAccountId() {
+        return accountId;
     }
 
     /**
-     * @param userId the userId to set
+     * @param accountId the accountId to set
      */
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 }

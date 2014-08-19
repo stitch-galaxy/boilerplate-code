@@ -21,6 +21,7 @@ public class AccountDto {
     private String userFirstName;
     private String userLastName;
     private LocalDate userBirthDate;
+    private Boolean emailVerified;
 
     /**
      * @return the email
@@ -67,6 +68,7 @@ public class AccountDto {
                 append(this.userFirstName, other.userFirstName).
                 append(this.userLastName, other.userLastName).
                 append(this.userBirthDate, other.userBirthDate).
+                append(this.getEmailVerified(), other.getEmailVerified()).
                 isEquals();
     }
 
@@ -124,5 +126,19 @@ public class AccountDto {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the emailVerified
+     */
+    public Boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    /**
+     * @param emailVerified the emailVerified to set
+     */
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 }

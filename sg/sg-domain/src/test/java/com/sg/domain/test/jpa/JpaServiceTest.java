@@ -17,6 +17,8 @@ import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
+import com.sg.domain.service.exception.SgEmailNonVerifiedException;
+import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupEmailAlreadyRegisteredException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
@@ -27,6 +29,7 @@ import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.domain.spring.configuration.ValidatorContext;
 import com.sg.dto.AccountDto;
 import com.sg.dto.CompleteSignupDto;
+import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -73,8 +76,11 @@ public class JpaServiceTest {
     private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
     private static final String USER_EMAIL = "test@example.com";
     private static final String USER_PASSWORD = "secret";
+    private static final String USER_INCORRECT_PASSWORD = "bad password";
 
     private static final SignupDto signupDto;
+    
+    private static final SigninDto signinDto;
 
     private static final CompleteSignupDto completeSignupDto;
 
@@ -105,6 +111,10 @@ public class JpaServiceTest {
         signupDto.setUserBirthDate(USER_BIRTH_DATE);
         signupDto.setUserFirstName(USER_FIRST_NAME);
         signupDto.setUserLastName(USER_LAST_NAME);
+        
+        signinDto = new SigninDto();
+        signinDto.setPassword(USER_PASSWORD);
+        signinDto.setEmail(USER_EMAIL);
 
         completeSignupDto = new CompleteSignupDto();
         completeSignupDto.setPassword(USER_PASSWORD);
@@ -298,6 +308,7 @@ public class JpaServiceTest {
         Assert.assertEquals(signupDto.getUserBirthDate(), accountDto.getUserBirthDate());
         Assert.assertEquals(signupDto.getUserFirstName(), accountDto.getUserFirstName());
         Assert.assertEquals(signupDto.getUserLastName(), accountDto.getUserLastName());
+        Assert.assertEquals(Boolean.FALSE, accountDto.getEmailVerified());
         
         Assert.assertTrue(accountDto.getRoles().size() == 2);
         Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
@@ -322,6 +333,7 @@ public class JpaServiceTest {
         Assert.assertEquals(signupDto.getUserBirthDate(), accountDto.getUserBirthDate());
         Assert.assertEquals(signupDto.getUserFirstName(), accountDto.getUserFirstName());
         Assert.assertEquals(signupDto.getUserLastName(), accountDto.getUserLastName());
+        Assert.assertEquals(Boolean.FALSE, accountDto.getEmailVerified());
         
         Assert.assertTrue(accountDto.getRoles().size() == 1);
         Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
@@ -357,6 +369,42 @@ public class JpaServiceTest {
         }
         catch(SgSignupAlreadyCompletedException e) {
         }
+    }
+    
+    @Test
+    public void testSignin()
+    {
+        try{
+            service.signIn(signinDto);
+            Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
+        }
+        catch(SgAccountNotFoundException e)
+        {}
+        
+        service.signupUser(signupDto);
+        
+        try{
+            service.signIn(signinDto);
+            Assert.fail("Expected " + SgEmailNonVerifiedException.class.getName());
+        }
+        catch(SgEmailNonVerifiedException e)
+        {}
+        
+        Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
+        service.completeSignup(accountId, completeSignupDto);
+        
+        service.signIn(signinDto);
+        
+        SigninDto invalidSignInDto = new SigninDto();
+        invalidSignInDto.setEmail(signinDto.getEmail());
+        invalidSignInDto.setPassword(USER_INCORRECT_PASSWORD);
+        
+        try{
+            service.signIn(invalidSignInDto);
+            Assert.fail("Expected " + SgInvalidPasswordException.class.getName());
+        }
+        catch(SgInvalidPasswordException e)
+        {}
     }
 
     @After

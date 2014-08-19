@@ -27,11 +27,14 @@ import com.sg.domain.entities.jpa.AccountsRepository;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
+import com.sg.domain.service.exception.SgEmailNonVerifiedException;
+import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupEmailAlreadyRegisteredException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.CompleteSignupDto;
+import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -363,6 +366,35 @@ public class JpaServiceImpl implements SgService {
             throw new SgSignupAlreadyCompletedException();
         }
         account.setEmailVerified(Boolean.TRUE);
+        account.setPassword(dto.getPassword());
         accountsRepository.save(account);
+    }
+    
+    public void signIn(final SigninDto dto) {
+    transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    signInImpl(dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    public void signInImpl(SigninDto dto) {
+        Account account = accountsRepository.findByEmail(dto.getEmail());
+        if (account == null) {
+            throw new SgAccountNotFoundException(dto.getEmail());
+        }
+        if (account.getEmailVerified() == Boolean.FALSE)
+        {
+            throw new SgEmailNonVerifiedException(dto.getEmail());
+        }
+        if (!dto.getPassword().equals(account.getPassword())) {
+            throw new SgInvalidPasswordException();
+        }
     }
 }
