@@ -11,6 +11,12 @@ package com.sg.domain.service.exception;
  * @author tarasev
  */
 public class SgAccountNotFoundException extends SgServiceLayerRuntimeException {
+    
+    public SgAccountNotFoundException(String email)
+    {
+        super("Account for " + email + " registration email not found.");
+    }
+    
     public SgAccountNotFoundException(long accountId)
     {
         super("Account " + accountId + " not found.");

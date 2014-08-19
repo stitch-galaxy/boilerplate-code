@@ -1,8 +1,9 @@
 package com.sg.sg_rest_api.test.configuration;
 
 import com.sg.domain.service.SgService;
-import com.sg.sg_rest_api.mail.MailService;
+import com.sg.domain.service.SgMailService;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +20,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MailMockContext {
     @Bean
-    public MailService mailService() {
-        return Mockito.mock(MailService.class);
+    @Qualifier("sgMailService")
+    public SgMailService sgMailService() {
+        return Mockito.mock(SgMailService.class);
     }
 }

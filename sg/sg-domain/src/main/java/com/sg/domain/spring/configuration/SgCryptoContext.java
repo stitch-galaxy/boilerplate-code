@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.sg_rest_api.configuration;
+package com.sg.domain.spring.configuration;
 
-import com.sg.sg_rest_api.security.Security;
+import com.sg.domain.service.SgCryptoService;
+import com.sg.domain.service.SgCryptoServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -17,7 +18,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  */
 @Configuration
 @PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment}/security.properties")
-public class CryptographyContext {
+public class SgCryptoContext {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
@@ -27,7 +28,7 @@ public class CryptographyContext {
     }
 
     @Bean
-    public Security security() {
-        return new Security();
+    public SgCryptoService sgCryptoService() {
+        return new SgCryptoServiceImpl();
     }
 }

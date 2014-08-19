@@ -6,10 +6,11 @@
 
 package com.sg.sg_rest_api.test.configuration;
 
+import com.sg.domain.test.configuration.MailMockContext;
 import com.sg.sg_rest_api.test.configuration.ServiceMockContext;
 import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.domain.spring.configuration.ValidatorContext;
-import com.sg.sg_rest_api.configuration.CryptographyContext;
+import com.sg.domain.spring.configuration.SgCryptoContext;
 import com.sg.sg_rest_api.configuration.SecurityContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -22,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 @EnableWebMvc
-@Import({ValidatorContext.class, ServiceMockContext.class, CryptographyContext.class, MailMockContext.class})
+@Import({ValidatorContext.class, ServiceMockContext.class, SgCryptoContext.class, MailMockContext.class})
 public class WebApplicationUnitTestContext extends WebMvcConfigurerAdapter {
     
 }

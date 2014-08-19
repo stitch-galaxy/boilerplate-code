@@ -54,7 +54,6 @@
             <version>${appengine.target.version}</version>
             <scope>test</scope>
         </dependency>
-
         <!--project dependencies-->
         <dependency>
             <groupId>com.sg</groupId>
@@ -91,33 +90,7 @@
             <artifactId>spring-security-config</artifactId>           
             <version>${spring-security-version}</version> 
         </dependency>
-        <!--Encryption-->
-        <dependency>
-            <groupId>org.jasypt</groupId>
-            <artifactId>jasypt</artifactId>
-            <version>${jasypt-version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <!--JSON serializtion-->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>${jackson-mapper-asl-version}</version>
-        </dependency>
-
         <!-- test dependencies -->
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>${hamcrest-all-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito-core-version}</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

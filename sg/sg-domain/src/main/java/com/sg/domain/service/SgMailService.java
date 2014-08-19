@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sg.domain.service;
 
 /**
  *
  * @author tarasev
  */
-public interface SomeSuperMethod {
+public interface SgMailService {
 
-    public void execute(Object ... arguments);
+    public void sendEmailVerificationEmail(String token, String email);
 }

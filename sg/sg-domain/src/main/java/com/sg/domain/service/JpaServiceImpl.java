@@ -5,6 +5,7 @@
  */
 package com.sg.domain.service;
 
+import com.sg.constants.Roles;
 import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
@@ -27,6 +28,7 @@ import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
+import com.sg.domain.service.exception.SgSignupEmailAlreadyRegisteredException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.CompleteSignupDto;
@@ -49,24 +51,24 @@ import org.springframework.validation.Validator;
 public class JpaServiceImpl implements SgService {
 
     @Resource(name = "productRepository")
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Resource(name = "threadsRepository")
-    ThreadsRepository threadsRepository;
+    private ThreadsRepository threadsRepository;
 
     @Resource(name = "canvasesRepository")
-    CanvasesRepository canvasesRepository;
+    private CanvasesRepository canvasesRepository;
 
     @Resource(name = "accountsRepository")
-    AccountsRepository accountsRepository;
+    private AccountsRepository accountsRepository;
 
     @Resource(name = "mapper")
-    MapperFacade mapper;
+    private MapperFacade mapper;
 
     @Resource(name = "transactionTemplate")
     private TransactionTemplate transactionTemplate;
 
-    @Resource(name = "validator")
+    @Resource
     private Validator validator;
 
     public void delete(final ThreadRefDto dto) {
@@ -263,11 +265,19 @@ public class JpaServiceImpl implements SgService {
         return result;
     }
 
-    public AccountDto getUserByEmail(final String email) {
-        return transactionTemplate.execute(new TransactionCallback<AccountDto>() {
-            public AccountDto doInTransaction(TransactionStatus status) {
+    public void signupUser(final SignupDto dto) {
+        signup(dto, Roles.ROLE_USER);
+    }
+
+    public void signupAdmin(final SignupDto dto) {
+        signup(dto, Roles.ROLE_ADMIN, Roles.ROLE_USER);
+    }
+
+    private void signup(final SignupDto dto, final String... roles) {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
-                    return getUserByEmailImpl(email);
+                    signupImpl(dto, roles);
                 } catch (SgServiceLayerRuntimeException e) {
                     throw e;
                 } catch (Exception e) {
@@ -277,30 +287,57 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    public AccountDto getUserByEmailImpl(String email) {
-        Account user = accountsRepository.findByEmail(email);
-        return mapper.map(user, AccountDto.class);
-    }
-
-    public Long signup(final SignupDto dto, final String... roles) {
-        return transactionTemplate.execute(new TransactionCallback<Long>() {
-            public Long doInTransaction(TransactionStatus status) {
-                try {
-                    return signupImpl(dto, roles);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    public Long signupImpl(SignupDto dto, String... roles) {
+    public void signupImpl(SignupDto dto, String... roles) {
+        if (accountsRepository.findByEmail(dto.getEmail()) != null) {
+            throw new SgSignupEmailAlreadyRegisteredException(dto.getEmail());
+        }
         Account user = mapper.map(dto, Account.class);
         user.setEmailVerified(Boolean.FALSE);
         user.setRoles(Arrays.asList(roles));
-        return accountsRepository.save(user).getId();
+        accountsRepository.save(user);
+    }
+    
+    public Long getAccountIdByRegistrationEmail(final String email) {
+        return transactionTemplate.execute(new TransactionCallback<Long>() {
+            public Long doInTransaction(TransactionStatus status) {
+                try {
+                    return getAccountIdByRegistrationEmailImpl(email);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    public Long getAccountIdByRegistrationEmailImpl(String email)
+    {
+        Account account = accountsRepository.findByEmail(email);
+        if (account == null)
+            throw new SgAccountNotFoundException(email);
+        return account.getId();
+    }
+
+    public AccountDto getAccountInfo(final Long accountId) {
+        return transactionTemplate.execute(new TransactionCallback<AccountDto>() {
+            public AccountDto doInTransaction(TransactionStatus status) {
+                try {
+                    return getAccountInfoImpl(accountId);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+
+    public AccountDto getAccountInfoImpl(Long accountId) {
+        Account account = accountsRepository.findOne(accountId);
+        if (account == null)
+            throw new SgAccountNotFoundException(accountId);
+        return mapper.map(account, AccountDto.class);
     }
 
     public void completeSignup(final Long userId, final CompleteSignupDto dto) {
@@ -328,5 +365,4 @@ public class JpaServiceImpl implements SgService {
         account.setEmailVerified(Boolean.TRUE);
         accountsRepository.save(account);
     }
-
 }

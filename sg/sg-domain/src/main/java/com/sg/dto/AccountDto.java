@@ -17,9 +17,7 @@ import org.joda.time.LocalDate;
 public class AccountDto {
     private Long id;
     private String email;
-    private String password;
     private List<String> roles;
-    private Boolean emailVerified;
     private String userFirstName;
     private String userLastName;
     private LocalDate userBirthDate;
@@ -39,20 +37,6 @@ public class AccountDto {
     }
 
     /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
      * @return the roles
      */
     public List<String> getRoles() {
@@ -64,20 +48,6 @@ public class AccountDto {
      */
     public void setRoles(List<String> roles) {
         this.roles = roles;
-    }
-
-    /**
-     * @return the emailVerified
-     */
-    public Boolean getEmailVerified() {
-        return emailVerified;
-    }
-
-    /**
-     * @param emailVerified the emailVerified to set
-     */
-    public void setEmailVerified(Boolean emailVerified) {
-        this.emailVerified = emailVerified;
     }
     
     @Override
@@ -93,8 +63,6 @@ public class AccountDto {
         return new EqualsBuilder().
                 append(this.getId(), other.getId()).
                 append(this.email, other.email).
-                append(this.password, other.password).
-                append(this.emailVerified, other.emailVerified).
                 append(this.roles, other.roles).
                 append(this.userFirstName, other.userFirstName).
                 append(this.userLastName, other.userLastName).

@@ -42,6 +42,7 @@
                 <commons-lang3-version>3.3.2</commons-lang3-version>
                 <hibernate-validator-version>5.1.2.Final</hibernate-validator-version>
                 <javax.el-api-version>3.0.0</javax.el-api-version>
+                <javax.mail-api-version>1.5.2</javax.mail-api-version>
   </properties>
 
 	<dependencyManagement>

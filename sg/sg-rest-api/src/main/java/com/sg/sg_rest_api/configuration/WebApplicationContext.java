@@ -6,6 +6,8 @@
 
 package com.sg.sg_rest_api.configuration;
 
+import com.sg.domain.spring.configuration.SgCryptoContext;
+import com.sg.domain.spring.configuration.SgMailServiceContext;
 import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
@@ -26,6 +28,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //http://www.robinhowlett.com/blog/2013/02/13/spring-app-migration-from-xml-to-java-based-config/
 @Configuration
 @EnableWebMvc
-@Import({ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class, CryptographyContext.class, SecurityContext.class, MailContext.class})
+@Import({ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class, SgCryptoContext.class, SecurityContext.class, SgMailServiceContext.class})
 public class WebApplicationContext extends WebMvcConfigurerAdapter {
 }

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.sg_rest_api.mail;
+package com.sg.domain.service;
 
 import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import java.util.Properties;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @author tarasev
  */
 @Service
-public class GaeMailServiceImpl implements MailService {
+public class GaeMailServiceImpl implements SgMailService {
 
     public void sendEmailVerificationEmail(String token, String email) {
         try

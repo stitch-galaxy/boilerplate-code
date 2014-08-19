@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.sg_rest_api.security;
+package com.sg.domain.service;
 
 import com.sg.constants.Roles;
 import com.sg.constants.TokenExpirationIntervals;
 import com.sg.constants.TokenExpirationType;
-import com.sg.dto.AccountDto;
 import java.util.ArrayList;
 import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnore;

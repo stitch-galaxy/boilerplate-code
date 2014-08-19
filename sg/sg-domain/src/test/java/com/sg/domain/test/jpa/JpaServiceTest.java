@@ -18,6 +18,7 @@ import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
+import com.sg.domain.service.exception.SgSignupEmailAlreadyRegisteredException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.domain.spring.configuration.JpaContext;
@@ -32,13 +33,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.sql.DataSource;
 import junit.framework.Assert;
 import org.joda.time.LocalDate;
 import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -263,38 +262,100 @@ public class JpaServiceTest {
         
         Assert.assertEquals(0, service.listThreads().size());
     }
-
-    @Test
-    public void testSignup() {
-        Long id = service.signup(signupDto, Roles.ROLE_ADMIN, Roles.ROLE_USER);
-
-        AccountDto found = service.getUserByEmail(USER_EMAIL);
-
-        AccountDto expected = new AccountDto();
-        expected.setId(id);
-        expected.setEmail(USER_EMAIL);
-        expected.setEmailVerified(Boolean.FALSE);
-        expected.setRoles(Arrays.asList(new String[]{Roles.ROLE_ADMIN, Roles.ROLE_USER}));
-        expected.setUserBirthDate(USER_BIRTH_DATE);
-        expected.setUserFirstName(USER_FIRST_NAME);
-        expected.setUserLastName(USER_LAST_NAME);
-
-        Assert.assertEquals(expected, found);
-    }
-
-    @Test
-    public void testCompleteSignup() {
-        Long accountId = service.signup(signupDto, Roles.ROLE_ADMIN, Roles.ROLE_USER);
-        try {
-            service.completeSignup(accountId + 1, completeSignupDto);
-            Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
-        } catch (SgAccountNotFoundException e) {
+    
+    @Test 
+    public void testGetAccountIdByRegistrationEmailThrowsExceptionIfAccountNotFound()
+    {
+        try
+        {
+            service.getAccountIdByRegistrationEmail(signupDto.getEmail());
+            Assert.fail("Expected  " + SgAccountNotFoundException.class.getName());
         }
+        catch(SgAccountNotFoundException e){
+        }
+    }
+    
+    @Test 
+    public void testGetAccountInfoThrowsExceptionIfAccountNotFound()
+    {
+        try
+        {
+            service.getAccountInfo(1L);
+            Assert.fail("Expected  " + SgAccountNotFoundException.class.getName());
+        }
+        catch(SgAccountNotFoundException e){
+        }
+    }
+    
+    @Test
+    public void testSignupAdmin() {
+        service.signupAdmin(signupDto);
+        
+        Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
+        
+        AccountDto accountDto = service.getAccountInfo(accountId);
+        Assert.assertEquals(signupDto.getEmail(), accountDto.getEmail());
+        Assert.assertEquals(signupDto.getUserBirthDate(), accountDto.getUserBirthDate());
+        Assert.assertEquals(signupDto.getUserFirstName(), accountDto.getUserFirstName());
+        Assert.assertEquals(signupDto.getUserLastName(), accountDto.getUserLastName());
+        
+        Assert.assertTrue(accountDto.getRoles().size() == 2);
+        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
+        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_ADMIN));
+        
+        try{
+            service.signupUser(signupDto);
+            Assert.fail("Expected " + SgSignupEmailAlreadyRegisteredException.class.getName());
+        }
+        catch(SgSignupEmailAlreadyRegisteredException e){
+        }
+    }
+    
+    @Test
+    public void testSignupUser() {
+        service.signupUser(signupDto);
+        
+        Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
+        
+        AccountDto accountDto = service.getAccountInfo(accountId);
+        Assert.assertEquals(signupDto.getEmail(), accountDto.getEmail());
+        Assert.assertEquals(signupDto.getUserBirthDate(), accountDto.getUserBirthDate());
+        Assert.assertEquals(signupDto.getUserFirstName(), accountDto.getUserFirstName());
+        Assert.assertEquals(signupDto.getUserLastName(), accountDto.getUserLastName());
+        
+        Assert.assertTrue(accountDto.getRoles().size() == 1);
+        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
+        
+        try{
+            service.signupUser(signupDto);
+            Assert.fail("Expected " + SgSignupEmailAlreadyRegisteredException.class.getName());
+        }
+        catch(SgSignupEmailAlreadyRegisteredException e){
+        }
+    }
+    
+    @Test
+    public void testCompleteSignup() 
+    {
+        try{
+            service.completeSignup(1L, completeSignupDto);
+            Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
+        }
+        catch(SgAccountNotFoundException e) {
+        }
+        
+        service.signupUser(signupDto);
+        
+        Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
+        
         service.completeSignup(accountId, completeSignupDto);
-        try {
+        
+        try
+        {
             service.completeSignup(accountId, completeSignupDto);
             Assert.fail("Expected " + SgSignupAlreadyCompletedException.class.getName());
-        } catch (SgSignupAlreadyCompletedException e) {
+        }
+        catch(SgSignupAlreadyCompletedException e) {
         }
     }
 

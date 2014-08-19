@@ -20,7 +20,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 public class ValidatorContext {
  
     @Bean
-    @Qualifier("validator")
     public Validator validator() {
         return new LocalValidatorFactoryBean();
     }

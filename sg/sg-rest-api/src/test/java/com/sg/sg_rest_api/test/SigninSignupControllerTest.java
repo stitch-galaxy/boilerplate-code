@@ -16,10 +16,10 @@ import com.sg.constants.SignupStatus;
 import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
 import com.sg.dto.AccountDto;
-import com.sg.sg_rest_api.mail.MailService;
-import com.sg.sg_rest_api.security.AuthToken;
-import com.sg.sg_rest_api.security.Security;
-import com.sg.sg_rest_api.security.SgSecurityException;
+import com.sg.domain.service.SgMailService;
+import com.sg.domain.service.AuthToken;
+import com.sg.domain.service.SgCryptoServiceImpl;
+import com.sg.domain.service.exception.SgCryptoException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.Test;
@@ -58,10 +58,10 @@ public class SigninSignupControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    Security security;
+    SgCryptoServiceImpl security;
 
     @Autowired
-    private MailService mailServiceMock;
+    private SgMailService mailServiceMock;
     
     @Autowired
     private SgService serviceMock;
@@ -330,14 +330,14 @@ public class SigninSignupControllerTest {
     
     private static class TokenMatcher extends BaseMatcher<String>
     {
-        private Security security;
+        private SgCryptoServiceImpl security;
         
         private Long userId;
         private List<String> authorities;
         
         private String reason;
         
-        public TokenMatcher(Security security)
+        public TokenMatcher(SgCryptoServiceImpl security)
         {
             this.security = security;
         }
@@ -350,7 +350,7 @@ public class SigninSignupControllerTest {
             AuthToken token;
             try {
                 token = security.getTokenFromString(encryptedToken);
-            } catch (SgSecurityException e) {
+            } catch (SgCryptoException e) {
                 reason = e.getMessage();
                 return false;
             }

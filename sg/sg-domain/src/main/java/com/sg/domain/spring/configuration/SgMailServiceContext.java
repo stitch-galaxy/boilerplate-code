@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 
-package com.sg.sg_rest_api.configuration;
+package com.sg.domain.spring.configuration;
 
-import com.sg.sg_rest_api.mail.GaeMailServiceImpl;
-import com.sg.sg_rest_api.mail.MailService;
+import com.sg.domain.service.GaeMailServiceImpl;
+import com.sg.domain.service.SgMailService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,9 +17,9 @@ import org.springframework.context.annotation.Configuration;
  * @author tarasev
  */
 @Configuration
-public class MailContext {
+public class SgMailServiceContext {
     @Bean
-    public MailService mailService() {
+    public SgMailService sgMailService() {
         return new GaeMailServiceImpl();
     }
 }

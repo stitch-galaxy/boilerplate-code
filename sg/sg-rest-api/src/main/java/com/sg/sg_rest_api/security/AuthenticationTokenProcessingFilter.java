@@ -9,6 +9,8 @@ package com.sg.sg_rest_api.security;
  *
  * @author tarasev
  */
+import com.sg.domain.service.AuthToken;
+import com.sg.domain.service.SgCryptoServiceImpl;
 import com.sg.constants.CustomHttpHeaders;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ import org.springframework.web.filter.GenericFilterBean;
 public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 
     @Autowired
-    Security security;
+    SgCryptoServiceImpl security;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {

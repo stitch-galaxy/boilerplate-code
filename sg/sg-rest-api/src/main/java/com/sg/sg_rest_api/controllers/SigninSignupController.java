@@ -26,9 +26,9 @@ import com.sg.dto.CompleteSignupAttempthResultDto;
 import com.sg.dto.CompleteSignupDto;
 import com.sg.dto.SignupDto;
 import com.sg.dto.SingupAttempthResultDto;
-import com.sg.sg_rest_api.mail.MailService;
-import com.sg.sg_rest_api.security.AuthToken;
-import com.sg.sg_rest_api.security.Security;
+import com.sg.domain.service.SgMailService;
+import com.sg.domain.service.AuthToken;
+import com.sg.domain.service.SgCryptoServiceImpl;
 import java.io.IOException;
 import java.util.Arrays;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,13 +41,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SigninSignupController {
 
     @Autowired
-    MailService mailService;
+    SgMailService mailService;
 
     @Autowired
     SgService service;
 
     @Autowired
-    Security security;
+    SgCryptoServiceImpl security;
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
     public @ResponseBody

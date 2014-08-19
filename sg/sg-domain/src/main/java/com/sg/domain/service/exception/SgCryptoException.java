@@ -4,23 +4,23 @@
  * and open the template in the editor.
  */
 
-package com.sg.sg_rest_api.security;
+package com.sg.domain.service.exception;
 
 /**
  *
  * @author tarasev
  */
-public class SgSecurityException extends Exception {
+public class SgCryptoException extends Exception {
 
-    public SgSecurityException(Throwable cause) {
+    public SgCryptoException(Throwable cause) {
         super(cause);
     }
     
-    public SgSecurityException(String message) {
+    public SgCryptoException(String message) {
         super(message);
     }
     
-    public SgSecurityException(String message, Throwable cause) {
+    public SgCryptoException(String message, Throwable cause) {
         super(message, cause);
     }
 }

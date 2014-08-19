@@ -8,15 +8,11 @@ package com.sg.domain.spring.configuration;
 import com.sg.domain.entities.jpa.CanvasesRepository;
 import com.sg.domain.entities.jpa.ProductRepository;
 import com.sg.domain.entities.jpa.ThreadsRepository;
-import com.sg.domain.service.JpaServiceImpl;
-import com.sg.domain.service.SgService;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -34,7 +30,6 @@ import org.springframework.transaction.support.TransactionTemplate;
  */
 @Configuration
 @EnableJpaRepositories(basePackageClasses = {ThreadsRepository.class, CanvasesRepository.class, ProductRepository.class})
-//@EnableJpaRepositories(basePackages = "com.sg.domain.entities.jpa")
 //GAE do not support @Transactional annotation because where is a class on a call stack which is not in a white list
 //@EnableTransactionManagement
 @PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment:test}/domain.jpa.properties")

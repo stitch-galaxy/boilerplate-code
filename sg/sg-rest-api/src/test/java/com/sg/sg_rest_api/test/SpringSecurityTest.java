@@ -15,8 +15,8 @@ import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
 import com.sg.constants.TokenExpirationType;
 import com.sg.dto.AccountDto;
-import com.sg.sg_rest_api.security.AuthToken;
-import com.sg.sg_rest_api.security.Security;
+import com.sg.domain.service.AuthToken;
+import com.sg.domain.service.SgCryptoServiceImpl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +70,7 @@ public class SpringSecurityTest {
     private SgService serviceMock;
 
     @Autowired
-    Security security;
+    SgCryptoServiceImpl security;
 
     @Resource
     private FilterChainProxy springSecurityFilterChain;
