@@ -57,7 +57,7 @@ public class CanvasDto {
         CanvasDto other = (CanvasDto) obj;
         return new EqualsBuilder().
                 append(this.code, other.code).
-                append(this.stitchesPerInch, other.stitchesPerInch).
-                isEquals();
+                isEquals()
+                && this.stitchesPerInch.compareTo(other.stitchesPerInch) == 0;
     }
 }

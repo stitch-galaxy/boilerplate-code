@@ -15,6 +15,8 @@ import com.sg.dto.ThreadRefDto;
 import com.sg.dto.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
+import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
+import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
@@ -63,7 +65,6 @@ public class JpaServiceTest {
 
     private static final String AIDA_14 = "Aida 14";
     private static final String AIDA_18 = "Aida 18";
-    private static final String AIDA_15 = "Aida 15";
 
     private static final String DMC = "DMC";
     private static final String ANCHOR = "Anchor";
@@ -80,6 +81,9 @@ public class JpaServiceTest {
 
     private static final ThreadDto dmcThreadDto;
     private static final ThreadDto anchorThreadDto;
+    
+    private static final CanvasDto aida14CanvasDto;
+    private static final CanvasDto aida18CanvasDto;
 
     static {
         dmcThreadDto = new ThreadDto();
@@ -87,6 +91,15 @@ public class JpaServiceTest {
 
         anchorThreadDto = new ThreadDto();
         anchorThreadDto.setCode(ANCHOR);
+        
+        aida14CanvasDto = new CanvasDto();
+        aida14CanvasDto.setCode(AIDA_14);
+        aida14CanvasDto.setStitchesPerInch(new BigDecimal(14));
+        
+        aida18CanvasDto = new CanvasDto();
+        aida18CanvasDto.setCode(AIDA_18);
+        aida18CanvasDto.setStitchesPerInch(new BigDecimal(18));
+        
 
         signupDto = new SignupDto();
         signupDto.setEmail(USER_EMAIL);
@@ -97,46 +110,83 @@ public class JpaServiceTest {
         completeSignupDto = new CompleteSignupDto();
         completeSignupDto.setPassword(USER_PASSWORD);
     }
-
-    private void canvasesTest() {
+    
+    @Test
+    public void testCanvasCreate()
+    {
+        service.create(aida14CanvasDto);
+        try {
+            service.create(aida14CanvasDto);
+            Assert.fail("Expected " + SgCanvasAlreadyExistsException.class.getName());
+        } catch (SgCanvasAlreadyExistsException e) {
+        }
+    }
+    
+    @Test
+    public void testCanvasesList() {
+        service.create(aida14CanvasDto);
+        service.create(aida18CanvasDto);
         List<CanvasDto> list = new ArrayList<CanvasDto>();
+        list.add(aida14CanvasDto);
+        list.add(aida18CanvasDto);
+        
+        List<CanvasDto> result = service.listCanvases();
+        Assert.assertEquals(list, result);
+    }
+    
+    @Test
+    public void testCanvasUpdate() {
+        service.create(aida14CanvasDto);
 
-        CanvasDto dto = new CanvasDto();
-        dto.setCode(AIDA_15);
-        dto.setStitchesPerInch(new BigDecimal(15));
-        service.create(dto);
-        list.add(dto);
-
-        dto = new CanvasDto();
-        dto.setCode(AIDA_18);
-        dto.setStitchesPerInch(new BigDecimal(18));
-        service.create(dto);
-        list.add(dto);
-
-        Assert.assertEquals(list, service.listCanvases());
-
+        CanvasRefDto ref = new CanvasRefDto();
+        ref.setCode(AIDA_18);
         CanvasUpdateDto updateDto = new CanvasUpdateDto();
-        CanvasRefDto refDto = new CanvasRefDto();
-        dto = new CanvasDto();
+        updateDto.setRef(ref);
+        updateDto.setDto(aida14CanvasDto);
 
-        refDto.setCode(AIDA_15);
+        try {
+            service.update(updateDto);
+            Assert.fail("Expected " + SgCanvasNotFoundException.class.getName());
+        } catch (SgCanvasNotFoundException e) {
+        }
 
-        dto.setCode(AIDA_14);
-        dto.setStitchesPerInch(new BigDecimal(14));
-
-        updateDto.setDto(dto);
-        updateDto.setRef(refDto);
-
+        ref = new CanvasRefDto();
+        ref.setCode(AIDA_14);
+        updateDto = new CanvasUpdateDto();
+        updateDto.setRef(ref);
+        updateDto.setDto(aida18CanvasDto);
         service.update(updateDto);
-
-        refDto = new CanvasRefDto();
-        refDto.setCode(AIDA_18);
-
-        service.delete(refDto);
-
-        list = new ArrayList<CanvasDto>();
-        list.add(dto);
+        List<CanvasDto> list = new ArrayList<CanvasDto>();
+        list.add(aida18CanvasDto);
         Assert.assertEquals(list, service.listCanvases());
+        service.create(aida14CanvasDto);
+
+        try {
+            service.update(updateDto);
+            Assert.fail("Expected " + SgCanvasAlreadyExistsException.class.getName());
+        } catch (SgCanvasAlreadyExistsException e) {
+        }
+    }
+    
+    @Test
+    public void testCanvasDelete() {
+        service.create(aida14CanvasDto);
+
+        CanvasRefDto ref = new CanvasRefDto();
+        ref.setCode(AIDA_18);
+
+        try {
+            service.delete(ref);
+            Assert.fail("Expected " + SgCanvasNotFoundException.class.getName());
+        } catch (SgCanvasNotFoundException e) {
+        }
+        
+        ref = new CanvasRefDto();
+        ref.setCode(AIDA_14);
+        
+        service.delete(ref);
+        
+        Assert.assertEquals(0, service.listCanvases().size());
     }
 
     @Test
@@ -146,7 +196,6 @@ public class JpaServiceTest {
             service.create(dmcThreadDto);
             Assert.fail("Expected " + SgThreadAlreadyExistsException.class.getName());
         } catch (SgThreadAlreadyExistsException e) {
-            int i = 0;
         }
     }
 

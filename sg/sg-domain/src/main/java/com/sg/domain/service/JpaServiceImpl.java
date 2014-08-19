@@ -24,6 +24,8 @@ import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
 import com.sg.domain.entities.jpa.AccountsRepository;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
+import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
+import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
@@ -180,6 +182,9 @@ public class JpaServiceImpl implements SgService {
     }
 
     private void createCanvasImpl(CanvasDto dto) {
+        if (canvasesRepository.findByCode(dto.getCode()) != null) {
+            throw new SgCanvasAlreadyExistsException(dto.getCode());
+        }
         Canvas canvas = mapper.map(dto, Canvas.class);
         canvasesRepository.save(canvas);
     }
@@ -200,6 +205,9 @@ public class JpaServiceImpl implements SgService {
 
     private void deleteCanvasImpl(CanvasRefDto dto) {
         Canvas canvas = canvasesRepository.findByCode(dto.getCode());
+        if (canvas == null) {
+            throw new SgCanvasNotFoundException(dto.getCode());
+        }
         canvasesRepository.delete(canvas);
     }
 
@@ -219,6 +227,15 @@ public class JpaServiceImpl implements SgService {
 
     private void updateCanvasImpl(CanvasUpdateDto dto) {
         Canvas canvas = canvasesRepository.findByCode(dto.getRef().getCode());
+        if (canvas == null) {
+            throw new SgCanvasNotFoundException(dto.getRef().getCode());
+        }
+        if (dto.getRef().getCode().equals(dto.getDto().getCode())) {
+            return;
+        }
+        if (canvasesRepository.findByCode(dto.getDto().getCode()) != null) {
+            throw new SgCanvasAlreadyExistsException(dto.getDto().getCode());
+        }
         mapper.map(dto.getDto(), canvas);
         canvasesRepository.save(canvas);
     }
