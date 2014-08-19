@@ -10,10 +10,10 @@ package com.sg.domain.service.exception;
  *
  * @author tarasev
  */
-public class SgSignupAlreadyCompletedException extends SgServiceLayerRuntimeException {
-    public SgSignupAlreadyCompletedException()
+public class SgCanvasNotFoundException extends SgServiceLayerRuntimeException {
+    public SgCanvasNotFoundException(String code)
     {
-        super("Signup already complted");
+        super("Canvas " + code + " not found.");
     }
     
 }

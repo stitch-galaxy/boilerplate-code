@@ -7,7 +7,6 @@
 package com.sg.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.joda.time.LocalDate;
 
 /**
  *
@@ -28,8 +27,22 @@ public class CompleteSignupDto {
 
         CompleteSignupDto other = (CompleteSignupDto) obj;
         return new EqualsBuilder().
-                append(this.password, other.password).
+                append(this.getPassword(), other.getPassword()).
                 isEquals();
 
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

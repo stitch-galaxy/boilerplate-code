@@ -23,8 +23,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
 import com.sg.domain.entities.jpa.AccountsRepository;
-import com.sg.domain.service.exception.CheckedExceptionWrapper;
+import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
+import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
+import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.CompleteSignupDto;
 import com.sg.dto.SignupDto;
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.validation.Validator;
 
 /**
  *
@@ -61,11 +64,16 @@ public class JpaServiceImpl implements SgService {
     @Resource(name = "transactionTemplate")
     private TransactionTemplate transactionTemplate;
 
+    @Resource(name = "validator")
+    private Validator validator;
+
     public void delete(final ThreadRefDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
                     deleteThreadImpl(dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
@@ -75,6 +83,9 @@ public class JpaServiceImpl implements SgService {
 
     private void deleteThreadImpl(ThreadRefDto dto) {
         Thread thread = threadsRepository.findByCode(dto.getCode());
+        if (thread == null) {
+            throw new SgThreadNotFoundException(dto.getCode());
+        }
         threadsRepository.delete(thread.getId());
     }
 
@@ -83,6 +94,8 @@ public class JpaServiceImpl implements SgService {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
                     createThreadImpl(dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
@@ -91,6 +104,10 @@ public class JpaServiceImpl implements SgService {
     }
 
     private void createThreadImpl(ThreadDto dto) {
+        if (threadsRepository.findByCode(dto.getCode()) != null) {
+            throw new SgThreadAlreadyExistsException(dto.getCode());
+        }
+
         Thread thread = mapper.map(dto, Thread.class);
         threadsRepository.save(thread);
     }
@@ -100,6 +117,8 @@ public class JpaServiceImpl implements SgService {
             public List<ThreadDto> doInTransaction(TransactionStatus status) {
                 try {
                     return listThreadsImpl();
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
@@ -121,6 +140,8 @@ public class JpaServiceImpl implements SgService {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
                     updateThreadImpl(dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
@@ -130,6 +151,16 @@ public class JpaServiceImpl implements SgService {
 
     private void updateThreadImpl(ThreadUpdateDto dto) {
         Thread thread = threadsRepository.findByCode(dto.getRef().getCode());
+        if (thread == null) {
+            throw new SgThreadNotFoundException(dto.getRef().getCode());
+        }
+        if (dto.getRef().getCode().equals(dto.getDto().getCode())) {
+            return;
+        }
+        if (threadsRepository.findByCode(dto.getDto().getCode()) != null) {
+            throw new SgThreadAlreadyExistsException(dto.getDto().getCode());
+        }
+
         mapper.map(dto.getDto(), thread);
         threadsRepository.save(thread);
     }
@@ -139,6 +170,8 @@ public class JpaServiceImpl implements SgService {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
                     createCanvasImpl(dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
@@ -156,6 +189,8 @@ public class JpaServiceImpl implements SgService {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
                     deleteCanvasImpl(dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
@@ -173,6 +208,8 @@ public class JpaServiceImpl implements SgService {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
                     updateCanvasImpl(dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
@@ -191,6 +228,8 @@ public class JpaServiceImpl implements SgService {
             public List<CanvasDto> doInTransaction(TransactionStatus status) {
                 try {
                     return listCanvasesImpl();
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
@@ -212,6 +251,8 @@ public class JpaServiceImpl implements SgService {
             public AccountDto doInTransaction(TransactionStatus status) {
                 try {
                     return getUserByEmailImpl(email);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
@@ -229,41 +270,13 @@ public class JpaServiceImpl implements SgService {
             public Long doInTransaction(TransactionStatus status) {
                 try {
                     return signupImpl(dto, roles);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
-    }
-
-    public void doSomething(int a) {
-        try {
-            executeInTx(new SomeSuperMethod() {
-
-                public void execute(Object... arguments) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-            }, a);
-        } catch (Exception e) {
-        }
-    }
-
-    public void executeInTx(final SomeSuperMethod method, final Object... args) throws Exception {
-        Object result = transactionTemplate.execute(new TransactionCallback() {
-            public Object doInTransaction(TransactionStatus status) {
-                try {
-                    method.execute(args);
-                    return null;
-                } catch (Exception e) {
-                    status.setRollbackOnly();
-                    return e;
-                }
-            }
-        });
-
-        if (result != null && result instanceof Exception) {
-            throw (Exception) result;
-        }
     }
 
     public Long signupImpl(SignupDto dto, String... roles) {
@@ -278,14 +291,25 @@ public class JpaServiceImpl implements SgService {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
                     completeSignupImpl(userId, dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
-                    throw new CheckedExceptionWrapper(e);
+                    throw new SgServiceLayerRuntimeException(e);
                 }
             }
         });
     }
 
-    public void completeSignupImpl(Long userId, CompleteSignupDto dto) {
+    public void completeSignupImpl(Long accountId, CompleteSignupDto dto) {
+        Account account = accountsRepository.findOne(accountId);
+        if (account == null) {
+            throw new SgAccountNotFoundException(accountId);
+        }
+        if (account.getEmailVerified() == Boolean.TRUE) {
+            throw new SgSignupAlreadyCompletedException();
+        }
+        account.setEmailVerified(Boolean.TRUE);
+        accountsRepository.save(account);
     }
 
 }

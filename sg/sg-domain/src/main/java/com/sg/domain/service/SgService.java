@@ -6,6 +6,11 @@
 
 package com.sg.domain.service;
 
+import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
+import com.sg.domain.service.exception.SgCanvasNotFoundException;
+import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
+import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
+import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
@@ -23,18 +28,18 @@ import java.util.List;
  */
 public interface SgService {
     
-    public void create(ThreadDto dto);
-    public void delete(ThreadRefDto dto);
-    public void update(ThreadUpdateDto dto);
+    public void create(ThreadDto dto) throws SgThreadAlreadyExistsException;
+    public void delete(ThreadRefDto dto) throws SgThreadNotFoundException;
+    public void update(ThreadUpdateDto dto) throws SgThreadNotFoundException, SgThreadAlreadyExistsException;
     public List<ThreadDto> listThreads();   
     
-    public void create(CanvasDto dto);
-    public void delete(CanvasRefDto dto);
-    public void update(CanvasUpdateDto dto);
+    public void create(CanvasDto dto) throws SgCanvasAlreadyExistsException;
+    public void delete(CanvasRefDto dto) throws SgCanvasNotFoundException;
+    public void update(CanvasUpdateDto dto) throws SgCanvasNotFoundException, SgCanvasAlreadyExistsException;
     public List<CanvasDto> listCanvases();   
     
     public AccountDto getUserByEmail(String email);
     public Long signup(SignupDto dto, String ... roles);
     
-    public void completeSignup(Long userId, CompleteSignupDto dto);
+    public void completeSignup(Long accountId, CompleteSignupDto dto) throws SgSignupAlreadyCompletedException;
 }

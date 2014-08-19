@@ -10,10 +10,10 @@ package com.sg.domain.service.exception;
  *
  * @author tarasev
  */
-public class SgSignupAlreadyCompletedException extends SgServiceLayerRuntimeException {
-    public SgSignupAlreadyCompletedException()
+public class SgThreadNotFoundException extends SgServiceLayerRuntimeException {
+    public SgThreadNotFoundException(String code)
     {
-        super("Signup already complted");
+        super("Thread " + code + " not found.");
     }
     
 }

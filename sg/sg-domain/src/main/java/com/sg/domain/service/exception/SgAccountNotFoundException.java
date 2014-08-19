@@ -10,10 +10,10 @@ package com.sg.domain.service.exception;
  *
  * @author tarasev
  */
-public class SgSignupAlreadyCompletedException extends SgServiceLayerRuntimeException {
-    public SgSignupAlreadyCompletedException()
+public class SgAccountNotFoundException extends SgServiceLayerRuntimeException {
+    public SgAccountNotFoundException(long accountId)
     {
-        super("Signup already complted");
+        super("Account " + accountId + " not found.");
     }
     
 }
