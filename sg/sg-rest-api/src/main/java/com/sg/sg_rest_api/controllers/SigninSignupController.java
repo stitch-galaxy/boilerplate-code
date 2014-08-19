@@ -52,31 +52,6 @@ public class SigninSignupController {
     @Autowired
     SgCryptoService security;
 
-    @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
-    public @ResponseBody
-    SinginAttempthResultDto signin(@RequestBody SigninDto dto) throws IOException {
-        SinginAttempthResultDto result = new SinginAttempthResultDto();
-        
-        try{
-            service.signIn(dto);
-        }
-        catch(SgAccountNotFoundException e)
-        {
-            result.setStatus(SigninStatus.STATUS_WRONG_PASSWORD);
-        }
-        catch(SgInvalidPasswordException e)
-        {
-            result.setStatus(SigninStatus.STATUS_WRONG_PASSWORD);
-        }
-        catch(SgEmailNonVerifiedException e)
-        {
-            result.setStatus(SigninStatus.STATUS_EMAIL_NOT_VERIFIED);
-        }
-        result.setStatus(SigninStatus.STATUS_SUCCESS);
-        
-        return result;
-    }
-
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
     public @ResponseBody
     SingupAttempthResultDto signupUser(@RequestBody SignupDto dto) throws SgCryptoException {
@@ -139,7 +114,7 @@ public class SigninSignupController {
         return result;
     }
 
-    @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.GET)
+    @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.POST)
     public @ResponseBody
     CompleteSignupAttempthResultDto completeSignup(@RequestBody CompleteSignupDto dto) {
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -159,6 +134,31 @@ public class SigninSignupController {
 
         attemptResult.setStatus(CompleteSignupStatus.STATUS_SUCCESS);
         return attemptResult;
+    }
+    
+    @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
+    public @ResponseBody
+    SinginAttempthResultDto signin(@RequestBody SigninDto dto) throws IOException {
+        SinginAttempthResultDto result = new SinginAttempthResultDto();
+        
+        try{
+            service.signIn(dto);
+        }
+        catch(SgAccountNotFoundException e)
+        {
+            result.setStatus(SigninStatus.STATUS_WRONG_PASSWORD);
+        }
+        catch(SgInvalidPasswordException e)
+        {
+            result.setStatus(SigninStatus.STATUS_WRONG_PASSWORD);
+        }
+        catch(SgEmailNonVerifiedException e)
+        {
+            result.setStatus(SigninStatus.STATUS_EMAIL_NOT_VERIFIED);
+        }
+        result.setStatus(SigninStatus.STATUS_SUCCESS);
+        
+        return result;
     }
 
 }

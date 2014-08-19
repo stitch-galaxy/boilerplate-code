@@ -16,6 +16,7 @@ import com.sg.constants.RequestPath;
 import com.sg.constants.TokenExpirationType;
 import com.sg.dto.AccountDto;
 import com.sg.domain.service.AuthToken;
+import com.sg.domain.service.SgCryptoService;
 import com.sg.domain.service.SgCryptoServiceImpl;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class SpringSecurityTest {
     private SgService serviceMock;
 
     @Autowired
-    SgCryptoServiceImpl security;
+    SgCryptoService security;
 
     @Resource
     private FilterChainProxy springSecurityFilterChain;
@@ -123,8 +124,6 @@ public class SpringSecurityTest {
                 .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
         verifyNoMoreInteractions(serviceMock);
     }
-
-    private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
     
     @Test
     public void testSecureResourceWithAuthToken() throws IOException, Exception {
