@@ -6,7 +6,6 @@
 
 package com.sg.sg_rest_api.test.configuration;
 
-import com.sg.domain.test.configuration.MailMockContext;
 import com.sg.sg_rest_api.test.configuration.ServiceMockContext;
 import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.domain.spring.configuration.ValidatorContext;

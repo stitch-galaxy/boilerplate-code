@@ -7,19 +7,22 @@ package com.sg.sg_rest_api.test;
 
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.domain.service.SgService;
-import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.ThreadDto;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
+import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
+import java.util.Arrays;
 import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.stringContainsInOrder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.mockito.Matchers.anyString;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -31,6 +34,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -75,7 +79,7 @@ public class ExceptionHandlingTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgServiceLayerRuntimeException(THREAD_ALREADY_EXISTS)).when(serviceMock).create(threadDto);
+        doThrow(new SgThreadAlreadyExistsException(AIDA_14)).when(serviceMock).create(threadDto);
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_ADD)
@@ -83,11 +87,10 @@ public class ExceptionHandlingTest {
                 .content(mapper.writeValueAsString(threadDto)))
                 .andExpect(status().is(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.error", is(THREAD_ALREADY_EXISTS)))
+                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
 
         verify(serviceMock, times(1)).create(threadDto);
         verifyNoMoreInteractions(serviceMock);
     }
-    public static final String THREAD_ALREADY_EXISTS = "Thread already exists";
 }
