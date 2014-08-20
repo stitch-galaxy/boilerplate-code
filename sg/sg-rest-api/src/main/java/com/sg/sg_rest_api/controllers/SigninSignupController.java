@@ -32,7 +32,6 @@ import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCryptoException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
-import com.sg.domain.service.exception.SgEmailAlreadySignedUpCompletellyException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import java.io.IOException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,7 +60,7 @@ public class SigninSignupController {
         try {
             service.signupUser(dto);
             
-        } catch (SgEmailAlreadySignedUpCompletellyException e) {
+        } catch (SgSignupAlreadyCompletedException e) {
             result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
             return result;
         }
@@ -86,7 +85,7 @@ public class SigninSignupController {
         try {
             service.signupAdmin(dto);
             
-        } catch (SgEmailAlreadySignedUpCompletellyException e) {
+        } catch (SgSignupAlreadyCompletedException e) {
             result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
             return result;
         }

@@ -20,7 +20,6 @@ import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
-import com.sg.domain.service.exception.SgEmailAlreadySignedUpCompletellyException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
@@ -326,9 +325,9 @@ public class JpaServiceTest {
         
         try{
             service.signupUser(signupDto);
-            Assert.fail("Expected " + SgEmailAlreadySignedUpCompletellyException.class.getName());
+            Assert.fail("Expected " + SgSignupAlreadyCompletedException.class.getName());
         }
-        catch(SgEmailAlreadySignedUpCompletellyException e){
+        catch(SgSignupAlreadyCompletedException e){
         }
     }
     
@@ -359,9 +358,9 @@ public class JpaServiceTest {
         
         try{
             service.signupUser(signupDto);
-            Assert.fail("Expected " + SgEmailAlreadySignedUpCompletellyException.class.getName());
+            Assert.fail("Expected " + SgSignupAlreadyCompletedException.class.getName());
         }
-        catch(SgEmailAlreadySignedUpCompletellyException e){
+        catch(SgSignupAlreadyCompletedException e){
         }
     }
     

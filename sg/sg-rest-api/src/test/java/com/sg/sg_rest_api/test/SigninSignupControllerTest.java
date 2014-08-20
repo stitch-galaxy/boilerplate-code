@@ -20,7 +20,6 @@ import com.sg.domain.service.SgMailService;
 import com.sg.domain.service.AuthToken;
 import com.sg.domain.service.SgCryptoService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
-import com.sg.domain.service.exception.SgEmailAlreadySignedUpCompletellyException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.dto.CompleteSignupDto;
@@ -189,7 +188,7 @@ public class SigninSignupControllerTest {
     public void testUserSignupAlreadyRegistered() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgEmailAlreadySignedUpCompletellyException(signupDto.getEmail())).when(serviceMock).signupUser(signupDto);
+        doThrow(new SgSignupAlreadyCompletedException()).when(serviceMock).signupUser(signupDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -208,7 +207,7 @@ public class SigninSignupControllerTest {
     public void testAdminSignupAlreadyRegistered() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgEmailAlreadySignedUpCompletellyException(signupDto.getEmail())).when(serviceMock).signupAdmin(signupDto);
+        doThrow(new SgSignupAlreadyCompletedException()).when(serviceMock).signupAdmin(signupDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)

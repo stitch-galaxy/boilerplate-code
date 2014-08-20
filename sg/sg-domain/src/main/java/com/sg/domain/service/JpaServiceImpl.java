@@ -30,7 +30,6 @@ import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
-import com.sg.domain.service.exception.SgEmailAlreadySignedUpCompletellyException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
@@ -300,7 +299,7 @@ public class JpaServiceImpl implements SgService {
             }
             else
             {
-                throw new SgEmailAlreadySignedUpCompletellyException(dto.getEmail());
+                throw new SgSignupAlreadyCompletedException();
             }
         }
         account = mapper.map(dto, Account.class);
