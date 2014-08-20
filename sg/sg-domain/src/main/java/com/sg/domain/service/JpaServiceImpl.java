@@ -299,7 +299,7 @@ public class JpaServiceImpl implements SgService {
             }
             else
             {
-                throw new SgSignupAlreadyCompletedException();
+                throw new SgSignupAlreadyCompletedException(dto.getEmail());
             }
         }
         account = mapper.map(dto, Account.class);
@@ -371,7 +371,7 @@ public class JpaServiceImpl implements SgService {
             throw new SgAccountNotFoundException(accountId);
         }
         if (account.getEmailVerified() == Boolean.TRUE) {
-            throw new SgSignupAlreadyCompletedException();
+            throw new SgSignupAlreadyCompletedException(account.getEmail());
         }
         account.setEmailVerified(Boolean.TRUE);
         account.setPassword(dto.getPassword());

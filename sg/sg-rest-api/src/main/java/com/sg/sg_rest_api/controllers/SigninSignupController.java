@@ -127,17 +127,17 @@ public class SigninSignupController {
     public @ResponseBody
     SinginAttempthResultDto signin(@RequestBody SigninDto dto) throws IOException {
         SinginAttempthResultDto result = new SinginAttempthResultDto();
+        result.setStatus(SigninStatus.STATUS_SUCCESS);
 
         try {
             service.signIn(dto);
         } catch (SgAccountNotFoundException e) {
-            result.setStatus(SigninStatus.STATUS_WRONG_PASSWORD);
+            result.setStatus(SigninStatus.STATUS_USER_NOT_FOUND);
         } catch (SgInvalidPasswordException e) {
             result.setStatus(SigninStatus.STATUS_WRONG_PASSWORD);
         } catch (SgEmailNonVerifiedException e) {
             result.setStatus(SigninStatus.STATUS_EMAIL_NOT_VERIFIED);
         }
-        result.setStatus(SigninStatus.STATUS_SUCCESS);
 
         return result;
     }

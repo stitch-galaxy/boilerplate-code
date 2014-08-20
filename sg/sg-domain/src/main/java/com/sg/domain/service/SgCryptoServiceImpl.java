@@ -6,6 +6,8 @@
 package com.sg.domain.service;
 
 import com.sg.domain.service.exception.SgCryptoException;
+import com.sg.domain.service.exception.SgInvalidTokenException;
+import com.sg.domain.service.exception.SgTokenExpiredException;
 import java.io.IOException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jasypt.util.text.BasicTextEncryptor;
@@ -31,7 +33,7 @@ public class SgCryptoServiceImpl implements SgCryptoService {
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(token);
             return textEncryptor.encrypt(json);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new SgCryptoException(e);
         }
     }
@@ -46,18 +48,18 @@ public class SgCryptoServiceImpl implements SgCryptoService {
             tokenBody = textEncryptor.decrypt(encryptedToken);
 
         } catch (Exception e) {
-            throw new SgCryptoException("Can not decrypt security token", e);
+            throw new SgInvalidTokenException(e);
         }
 
         try {
             ObjectMapper mapper = new ObjectMapper();
             token = mapper.readValue(tokenBody, AuthToken.class);
 
-        } catch (IOException e) {
-            throw new SgCryptoException("Can not deserialize decrypted security exception", e);
+        } catch (Exception e) {
+            throw new SgInvalidTokenException(e);
         }
         if (token.isExpired()) {
-            throw new SgCryptoException("Security token expired");
+            throw new SgTokenExpiredException();
         }
         return token;
 

@@ -29,19 +29,22 @@ public class AuthToken {
 
     public AuthToken(AccountDto dto, TokenExpirationType expirationType) {
         this.accountId = dto.getId();
-        List<String> authorities = new ArrayList<String>();
+        List<String> authoritiesToGrantAccess = new ArrayList<String>();
         for (String r : dto.getRoles()) {
-            authorities.add(Roles.ROLE_AUTHORITY_PREFIX + r);
+            authoritiesToGrantAccess.add(Roles.ROLE_AUTHORITY_PREFIX + r);
         }
-        setAuthorities(authorities);
+        this.authorities = authoritiesToGrantAccess;
         Instant now = Instant.now();
-        expirationMillis = now.getMillis();
+        this.expirationMillis = now.getMillis();
+        long interval = 0;
         switch (expirationType) {
             case LONG_TOKEN:
-                expirationMillis += TokenExpirationIntervals.LONG_TOKEN_EXPIRATION_INTERVAL;
+                interval = TokenExpirationIntervals.LONG_TOKEN_EXPIRATION_INTERVAL;
+                this.expirationMillis += interval;
                 break;
             case USER_SESSION_TOKEN:
-                expirationMillis += TokenExpirationIntervals.USER_SESSION_TOKEN_EXPIRATION_INTERVAL;
+                interval = TokenExpirationIntervals.USER_SESSION_TOKEN_EXPIRATION_INTERVAL;
+                this.expirationMillis += interval;
                 break;
             case NEVER_EXPIRES:
                 expirationMillis = 0;

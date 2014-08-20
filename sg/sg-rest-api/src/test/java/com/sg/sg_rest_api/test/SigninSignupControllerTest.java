@@ -12,6 +12,7 @@ import com.sg.domain.service.SgService;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
 import com.sg.constants.Roles;
+import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
 import com.sg.constants.TokenExpirationType;
 import com.sg.dto.SignupDto;
@@ -20,9 +21,12 @@ import com.sg.domain.service.SgMailService;
 import com.sg.domain.service.AuthToken;
 import com.sg.domain.service.SgCryptoService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
+import com.sg.domain.service.exception.SgEmailNonVerifiedException;
+import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.dto.CompleteSignupDto;
+import com.sg.dto.SigninDto;
 import java.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -100,6 +104,8 @@ public class SigninSignupControllerTest {
     private static final AccountDto nonVerifiedUserAccountDto;
     private static final AccountDto nonVerifiedAdminUserAccountDto;
     private static final CompleteSignupDto completeSignupDto;
+    private static final SigninDto signinDto;
+    
 
     static {
         signupDto = new SignupDto();
@@ -128,6 +134,10 @@ public class SigninSignupControllerTest {
         
         completeSignupDto = new CompleteSignupDto();
         completeSignupDto.setPassword(USER_PASSWORD);
+        
+        signinDto = new SigninDto();
+        signinDto.setEmail(USER_EMAIL);
+        signinDto.setPassword(USER_PASSWORD);
     }
 
     @Test
@@ -188,7 +198,7 @@ public class SigninSignupControllerTest {
     public void testUserSignupAlreadyRegistered() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgSignupAlreadyCompletedException()).when(serviceMock).signupUser(signupDto);
+        doThrow(new SgSignupAlreadyCompletedException(USER_EMAIL)).when(serviceMock).signupUser(signupDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -207,7 +217,7 @@ public class SigninSignupControllerTest {
     public void testAdminSignupAlreadyRegistered() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgSignupAlreadyCompletedException()).when(serviceMock).signupAdmin(signupDto);
+        doThrow(new SgSignupAlreadyCompletedException(USER_EMAIL)).when(serviceMock).signupAdmin(signupDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -311,7 +321,7 @@ public class SigninSignupControllerTest {
     public void testCompleteSignupAlreadyCompleted() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgSignupAlreadyCompletedException()).when(serviceMock).completeSignup(ACCOUNT_ID, completeSignupDto);
+        doThrow(new SgSignupAlreadyCompletedException(USER_EMAIL)).when(serviceMock).completeSignup(ACCOUNT_ID, completeSignupDto);
         
         mockMvc.perform(post(RequestPath.REQUEST_COMPLETE_SIGNUP)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -344,188 +354,88 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-
-    /*
+    
+    //, ;
 
     @Test
-    public void testUserNotFound() throws Exception {
-
-        SigninDto dto = new SigninDto();
-        dto.setEmail(USER_EMAIL);
-        dto.setPassword(USER_PASSWORD);
-
+    public void testSigninAccountNotFound() throws Exception
+    {
         ObjectMapper mapper = new ObjectMapper();
 
-        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(null);
-
+        doThrow(new SgAccountNotFoundException(signinDto.getEmail())).when(serviceMock).signIn(signinDto);
+        
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(mapper.writeValueAsString(signinDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_USER_NOT_FOUND)));
-        verify(serviceMock, times(1)).getUserByEmail(dto.getEmail());
+
+        verify(serviceMock, times(1)).signIn(signinDto);
+
         verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(mailServiceMock);
     }
-
+    
     @Test
-    public void testEmailNotVerified() throws Exception {
-        SigninDto dto = new SigninDto();
-        dto.setEmail(USER_EMAIL);
-        dto.setPassword(USER_PASSWORD);
-
+    public void testSigninInvalidPassword() throws Exception
+    {
         ObjectMapper mapper = new ObjectMapper();
 
-        AccountDto accountDto = new AccountDto();
-        accountDto.setUserBirthDate(USER_BIRTH_DATE);
-        accountDto.setEmail(USER_EMAIL);
-        accountDto.setEmailVerified(Boolean.FALSE);
-        accountDto.setPassword(USER_PASSWORD);
-        List<String> roles = new ArrayList<String>();
-        roles.add(Roles.ROLE_USER);
-        roles.add(Roles.ROLE_ADMIN);
-        accountDto.setRoles(roles);
-
-        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
-
+        doThrow(new SgInvalidPasswordException()).when(serviceMock).signIn(signinDto);
+        
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_EMAIL_NOT_VERIFIED)));
-        verify(serviceMock, times(1)).getUserByEmail(dto.getEmail());
-        verifyNoMoreInteractions(serviceMock);
-    }
-
-    @Test
-    public void testWrongPassword() throws Exception {
-        SigninDto dto = new SigninDto();
-        dto.setEmail(USER_EMAIL);
-        dto.setPassword(USER_WRONG_PASSWORD);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        AccountDto accountDto = new AccountDto();
-        accountDto.setUserBirthDate(USER_BIRTH_DATE);
-        accountDto.setEmail(USER_EMAIL);
-        accountDto.setEmailVerified(Boolean.TRUE);
-        accountDto.setPassword(USER_PASSWORD);
-        List<String> roles = new ArrayList<String>();
-        roles.add(Roles.ROLE_USER);
-        roles.add(Roles.ROLE_ADMIN);
-        accountDto.setRoles(roles);
-
-        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
-
-        mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(mapper.writeValueAsString(signinDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_WRONG_PASSWORD)));
-        verify(serviceMock, times(1)).getUserByEmail(dto.getEmail());
+
+        verify(serviceMock, times(1)).signIn(signinDto);
+
         verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(mailServiceMock);
     }
-
+    
     @Test
-    public void testSuccessSignin() throws Exception {
-        SigninDto dto = new SigninDto();
-        dto.setEmail(USER_EMAIL);
-        dto.setPassword(USER_PASSWORD);
-
+    public void testSigninEmailNonVerified() throws Exception
+    {
         ObjectMapper mapper = new ObjectMapper();
 
-        AccountDto accountDto = new AccountDto();
-        accountDto.setId(USER_ID);
-        accountDto.setUserBirthDate(USER_BIRTH_DATE);
-        accountDto.setEmail(USER_EMAIL);
-        accountDto.setEmailVerified(Boolean.TRUE);
-        accountDto.setPassword(USER_PASSWORD);
-        List<String> roles = new ArrayList<String>();
-        roles.add(Roles.ROLE_USER);
-        roles.add(Roles.ROLE_ADMIN);
-        accountDto.setRoles(roles);
+        doThrow(new SgEmailNonVerifiedException(signinDto.getEmail())).when(serviceMock).signIn(signinDto);
+        
+        mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(signinDto)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_EMAIL_NOT_VERIFIED)));
 
-        when(serviceMock.getUserByEmail(dto.getEmail())).thenReturn(accountDto);
+        verify(serviceMock, times(1)).signIn(signinDto);
 
-        TokenMatcher tokenMatcher = new TokenMatcher(security);
-        tokenMatcher.setUserId(USER_ID);
-        List<String> authorities = new ArrayList<String>();
-        for (String r : roles) {
-            authorities.add(Roles.ROLE_AUTHORITY_PREFIX + r);
-        }
-        tokenMatcher.setAuthorities(authorities);
+        verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(mailServiceMock);
+    }
+    
+    @Test
+    public void testSigninSuccessfully() throws Exception
+    {
+        ObjectMapper mapper = new ObjectMapper();
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(mapper.writeValueAsString(signinDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_SUCCESS)))
-                .andExpect(jsonPath("$.authToken", tokenMatcher));
-        verify(serviceMock, times(1)).getUserByEmail(dto.getEmail());
+                .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_SUCCESS)));
+
+        verify(serviceMock, times(1)).signIn(signinDto);
+
         verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(mailServiceMock);
     }
-
-    private static class TokenMatcher extends BaseMatcher<String> {
-
-        private SgCryptoServiceImpl security;
-
-        private Long userId;
-        private List<String> authorities;
-
-        private String reason;
-
-        public TokenMatcher(SgCryptoServiceImpl security) {
-            this.security = security;
-        }
-
-        public boolean matches(Object item) {
-            if (item == null || !(item instanceof String)) {
-                return false;
-            }
-
-            String encryptedToken = (String) item;
-            AuthToken token;
-            try {
-                token = security.getTokenFromString(encryptedToken);
-            } catch (SgCryptoException e) {
-                reason = e.getMessage();
-                return false;
-            }
-
-            if (!userId.equals(token.getAccountId())) {
-                reason = "Non expected userId";
-                return false;
-            }
-            if (!authorities.equals(token.getAuthorities())) {
-                reason = "Non expected authorities";
-                return false;
-            }
-            return true;
-        }
-
-        public void describeTo(Description description) {
-            description.appendText(reason);
-        }
-
-        public List<String> getAuthorities() {
-            return authorities;
-        }
-
-        public void setAuthorities(List<String> authorities) {
-            this.authorities = authorities;
-        }
-
-        public Long getUserId() {
-            return userId;
-        }
-
-        public void setUserId(Long userId) {
-            this.userId = userId;
-        }
-
-    }
-    */
 }

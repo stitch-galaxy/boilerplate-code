@@ -10,10 +10,9 @@ package com.sg.domain.service.exception;
  *
  * @author tarasev
  */
-public class SgSignupAlreadyCompletedException extends SgServiceLayerRuntimeException {
-    public SgSignupAlreadyCompletedException(String email)
-    {
-        super(email + "already signed up and verified email.");
+public class SgTokenExpiredException extends SgCryptoException {
+
+    public SgTokenExpiredException() {
+        super("Security token expired.");
     }
-    
 }
