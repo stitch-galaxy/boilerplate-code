@@ -16,6 +16,7 @@ import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.OperationStatusDto;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,7 @@ public class ThreadsController {
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_ADD, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto create(@RequestBody ThreadDto dto) throws SgDataValidationException {
+    OperationStatusDto create(@Valid @RequestBody ThreadDto dto) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
         try {
@@ -51,7 +52,7 @@ public class ThreadsController {
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_DELETE, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto delete(@RequestBody ThreadRefDto dto) throws SgDataValidationException {
+    OperationStatusDto delete(@Valid @RequestBody ThreadRefDto dto) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
         try {
@@ -64,7 +65,7 @@ public class ThreadsController {
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_UPDATE, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto update(@RequestBody ThreadUpdateDto dto) throws SgDataValidationException {
+    OperationStatusDto update(@Valid @RequestBody ThreadUpdateDto dto) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
         try {

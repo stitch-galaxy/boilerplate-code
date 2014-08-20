@@ -6,44 +6,16 @@ package com.sg.domain.test.jpa;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.sg.constants.Roles;
-import com.sg.dto.CanvasDto;
-import com.sg.dto.CanvasRefDto;
-import com.sg.dto.CanvasUpdateDto;
-import com.sg.dto.ThreadDto;
-import com.sg.dto.ThreadRefDto;
-import com.sg.dto.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
-import com.sg.domain.service.exception.SgAccountNotFoundException;
-import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
-import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgDataValidationException;
-import com.sg.domain.service.exception.SgEmailNonVerifiedException;
-import com.sg.domain.service.exception.SgInvalidPasswordException;
-import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
-import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
-import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
-import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.domain.spring.configuration.ValidatorContext;
-import com.sg.dto.AccountDto;
-import com.sg.dto.CompleteSignupDto;
-import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
-import javax.sql.DataSource;
 import junit.framework.Assert;
-import org.joda.time.LocalDate;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +35,7 @@ public class JpaServiceDataValidationTest {
     private SgService service;
     
     @Test
-    public void testValidation()
+    public void testInvalidSignupDto()
     {
         SignupDto dto = new SignupDto();
         dto.setEmail("abc");
@@ -79,7 +51,7 @@ public class JpaServiceDataValidationTest {
                 SignupDto.FIELD_SIGNUP_USER_FIRST_NAME,
                 SignupDto.FIELD_SIGNUP_USER_LAST_NAME,
             })),
-                    e.getErrors());
+                    e.getFieldErrors());
         }
     }
 }

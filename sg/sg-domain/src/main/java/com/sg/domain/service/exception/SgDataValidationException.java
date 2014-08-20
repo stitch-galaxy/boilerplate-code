@@ -16,20 +16,32 @@ import javax.validation.ConstraintViolation;
  */
 public class SgDataValidationException extends Exception {
 
-    private Set<String> errors = new HashSet<String>();
+    private Set<String> fieldErrors;
     
     public SgDataValidationException(Set<ConstraintViolation<Object>> errors) {
         super();
+        fieldErrors = new HashSet<String>();
         for(ConstraintViolation<Object> error : errors)
         {
-            this.errors.add(error.getMessageTemplate());
+            this.fieldErrors.add(error.getMessageTemplate());
         }
+    }
+    
+    public SgDataValidationException()
+    {
     }
 
     /**
-     * @return the errors
+     * @return the fieldErrors
      */
-    public Set<String> getErrors() {
-        return errors;
+    public Set<String> getFieldErrors() {
+        return fieldErrors;
+    }
+
+    /**
+     * @param fieldErrors the fieldErrors to set
+     */
+    public void setFieldErrors(Set<String> fieldErrors) {
+        this.fieldErrors = fieldErrors;
     }
 }

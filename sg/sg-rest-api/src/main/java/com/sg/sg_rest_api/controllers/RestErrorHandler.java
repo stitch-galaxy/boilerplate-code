@@ -5,14 +5,22 @@
  */
 package com.sg.sg_rest_api.controllers;
 
+import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.dto.ErrorDto;
+import com.sg.dto.ValidationErrorDto;
 import com.sg.sg_rest_api.utils.Utils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,9 +35,27 @@ public class RestErrorHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestErrorHandler.class);
 
-    //TODO: different http statuses for different exception classes
-    //TODO: interceptor which log request totally
-    //https://gist.github.com/calo81/2071634
+    @ExceptionHandler(SgDataValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ValidationErrorDto processServiceValidationError(SgDataValidationException ex) {
+        return new ValidationErrorDto(ex);
+    }
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ValidationErrorDto processValidationError(MethodArgumentNotValidException ex) {
+        BindingResult result = ex.getBindingResult();
+        List<FieldError> errors = result.getFieldErrors();
+        Set<String> fieldErrors = new HashSet<String>();
+        for(FieldError error : errors)
+        {
+            fieldErrors.add(error.getDefaultMessage());
+        }
+        return new ValidationErrorDto(fieldErrors);
+    }
+    
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
