@@ -293,12 +293,9 @@ public class JpaServiceImpl implements SgService {
     public void signupImpl(SignupDto dto, String... roles) {
         Account account = accountsRepository.findByEmail(dto.getEmail());
         if (account != null) {
-            if (account.getEmailVerified() == Boolean.FALSE)
-            {
+            if (account.getEmailVerified() == Boolean.FALSE) {
                 throw new SgSignupForRegisteredButNonVerifiedEmailException(dto.getEmail());
-            }
-            else
-            {
+            } else {
                 throw new SgSignupAlreadyCompletedException(dto.getEmail());
             }
         }
@@ -307,7 +304,7 @@ public class JpaServiceImpl implements SgService {
         account.setRoles(Arrays.asList(roles));
         accountsRepository.save(account);
     }
-    
+
     public Long getAccountIdByRegistrationEmail(final String email) {
         return transactionTemplate.execute(new TransactionCallback<Long>() {
             public Long doInTransaction(TransactionStatus status) {
@@ -321,12 +318,12 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
-    public Long getAccountIdByRegistrationEmailImpl(String email)
-    {
+
+    public Long getAccountIdByRegistrationEmailImpl(String email) {
         Account account = accountsRepository.findByEmail(email);
-        if (account == null)
+        if (account == null) {
             throw new SgAccountNotFoundException(email);
+        }
         return account.getId();
     }
 
@@ -346,8 +343,9 @@ public class JpaServiceImpl implements SgService {
 
     public AccountDto getAccountInfoImpl(Long accountId) {
         Account account = accountsRepository.findOne(accountId);
-        if (account == null)
+        if (account == null) {
             throw new SgAccountNotFoundException(accountId);
+        }
         return mapper.map(account, AccountDto.class);
     }
 
@@ -377,9 +375,9 @@ public class JpaServiceImpl implements SgService {
         account.setPassword(dto.getPassword());
         accountsRepository.save(account);
     }
-    
+
     public void signIn(final SigninDto dto) {
-    transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
                     signInImpl(dto);
@@ -391,18 +389,20 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     public void signInImpl(SigninDto dto) {
         Account account = accountsRepository.findByEmail(dto.getEmail());
         if (account == null) {
             throw new SgAccountNotFoundException(dto.getEmail());
         }
-        if (account.getEmailVerified() == Boolean.FALSE)
-        {
+        if (account.getEmailVerified() == Boolean.FALSE) {
             throw new SgEmailNonVerifiedException(dto.getEmail());
         }
         if (!dto.getPassword().equals(account.getPassword())) {
             throw new SgInvalidPasswordException();
         }
+    }
+
+    public void ping() {
     }
 }

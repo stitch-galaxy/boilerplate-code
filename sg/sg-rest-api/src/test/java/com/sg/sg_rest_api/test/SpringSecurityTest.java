@@ -10,6 +10,7 @@ import com.sg.sg_rest_api.test.configuration.WebApplicationIntegrationTestContex
 import com.sg.domain.service.SgService;
 import com.sg.dto.ThreadDto;
 import com.sg.constants.CustomHttpHeaders;
+import com.sg.constants.OperationStatus;
 import com.sg.constants.Roles;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
@@ -110,31 +111,17 @@ public class SpringSecurityTest {
 
     @Test
     public void testUnsecureResource() throws Exception {
-        ThreadDto dto = new ThreadDto();
-        dto.setCode(AIDA_14);
-
-        when(serviceMock.listThreads()).thenReturn(Arrays.asList(dto));
-
-        mockMvc.perform(get(RequestPath.REQUEST_THREAD_LIST))
+        mockMvc.perform(get(RequestPath.REQUEST_PING))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].code", is(AIDA_14)));
-        verify(serviceMock, times(1)).listThreads();
+                .andExpect(jsonPath("$.status", is(OperationStatus.STATUS_SUCCESS)));
+        verify(serviceMock, times(1)).ping();
         verifyNoMoreInteractions(serviceMock);
     }
 
     @Test
     public void testSecureResourceWithoutAuthToken() throws IOException, Exception {
-        ThreadDto threadDto = new ThreadDto();
-        threadDto.setCode(AIDA_14);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        mockMvc.perform(
-                post(RequestPath.REQUEST_THREAD_ADD)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(threadDto)))
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -147,19 +134,11 @@ public class SpringSecurityTest {
         AuthToken token = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now());
         String authToken = security.encryptSecurityToken(token);
 
-        ThreadDto threadDto = new ThreadDto();
-        threadDto.setCode(AIDA_14);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        mockMvc.perform(
-                post(RequestPath.REQUEST_THREAD_ADD)
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, authToken)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(threadDto)))
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().isOk())
-                .andExpect(content().bytes(new byte[0]));
-        verify(serviceMock, times(1)).create(threadDto);
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.status", is(OperationStatus.STATUS_SUCCESS)));
+        verify(serviceMock, times(1)).ping();
         verifyNoMoreInteractions(serviceMock);
     }
 
@@ -169,16 +148,7 @@ public class SpringSecurityTest {
         token.setExpirationInstantMillis(Instant.now().getMillis() - 1);
         String authToken = security.encryptSecurityToken(token);
 
-        ThreadDto threadDto = new ThreadDto();
-        threadDto.setCode(AIDA_14);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        mockMvc.perform(
-                post(RequestPath.REQUEST_THREAD_ADD)
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, authToken)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(threadDto)))
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -188,16 +158,7 @@ public class SpringSecurityTest {
 
     @Test
     public void testSecureResourceWithBadAuthToken() throws IOException, Exception {
-        ThreadDto threadDto = new ThreadDto();
-        threadDto.setCode(AIDA_14);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        mockMvc.perform(
-                post(RequestPath.REQUEST_THREAD_ADD)
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, BAD_TOKEN)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(threadDto)))
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, BAD_TOKEN))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))

@@ -18,6 +18,8 @@ public class RequestPath {
     public static final String REST_SECURE_ADMIN_PATH = REST_SECURE_PATH + "/admin";
     public static final String REST_SECURE_USER_PATH = REST_SECURE_PATH + "/user";
     
+    public static final String REQUEST_PING = REST_USER_API_PATH + "/ping";
+    public static final String REQUEST_SECURE_PING = REST_SECURE_USER_PATH + "/ping";
     
     public static final String REQUEST_THREAD_ADD = REST_SECURE_ADMIN_PATH + "/thread/create";
     public static final String REQUEST_THREAD_DELETE = REST_SECURE_ADMIN_PATH + "/thread/delete";

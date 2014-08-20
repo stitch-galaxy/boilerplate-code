@@ -52,4 +52,6 @@ public interface SgService {
     public AccountDto getAccountInfo(Long accountId) throws SgAccountNotFoundException;
     
     public void signIn(SigninDto dto) throws SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;
+    
+    public void ping() throws Exception;
 }

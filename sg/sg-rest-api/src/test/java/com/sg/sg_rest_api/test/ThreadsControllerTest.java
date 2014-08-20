@@ -11,6 +11,13 @@ import com.sg.dto.ThreadDto;
 import com.sg.domain.service.SgService;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
+import com.sg.constants.SigninStatus;
+import com.sg.constants.ThreadOperationStatus;
+import com.sg.domain.service.exception.SgEmailNonVerifiedException;
+import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
+import com.sg.domain.service.exception.SgThreadNotFoundException;
+import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadUpdateDto;
 import java.io.IOException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,41 +68,135 @@ public class ThreadsControllerTest {
                 .build();
     }
 
-    @Test
-    public void test() throws Exception {
-        ThreadDto first = new ThreadDto();
-        first.setCode(AIDA_14);
+    private static final String DMC = "DMC";
+    private static final String ANCHOR = "Anchor";
 
-        ThreadDto second = new ThreadDto();
-        second.setCode(AIDA_18);
-        when(serviceMock.listThreads()).thenReturn(Arrays.asList(first, second));
+    private static final ThreadDto dmcThreadDto;
+    private static final ThreadDto anchorThreadDto;
+    
+    private static final ThreadRefDto dmcThreadRefDto;
+    
+    private static final ThreadUpdateDto dmcThreadUpdateDto;
+
+    static {
+        dmcThreadDto = new ThreadDto();
+        dmcThreadDto.setCode(DMC);
+
+        anchorThreadDto = new ThreadDto();
+        anchorThreadDto.setCode(ANCHOR);
+        
+        dmcThreadRefDto = new ThreadRefDto();
+        dmcThreadDto.setCode(DMC);
+        
+        dmcThreadUpdateDto = new ThreadUpdateDto();
+        dmcThreadUpdateDto.setRef(dmcThreadRefDto);
+        dmcThreadUpdateDto.setDto(anchorThreadDto);
+    }
+
+    @Test
+    public void testList() throws Exception {
+        when(serviceMock.listThreads()).thenReturn(Arrays.asList(dmcThreadDto, anchorThreadDto));
 
         mockMvc.perform(get(RequestPath.REQUEST_THREAD_LIST))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].code", is(AIDA_14)))
-                .andExpect(jsonPath("$[1].code", is(AIDA_18)));
+                .andExpect(jsonPath("$[0].code", is(DMC)))
+                .andExpect(jsonPath("$[1].code", is(ANCHOR)));
         verify(serviceMock, times(1)).listThreads();
         verifyNoMoreInteractions(serviceMock);
     }
-    private static final String AIDA_18 = "Aida 18";
-    private static final String AIDA_14 = "Aida 14";
+
+    @Test
+    public void testCreateAlreadyExists() throws IOException, Exception {
+        ObjectMapper mapper = new ObjectMapper();
+
+        doThrow(new SgThreadAlreadyExistsException(dmcThreadDto.getCode())).when(serviceMock).create(dmcThreadDto);
+
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_ADD)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(dmcThreadDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is(ThreadOperationStatus.THREAD_ALREADY_EXISTS)));
+        verify(serviceMock, times(1)).create(dmcThreadDto);
+        verifyNoMoreInteractions(serviceMock);
+    }
 
     @Test
     public void testCreate() throws IOException, Exception {
-        ThreadDto threadDto = new ThreadDto();
-        threadDto.setCode(AIDA_14);
 
         ObjectMapper mapper = new ObjectMapper();
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(threadDto)))
+                .content(mapper.writeValueAsString(dmcThreadDto)))
                 .andExpect(status().isOk())
-                .andExpect(content().bytes(new byte[0]));
-        verify(serviceMock, times(1)).create(threadDto);
+                .andExpect(jsonPath("$.status", is(ThreadOperationStatus.STATUS_SUCCESS)));
+        verify(serviceMock, times(1)).create(dmcThreadDto);
+        verifyNoMoreInteractions(serviceMock);
+    }
+    
+    @Test
+    public void testDeleteNotFound() throws IOException, Exception {
+        ObjectMapper mapper = new ObjectMapper();
+
+        doThrow(new SgThreadNotFoundException(dmcThreadRefDto.getCode())).when(serviceMock).delete(dmcThreadRefDto);
+
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_DELETE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(dmcThreadRefDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is(ThreadOperationStatus.THREAD_NOT_FOUND)));
+        verify(serviceMock, times(1)).delete(dmcThreadRefDto);
+        verifyNoMoreInteractions(serviceMock);
+    }
+
+    @Test
+    public void testDelete() throws IOException, Exception {
+        ObjectMapper mapper = new ObjectMapper();
+
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_DELETE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(dmcThreadRefDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is(ThreadOperationStatus.STATUS_SUCCESS)));
+        verify(serviceMock, times(1)).delete(dmcThreadRefDto);
+        verifyNoMoreInteractions(serviceMock);
+    }
+    
+    @Test
+    public void testUpdateNotFound() throws IOException, Exception {
+        ObjectMapper mapper = new ObjectMapper();
+
+        doThrow(new SgThreadNotFoundException(dmcThreadUpdateDto.getRef().getCode())).when(serviceMock).update(dmcThreadUpdateDto);
+
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_UPDATE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(dmcThreadUpdateDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is(ThreadOperationStatus.THREAD_NOT_FOUND)));
+        verify(serviceMock, times(1)).update(dmcThreadUpdateDto);
+        verifyNoMoreInteractions(serviceMock);
+    }
+    
+    @Test
+    public void testUpdateAlreadyExists() throws IOException, Exception {
+        ObjectMapper mapper = new ObjectMapper();
+
+        doThrow(new SgThreadAlreadyExistsException(dmcThreadUpdateDto.getRef().getCode())).when(serviceMock).update(dmcThreadUpdateDto);
+
+        mockMvc.perform(
+                post(RequestPath.REQUEST_THREAD_UPDATE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(dmcThreadUpdateDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is(ThreadOperationStatus.THREAD_ALREADY_EXISTS)));
+        verify(serviceMock, times(1)).update(dmcThreadUpdateDto);
         verifyNoMoreInteractions(serviceMock);
     }
 }
