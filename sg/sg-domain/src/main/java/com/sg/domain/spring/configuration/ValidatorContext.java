@@ -18,7 +18,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  */
 @Configuration
 public class ValidatorContext {
- 
+    
     @Bean
     public Validator validator() {
         return new LocalValidatorFactoryBean();

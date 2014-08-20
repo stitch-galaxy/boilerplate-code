@@ -29,6 +29,7 @@ import com.sg.domain.service.AuthToken;
 import com.sg.domain.service.SgCryptoService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCryptoException;
+import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
@@ -55,7 +56,7 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto signupUser(@RequestBody SignupDto dto) throws SgCryptoException {
+    OperationStatusDto signupUser(@RequestBody SignupDto dto) throws SgCryptoException, SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -78,7 +79,7 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_ADMIN_USER, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto signupAdmin(@RequestBody SignupDto dto) throws IOException, SgCryptoException {
+    OperationStatusDto signupAdmin(@RequestBody SignupDto dto) throws IOException, SgCryptoException, SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -101,7 +102,7 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto completeSignup(@RequestBody CompleteSignupDto dto) {
+    OperationStatusDto completeSignup(@RequestBody CompleteSignupDto dto) throws SgDataValidationException {
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         OperationStatusDto attemptResult = new OperationStatusDto();
@@ -122,13 +123,12 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto signin(@RequestBody SigninDto dto, HttpServletResponse response) throws IOException, SgCryptoException {
+    OperationStatusDto signin(@RequestBody SigninDto dto, HttpServletResponse response) throws IOException, SgCryptoException, SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SigninStatus.STATUS_SUCCESS);
 
         try {
             service.signIn(dto);
-            //todo: test this
             Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
             AccountDto accountDto = service.getAccountInfo(accountId);
             AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now());

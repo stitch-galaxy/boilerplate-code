@@ -11,6 +11,7 @@ import com.sg.dto.ThreadDto;
 import com.sg.dto.ThreadRefDto;
 import com.sg.dto.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
+import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.OperationStatusDto;
@@ -30,7 +31,7 @@ public class ThreadsController {
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_ADD, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto create(@RequestBody ThreadDto dto) {
+    OperationStatusDto create(@RequestBody ThreadDto dto) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
         try {
@@ -50,15 +51,12 @@ public class ThreadsController {
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_DELETE, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto delete(@RequestBody ThreadRefDto dto) {
+    OperationStatusDto delete(@RequestBody ThreadRefDto dto) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
-        try
-        {
+        try {
             service.delete(dto);
-        }
-        catch(SgThreadNotFoundException e)
-        {
+        } catch (SgThreadNotFoundException e) {
             result.setStatus(ThreadOperationStatus.THREAD_NOT_FOUND);
         }
         return result;
@@ -66,18 +64,14 @@ public class ThreadsController {
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_UPDATE, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto update(@RequestBody ThreadUpdateDto dto) {
+    OperationStatusDto update(@RequestBody ThreadUpdateDto dto) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
-        try{
-        service.update(dto);
-        }
-        catch(SgThreadAlreadyExistsException e)
-        {
+        try {
+            service.update(dto);
+        } catch (SgThreadAlreadyExistsException e) {
             result.setStatus(ThreadOperationStatus.THREAD_ALREADY_EXISTS);
-        }
-        catch(SgThreadNotFoundException e)
-        {
+        } catch (SgThreadNotFoundException e) {
             result.setStatus(ThreadOperationStatus.THREAD_NOT_FOUND);
         }
         return result;

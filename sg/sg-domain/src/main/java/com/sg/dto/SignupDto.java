@@ -6,7 +6,11 @@
 
 package com.sg.dto;
 
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import org.joda.time.LocalDate;
 
 /**
@@ -14,9 +18,20 @@ import org.joda.time.LocalDate;
  * @author tarasev
  */
 public class SignupDto {
+    
+    public static final String FIELD_SIGNUP_EMAIL = "SignupDto.Email";
+    public static final String FIELD_SIGNUP_USER_FIRST_NAME = "SignupDto.FirstName";
+    public static final String FIELD_SIGNUP_USER_LAST_NAME = "SignupDto.LastName";
+    public static final String FIELD_SIGNUP_USER_BIRTH_DATE = "SignupDto.Birthdate";
+    
+    @NotEmpty(message = FIELD_SIGNUP_EMAIL)
+    @Email(message = FIELD_SIGNUP_EMAIL)
     private String email;
+    @NotEmpty(message = FIELD_SIGNUP_USER_FIRST_NAME)
     private String userFirstName;
+    @NotEmpty(message = FIELD_SIGNUP_USER_LAST_NAME)
     private String userLastName;
+    @NotNull(message = FIELD_SIGNUP_USER_BIRTH_DATE)
     private LocalDate userBirthDate;
 
     /**

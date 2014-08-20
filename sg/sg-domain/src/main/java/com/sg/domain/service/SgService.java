@@ -9,6 +9,7 @@ package com.sg.domain.service;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
+import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
@@ -33,25 +34,27 @@ import java.util.List;
  */
 public interface SgService {
     
-    public void create(ThreadDto dto) throws SgThreadAlreadyExistsException;
-    public void delete(ThreadRefDto dto) throws SgThreadNotFoundException;
-    public void update(ThreadUpdateDto dto) throws SgThreadNotFoundException, SgThreadAlreadyExistsException;
+    public void create(ThreadDto dto) throws SgDataValidationException, SgThreadAlreadyExistsException;
+    public void delete(ThreadRefDto dto) throws SgDataValidationException, SgThreadNotFoundException;
+    public void update(ThreadUpdateDto dto) throws SgDataValidationException, SgThreadNotFoundException, SgThreadAlreadyExistsException;
     public List<ThreadDto> listThreads();   
     
-    public void create(CanvasDto dto) throws SgCanvasAlreadyExistsException;
-    public void delete(CanvasRefDto dto) throws SgCanvasNotFoundException;
-    public void update(CanvasUpdateDto dto) throws SgCanvasNotFoundException, SgCanvasAlreadyExistsException;
+    public void create(CanvasDto dto) throws SgDataValidationException, SgCanvasAlreadyExistsException;
+    public void delete(CanvasRefDto dto) throws SgDataValidationException, SgCanvasNotFoundException;
+    public void update(CanvasUpdateDto dto) throws SgDataValidationException, SgCanvasNotFoundException, SgCanvasAlreadyExistsException;
     public List<CanvasDto> listCanvases();   
    
-    public void signupUser(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
-    public void signupAdmin(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
+    public void signupUser(SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
+    public void signupAdmin(SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     
-    public Long getAccountIdByRegistrationEmail(String email) throws SgAccountNotFoundException;
-    public void completeSignup(Long accountId, CompleteSignupDto dto) throws SgAccountNotFoundException, SgSignupAlreadyCompletedException;
+    //put email to dto and check validity
+    public Long getAccountIdByRegistrationEmail(String email) throws SgDataValidationException, SgAccountNotFoundException;
+    //put accountId to dto and check validity
+    public void completeSignup(Long accountId, CompleteSignupDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgSignupAlreadyCompletedException;
+    //put accountId to dto and check validity
+    public AccountDto getAccountInfo(Long accountId) throws SgDataValidationException, SgAccountNotFoundException;
     
-    public AccountDto getAccountInfo(Long accountId) throws SgAccountNotFoundException;
-    
-    public void signIn(SigninDto dto) throws SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;
+    public void signIn(SigninDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;
     
     public void ping() throws Exception;
 }

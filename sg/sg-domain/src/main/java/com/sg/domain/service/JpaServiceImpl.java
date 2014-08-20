@@ -27,6 +27,7 @@ import com.sg.domain.entities.jpa.AccountsRepository;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
+import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
@@ -38,12 +39,15 @@ import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.validation.Validator;
 
 /**
  *
@@ -73,6 +77,15 @@ public class JpaServiceImpl implements SgService {
 
     @Resource
     private Validator validator;
+    
+    private void validate(Object object) throws SgDataValidationException
+    {
+        Set<ConstraintViolation<Object>> errors = validator.validate(object);
+        if (errors != null && errors.size() > 0)
+        {
+            throw new SgDataValidationException(errors);
+        }
+    }
 
     public void delete(final ThreadRefDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
@@ -267,8 +280,9 @@ public class JpaServiceImpl implements SgService {
         }
         return result;
     }
-
-    public void signupUser(final SignupDto dto) {
+    
+    public void signupUser(final SignupDto dto) throws SgDataValidationException {
+        validate(dto);
         signup(dto, Roles.ROLE_USER);
     }
 

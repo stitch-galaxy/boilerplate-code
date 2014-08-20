@@ -17,6 +17,7 @@ import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
+import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
@@ -121,7 +122,7 @@ public class JpaServiceTest {
     }
     
     @Test
-    public void testCanvasCreate()
+    public void testCanvasCreate() throws SgDataValidationException
     {
         service.create(aida14CanvasDto);
         try {
@@ -132,7 +133,7 @@ public class JpaServiceTest {
     }
     
     @Test
-    public void testCanvasesList() {
+    public void testCanvasesList() throws SgDataValidationException {
         service.create(aida14CanvasDto);
         service.create(aida18CanvasDto);
         List<CanvasDto> list = new ArrayList<CanvasDto>();
@@ -144,7 +145,7 @@ public class JpaServiceTest {
     }
     
     @Test
-    public void testCanvasUpdate() {
+    public void testCanvasUpdate() throws SgDataValidationException {
         service.create(aida14CanvasDto);
 
         CanvasRefDto ref = new CanvasRefDto();
@@ -178,7 +179,7 @@ public class JpaServiceTest {
     }
     
     @Test
-    public void testCanvasDelete() {
+    public void testCanvasDelete() throws SgDataValidationException {
         service.create(aida14CanvasDto);
 
         CanvasRefDto ref = new CanvasRefDto();
@@ -199,7 +200,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testThreadCreate() {
+    public void testThreadCreate() throws SgDataValidationException {
         service.create(dmcThreadDto);
         try {
             service.create(dmcThreadDto);
@@ -209,7 +210,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testThreadsList() {
+    public void testThreadsList() throws SgDataValidationException {
         service.create(dmcThreadDto);
         service.create(anchorThreadDto);
         List<ThreadDto> list = new ArrayList<ThreadDto>();
@@ -219,7 +220,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testThreadUpdate() {
+    public void testThreadUpdate() throws SgDataValidationException {
         service.create(dmcThreadDto);
 
         ThreadRefDto ref = new ThreadRefDto();
@@ -253,7 +254,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testThreadDelete() {
+    public void testThreadDelete() throws SgDataValidationException {
         service.create(dmcThreadDto);
 
         ThreadRefDto ref = new ThreadRefDto();
@@ -274,7 +275,7 @@ public class JpaServiceTest {
     }
     
     @Test 
-    public void testGetAccountIdByRegistrationEmailThrowsExceptionIfAccountNotFound()
+    public void testGetAccountIdByRegistrationEmailThrowsExceptionIfAccountNotFound() throws SgDataValidationException
     {
         try
         {
@@ -286,7 +287,7 @@ public class JpaServiceTest {
     }
     
     @Test 
-    public void testGetAccountInfoThrowsExceptionIfAccountNotFound()
+    public void testGetAccountInfoThrowsExceptionIfAccountNotFound() throws SgDataValidationException
     {
         try
         {
@@ -298,7 +299,7 @@ public class JpaServiceTest {
     }
     
     @Test
-    public void testSignupAdmin() {
+    public void testSignupAdmin() throws SgDataValidationException {
         service.signupAdmin(signupDto);
         
         Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
@@ -332,7 +333,7 @@ public class JpaServiceTest {
     }
     
     @Test
-    public void testSignupUser() {
+    public void testSignupUser() throws SgDataValidationException {
         service.signupUser(signupDto);
         
         Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
@@ -365,7 +366,7 @@ public class JpaServiceTest {
     }
     
     @Test
-    public void testCompleteSignup() 
+    public void testCompleteSignup() throws SgDataValidationException 
     {
         try{
             service.completeSignup(1L, completeSignupDto);
@@ -390,7 +391,7 @@ public class JpaServiceTest {
     }
     
     @Test
-    public void testSignin()
+    public void testSignin() throws SgDataValidationException
     {
         try{
             service.signIn(signinDto);
