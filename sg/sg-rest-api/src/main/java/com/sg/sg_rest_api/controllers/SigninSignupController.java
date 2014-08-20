@@ -6,11 +6,11 @@
 package com.sg.sg_rest_api.controllers;
 
 import com.sg.constants.CompleteSignupStatus;
+import com.sg.constants.CustomHttpHeaders;
 import com.sg.constants.RequestPath;
 import com.sg.dto.AccountDto;
 import com.sg.domain.service.SgService;
 import com.sg.dto.SigninDto;
-import com.sg.dto.SinginAttempthResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +21,9 @@ import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
 import com.sg.constants.TokenExpirationType;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
-import com.sg.dto.CompleteSignupAttempthResultDto;
+import com.sg.dto.OperationStatusDto;
 import com.sg.dto.CompleteSignupDto;
 import com.sg.dto.SignupDto;
-import com.sg.dto.SingupAttempthResultDto;
 import com.sg.domain.service.SgMailService;
 import com.sg.domain.service.AuthToken;
 import com.sg.domain.service.SgCryptoService;
@@ -34,6 +33,7 @@ import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 import org.joda.time.Instant;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -55,18 +55,16 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
     public @ResponseBody
-    SingupAttempthResultDto signupUser(@RequestBody SignupDto dto) throws SgCryptoException {
-        SingupAttempthResultDto result = new SingupAttempthResultDto();
+    OperationStatusDto signupUser(@RequestBody SignupDto dto) throws SgCryptoException {
+        OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
             service.signupUser(dto);
-            
+
         } catch (SgSignupAlreadyCompletedException e) {
             result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
             return result;
-        }
-        catch (SgSignupForRegisteredButNonVerifiedEmailException e)
-        {
+        } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
             result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
         Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
@@ -80,18 +78,16 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_ADMIN_USER, method = RequestMethod.POST)
     public @ResponseBody
-    SingupAttempthResultDto signupAdmin(@RequestBody SignupDto dto) throws IOException, SgCryptoException {
-        SingupAttempthResultDto result = new SingupAttempthResultDto();
+    OperationStatusDto signupAdmin(@RequestBody SignupDto dto) throws IOException, SgCryptoException {
+        OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
             service.signupAdmin(dto);
-            
+
         } catch (SgSignupAlreadyCompletedException e) {
             result.setStatus(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED);
             return result;
-        }
-        catch (SgSignupForRegisteredButNonVerifiedEmailException e)
-        {
+        } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
             result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
         Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
@@ -105,10 +101,10 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.POST)
     public @ResponseBody
-    CompleteSignupAttempthResultDto completeSignup(@RequestBody CompleteSignupDto dto) {
+    OperationStatusDto completeSignup(@RequestBody CompleteSignupDto dto) {
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        CompleteSignupAttempthResultDto attemptResult = new CompleteSignupAttempthResultDto();
+        OperationStatusDto attemptResult = new OperationStatusDto();
 
         try {
             service.completeSignup(userId, dto);
@@ -126,12 +122,18 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
     public @ResponseBody
-    SinginAttempthResultDto signin(@RequestBody SigninDto dto) throws IOException {
-        SinginAttempthResultDto result = new SinginAttempthResultDto();
+    OperationStatusDto signin(@RequestBody SigninDto dto, HttpServletResponse response) throws IOException, SgCryptoException {
+        OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SigninStatus.STATUS_SUCCESS);
 
         try {
             service.signIn(dto);
+            //todo: test this
+            Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
+            AccountDto accountDto = service.getAccountInfo(accountId);
+            AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now());
+            String token = security.encryptSecurityToken(authToken);
+            response.setHeader(CustomHttpHeaders.X_AUTH_TOKEN, token);
         } catch (SgAccountNotFoundException e) {
             result.setStatus(SigninStatus.STATUS_USER_NOT_FOUND);
         } catch (SgInvalidPasswordException e) {

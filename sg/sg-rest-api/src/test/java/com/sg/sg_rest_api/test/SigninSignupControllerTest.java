@@ -6,6 +6,7 @@
 package com.sg.sg_rest_api.test;
 
 import com.sg.constants.CompleteSignupStatus;
+import com.sg.constants.CustomHttpHeaders;
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
 import com.sg.domain.service.SgService;
@@ -103,6 +104,7 @@ public class SigninSignupControllerTest {
     private static final SignupDto signupDto;
     private static final AccountDto nonVerifiedUserAccountDto;
     private static final AccountDto nonVerifiedAdminUserAccountDto;
+    private static final AccountDto verifiedUserAccountDto;
     private static final CompleteSignupDto completeSignupDto;
     private static final SigninDto signinDto;
     
@@ -122,6 +124,17 @@ public class SigninSignupControllerTest {
         nonVerifiedUserAccountDto.setUserBirthDate(USER_BIRTH_DATE);
         nonVerifiedUserAccountDto.setUserFirstName(USER_FIRST_NAME);
         nonVerifiedUserAccountDto.setUserLastName(USER_LAST_NAME);
+        
+        verifiedUserAccountDto = new AccountDto();
+        verifiedUserAccountDto.setEmail(USER_EMAIL);
+        verifiedUserAccountDto.setEmailVerified(Boolean.TRUE);
+        verifiedUserAccountDto.setId(ACCOUNT_ID);
+        verifiedUserAccountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER}));
+        verifiedUserAccountDto.setUserBirthDate(USER_BIRTH_DATE);
+        verifiedUserAccountDto.setUserFirstName(USER_FIRST_NAME);
+        verifiedUserAccountDto.setUserLastName(USER_LAST_NAME);
+        
+        
         
         nonVerifiedAdminUserAccountDto = new AccountDto();
         nonVerifiedAdminUserAccountDto.setEmail(USER_EMAIL);
@@ -424,18 +437,27 @@ public class SigninSignupControllerTest {
     public void testSigninSuccessfully() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
+        
+        when(serviceMock.getAccountIdByRegistrationEmail(signinDto.getEmail())).thenReturn(verifiedUserAccountDto.getId());
+        when(serviceMock.getAccountInfo(verifiedUserAccountDto.getId())).thenReturn(verifiedUserAccountDto);
+        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(signinDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_SUCCESS)));
+                .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_SUCCESS)))
+                .andExpect(header().string(CustomHttpHeaders.X_AUTH_TOKEN, is(SECURE_TOKEN_STRING)));
 
         verify(serviceMock, times(1)).signIn(signinDto);
+        verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signinDto.getEmail());
+        verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
+        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verifyNoMoreInteractions(serviceMock);
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
+    
 }

@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  *
  * @author tarasev
  */
-public class CompleteSignupAttempthResultDto {
+public class OperationStatusDto {
 
     private int status;
 
@@ -38,7 +38,7 @@ public class CompleteSignupAttempthResultDto {
             return false;
         }
 
-        CompleteSignupAttempthResultDto other = (CompleteSignupAttempthResultDto) obj;
+        OperationStatusDto other = (OperationStatusDto) obj;
         return new EqualsBuilder().
                 append(this.status, other.status).
                 isEquals();
