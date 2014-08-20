@@ -75,7 +75,7 @@ public class SpringSecurityTest {
         accountDto.setEmail(USER_EMAIL);
         accountDto.setEmailVerified(Boolean.FALSE);
         accountDto.setId(ACCOUNT_ID);
-        accountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER}));
+        accountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
         accountDto.setUserBirthDate(USER_BIRTH_DATE);
         accountDto.setUserFirstName(USER_FIRST_NAME);
         accountDto.setUserLastName(USER_LAST_NAME);
