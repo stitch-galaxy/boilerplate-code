@@ -18,7 +18,9 @@ import com.sg.domain.spring.configuration.SgCryptoContext;
 import com.sg.dto.AccountDto;
 import java.util.Arrays;
 import junit.framework.Assert;
+import org.joda.time.Instant;
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,8 @@ public class SgCryptoServiceTest {
     private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
     private static final String USER_EMAIL = "test@example.com";
     private static final AccountDto accountDto;
+    
+    private static final String INVALID_TOKEN = "INVALID_TOKEN";
 
     static {
         accountDto = new AccountDto();
@@ -57,25 +61,26 @@ public class SgCryptoServiceTest {
 
     @Test
     public void testGoodLongToken() throws SgCryptoException {
-        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN);
+        Instant now = Instant.now();
+        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, now);
 
-        String token = cryptoService.getTokenString(authToken);
+        String token = cryptoService.encryptSecurityToken(authToken);
 
-        AuthToken decryptedAuthToken = cryptoService.getTokenFromString(token);
+        AuthToken decryptedAuthToken = cryptoService.decryptSecurityTokenAtInstant(token, now);
 
         Assert.assertEquals(authToken, decryptedAuthToken);
     }
 
     @Test
     public void testExpiredLongToken() throws SgCryptoException {
-        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN);
-        authToken.setExpirationMillis(authToken.getExpirationMillis() - TokenExpirationIntervals.LONG_TOKEN_EXPIRATION_INTERVAL);
+        Instant now = Instant.now();
+        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, now);
 
-        String token = cryptoService.getTokenString(authToken);
+        String token = cryptoService.encryptSecurityToken(authToken);
 
         try
         {
-            cryptoService.getTokenFromString(token);
+            cryptoService.decryptSecurityTokenAtInstant(token, now.plus(TokenExpirationIntervals.LONG_TOKEN_EXPIRATION_INTERVAL));
             Assert.fail("Expected " + SgTokenExpiredException.class.getName());
         }
         catch(SgTokenExpiredException e){
@@ -84,25 +89,26 @@ public class SgCryptoServiceTest {
     
     @Test
     public void testGoodSessionToken() throws SgCryptoException {
-        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN);
+        Instant now = Instant.now();
+        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, now);
 
-        String token = cryptoService.getTokenString(authToken);
+        String token = cryptoService.encryptSecurityToken(authToken);
 
-        AuthToken decryptedAuthToken = cryptoService.getTokenFromString(token);
+        AuthToken decryptedAuthToken = cryptoService.decryptSecurityTokenAtInstant(token, now);
 
         Assert.assertEquals(authToken, decryptedAuthToken);
     }
 
     @Test
     public void testExpiredSessionToken() throws SgCryptoException {
-        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN);
-        authToken.setExpirationMillis(authToken.getExpirationMillis() - TokenExpirationIntervals.USER_SESSION_TOKEN_EXPIRATION_INTERVAL);
+        Instant now = Instant.now();
+        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, now);
 
-        String token = cryptoService.getTokenString(authToken);
+        String token = cryptoService.encryptSecurityToken(authToken);
 
         try
         {
-            cryptoService.getTokenFromString(token);
+            cryptoService.decryptSecurityTokenAtInstant(token, now.plus(TokenExpirationIntervals.USER_SESSION_TOKEN_EXPIRATION_INTERVAL));
             Assert.fail("Expected " + SgTokenExpiredException.class.getName());
         }
         catch(SgTokenExpiredException e){
@@ -111,11 +117,12 @@ public class SgCryptoServiceTest {
     
     @Test
     public void testNeverExpiresToken() throws SgCryptoException {
-        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN);
+        Instant now = Instant.now();
+        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.NEVER_EXPIRES, now);
 
-        String token = cryptoService.getTokenString(authToken);
+        String token = cryptoService.encryptSecurityToken(authToken);
 
-        AuthToken decryptedAuthToken = cryptoService.getTokenFromString(token);
+        AuthToken decryptedAuthToken = cryptoService.decryptSecurityTokenAtInstant(token, now.plus(Period.days(356 * 10).toStandardDuration()));
 
         Assert.assertEquals(authToken, decryptedAuthToken);
     }
@@ -125,11 +132,11 @@ public class SgCryptoServiceTest {
     {
         try
         {
-            cryptoService.getTokenFromString(INVALID_TOKEN);
+            cryptoService.decryptSecurityTokenAtInstant(INVALID_TOKEN, Instant.now());
             Assert.fail("Expected " + SgInvalidTokenException.class.getName());
         }
         catch(SgInvalidTokenException e){
         }
     }
-    private static final String INVALID_TOKEN = "INVALID_TOKEN";
+    
 }

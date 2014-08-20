@@ -11,6 +11,7 @@ import com.sg.domain.service.exception.SgTokenExpiredException;
 import java.io.IOException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jasypt.util.text.BasicTextEncryptor;
+import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class SgCryptoServiceImpl implements SgCryptoService {
     @Value("${security.key}")
     private String secret;
 
-    public String getTokenString(AuthToken token) throws SgCryptoException {
+    public String encryptSecurityToken(AuthToken token) throws SgCryptoException {
 
         try {
             BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
@@ -38,7 +39,7 @@ public class SgCryptoServiceImpl implements SgCryptoService {
         }
     }
 
-    public AuthToken getTokenFromString(String encryptedToken) throws SgCryptoException {
+    public AuthToken decryptSecurityTokenAtInstant(String encryptedToken, Instant instant) throws SgCryptoException {
         String tokenBody;
         AuthToken token;
         try {
@@ -58,7 +59,7 @@ public class SgCryptoServiceImpl implements SgCryptoService {
         } catch (Exception e) {
             throw new SgInvalidTokenException(e);
         }
-        if (token.isExpired()) {
+        if (token.isExpired(instant)) {
             throw new SgTokenExpiredException();
         }
         return token;

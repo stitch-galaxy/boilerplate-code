@@ -13,6 +13,7 @@ import com.sg.constants.CustomHttpHeaders;
 import com.sg.constants.Roles;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
+import com.sg.constants.TokenExpirationIntervals;
 import com.sg.constants.TokenExpirationType;
 import com.sg.domain.service.AuthToken;
 import com.sg.domain.service.SgCryptoService;
@@ -143,8 +144,8 @@ public class SpringSecurityTest {
     
     @Test
     public void testSecureResourceWithAuthToken() throws IOException, Exception {
-        AuthToken token = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN);
-        String authToken = security.getTokenString(token);
+        AuthToken token = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now());
+        String authToken = security.encryptSecurityToken(token);
 
         ThreadDto threadDto = new ThreadDto();
         threadDto.setCode(AIDA_14);
@@ -164,9 +165,9 @@ public class SpringSecurityTest {
 
     @Test
     public void testExpiredAuthToken() throws IOException, Exception {
-        AuthToken token = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN);
-        token.setExpirationMillis(Instant.now().getMillis() - 1);
-        String authToken = security.getTokenString(token);
+        AuthToken token = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now().minus(TokenExpirationIntervals.USER_SESSION_TOKEN_EXPIRATION_INTERVAL));
+        token.setExpirationInstantMillis(Instant.now().getMillis() - 1);
+        String authToken = security.encryptSecurityToken(token);
 
         ThreadDto threadDto = new ThreadDto();
         threadDto.setCode(AIDA_14);

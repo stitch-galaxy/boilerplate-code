@@ -147,7 +147,7 @@ public class SigninSignupControllerTest {
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupUser(signupDto);
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountDto.getId());
         when(serviceMock.getAccountInfo(nonVerifiedUserAccountDto.getId())).thenReturn(nonVerifiedUserAccountDto);
-        when(cryptoMock.getTokenString(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
+        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -159,7 +159,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).signupUser(signupDto);
         verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
         verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
-        verify(cryptoMock, times(1)).getTokenString(org.mockito.Matchers.any(AuthToken.class));
+        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
@@ -174,7 +174,7 @@ public class SigninSignupControllerTest {
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupAdmin(signupDto);
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountDto.getId());
         when(serviceMock.getAccountInfo(nonVerifiedAdminUserAccountDto.getId())).thenReturn(nonVerifiedAdminUserAccountDto);
-        when(cryptoMock.getTokenString(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
+        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -186,7 +186,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).signupAdmin(signupDto);
         verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
         verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
-        verify(cryptoMock, times(1)).getTokenString(org.mockito.Matchers.any(AuthToken.class));
+        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
@@ -238,7 +238,7 @@ public class SigninSignupControllerTest {
 
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountDto.getId());
         when(serviceMock.getAccountInfo(nonVerifiedUserAccountDto.getId())).thenReturn(nonVerifiedUserAccountDto);
-        when(cryptoMock.getTokenString(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
+        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -250,7 +250,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).signupUser(signupDto);
         verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
         verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
-        verify(cryptoMock, times(1)).getTokenString(org.mockito.Matchers.any(AuthToken.class));
+        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
@@ -264,7 +264,7 @@ public class SigninSignupControllerTest {
 
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountDto.getId());
         when(serviceMock.getAccountInfo(nonVerifiedAdminUserAccountDto.getId())).thenReturn(nonVerifiedAdminUserAccountDto);
-        when(cryptoMock.getTokenString(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
+        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -276,7 +276,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).signupAdmin(signupDto);
         verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
         verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
-        verify(cryptoMock, times(1)).getTokenString(org.mockito.Matchers.any(AuthToken.class));
+        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);

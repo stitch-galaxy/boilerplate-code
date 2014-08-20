@@ -34,6 +34,7 @@ import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import java.io.IOException;
+import org.joda.time.Instant;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -70,8 +71,8 @@ public class SigninSignupController {
         }
         Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
         AccountDto accountDto = service.getAccountInfo(accountId);
-        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN);
-        String token = security.getTokenString(authToken);
+        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());
+        String token = security.encryptSecurityToken(authToken);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
 
         return result;
@@ -95,8 +96,8 @@ public class SigninSignupController {
         }
         Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
         AccountDto accountDto = service.getAccountInfo(accountId);
-        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN);
-        String token = security.getTokenString(authToken);
+        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());
+        String token = security.encryptSecurityToken(authToken);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
 
         return result;

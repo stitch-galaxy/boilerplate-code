@@ -6,6 +6,7 @@
 
 package com.sg.constants;
 
+import org.joda.time.Duration;
 import org.joda.time.Period;
 
 /**
@@ -13,6 +14,6 @@ import org.joda.time.Period;
  * @author tarasev
  */
 public class TokenExpirationIntervals {
-    public static final long USER_SESSION_TOKEN_EXPIRATION_INTERVAL = Period.days(1).toStandardDuration().getMillis();
-    public static final long LONG_TOKEN_EXPIRATION_INTERVAL = Period.days(30).toStandardDuration().getMillis();
+    public static final Duration USER_SESSION_TOKEN_EXPIRATION_INTERVAL = Period.days(1).toStandardDuration();
+    public static final Duration LONG_TOKEN_EXPIRATION_INTERVAL = Period.days(30).toStandardDuration();
 }

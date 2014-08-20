@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,7 +45,7 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
         String encryptedAuthToken = this.extractAuthTokenFromRequest(httpRequest);
         if (encryptedAuthToken != null) {
             try {
-                AuthToken authToken = security.getTokenFromString(encryptedAuthToken);
+                AuthToken authToken = security.decryptSecurityTokenAtInstant(encryptedAuthToken, Instant.now());
 
                 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
                 for (String a : authToken.getAuthorities()) {

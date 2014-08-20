@@ -25,29 +25,25 @@ public class AuthToken {
     public AuthToken() {
     }
 
-    private long expirationMillis;
+    private long expirationInstantMillis;
 
-    public AuthToken(AccountDto dto, TokenExpirationType expirationType) {
+    public AuthToken(AccountDto dto, TokenExpirationType expirationType, Instant issueTime) {
         this.accountId = dto.getId();
         List<String> authoritiesToGrantAccess = new ArrayList<String>();
         for (String r : dto.getRoles()) {
             authoritiesToGrantAccess.add(Roles.ROLE_AUTHORITY_PREFIX + r);
         }
         this.authorities = authoritiesToGrantAccess;
-        Instant now = Instant.now();
-        this.expirationMillis = now.getMillis();
-        long interval = 0;
+        this.expirationInstantMillis = issueTime.getMillis();
         switch (expirationType) {
             case LONG_TOKEN:
-                interval = TokenExpirationIntervals.LONG_TOKEN_EXPIRATION_INTERVAL;
-                this.expirationMillis += interval;
+                this.expirationInstantMillis += TokenExpirationIntervals.LONG_TOKEN_EXPIRATION_INTERVAL.getMillis();
                 break;
             case USER_SESSION_TOKEN:
-                interval = TokenExpirationIntervals.USER_SESSION_TOKEN_EXPIRATION_INTERVAL;
-                this.expirationMillis += interval;
+                this.expirationInstantMillis += TokenExpirationIntervals.USER_SESSION_TOKEN_EXPIRATION_INTERVAL.getMillis();
                 break;
             case NEVER_EXPIRES:
-                expirationMillis = 0;
+                expirationInstantMillis = Long.MAX_VALUE;
                 break;
         }
     }
@@ -70,28 +66,26 @@ public class AuthToken {
     }
 
     @JsonIgnore
-    public boolean isExpired() {
-        if (expirationMillis == 0) {
-            return false;
-        }
-        if (expirationMillis > Instant.now().getMillis()) {
+    public boolean isExpired(Instant moment) {
+        
+        if (expirationInstantMillis > moment.getMillis()) {
             return false;
         }
         return true;
     }
 
     /**
-     * @return the expirationMillis
+     * @return the expirationInstantMillis
      */
-    public long getExpirationMillis() {
-        return expirationMillis;
+    public long getExpirationInstantMillis() {
+        return expirationInstantMillis;
     }
 
     /**
-     * @param expirationMillis the expirationMillis to set
+     * @param expirationInstantMillis the expirationInstantMillis to set
      */
-    public void setExpirationMillis(long expirationMillis) {
-        this.expirationMillis = expirationMillis;
+    public void setExpirationInstantMillis(long expirationInstantMillis) {
+        this.expirationInstantMillis = expirationInstantMillis;
     }
 
     /**
@@ -121,7 +115,7 @@ public class AuthToken {
         return new EqualsBuilder().
                 append(this.accountId, other.accountId).
                 append(this.authorities, other.authorities).
-                append(this.expirationMillis, other.expirationMillis).
+                append(this.expirationInstantMillis, other.expirationInstantMillis).
                 isEquals();
     }
 }

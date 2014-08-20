@@ -7,6 +7,7 @@
 package com.sg.domain.service;
 
 import com.sg.domain.service.exception.SgCryptoException;
+import org.joda.time.Instant;
 
 /**
  *
@@ -14,7 +15,7 @@ import com.sg.domain.service.exception.SgCryptoException;
  */
 public interface SgCryptoService {
     
-    public String getTokenString(AuthToken token) throws SgCryptoException;
-    public AuthToken getTokenFromString(String encryptedToken) throws SgCryptoException;
+    public String encryptSecurityToken(AuthToken token) throws SgCryptoException;
+    public AuthToken decryptSecurityTokenAtInstant(String encryptedToken, Instant instant) throws SgCryptoException;
     
 }
