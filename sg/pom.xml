@@ -11,15 +11,10 @@
     <appengine.target.version>1.9.7</appengine.target.version>
 
                 <sg-domain-version>1.0.0-SNAPSHOT</sg-domain-version>
-		<sg-common-version>1.0.0-SNAPSHOT</sg-common-version>
-		<sg-cdn-version>1.0.0-SNAPSHOT</sg-cdn-version>
-		<sg-manager-api-version>1.0.0-SNAPSHOT</sg-manager-api-version>
-		<sg-manager-web-version>1.0.0-SNAPSHOT</sg-manager-web-version>
 
 		<spring-version>4.0.6.RELEASE</spring-version>
                 <spring-data-jpa-version>1.6.1.RELEASE</spring-data-jpa-version>
                 <spring-boot-starter-data-jpa-version>1.1.4.RELEASE</spring-boot-starter-data-jpa-version>
-
 
 		<junit-version>4.10</junit-version>
 		<joda-version>2.3</joda-version>
@@ -71,5 +66,6 @@
     <module>sg-ear</module>
     <module>sg-domain</module>
     <module>sg-rest-api</module>
+    <module>sg-rest-integ-test</module>
   </modules>
 </project>
