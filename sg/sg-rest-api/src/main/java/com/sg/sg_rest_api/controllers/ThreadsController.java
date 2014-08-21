@@ -7,7 +7,7 @@ package com.sg.sg_rest_api.controllers;
 
 import com.sg.constants.RequestPath;
 import com.sg.constants.ThreadOperationStatus;
-import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
@@ -15,6 +15,7 @@ import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.response.OperationStatusDto;
+import com.sg.dto.response.ThreadsListDto;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ThreadsController {
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_ADD, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto create(@Valid @RequestBody ThreadDto dto) throws SgDataValidationException {
+    OperationStatusDto create(@Valid @RequestBody ThreadCreateDto dto) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
         try {
@@ -45,9 +46,8 @@ public class ThreadsController {
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_LIST, method = RequestMethod.GET)
     public @ResponseBody
-    List<ThreadDto> list() {
-        List<ThreadDto> result = service.listThreads();
-        return result;
+    ThreadsListDto list() {
+        return service.listThreads();
     }
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_DELETE, method = RequestMethod.POST)

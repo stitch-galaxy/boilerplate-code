@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author tarasev
  */
-public class ThreadDto {
+public class ThreadCreateDto {
 
     public static final String FIELD_THREAD_CODE = "ThreadDto.Code";
     
@@ -45,7 +45,7 @@ public class ThreadDto {
             return false;
         }
 
-        ThreadDto other = (ThreadDto) obj;
+        ThreadCreateDto other = (ThreadCreateDto) obj;
         return new EqualsBuilder().
                 append(this.code, other.code).
                 isEquals();

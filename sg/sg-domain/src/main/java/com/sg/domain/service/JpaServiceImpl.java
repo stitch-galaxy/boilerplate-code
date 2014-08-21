@@ -10,7 +10,7 @@ import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
-import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.dto.response.AccountDto;
@@ -37,6 +37,7 @@ import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
+import com.sg.dto.response.ThreadsListDto;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -101,7 +102,7 @@ public class JpaServiceImpl implements SgService {
         threadsRepository.delete(thread.getId());
     }
 
-    public void create(final ThreadDto dto) throws SgDataValidationException {
+    public void create(final ThreadCreateDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
@@ -116,7 +117,7 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    private void createThreadImpl(ThreadDto dto) {
+    private void createThreadImpl(ThreadCreateDto dto) {
         if (threadsRepository.findByCode(dto.getCode()) != null) {
             throw new SgThreadAlreadyExistsException(dto.getCode());
         }
@@ -125,9 +126,9 @@ public class JpaServiceImpl implements SgService {
         threadsRepository.save(thread);
     }
 
-    public List<ThreadDto> listThreads() {
-        return transactionTemplate.execute(new TransactionCallback<List<ThreadDto>>() {
-            public List<ThreadDto> doInTransaction(TransactionStatus status) {
+    public ThreadsListDto listThreads() {
+        return transactionTemplate.execute(new TransactionCallback<ThreadsListDto>() {
+            public ThreadsListDto doInTransaction(TransactionStatus status) {
                 try {
                     return listThreadsImpl();
                 } catch (SgServiceLayerRuntimeException e) {
@@ -139,12 +140,16 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    private List<ThreadDto> listThreadsImpl() {
-        List<ThreadDto> result = new ArrayList<ThreadDto>();
+    private ThreadsListDto listThreadsImpl() {
+        ThreadsListDto result = new ThreadsListDto();
         Iterable<Thread> threads = threadsRepository.findAll();
+        
+        List<ThreadsListDto.ThreadInfo> list = new ArrayList<ThreadsListDto.ThreadInfo>();
         for (Thread t : threads) {
-            result.add(mapper.map(t, ThreadDto.class));
+            list.add(mapper.map(t, ThreadsListDto.ThreadInfo.class));
         }
+        
+        result.setThreads(list);
         return result;
     }
 

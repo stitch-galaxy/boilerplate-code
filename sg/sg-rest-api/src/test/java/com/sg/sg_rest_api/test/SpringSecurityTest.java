@@ -8,7 +8,7 @@ package com.sg.sg_rest_api.test;
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationIntegrationTestContext;
 import com.sg.domain.service.SgService;
-import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadCreateDto;
 import com.sg.constants.CustomHttpHeaders;
 import com.sg.constants.OperationStatus;
 import com.sg.constants.Roles;

@@ -17,7 +17,7 @@ import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.ThreadDeleteDto;
-import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -160,14 +160,14 @@ public class JpaServiceDataValidationTest {
     
     @Test
     public void testInvalidThreadDto() {
-        ThreadDto dto = new ThreadDto();
+        ThreadCreateDto dto = new ThreadCreateDto();
         dto.setCode(INVALID_THREAD_CODE);
         try {
             service.create(dto);
             Assert.fail("Expected " + SgDataValidationException.class.getName());
         } catch (SgDataValidationException e) {
             Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
-                ThreadDto.FIELD_THREAD_CODE,
+                ThreadCreateDto.FIELD_THREAD_CODE,
             })),
                     e.getFieldErrors());
         }
@@ -176,7 +176,7 @@ public class JpaServiceDataValidationTest {
 
     @Test
     public void testValidThreadDto() throws SgDataValidationException {
-        ThreadDto dto = new ThreadDto();
+        ThreadCreateDto dto = new ThreadCreateDto();
         dto.setCode(VALID_THREAD_CODE);
         validatorComponent.validate(dto);
     }

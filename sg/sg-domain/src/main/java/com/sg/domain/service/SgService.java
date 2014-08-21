@@ -19,13 +19,14 @@ import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
-import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.response.AccountDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
+import com.sg.dto.response.ThreadsListDto;
 import java.util.List;
 
 /**
@@ -34,10 +35,10 @@ import java.util.List;
  */
 public interface SgService {
     
-    public void create(ThreadDto dto) throws SgDataValidationException, SgThreadAlreadyExistsException;
+    public void create(ThreadCreateDto dto) throws SgDataValidationException, SgThreadAlreadyExistsException;
     public void delete(ThreadDeleteDto dto) throws SgDataValidationException, SgThreadNotFoundException;
     public void update(ThreadUpdateDto dto) throws SgDataValidationException, SgThreadNotFoundException, SgThreadAlreadyExistsException;
-    public List<ThreadDto> listThreads();   
+    public ThreadsListDto listThreads();   
     
     public void create(CanvasDto dto) throws SgDataValidationException, SgCanvasAlreadyExistsException;
     public void delete(CanvasRefDto dto) throws SgDataValidationException, SgCanvasNotFoundException;

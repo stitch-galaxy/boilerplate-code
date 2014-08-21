@@ -10,7 +10,7 @@ import com.sg.constants.Roles;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
-import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
@@ -32,6 +32,7 @@ import com.sg.dto.response.AccountDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
+import com.sg.dto.response.ThreadsListDto;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -85,18 +86,27 @@ public class JpaServiceTest {
 
     private static final CompleteSignupDto completeSignupDto;
 
-    private static final ThreadDto dmcThreadDto;
-    private static final ThreadDto anchorThreadDto;
+    private static final ThreadCreateDto dmcThreadDto;
+    private static final ThreadCreateDto anchorThreadDto;
+    
+    private static final ThreadsListDto.ThreadInfo dmcThreadInfoDto;
+    private static final ThreadsListDto.ThreadInfo anchorThreadInfoDto;
     
     private static final CanvasDto aida14CanvasDto;
     private static final CanvasDto aida18CanvasDto;
 
     static {
-        dmcThreadDto = new ThreadDto();
+        dmcThreadDto = new ThreadCreateDto();
         dmcThreadDto.setCode(DMC);
+        
+        dmcThreadInfoDto = new ThreadsListDto.ThreadInfo();
+        dmcThreadInfoDto.setCode(DMC);
 
-        anchorThreadDto = new ThreadDto();
+        anchorThreadDto = new ThreadCreateDto();
         anchorThreadDto.setCode(ANCHOR);
+        
+        anchorThreadInfoDto = new ThreadsListDto.ThreadInfo();
+        anchorThreadInfoDto.setCode(ANCHOR);
         
         aida14CanvasDto = new CanvasDto();
         aida14CanvasDto.setCode(AIDA_14);
@@ -213,10 +223,13 @@ public class JpaServiceTest {
     public void testThreadsList() throws SgDataValidationException {
         service.create(dmcThreadDto);
         service.create(anchorThreadDto);
-        List<ThreadDto> list = new ArrayList<ThreadDto>();
-        list.add(dmcThreadDto);
-        list.add(anchorThreadDto);
-        Assert.assertEquals(list, service.listThreads());
+        
+        ThreadsListDto threadsList = new ThreadsListDto();
+        List<ThreadsListDto.ThreadInfo> list = new ArrayList<ThreadsListDto.ThreadInfo>();
+        list.add(dmcThreadInfoDto);
+        list.add(anchorThreadInfoDto);
+        threadsList.setThreads(list);
+        Assert.assertEquals(threadsList, service.listThreads());
     }
 
     @Test
@@ -237,9 +250,13 @@ public class JpaServiceTest {
         updateDto.setRefCode(DMC);
         updateDto.setCode(ANCHOR);
         service.update(updateDto);
-        List<ThreadDto> list = new ArrayList<ThreadDto>();
-        list.add(anchorThreadDto);
-        Assert.assertEquals(list, service.listThreads());
+        ThreadsListDto threadsList = new ThreadsListDto();
+        List<ThreadsListDto.ThreadInfo> list = new ArrayList<ThreadsListDto.ThreadInfo>();
+        list.add(anchorThreadInfoDto);
+        threadsList.setThreads(list);
+        
+        Assert.assertEquals(threadsList, service.listThreads());
+        
         service.create(dmcThreadDto);
 
         try {
@@ -267,7 +284,7 @@ public class JpaServiceTest {
         
         service.delete(ref);
         
-        Assert.assertEquals(0, service.listThreads().size());
+        Assert.assertEquals(0, service.listThreads().getThreads().size());
     }
     
     @Test 

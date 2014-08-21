@@ -7,7 +7,7 @@ package com.sg.sg_rest_api.test;
 
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
-import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadCreateDto;
 import com.sg.domain.service.SgService;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
@@ -18,7 +18,9 @@ import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
+import com.sg.dto.response.ThreadsListDto;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.List;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import static org.hamcrest.Matchers.*;
@@ -71,19 +74,28 @@ public class ThreadsControllerTest {
     private static final String DMC = "DMC";
     private static final String ANCHOR = "Anchor";
 
-    private static final ThreadDto dmcThreadDto;
-    private static final ThreadDto anchorThreadDto;
+    private static final ThreadCreateDto dmcThreadDto;
+    private static final ThreadCreateDto anchorThreadDto;
+    
+    private static final ThreadsListDto.ThreadInfo dmcThreadInfoDto;
+    private static final ThreadsListDto.ThreadInfo anchorThreadInfoDto;
     
     private static final ThreadDeleteDto dmcThreadDeleteDto;
     
     private static final ThreadUpdateDto dmcThreadUpdateDto;
 
     static {
-        dmcThreadDto = new ThreadDto();
+        dmcThreadDto = new ThreadCreateDto();
         dmcThreadDto.setCode(DMC);
 
-        anchorThreadDto = new ThreadDto();
+        anchorThreadDto = new ThreadCreateDto();
         anchorThreadDto.setCode(ANCHOR);
+        
+        dmcThreadInfoDto = new ThreadsListDto.ThreadInfo();
+        dmcThreadInfoDto.setCode(DMC);
+        
+        anchorThreadInfoDto = new ThreadsListDto.ThreadInfo();
+        anchorThreadInfoDto.setCode(ANCHOR);
         
         dmcThreadDeleteDto = new ThreadDeleteDto();
         dmcThreadDeleteDto.setCode(DMC);
@@ -95,14 +107,21 @@ public class ThreadsControllerTest {
 
     @Test
     public void testList() throws Exception {
-        when(serviceMock.listThreads()).thenReturn(Arrays.asList(dmcThreadDto, anchorThreadDto));
+        
+        ThreadsListDto threadsList = new ThreadsListDto();
+        List<ThreadsListDto.ThreadInfo> list = new ArrayList<ThreadsListDto.ThreadInfo>();
+        list.add(dmcThreadInfoDto);
+        list.add(anchorThreadInfoDto);
+        threadsList.setThreads(list);
+        
+        when(serviceMock.listThreads()).thenReturn(threadsList);
 
         mockMvc.perform(get(RequestPath.REQUEST_THREAD_LIST))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].code", is(DMC)))
-                .andExpect(jsonPath("$[1].code", is(ANCHOR)));
+                .andExpect(jsonPath("$.threads", hasSize(2)))
+                .andExpect(jsonPath("$.threads.[0].code", is(DMC)))
+                .andExpect(jsonPath("$.threads[1].code", is(ANCHOR)));
         verify(serviceMock, times(1)).listThreads();
         verifyNoMoreInteractions(serviceMock);
     }

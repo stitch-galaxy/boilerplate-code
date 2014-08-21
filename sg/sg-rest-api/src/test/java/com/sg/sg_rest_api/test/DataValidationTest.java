@@ -16,7 +16,7 @@ import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.ThreadDeleteDto;
-import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
 import java.util.HashSet;
@@ -204,7 +204,7 @@ public class DataValidationTest {
     public void testThreadCreateDtoError() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         
-        ThreadDto dto = new ThreadDto();
+        ThreadCreateDto dto = new ThreadCreateDto();
         dto.setCode(INVALID_THREAD_CODE);
         
         mockMvc.perform(post(RequestPath.REQUEST_THREAD_ADD)
@@ -214,7 +214,7 @@ public class DataValidationTest {
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.fieldErrors", hasSize(1)))
                 .andExpect((jsonPath("$.fieldErrors", containsInAnyOrder(
-                        ThreadDto.FIELD_THREAD_CODE
+                        ThreadCreateDto.FIELD_THREAD_CODE
                 ))));
 
         verifyNoMoreInteractions(serviceMock);
