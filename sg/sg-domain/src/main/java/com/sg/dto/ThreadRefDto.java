@@ -6,6 +6,7 @@
 package com.sg.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *

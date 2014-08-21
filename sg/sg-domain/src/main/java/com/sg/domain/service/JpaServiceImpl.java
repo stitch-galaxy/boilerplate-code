@@ -78,7 +78,8 @@ public class JpaServiceImpl implements SgService {
     @Resource
     private ValidatorComponent validatorComponent;
 
-    public void delete(final ThreadRefDto dto) {
+    public void delete(final ThreadRefDto dto) throws SgDataValidationException {
+        validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -100,7 +101,8 @@ public class JpaServiceImpl implements SgService {
         threadsRepository.delete(thread.getId());
     }
 
-    public void create(final ThreadDto dto) {
+    public void create(final ThreadDto dto) throws SgDataValidationException {
+        validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -146,7 +148,8 @@ public class JpaServiceImpl implements SgService {
         return result;
     }
 
-    public void update(final ThreadUpdateDto dto) {
+    public void update(final ThreadUpdateDto dto) throws SgDataValidationException {
+        validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -176,7 +179,8 @@ public class JpaServiceImpl implements SgService {
         threadsRepository.save(thread);
     }
 
-    public void create(final CanvasDto dto) {
+    public void create(final CanvasDto dto) throws SgDataValidationException {
+        validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -198,7 +202,8 @@ public class JpaServiceImpl implements SgService {
         canvasesRepository.save(canvas);
     }
 
-    public void delete(final CanvasRefDto dto) {
+    public void delete(final CanvasRefDto dto) throws SgDataValidationException {
+        validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -220,7 +225,8 @@ public class JpaServiceImpl implements SgService {
         canvasesRepository.delete(canvas);
     }
 
-    public void update(final CanvasUpdateDto dto) {
+    public void update(final CanvasUpdateDto dto) throws SgDataValidationException {
+        validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -277,7 +283,8 @@ public class JpaServiceImpl implements SgService {
         signup(dto, Roles.ROLE_USER);
     }
 
-    public void signupAdmin(final SignupDto dto) {
+    public void signupAdmin(final SignupDto dto) throws SgDataValidationException {
+        validatorComponent.validate(dto);
         signup(dto, Roles.ROLE_ADMIN, Roles.ROLE_USER);
     }
 
@@ -354,7 +361,8 @@ public class JpaServiceImpl implements SgService {
         return mapper.map(account, AccountDto.class);
     }
 
-    public void completeSignup(final Long userId, final CompleteSignupDto dto) {
+    public void completeSignup(final Long userId, final CompleteSignupDto dto) throws SgDataValidationException {
+        validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -381,7 +389,8 @@ public class JpaServiceImpl implements SgService {
         accountsRepository.save(account);
     }
 
-    public void signIn(final SigninDto dto) {
+    public void signIn(final SigninDto dto) throws SgDataValidationException {
+        validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {

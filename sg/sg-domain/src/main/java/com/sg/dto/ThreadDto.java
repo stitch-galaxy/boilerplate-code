@@ -6,6 +6,7 @@
 package com.sg.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -13,7 +14,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class ThreadDto {
 
+    public static final String FIELD_THREAD_CODE = "ThreadDto.Code";
     
+    @NotBlank(message = FIELD_THREAD_CODE)
     private String code;
 
     /**
@@ -27,7 +30,10 @@ public class ThreadDto {
      * @param code the code to set
      */
     public void setCode(String code) {
-        this.code = code;
+        this.code = null;
+        if (code != null) {
+            this.code = code.trim();
+        }
     }
 
     @Override

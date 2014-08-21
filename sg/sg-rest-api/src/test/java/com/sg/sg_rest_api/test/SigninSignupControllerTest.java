@@ -95,8 +95,8 @@ public class SigninSignupControllerTest {
 
     private static final String SECURE_TOKEN_STRING = "secure token";
     private static final Long ACCOUNT_ID = 1L;
-    private static final String USER_PASSWORD = "secret";
-    private static final String USER_WRONG_PASSWORD = "bad secret";
+    private static final String USER_PASSWORD = "1GoodPassword!";
+    private static final String USER_WRONG_PASSWORD = "badpwd";
     private static final String USER_EMAIL = "test@example.com";
     private static final String USER_LAST_NAME = "Tarasov";
     private static final String USER_FIRST_NAME = "Evgeny";

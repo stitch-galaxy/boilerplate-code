@@ -76,8 +76,8 @@ public class JpaServiceTest {
     private static final String USER_FIRST_NAME = "Nadezhda";
     private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
     private static final String USER_EMAIL = "test@example.com";
-    private static final String USER_PASSWORD = "secret";
-    private static final String USER_INCORRECT_PASSWORD = "bad password";
+    private static final String USER_PASSWORD = "1GoodPassword!";
+    private static final String USER_INCORRECT_PASSWORD = "1InvalidPassword!";
 
     private static final SignupDto signupDto;
     

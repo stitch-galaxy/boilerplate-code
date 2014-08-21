@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sg.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.text.WordUtils;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import org.joda.time.LocalDate;
@@ -18,20 +20,21 @@ import org.joda.time.LocalDate;
  * @author tarasev
  */
 public class SignupDto {
-    
+
     public static final String FIELD_SIGNUP_EMAIL = "SignupDto.Email";
     public static final String FIELD_SIGNUP_USER_FIRST_NAME = "SignupDto.FirstName";
     public static final String FIELD_SIGNUP_USER_LAST_NAME = "SignupDto.LastName";
     public static final String FIELD_SIGNUP_USER_BIRTH_DATE = "SignupDto.Birthdate";
-    
-    @NotEmpty(message = FIELD_SIGNUP_EMAIL)
+
+    @NotBlank(message = FIELD_SIGNUP_EMAIL)
     @Email(message = FIELD_SIGNUP_EMAIL)
     private String email;
-    @NotEmpty(message = FIELD_SIGNUP_USER_FIRST_NAME)
+    @NotBlank(message = FIELD_SIGNUP_USER_FIRST_NAME)
     private String userFirstName;
-    @NotEmpty(message = FIELD_SIGNUP_USER_LAST_NAME)
+    @NotBlank(message = FIELD_SIGNUP_USER_LAST_NAME)
     private String userLastName;
     @NotNull(message = FIELD_SIGNUP_USER_BIRTH_DATE)
+    @Past
     private LocalDate userBirthDate;
 
     /**
@@ -45,9 +48,12 @@ public class SignupDto {
      * @param email the email to set
      */
     public void setEmail(String email) {
-        this.email = email;
+        this.email = null;
+        if (email != null) {
+            this.email = email.toLowerCase().trim();
+        }
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -78,7 +84,10 @@ public class SignupDto {
      * @param userFirstName the userFirstName to set
      */
     public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
+        this.userFirstName = null;
+        if (userFirstName != null) {
+            this.userFirstName = WordUtils.capitalizeFully(userFirstName.trim());
+        }
     }
 
     /**
@@ -92,7 +101,10 @@ public class SignupDto {
      * @param userLastName the userLastName to set
      */
     public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
+        this.userLastName = null;
+        if (userLastName != null) {
+            this.userLastName = WordUtils.capitalizeFully(userLastName.trim());
+        }
     }
 
     /**

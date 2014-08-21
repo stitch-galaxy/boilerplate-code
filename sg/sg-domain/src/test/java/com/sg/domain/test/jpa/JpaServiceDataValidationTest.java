@@ -7,15 +7,21 @@ package com.sg.domain.test.jpa;
  * and open the template in the editor.
  */
 import com.sg.domain.service.SgService;
+import com.sg.domain.service.ValidatorComponent;
 import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.domain.spring.configuration.ValidatorContext;
+import com.sg.dto.CompleteSignupDto;
+import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
+import com.sg.dto.ThreadDto;
 import java.util.Arrays;
 import java.util.HashSet;
+import javax.annotation.Resource;
 import junit.framework.Assert;
+import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,25 +39,144 @@ public class JpaServiceDataValidationTest {
 
     @Autowired
     private SgService service;
+
+    @Resource
+    private ValidatorComponent validatorComponent;
+
+    private static final String VALID_USER_LAST_NAME = "cY";
+    private static final String VALID_USER_FIRST_NAME = "eZy";
+    private static final LocalDate VALID_USER_BIRTH_DATE = new LocalDate(2014, 01, 01);
+    private static final String VALID_EMAIL = "eTarasov@rencap.com ";
     
+    private static final String INVALID_USER_LAST_NAME = "";
+    private static final String INVALID_USER_FIRST_NAME = "";
+    private static final LocalDate INVALID_USER_BIRTH_DATE = null;
+    private static final String INVALID_EMAIL = " abc ";
+    
+    private static final String VALID_PASSWORD = "1хороший пароль";
+    private static final String INVALID_PASSWORD = "badpassword";
+    
+    private static final String INVALID_THREAD_CODE = "";
+    private static final String VALID_THREAD_CODE = "DMC";
+
     @Test
-    public void testInvalidSignupDto()
-    {
+    public void testInvalidSignupUserDto() {
         SignupDto dto = new SignupDto();
-        dto.setEmail("abc");
-        try{
+        dto.setEmail(INVALID_EMAIL);
+        dto.setUserBirthDate(INVALID_USER_BIRTH_DATE);
+        dto.setUserFirstName(INVALID_USER_FIRST_NAME);
+        dto.setUserLastName(INVALID_USER_LAST_NAME);
+        
+        try {
             service.signupUser(dto);
             Assert.fail("Expected " + SgDataValidationException.class.getName());
-        }
-        catch(SgDataValidationException e)
-        {
+        } catch (SgDataValidationException e) {
             Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
                 SignupDto.FIELD_SIGNUP_EMAIL,
                 SignupDto.FIELD_SIGNUP_USER_BIRTH_DATE,
                 SignupDto.FIELD_SIGNUP_USER_FIRST_NAME,
-                SignupDto.FIELD_SIGNUP_USER_LAST_NAME,
+                SignupDto.FIELD_SIGNUP_USER_LAST_NAME,})),
+                    e.getFieldErrors());
+        }
+    }
+
+    @Test
+    public void testInvalidSignupAdminDto() {
+        SignupDto dto = new SignupDto();
+        dto.setEmail(INVALID_EMAIL);
+        dto.setUserBirthDate(INVALID_USER_BIRTH_DATE);
+        dto.setUserFirstName(INVALID_USER_FIRST_NAME);
+        dto.setUserLastName(INVALID_USER_LAST_NAME);
+        try {
+            service.signupAdmin(dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                SignupDto.FIELD_SIGNUP_EMAIL,
+                SignupDto.FIELD_SIGNUP_USER_BIRTH_DATE,
+                SignupDto.FIELD_SIGNUP_USER_FIRST_NAME,
+                SignupDto.FIELD_SIGNUP_USER_LAST_NAME,})),
+                    e.getFieldErrors());
+        }
+    }
+
+    @Test
+    public void testValidSignupDto() throws SgDataValidationException {
+        SignupDto dto = new SignupDto();
+        dto.setEmail(VALID_EMAIL);
+        dto.setUserBirthDate(VALID_USER_BIRTH_DATE);
+        dto.setUserFirstName(VALID_USER_FIRST_NAME);
+        dto.setUserLastName(VALID_USER_LAST_NAME);
+        validatorComponent.validate(dto);
+    }
+
+    @Test
+    public void testInvalidCompleteSignupDto() {
+        CompleteSignupDto dto = new CompleteSignupDto();
+        dto.setPassword(INVALID_PASSWORD);
+        try {
+            service.completeSignup(1L, dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                CompleteSignupDto.FIELD_COMPLETE_SIGNUP_PASSWORD
             })),
                     e.getFieldErrors());
         }
     }
+
+    @Test
+    public void testValidCompleteSignupDto() throws SgDataValidationException {
+        CompleteSignupDto dto = new CompleteSignupDto();
+        dto.setPassword(VALID_PASSWORD);
+        validatorComponent.validate(dto);
+    }
+
+    @Test
+    public void testInvalidSigninDto() {
+        SigninDto dto = new SigninDto();
+        dto.setPassword(INVALID_PASSWORD);
+        dto.setEmail(INVALID_EMAIL);
+        try {
+            service.signIn(dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                SigninDto.FIELD_SIGNIN_EMAIL,
+                SigninDto.FIELD_SIGNIN_PASSWORD,})),
+                    e.getFieldErrors());
+        }
+    }
+
+    @Test
+    public void testValidSigninDto() throws SgDataValidationException {
+        SigninDto dto = new SigninDto();
+        dto.setPassword(VALID_PASSWORD);
+        dto.setEmail(VALID_EMAIL);
+        validatorComponent.validate(dto);
+    }
+    
+    @Test
+    public void testInvalidThreadDto() {
+        ThreadDto dto = new ThreadDto();
+        dto.setCode(INVALID_THREAD_CODE);
+        try {
+            service.create(dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                ThreadDto.FIELD_THREAD_CODE,
+            })),
+                    e.getFieldErrors());
+        }
+    }
+    
+
+    @Test
+    public void testValidThreadDto() throws SgDataValidationException {
+        ThreadDto dto = new ThreadDto();
+        dto.setCode(VALID_THREAD_CODE);
+        validatorComponent.validate(dto);
+    }
+
 }
