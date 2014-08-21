@@ -8,7 +8,7 @@ package com.sg.sg_rest_api.controllers;
 import com.sg.constants.RequestPath;
 import com.sg.constants.ThreadOperationStatus;
 import com.sg.dto.ThreadDto;
-import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadDeleteDto;
 import com.sg.dto.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgDataValidationException;
@@ -52,7 +52,7 @@ public class ThreadsController {
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_DELETE, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto delete(@Valid @RequestBody ThreadRefDto dto) throws SgDataValidationException {
+    OperationStatusDto delete(@Valid @RequestBody ThreadDeleteDto dto) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
         try {

@@ -9,7 +9,7 @@ import com.sg.constants.OperationStatus;
 import com.sg.constants.RequestPath;
 import com.sg.constants.ThreadOperationStatus;
 import com.sg.dto.ThreadDto;
-import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadDeleteDto;
 import com.sg.dto.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;

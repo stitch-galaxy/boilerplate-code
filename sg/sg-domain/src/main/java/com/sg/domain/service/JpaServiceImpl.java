@@ -11,7 +11,7 @@ import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
 import com.sg.dto.ThreadDto;
-import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadDeleteDto;
 import com.sg.dto.ThreadUpdateDto;
 import com.sg.dto.AccountDto;
 import com.sg.domain.entities.jpa.Canvas;
@@ -78,7 +78,7 @@ public class JpaServiceImpl implements SgService {
     @Resource
     private ValidatorComponent validatorComponent;
 
-    public void delete(final ThreadRefDto dto) throws SgDataValidationException {
+    public void delete(final ThreadDeleteDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
@@ -93,7 +93,7 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    private void deleteThreadImpl(ThreadRefDto dto) {
+    private void deleteThreadImpl(ThreadDeleteDto dto) {
         Thread thread = threadsRepository.findByCode(dto.getCode());
         if (thread == null) {
             throw new SgThreadNotFoundException(dto.getCode());
@@ -164,18 +164,15 @@ public class JpaServiceImpl implements SgService {
     }
 
     private void updateThreadImpl(ThreadUpdateDto dto) {
-        Thread thread = threadsRepository.findByCode(dto.getRef().getCode());
+        Thread thread = threadsRepository.findByCode(dto.getRefCode());
         if (thread == null) {
-            throw new SgThreadNotFoundException(dto.getRef().getCode());
+            throw new SgThreadNotFoundException(dto.getRefCode());
         }
-        if (dto.getRef().getCode().equals(dto.getDto().getCode())) {
-            return;
-        }
-        if (threadsRepository.findByCode(dto.getDto().getCode()) != null) {
-            throw new SgThreadAlreadyExistsException(dto.getDto().getCode());
+        if (threadsRepository.findByCode(dto.getCode()) != null) {
+            throw new SgThreadAlreadyExistsException(dto.getCode());
         }
 
-        mapper.map(dto.getDto(), thread);
+        mapper.map(dto, thread);
         threadsRepository.save(thread);
     }
 
@@ -244,9 +241,6 @@ public class JpaServiceImpl implements SgService {
         Canvas canvas = canvasesRepository.findByCode(dto.getRef().getCode());
         if (canvas == null) {
             throw new SgCanvasNotFoundException(dto.getRef().getCode());
-        }
-        if (dto.getRef().getCode().equals(dto.getDto().getCode())) {
-            return;
         }
         if (canvasesRepository.findByCode(dto.getDto().getCode()) != null) {
             throw new SgCanvasAlreadyExistsException(dto.getDto().getCode());

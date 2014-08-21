@@ -16,7 +16,9 @@ import com.sg.domain.spring.configuration.ValidatorContext;
 import com.sg.dto.CompleteSignupDto;
 import com.sg.dto.SigninDto;
 import com.sg.dto.SignupDto;
+import com.sg.dto.ThreadDeleteDto;
 import com.sg.dto.ThreadDto;
+import com.sg.dto.ThreadUpdateDto;
 import java.util.Arrays;
 import java.util.HashSet;
 import javax.annotation.Resource;
@@ -176,6 +178,53 @@ public class JpaServiceDataValidationTest {
     public void testValidThreadDto() throws SgDataValidationException {
         ThreadDto dto = new ThreadDto();
         dto.setCode(VALID_THREAD_CODE);
+        validatorComponent.validate(dto);
+    }
+    
+    @Test
+    public void testInvalidThreadDeleteDto() {
+        ThreadDeleteDto dto = new ThreadDeleteDto();
+        dto.setCode(INVALID_THREAD_CODE);
+        try {
+            service.delete(dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                ThreadDeleteDto.FIELD_THREAD_CODE,
+            })),
+                    e.getFieldErrors());
+        }
+    }
+
+    @Test
+    public void testValidThreadDeleteDto() throws SgDataValidationException {
+        ThreadDeleteDto dto = new ThreadDeleteDto();
+        dto.setCode(VALID_THREAD_CODE);
+        validatorComponent.validate(dto);
+    }
+    
+    @Test
+    public void testInvalidThreadUpdateDto() {
+        ThreadUpdateDto dto = new ThreadUpdateDto();
+        dto.setCode(INVALID_THREAD_CODE);
+        dto.setRefCode(INVALID_THREAD_CODE);
+        try {
+            service.update(dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                ThreadUpdateDto.FIELD_THREAD_CODE,
+                ThreadUpdateDto.FIELD_THREAD_REF_CODE,
+            })),
+                    e.getFieldErrors());
+        }
+    }
+
+    @Test
+    public void testValidThreadUpdateDto() throws SgDataValidationException {
+        ThreadUpdateDto dto = new ThreadUpdateDto();
+        dto.setCode(VALID_THREAD_CODE);
+        dto.setRefCode(VALID_THREAD_CODE);
         validatorComponent.validate(dto);
     }
 

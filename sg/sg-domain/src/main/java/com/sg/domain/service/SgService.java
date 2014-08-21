@@ -20,7 +20,7 @@ import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
 import com.sg.dto.ThreadDto;
-import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadDeleteDto;
 import com.sg.dto.ThreadUpdateDto;
 import com.sg.dto.CompleteSignupDto;
 import com.sg.dto.AccountDto;
@@ -35,7 +35,7 @@ import java.util.List;
 public interface SgService {
     
     public void create(ThreadDto dto) throws SgDataValidationException, SgThreadAlreadyExistsException;
-    public void delete(ThreadRefDto dto) throws SgDataValidationException, SgThreadNotFoundException;
+    public void delete(ThreadDeleteDto dto) throws SgDataValidationException, SgThreadNotFoundException;
     public void update(ThreadUpdateDto dto) throws SgDataValidationException, SgThreadNotFoundException, SgThreadAlreadyExistsException;
     public List<ThreadDto> listThreads();   
     

@@ -16,7 +16,7 @@ import com.sg.constants.ThreadOperationStatus;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
-import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadDeleteDto;
 import com.sg.dto.ThreadUpdateDto;
 import java.io.IOException;
 import org.junit.Test;
@@ -74,7 +74,7 @@ public class ThreadsControllerTest {
     private static final ThreadDto dmcThreadDto;
     private static final ThreadDto anchorThreadDto;
     
-    private static final ThreadRefDto dmcThreadRefDto;
+    private static final ThreadDeleteDto dmcThreadDeleteDto;
     
     private static final ThreadUpdateDto dmcThreadUpdateDto;
 
@@ -85,12 +85,12 @@ public class ThreadsControllerTest {
         anchorThreadDto = new ThreadDto();
         anchorThreadDto.setCode(ANCHOR);
         
-        dmcThreadRefDto = new ThreadRefDto();
-        dmcThreadDto.setCode(DMC);
+        dmcThreadDeleteDto = new ThreadDeleteDto();
+        dmcThreadDeleteDto.setCode(DMC);
         
         dmcThreadUpdateDto = new ThreadUpdateDto();
-        dmcThreadUpdateDto.setRef(dmcThreadRefDto);
-        dmcThreadUpdateDto.setDto(anchorThreadDto);
+        dmcThreadUpdateDto.setRefCode(DMC);
+        dmcThreadUpdateDto.setCode(ANCHOR);
     }
 
     @Test
@@ -142,15 +142,15 @@ public class ThreadsControllerTest {
     public void testDeleteNotFound() throws IOException, Exception {
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgThreadNotFoundException(dmcThreadRefDto.getCode())).when(serviceMock).delete(dmcThreadRefDto);
+        doThrow(new SgThreadNotFoundException(dmcThreadDeleteDto.getCode())).when(serviceMock).delete(dmcThreadDeleteDto);
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_DELETE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dmcThreadRefDto)))
+                .content(mapper.writeValueAsString(dmcThreadDeleteDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status", is(ThreadOperationStatus.THREAD_NOT_FOUND)));
-        verify(serviceMock, times(1)).delete(dmcThreadRefDto);
+        verify(serviceMock, times(1)).delete(dmcThreadDeleteDto);
         verifyNoMoreInteractions(serviceMock);
     }
 
@@ -161,10 +161,10 @@ public class ThreadsControllerTest {
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_DELETE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dmcThreadRefDto)))
+                .content(mapper.writeValueAsString(dmcThreadDeleteDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status", is(ThreadOperationStatus.STATUS_SUCCESS)));
-        verify(serviceMock, times(1)).delete(dmcThreadRefDto);
+        verify(serviceMock, times(1)).delete(dmcThreadDeleteDto);
         verifyNoMoreInteractions(serviceMock);
     }
     
@@ -172,7 +172,7 @@ public class ThreadsControllerTest {
     public void testUpdateNotFound() throws IOException, Exception {
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgThreadNotFoundException(dmcThreadUpdateDto.getRef().getCode())).when(serviceMock).update(dmcThreadUpdateDto);
+        doThrow(new SgThreadNotFoundException(dmcThreadUpdateDto.getRefCode())).when(serviceMock).update(dmcThreadUpdateDto);
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_UPDATE)
@@ -188,7 +188,7 @@ public class ThreadsControllerTest {
     public void testUpdateAlreadyExists() throws IOException, Exception {
         ObjectMapper mapper = new ObjectMapper();
 
-        doThrow(new SgThreadAlreadyExistsException(dmcThreadUpdateDto.getRef().getCode())).when(serviceMock).update(dmcThreadUpdateDto);
+        doThrow(new SgThreadAlreadyExistsException(dmcThreadUpdateDto.getRefCode())).when(serviceMock).update(dmcThreadUpdateDto);
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_UPDATE)

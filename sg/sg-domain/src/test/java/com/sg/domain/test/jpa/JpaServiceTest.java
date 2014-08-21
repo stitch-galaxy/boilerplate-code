@@ -11,7 +11,7 @@ import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
 import com.sg.dto.ThreadDto;
-import com.sg.dto.ThreadRefDto;
+import com.sg.dto.ThreadDeleteDto;
 import com.sg.dto.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
@@ -223,23 +223,19 @@ public class JpaServiceTest {
     public void testThreadUpdate() throws SgDataValidationException {
         service.create(dmcThreadDto);
 
-        ThreadRefDto ref = new ThreadRefDto();
-        ref.setCode(ANCHOR);
         ThreadUpdateDto updateDto = new ThreadUpdateDto();
-        updateDto.setRef(ref);
-        updateDto.setDto(dmcThreadDto);
+        updateDto.setRefCode(ANCHOR);
+        updateDto.setCode(DMC);
 
         try {
             service.update(updateDto);
             Assert.fail("Expected " + SgThreadNotFoundException.class.getName());
         } catch (SgThreadNotFoundException e) {
         }
-
-        ref = new ThreadRefDto();
-        ref.setCode(DMC);
+        
         updateDto = new ThreadUpdateDto();
-        updateDto.setRef(ref);
-        updateDto.setDto(anchorThreadDto);
+        updateDto.setRefCode(DMC);
+        updateDto.setCode(ANCHOR);
         service.update(updateDto);
         List<ThreadDto> list = new ArrayList<ThreadDto>();
         list.add(anchorThreadDto);
@@ -257,7 +253,7 @@ public class JpaServiceTest {
     public void testThreadDelete() throws SgDataValidationException {
         service.create(dmcThreadDto);
 
-        ThreadRefDto ref = new ThreadRefDto();
+        ThreadDeleteDto ref = new ThreadDeleteDto();
         ref.setCode(ANCHOR);
 
         try {
@@ -266,7 +262,7 @@ public class JpaServiceTest {
         } catch (SgThreadNotFoundException e) {
         }
         
-        ref = new ThreadRefDto();
+        ref = new ThreadDeleteDto();
         ref.setCode(DMC);
         
         service.delete(ref);

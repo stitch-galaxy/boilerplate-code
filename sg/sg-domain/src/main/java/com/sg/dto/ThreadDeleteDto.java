@@ -12,8 +12,11 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author tarasev
  */
-public class ThreadRefDto {
+public class ThreadDeleteDto {
 
+    public static final String FIELD_THREAD_CODE = "ThreadDeleteDto.Code";
+    
+    @NotBlank(message = FIELD_THREAD_CODE)
     private String code;
 
     /**
@@ -39,7 +42,7 @@ public class ThreadRefDto {
             return false;
         }
 
-        ThreadRefDto other = (ThreadRefDto) obj;
+        ThreadDeleteDto other = (ThreadDeleteDto) obj;
         return new EqualsBuilder().
                 append(this.code, other.code).
                 isEquals();

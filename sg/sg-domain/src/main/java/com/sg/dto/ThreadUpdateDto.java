@@ -7,42 +7,38 @@
 package com.sg.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
  * @author tarasev
  */
 public class ThreadUpdateDto {
+    public static final String FIELD_THREAD_CODE = "ThreadUpdateDto.Code";
+    public static final String FIELD_THREAD_REF_CODE = "ThreadUpdateDto.RefCode";
     
-    private ThreadRefDto ref;
-    private ThreadDto dto;
+    @NotBlank(message = FIELD_THREAD_CODE)
+    private String code;
+    
+    @NotBlank(message = FIELD_THREAD_REF_CODE)
+    private String refCode;
+
 
     /**
-     * @return the ref
+     * @return the code
      */
-    public ThreadRefDto getRef() {
-        return ref;
+    public String getCode() {
+        return code;
     }
 
     /**
-     * @param ref the ref to set
+     * @param code the code to set
      */
-    public void setRef(ThreadRefDto ref) {
-        this.ref = ref;
-    }
-
-    /**
-     * @return the dto
-     */
-    public ThreadDto getDto() {
-        return dto;
-    }
-
-    /**
-     * @param dto the dto to set
-     */
-    public void setDto(ThreadDto dto) {
-        this.dto = dto;
+    public void setCode(String code) {
+        this.code = null;
+        if (code != null) {
+            this.code = code.trim();
+        }
     }
     
     @Override
@@ -56,9 +52,23 @@ public class ThreadUpdateDto {
 
         ThreadUpdateDto other = (ThreadUpdateDto) obj;
         return new EqualsBuilder().
-                append(this.dto, other.dto).
-                append(this.ref, other.ref).
+                append(this.code, other.code).
+                append(this.getRefCode(), other.getRefCode()).
                 isEquals();
+    }
+
+    /**
+     * @return the refCode
+     */
+    public String getRefCode() {
+        return refCode;
+    }
+
+    /**
+     * @param refCode the refCode to set
+     */
+    public void setRefCode(String refCode) {
+        this.refCode = refCode;
     }
     
 }
