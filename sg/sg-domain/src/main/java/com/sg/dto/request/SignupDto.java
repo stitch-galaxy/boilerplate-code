@@ -3,25 +3,39 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.sg.dto.request;
 
-package com.sg.dto;
-
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.text.WordUtils;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import org.joda.time.LocalDate;
 
 /**
  *
  * @author tarasev
  */
-public class AccountDto {
-    private Long id;
+public class SignupDto {
+
+    public static final String FIELD_SIGNUP_EMAIL = "SignupDto.Email";
+    public static final String FIELD_SIGNUP_USER_FIRST_NAME = "SignupDto.FirstName";
+    public static final String FIELD_SIGNUP_USER_LAST_NAME = "SignupDto.LastName";
+    public static final String FIELD_SIGNUP_USER_BIRTH_DATE = "SignupDto.Birthdate";
+
+    @NotBlank(message = FIELD_SIGNUP_EMAIL)
+    @Email(message = FIELD_SIGNUP_EMAIL)
     private String email;
-    private List<String> roles;
+    @NotBlank(message = FIELD_SIGNUP_USER_FIRST_NAME)
     private String userFirstName;
+    @NotBlank(message = FIELD_SIGNUP_USER_LAST_NAME)
     private String userLastName;
+    @NotNull(message = FIELD_SIGNUP_USER_BIRTH_DATE)
+    @Past
     private LocalDate userBirthDate;
-    private Boolean emailVerified;
 
     /**
      * @return the email
@@ -34,23 +48,12 @@ public class AccountDto {
      * @param email the email to set
      */
     public void setEmail(String email) {
-        this.email = email;
+        this.email = null;
+        if (email != null) {
+            this.email = email.toLowerCase().trim();
+        }
     }
 
-    /**
-     * @return the roles
-     */
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    /**
-     * @param roles the roles to set
-     */
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
-    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -60,16 +63,14 @@ public class AccountDto {
             return false;
         }
 
-        AccountDto other = (AccountDto) obj;
+        SignupDto other = (SignupDto) obj;
         return new EqualsBuilder().
-                append(this.getId(), other.getId()).
                 append(this.email, other.email).
-                append(this.roles, other.roles).
                 append(this.userFirstName, other.userFirstName).
                 append(this.userLastName, other.userLastName).
                 append(this.userBirthDate, other.userBirthDate).
-                append(this.getEmailVerified(), other.getEmailVerified()).
                 isEquals();
+
     }
 
     /**
@@ -83,7 +84,10 @@ public class AccountDto {
      * @param userFirstName the userFirstName to set
      */
     public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
+        this.userFirstName = null;
+        if (userFirstName != null) {
+            this.userFirstName = WordUtils.capitalizeFully(userFirstName.trim());
+        }
     }
 
     /**
@@ -97,7 +101,10 @@ public class AccountDto {
      * @param userLastName the userLastName to set
      */
     public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
+        this.userLastName = null;
+        if (userLastName != null) {
+            this.userLastName = WordUtils.capitalizeFully(userLastName.trim());
+        }
     }
 
     /**
@@ -112,33 +119,5 @@ public class AccountDto {
      */
     public void setUserBirthDate(LocalDate userBirthDate) {
         this.userBirthDate = userBirthDate;
-    }
-
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the emailVerified
-     */
-    public Boolean getEmailVerified() {
-        return emailVerified;
-    }
-
-    /**
-     * @param emailVerified the emailVerified to set
-     */
-    public void setEmailVerified(Boolean emailVerified) {
-        this.emailVerified = emailVerified;
     }
 }

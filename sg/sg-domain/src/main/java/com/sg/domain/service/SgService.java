@@ -19,13 +19,13 @@ import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.CanvasDto;
 import com.sg.dto.CanvasRefDto;
 import com.sg.dto.CanvasUpdateDto;
-import com.sg.dto.ThreadDto;
-import com.sg.dto.ThreadDeleteDto;
-import com.sg.dto.ThreadUpdateDto;
-import com.sg.dto.CompleteSignupDto;
-import com.sg.dto.AccountDto;
-import com.sg.dto.SigninDto;
-import com.sg.dto.SignupDto;
+import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadDeleteDto;
+import com.sg.dto.request.ThreadUpdateDto;
+import com.sg.dto.request.CompleteSignupDto;
+import com.sg.dto.response.AccountDto;
+import com.sg.dto.request.SigninDto;
+import com.sg.dto.request.SignupDto;
 import java.util.List;
 
 /**

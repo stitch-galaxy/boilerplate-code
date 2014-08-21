@@ -9,7 +9,7 @@ package com.sg.sg_rest_api.security;
  *
  * @author tarasev
  */
-import com.sg.dto.ErrorDto;
+import com.sg.dto.response.ErrorDto;
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.utils.Utils;
 import java.io.IOException;

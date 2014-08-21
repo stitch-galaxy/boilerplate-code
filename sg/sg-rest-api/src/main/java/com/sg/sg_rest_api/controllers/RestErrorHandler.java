@@ -6,8 +6,8 @@
 package com.sg.sg_rest_api.controllers;
 
 import com.sg.domain.service.exception.SgDataValidationException;
-import com.sg.dto.ErrorDto;
-import com.sg.dto.ValidationErrorDto;
+import com.sg.dto.response.ErrorDto;
+import com.sg.dto.response.ValidationErrorDto;
 import com.sg.sg_rest_api.utils.Utils;
 import java.io.PrintWriter;
 import java.io.StringWriter;

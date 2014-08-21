@@ -5,7 +5,7 @@
  */
 package com.sg.sg_rest_api.utils;
 
-import com.sg.dto.ErrorDto;
+import com.sg.dto.response.ErrorDto;
 import java.util.UUID;
 import org.slf4j.Logger;
 

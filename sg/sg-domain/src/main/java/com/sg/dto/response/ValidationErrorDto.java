@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.dto;
+package com.sg.dto.response;
 
 import com.sg.domain.service.exception.SgDataValidationException;
 import java.util.HashSet;

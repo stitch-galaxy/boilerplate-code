@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.dto;
+package com.sg.dto.request;
 
 import com.sg.constants.PasswordRegexp;
 import javax.validation.constraints.Pattern;

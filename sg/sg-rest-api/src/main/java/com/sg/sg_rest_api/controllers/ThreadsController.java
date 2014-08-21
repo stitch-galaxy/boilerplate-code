@@ -7,14 +7,14 @@ package com.sg.sg_rest_api.controllers;
 
 import com.sg.constants.RequestPath;
 import com.sg.constants.ThreadOperationStatus;
-import com.sg.dto.ThreadDto;
-import com.sg.dto.ThreadDeleteDto;
-import com.sg.dto.ThreadUpdateDto;
+import com.sg.dto.request.ThreadDto;
+import com.sg.dto.request.ThreadDeleteDto;
+import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
-import com.sg.dto.OperationStatusDto;
+import com.sg.dto.response.OperationStatusDto;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
