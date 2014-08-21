@@ -6,6 +6,7 @@
 
 package com.sg.domain.spring.configuration;
 
+import com.sg.domain.service.ValidatorComponent;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,5 +23,10 @@ public class ValidatorContext {
     @Bean
     public Validator validator() {
         return new LocalValidatorFactoryBean();
+    }
+    
+    @Bean ValidatorComponent validatorComponent()
+    {
+        return new ValidatorComponent();
     }
 }

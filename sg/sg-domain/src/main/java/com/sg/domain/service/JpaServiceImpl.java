@@ -76,16 +76,7 @@ public class JpaServiceImpl implements SgService {
     private TransactionTemplate transactionTemplate;
 
     @Resource
-    private Validator validator;
-    
-    private void validate(Object object) throws SgDataValidationException
-    {
-        Set<ConstraintViolation<Object>> errors = validator.validate(object);
-        if (errors != null && errors.size() > 0)
-        {
-            throw new SgDataValidationException(errors);
-        }
-    }
+    private ValidatorComponent validatorComponent;
 
     public void delete(final ThreadRefDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
@@ -282,7 +273,7 @@ public class JpaServiceImpl implements SgService {
     }
     
     public void signupUser(final SignupDto dto) throws SgDataValidationException {
-        validate(dto);
+        validatorComponent.validate(dto);
         signup(dto, Roles.ROLE_USER);
     }
 
