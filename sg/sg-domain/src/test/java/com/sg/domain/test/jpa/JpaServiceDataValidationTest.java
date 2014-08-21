@@ -13,12 +13,17 @@ import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.domain.spring.configuration.ValidatorContext;
+import com.sg.dto.request.CanvasCreateDto;
+import com.sg.dto.request.CanvasDeleteDto;
+import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadUpdateDto;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashSet;
 import javax.annotation.Resource;
@@ -60,6 +65,12 @@ public class JpaServiceDataValidationTest {
     
     private static final String INVALID_THREAD_CODE = "";
     private static final String VALID_THREAD_CODE = "DMC";
+    
+    private static final String INVALID_CANVAS_CODE = "";
+    private static final String VALID_CANVAS_CODE = "Aida 14";
+    
+    private static final BigDecimal INVALID_STITCHES_PER_INCH = null;
+    private static final BigDecimal VALID_STITCHES_PER_INCH = new BigDecimal(14);
 
     @Test
     public void testInvalidSignupUserDto() {
@@ -182,6 +193,32 @@ public class JpaServiceDataValidationTest {
     }
     
     @Test
+    public void testInvalidCanvasDto() {
+        CanvasCreateDto dto = new CanvasCreateDto();
+        dto.setCode(INVALID_CANVAS_CODE);
+        dto.setStitchesPerInch(INVALID_STITCHES_PER_INCH);
+        try {
+            service.create(dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                CanvasCreateDto.FIELD_CANVAS_CODE,
+                CanvasCreateDto.FIELD_STITCHES_PER_INCH,
+            })),
+                    e.getFieldErrors());
+        }
+    }
+    
+
+    @Test
+    public void testValidCanvasDto() throws SgDataValidationException {
+        CanvasCreateDto dto = new CanvasCreateDto();
+        dto.setCode(VALID_CANVAS_CODE);
+        dto.setStitchesPerInch(VALID_STITCHES_PER_INCH);
+        validatorComponent.validate(dto);
+    }
+    
+    @Test
     public void testInvalidThreadDeleteDto() {
         ThreadDeleteDto dto = new ThreadDeleteDto();
         dto.setCode(INVALID_THREAD_CODE);
@@ -200,6 +237,29 @@ public class JpaServiceDataValidationTest {
     public void testValidThreadDeleteDto() throws SgDataValidationException {
         ThreadDeleteDto dto = new ThreadDeleteDto();
         dto.setCode(VALID_THREAD_CODE);
+        validatorComponent.validate(dto);
+    }
+    
+    @Test
+    public void testInvalidCanvasDeleteDto() {
+        CanvasDeleteDto dto = new CanvasDeleteDto();
+        dto.setCode(INVALID_CANVAS_CODE);
+        try {
+            service.delete(dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                CanvasDeleteDto.FIELD_CANVAS_CODE,
+            })),
+                    e.getFieldErrors());
+        }
+    }
+
+    @Test
+    public void testValidCanvasDeleteDto() throws SgDataValidationException {
+        CanvasCreateDto dto = new CanvasCreateDto();
+        dto.setCode(VALID_CANVAS_CODE);
+        dto.setStitchesPerInch(VALID_STITCHES_PER_INCH);
         validatorComponent.validate(dto);
     }
     
@@ -225,6 +285,35 @@ public class JpaServiceDataValidationTest {
         ThreadUpdateDto dto = new ThreadUpdateDto();
         dto.setCode(VALID_THREAD_CODE);
         dto.setRefCode(VALID_THREAD_CODE);
+        validatorComponent.validate(dto);
+    }
+    
+    @Test
+    public void testInvalidCanvasUpdateDto() {
+        CanvasUpdateDto dto = new CanvasUpdateDto();
+        dto.setCode(INVALID_CANVAS_CODE);
+        dto.setRefCode(INVALID_CANVAS_CODE);
+        dto.setStitchesPerInch(INVALID_STITCHES_PER_INCH);
+        
+        try {
+            service.update(dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                CanvasUpdateDto.FIELD_CANVAS_CODE,
+                CanvasUpdateDto.FIELD_CANVAS_REF_CODE,
+                CanvasUpdateDto.FIELD_STITCHES_PER_INCH,
+            })),
+                    e.getFieldErrors());
+        }
+    }
+
+    @Test
+    public void testValidCanvasUpdateDto() throws SgDataValidationException {
+        CanvasUpdateDto dto = new CanvasUpdateDto();
+        dto.setCode(VALID_CANVAS_CODE);
+        dto.setRefCode(VALID_CANVAS_CODE);
+        dto.setStitchesPerInch(VALID_STITCHES_PER_INCH);
         validatorComponent.validate(dto);
     }
 

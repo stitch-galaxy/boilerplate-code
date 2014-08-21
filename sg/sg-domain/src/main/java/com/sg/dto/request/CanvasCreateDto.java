@@ -4,17 +4,25 @@
  * and open the template in the editor.
  */
 
-package com.sg.dto;
+package com.sg.dto.request;
 
 import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
  * @author tarasev
  */
-public class CanvasDto {
+public class CanvasCreateDto {
+    public static final String FIELD_CANVAS_CODE = "CanvasCreateDto.Code";
+    public static final String FIELD_STITCHES_PER_INCH = "CanvasCreateDto.StitchesPerInch";
+    
+    @NotBlank(message = FIELD_CANVAS_CODE)
     private String code;
+    
+    @NotNull(message = FIELD_STITCHES_PER_INCH)
     private BigDecimal stitchesPerInch;
 
     /**
@@ -28,7 +36,10 @@ public class CanvasDto {
      * @param code the code to set
      */
     public void setCode(String code) {
-        this.code = code;
+        this.code = null;
+        if (code != null) {
+            this.code = code.trim();
+        }
     }
 
     /**
@@ -54,7 +65,7 @@ public class CanvasDto {
             return false;
         }
 
-        CanvasDto other = (CanvasDto) obj;
+        CanvasCreateDto other = (CanvasCreateDto) obj;
         return new EqualsBuilder().
                 append(this.code, other.code).
                 isEquals()

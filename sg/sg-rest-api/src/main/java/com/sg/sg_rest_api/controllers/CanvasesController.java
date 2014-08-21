@@ -7,11 +7,12 @@
 package com.sg.sg_rest_api.controllers;
 
 import com.sg.constants.RequestPath;
-import com.sg.dto.CanvasDto;
-import com.sg.dto.CanvasRefDto;
-import com.sg.dto.CanvasUpdateDto;
+import com.sg.dto.request.CanvasCreateDto;
+import com.sg.dto.request.CanvasDeleteDto;
+import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgDataValidationException;
+import com.sg.dto.response.CanvasesListDto;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,21 +29,21 @@ public class CanvasesController {
     SgService service;
     
     @RequestMapping(value = RequestPath.REQUEST_CANVAS_ADD, method = RequestMethod.POST)
-    public @ResponseBody void create(@Valid @RequestBody CanvasDto dto) throws SgDataValidationException {
+    public @ResponseBody void create(@Valid @RequestBody CanvasCreateDto dto) throws SgDataValidationException {
         service.create(dto);
     }
     
     @RequestMapping(value = RequestPath.REQUEST_CANVAS_LIST, method = RequestMethod.GET)
-    public @ResponseBody List<CanvasDto> list() {
+    public @ResponseBody CanvasesListDto list() {
         return service.listCanvases();
     }
     
-    @RequestMapping(value = RequestPath.REQUEST_CANVAS_DELETE, method = RequestMethod.PUT)
-    public @ResponseBody void delete(@Valid @RequestBody CanvasRefDto dto) throws SgDataValidationException {
+    @RequestMapping(value = RequestPath.REQUEST_CANVAS_DELETE, method = RequestMethod.POST)
+    public @ResponseBody void delete(@Valid @RequestBody CanvasDeleteDto dto) throws SgDataValidationException {
         service.delete(dto);
     }
     
-    @RequestMapping(value = RequestPath.REQUEST_CANVAS_UPDATE, method = RequestMethod.PUT)
+    @RequestMapping(value = RequestPath.REQUEST_CANVAS_UPDATE, method = RequestMethod.POST)
     public @ResponseBody void update(@Valid @RequestBody CanvasUpdateDto dto) throws SgDataValidationException {
         service.update(dto);
     }

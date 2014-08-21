@@ -7,9 +7,9 @@ package com.sg.domain.test.jpa;
  * and open the template in the editor.
  */
 import com.sg.constants.Roles;
-import com.sg.dto.CanvasDto;
-import com.sg.dto.CanvasRefDto;
-import com.sg.dto.CanvasUpdateDto;
+import com.sg.dto.request.CanvasCreateDto;
+import com.sg.dto.request.CanvasDeleteDto;
+import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
@@ -32,6 +32,7 @@ import com.sg.dto.response.AccountDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
+import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -92,8 +93,13 @@ public class JpaServiceTest {
     private static final ThreadsListDto.ThreadInfo dmcThreadInfoDto;
     private static final ThreadsListDto.ThreadInfo anchorThreadInfoDto;
     
-    private static final CanvasDto aida14CanvasDto;
-    private static final CanvasDto aida18CanvasDto;
+    private static final CanvasCreateDto aida14CanvasDto;
+    private static final CanvasCreateDto aida18CanvasDto;
+    
+    private static final CanvasesListDto.CanvasInfo aida14CanvasInfoDto;
+    private static final CanvasesListDto.CanvasInfo aida18CanvasInfoDto;
+    private static final BigDecimal STITCHES_14 = new BigDecimal(14);
+    private static final BigDecimal STITCHES_18 = new BigDecimal(18);
 
     static {
         dmcThreadDto = new ThreadCreateDto();
@@ -108,13 +114,21 @@ public class JpaServiceTest {
         anchorThreadInfoDto = new ThreadsListDto.ThreadInfo();
         anchorThreadInfoDto.setCode(ANCHOR);
         
-        aida14CanvasDto = new CanvasDto();
+        aida14CanvasDto = new CanvasCreateDto();
         aida14CanvasDto.setCode(AIDA_14);
-        aida14CanvasDto.setStitchesPerInch(new BigDecimal(14));
+        aida14CanvasDto.setStitchesPerInch(STITCHES_14);
         
-        aida18CanvasDto = new CanvasDto();
+        aida18CanvasDto = new CanvasCreateDto();
         aida18CanvasDto.setCode(AIDA_18);
-        aida18CanvasDto.setStitchesPerInch(new BigDecimal(18));
+        aida18CanvasDto.setStitchesPerInch(STITCHES_18);
+        
+        aida14CanvasInfoDto = new CanvasesListDto.CanvasInfo();
+        aida14CanvasInfoDto.setCode(AIDA_14);
+        aida14CanvasInfoDto.setStitchesPerInch(STITCHES_14);
+        
+        aida18CanvasInfoDto = new CanvasesListDto.CanvasInfo();
+        aida18CanvasInfoDto.setCode(AIDA_18);
+        aida18CanvasInfoDto.setStitchesPerInch(STITCHES_18);
         
 
         signupDto = new SignupDto();
@@ -146,23 +160,24 @@ public class JpaServiceTest {
     public void testCanvasesList() throws SgDataValidationException {
         service.create(aida14CanvasDto);
         service.create(aida18CanvasDto);
-        List<CanvasDto> list = new ArrayList<CanvasDto>();
-        list.add(aida14CanvasDto);
-        list.add(aida18CanvasDto);
         
-        List<CanvasDto> result = service.listCanvases();
-        Assert.assertEquals(list, result);
+        CanvasesListDto canvasesList = new CanvasesListDto();
+        List<CanvasesListDto.CanvasInfo> list = new ArrayList<CanvasesListDto.CanvasInfo>();
+        list.add(aida14CanvasInfoDto);
+        list.add(aida18CanvasInfoDto);
+        canvasesList.setCanvases(list);
+        
+        Assert.assertEquals(canvasesList, service.listCanvases());
     }
     
     @Test
     public void testCanvasUpdate() throws SgDataValidationException {
         service.create(aida14CanvasDto);
-
-        CanvasRefDto ref = new CanvasRefDto();
-        ref.setCode(AIDA_18);
+        
         CanvasUpdateDto updateDto = new CanvasUpdateDto();
-        updateDto.setRef(ref);
-        updateDto.setDto(aida14CanvasDto);
+        updateDto.setRefCode(AIDA_18);
+        updateDto.setCode(AIDA_14);
+        updateDto.setStitchesPerInch(STITCHES_14);
 
         try {
             service.update(updateDto);
@@ -170,15 +185,19 @@ public class JpaServiceTest {
         } catch (SgCanvasNotFoundException e) {
         }
 
-        ref = new CanvasRefDto();
-        ref.setCode(AIDA_14);
         updateDto = new CanvasUpdateDto();
-        updateDto.setRef(ref);
-        updateDto.setDto(aida18CanvasDto);
+        updateDto.setRefCode(AIDA_14);
+        updateDto.setCode(AIDA_18);
+        updateDto.setStitchesPerInch(STITCHES_18);
+        
         service.update(updateDto);
-        List<CanvasDto> list = new ArrayList<CanvasDto>();
-        list.add(aida18CanvasDto);
-        Assert.assertEquals(list, service.listCanvases());
+        
+        CanvasesListDto canvasesList = new CanvasesListDto();
+        List<CanvasesListDto.CanvasInfo> list = new ArrayList<CanvasesListDto.CanvasInfo>();
+        list.add(aida18CanvasInfoDto);
+        canvasesList.setCanvases(list);
+        
+        Assert.assertEquals(canvasesList, service.listCanvases());
         service.create(aida14CanvasDto);
 
         try {
@@ -192,7 +211,7 @@ public class JpaServiceTest {
     public void testCanvasDelete() throws SgDataValidationException {
         service.create(aida14CanvasDto);
 
-        CanvasRefDto ref = new CanvasRefDto();
+        CanvasDeleteDto ref = new CanvasDeleteDto();
         ref.setCode(AIDA_18);
 
         try {
@@ -201,12 +220,12 @@ public class JpaServiceTest {
         } catch (SgCanvasNotFoundException e) {
         }
         
-        ref = new CanvasRefDto();
+        ref = new CanvasDeleteDto();
         ref.setCode(AIDA_14);
         
         service.delete(ref);
         
-        Assert.assertEquals(0, service.listCanvases().size());
+        Assert.assertEquals(0, service.listCanvases().getCanvases().size());
     }
 
     @Test

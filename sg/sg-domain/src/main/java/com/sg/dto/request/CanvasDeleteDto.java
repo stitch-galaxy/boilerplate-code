@@ -3,16 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.dto;
+package com.sg.dto.request;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
  * @author tarasev
  */
-public class CanvasRefDto {
+public class CanvasDeleteDto {
 
+    public static final String FIELD_CANVAS_CODE = "CanvasDeleteDto.Code";
+    
+    @NotBlank(message = FIELD_CANVAS_CODE)
     private String code;
 
     /**
@@ -38,7 +42,7 @@ public class CanvasRefDto {
             return false;
         }
 
-        CanvasRefDto other = (CanvasRefDto) obj;
+        CanvasDeleteDto other = (CanvasDeleteDto) obj;
         return new EqualsBuilder().
                 append(this.code, other.code).
                 isEquals();

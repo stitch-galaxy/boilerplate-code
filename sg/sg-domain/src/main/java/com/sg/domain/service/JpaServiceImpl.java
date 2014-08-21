@@ -7,9 +7,9 @@ package com.sg.domain.service;
 
 import com.sg.constants.Roles;
 import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
-import com.sg.dto.CanvasDto;
-import com.sg.dto.CanvasRefDto;
-import com.sg.dto.CanvasUpdateDto;
+import com.sg.dto.request.CanvasCreateDto;
+import com.sg.dto.request.CanvasDeleteDto;
+import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
@@ -37,6 +37,7 @@ import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
+import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -181,7 +182,7 @@ public class JpaServiceImpl implements SgService {
         threadsRepository.save(thread);
     }
 
-    public void create(final CanvasDto dto) throws SgDataValidationException {
+    public void create(final CanvasCreateDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
@@ -196,7 +197,7 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    private void createCanvasImpl(CanvasDto dto) {
+    private void createCanvasImpl(CanvasCreateDto dto) {
         if (canvasesRepository.findByCode(dto.getCode()) != null) {
             throw new SgCanvasAlreadyExistsException(dto.getCode());
         }
@@ -204,7 +205,7 @@ public class JpaServiceImpl implements SgService {
         canvasesRepository.save(canvas);
     }
 
-    public void delete(final CanvasRefDto dto) throws SgDataValidationException {
+    public void delete(final CanvasDeleteDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
@@ -219,7 +220,7 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    private void deleteCanvasImpl(CanvasRefDto dto) {
+    private void deleteCanvasImpl(CanvasDeleteDto dto) {
         Canvas canvas = canvasesRepository.findByCode(dto.getCode());
         if (canvas == null) {
             throw new SgCanvasNotFoundException(dto.getCode());
@@ -243,20 +244,20 @@ public class JpaServiceImpl implements SgService {
     }
 
     private void updateCanvasImpl(CanvasUpdateDto dto) {
-        Canvas canvas = canvasesRepository.findByCode(dto.getRef().getCode());
+        Canvas canvas = canvasesRepository.findByCode(dto.getRefCode());
         if (canvas == null) {
-            throw new SgCanvasNotFoundException(dto.getRef().getCode());
+            throw new SgCanvasNotFoundException(dto.getRefCode());
         }
-        if (canvasesRepository.findByCode(dto.getDto().getCode()) != null) {
-            throw new SgCanvasAlreadyExistsException(dto.getDto().getCode());
+        if (canvasesRepository.findByCode(dto.getCode()) != null) {
+            throw new SgCanvasAlreadyExistsException(dto.getCode());
         }
-        mapper.map(dto.getDto(), canvas);
+        mapper.map(dto, canvas);
         canvasesRepository.save(canvas);
     }
 
-    public List<CanvasDto> listCanvases() {
-        return transactionTemplate.execute(new TransactionCallback<List<CanvasDto>>() {
-            public List<CanvasDto> doInTransaction(TransactionStatus status) {
+    public CanvasesListDto listCanvases() {
+        return transactionTemplate.execute(new TransactionCallback<CanvasesListDto>() {
+            public CanvasesListDto doInTransaction(TransactionStatus status) {
                 try {
                     return listCanvasesImpl();
                 } catch (SgServiceLayerRuntimeException e) {
@@ -268,12 +269,16 @@ public class JpaServiceImpl implements SgService {
         });
     }
 
-    private List<CanvasDto> listCanvasesImpl() {
-        List<CanvasDto> result = new ArrayList<CanvasDto>();
+    private CanvasesListDto listCanvasesImpl() {
+        CanvasesListDto result = new CanvasesListDto();
         Iterable<Canvas> canvases = canvasesRepository.findAll();
+        
+        List<CanvasesListDto.CanvasInfo> list = new ArrayList<CanvasesListDto.CanvasInfo>();
         for (Canvas c : canvases) {
-            result.add(mapper.map(c, CanvasDto.class));
+            list.add(mapper.map(c, CanvasesListDto.CanvasInfo.class));
         }
+        
+        result.setCanvases(list);
         return result;
     }
     

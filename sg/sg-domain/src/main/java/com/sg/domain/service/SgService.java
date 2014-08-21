@@ -16,9 +16,9 @@ import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
-import com.sg.dto.CanvasDto;
-import com.sg.dto.CanvasRefDto;
-import com.sg.dto.CanvasUpdateDto;
+import com.sg.dto.request.CanvasCreateDto;
+import com.sg.dto.request.CanvasDeleteDto;
+import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
@@ -26,6 +26,7 @@ import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.response.AccountDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
+import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import java.util.List;
 
@@ -40,10 +41,10 @@ public interface SgService {
     public void update(ThreadUpdateDto dto) throws SgDataValidationException, SgThreadNotFoundException, SgThreadAlreadyExistsException;
     public ThreadsListDto listThreads();   
     
-    public void create(CanvasDto dto) throws SgDataValidationException, SgCanvasAlreadyExistsException;
-    public void delete(CanvasRefDto dto) throws SgDataValidationException, SgCanvasNotFoundException;
+    public void create(CanvasCreateDto dto) throws SgDataValidationException, SgCanvasAlreadyExistsException;
+    public void delete(CanvasDeleteDto dto) throws SgDataValidationException, SgCanvasNotFoundException;
     public void update(CanvasUpdateDto dto) throws SgDataValidationException, SgCanvasNotFoundException, SgCanvasAlreadyExistsException;
-    public List<CanvasDto> listCanvases();   
+    public CanvasesListDto listCanvases();   
    
     public void signupUser(SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     public void signupAdmin(SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
