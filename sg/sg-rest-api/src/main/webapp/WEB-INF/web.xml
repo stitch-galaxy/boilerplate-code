@@ -38,23 +38,23 @@
 
     
     <!-- Log request filter -->
-    <filter>
+<!--    <filter>
         <filter-name>logRequestFilter</filter-name>
         <filter-class>com.sg.sg_rest_api.filters.LoggerFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>logRequestFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <!-- CORS filter -->
-    <filter>
+<!--    <filter>
         <filter-name>corsFilter</filter-name>
         <filter-class>com.sg.sg_rest_api.filters.CorsFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>corsFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <!-- Spring security -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>

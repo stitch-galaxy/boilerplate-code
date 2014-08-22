@@ -7,6 +7,7 @@ package com.sg.domain.test.jpa;
  * and open the template in the editor.
  */
 import com.sg.constants.Roles;
+import com.sg.constants.UrlConstants;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
@@ -19,6 +20,7 @@ import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
+import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
@@ -327,6 +329,32 @@ public class JpaServiceTest {
             Assert.fail("Expected  " + SgAccountNotFoundException.class.getName());
         }
         catch(SgAccountNotFoundException e){
+        }
+    }
+    
+    
+    @Test
+    public void testInstallation() throws SgDataValidationException {
+        service.install();
+        
+        Long accountId = service.getAccountIdByRegistrationEmail(UrlConstants.SG_ROOT_USER_EMAIL);
+        
+        AccountDto accountDto = service.getAccountInfo(accountId);
+        Assert.assertEquals(UrlConstants.SG_ROOT_USER_EMAIL, accountDto.getEmail());
+        Assert.assertEquals(UrlConstants.SG_ROOT_USER_BIRTH_DATE, accountDto.getUserBirthDate());
+        Assert.assertEquals(UrlConstants.SG_ROOT_USER_NAME, accountDto.getUserFirstName());
+        Assert.assertEquals(UrlConstants.SG_ROOT_USER_NAME, accountDto.getUserLastName());
+        Assert.assertEquals(Boolean.TRUE, accountDto.getEmailVerified());
+        
+        Assert.assertTrue(accountDto.getRoles().size() == 2);
+        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
+        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_ADMIN));
+        
+        try{
+            service.install();
+            Assert.fail("Expected " + SgSignupForRegisteredButNonVerifiedEmailException.class.getName());
+        }
+        catch(SgInstallationAlreadyCompletedException e){
         }
     }
     

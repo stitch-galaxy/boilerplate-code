@@ -27,7 +27,6 @@ public class SigninDto {
 
     public static final String FIELD_SIGNIN_PASSWORD = "SigninDto.Password";
     @NotBlank(message = FIELD_SIGNIN_PASSWORD)
-    @Pattern(regexp = PasswordRegexp.PASSWORD_REGULAR_EXPRESSION, message = FIELD_SIGNIN_PASSWORD)
     private String password;
 
     /**

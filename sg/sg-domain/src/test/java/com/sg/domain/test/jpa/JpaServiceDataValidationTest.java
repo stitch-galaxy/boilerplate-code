@@ -62,6 +62,7 @@ public class JpaServiceDataValidationTest {
     
     private static final String VALID_PASSWORD = "1хороший пароль";
     private static final String INVALID_PASSWORD = "badpassword";
+    private static final String EMPTY_PASSWORD = "";
     
     private static final String INVALID_THREAD_CODE = "";
     private static final String VALID_THREAD_CODE = "DMC";
@@ -148,7 +149,7 @@ public class JpaServiceDataValidationTest {
     @Test
     public void testInvalidSigninDto() {
         SigninDto dto = new SigninDto();
-        dto.setPassword(INVALID_PASSWORD);
+        dto.setPassword(EMPTY_PASSWORD);
         dto.setEmail(INVALID_EMAIL);
         try {
             service.signIn(dto);
@@ -160,6 +161,7 @@ public class JpaServiceDataValidationTest {
                     e.getFieldErrors());
         }
     }
+    
 
     @Test
     public void testValidSigninDto() throws SgDataValidationException {

@@ -103,6 +103,7 @@ public class DataValidationTest {
     private static final String INVALID_USER_FIRST_NAME = "";
     private static final LocalDate INVALID_USER_BIRTH_DATE = null;
     private static final String INVALID_PASSWORD = "badpassword";
+    private static final String EMPTY_PASSWORD = "";
     private static final String INVALID_THREAD_CODE = "";
     
 
@@ -184,7 +185,7 @@ public class DataValidationTest {
         
         SigninDto dto = new SigninDto();
         dto.setEmail(INVALID_EMAIL);
-        dto.setPassword(INVALID_PASSWORD);
+        dto.setPassword(EMPTY_PASSWORD);
         
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)

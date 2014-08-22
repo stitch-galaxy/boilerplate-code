@@ -7,6 +7,7 @@ package com.sg.sg_rest_api.test;
 
 import com.sg.constants.CompleteSignupStatus;
 import com.sg.constants.CustomHttpHeaders;
+import com.sg.constants.InstallStatus;
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
 import com.sg.domain.service.SgService;
@@ -23,6 +24,7 @@ import com.sg.domain.service.AuthToken;
 import com.sg.domain.service.SgCryptoService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
+import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
@@ -151,6 +153,31 @@ public class SigninSignupControllerTest {
         signinDto = new SigninDto();
         signinDto.setEmail(USER_EMAIL);
         signinDto.setPassword(USER_PASSWORD);
+    }
+    
+    @Test
+    public void testInstallAlreadyCompleted() throws Exception {
+        doThrow(new SgInstallationAlreadyCompletedException()).when(serviceMock).install();
+
+        mockMvc.perform(get(RequestPath.REQUEST_INSTALL))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.status", is(InstallStatus.STATUS_ALREADY_COMPLETED)));
+
+        verify(serviceMock, times(1)).install();
+        verifyNoMoreInteractions(serviceMock);
+        
+    }
+    
+    @Test
+    public void testInstall() throws Exception {
+        mockMvc.perform(get(RequestPath.REQUEST_INSTALL))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.status", is(InstallStatus.STATUS_SUCCESS)));
+
+        verify(serviceMock, times(1)).install();
+        verifyNoMoreInteractions(serviceMock);
     }
 
     @Test

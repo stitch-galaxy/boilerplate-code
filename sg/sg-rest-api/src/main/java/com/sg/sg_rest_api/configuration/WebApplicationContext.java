@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sg.sg_rest_api.configuration;
 
 import com.sg.domain.spring.configuration.SgCryptoContext;
@@ -12,10 +11,8 @@ import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.domain.spring.configuration.ValidatorContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -30,4 +27,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 @Import({ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class, SgCryptoContext.class, SecurityContext.class, SgMailServiceContext.class})
 public class WebApplicationContext extends WebMvcConfigurerAdapter {
+
+    //https://jira.spring.io/browse/SPR-6443
+    //http://stackoverflow.com/questions/3616359/who-sets-response-content-type-in-spring-mvc-responsebody
+//    //http://stackoverflow.com/questions/3616359/who-sets-response-content-type-in-spring-mvc-responsebody/3617594#3617594
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+//        stringConverter.setSupportedMediaTypes(Arrays.asList(new MediaType("application", "json", StandardCharsets.UTF_8)));
+//        converters.add(stringConverter);
+//    }
 }

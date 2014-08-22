@@ -6,6 +6,7 @@
 package com.sg.domain.service;
 
 import com.sg.constants.Roles;
+import com.sg.constants.UrlConstants;
 import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
@@ -29,6 +30,7 @@ import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
+import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
@@ -46,6 +48,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import ma.glasnost.orika.MapperFacade;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -423,4 +426,36 @@ public class JpaServiceImpl implements SgService {
 
     public void ping() {
     }
+
+    public void install() throws SgInstallationAlreadyCompletedException {
+         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    installImpl();
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    private void installImpl()
+    {
+        Account account = accountsRepository.findByEmail(UrlConstants.SG_ROOT_USER_EMAIL);
+        if (account != null) {
+                throw new SgInstallationAlreadyCompletedException();
+        }
+        account = new Account();
+        account.setEmail(UrlConstants.SG_ROOT_USER_EMAIL);
+        account.setEmailVerified(Boolean.TRUE);
+        account.setPassword(UrlConstants.SG_ROOT_USER_FIRST_PWD);
+        account.setUserFirstName(UrlConstants.SG_ROOT_USER_NAME);
+        account.setUserLastName(UrlConstants.SG_ROOT_USER_NAME);
+        account.setUserBirthDate(UrlConstants.SG_ROOT_USER_BIRTH_DATE);
+        account.setRoles(Arrays.asList(Roles.ROLE_ADMIN, Roles.ROLE_USER));
+        accountsRepository.save(account);
+    }
+    
 }

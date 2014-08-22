@@ -7,6 +7,7 @@ package com.sg.sg_rest_api.controllers;
 
 import com.sg.constants.CompleteSignupStatus;
 import com.sg.constants.CustomHttpHeaders;
+import com.sg.constants.InstallStatus;
 import com.sg.constants.RequestPath;
 import com.sg.dto.response.AccountDto;
 import com.sg.domain.service.SgService;
@@ -31,6 +32,7 @@ import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCryptoException;
 import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
+import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import java.io.IOException;
@@ -54,6 +56,19 @@ public class SigninSignupController {
 
     @Autowired
     SgCryptoService security;
+    
+    @RequestMapping(value = RequestPath.REQUEST_INSTALL, method = RequestMethod.GET)
+    public @ResponseBody
+    OperationStatusDto signupUser() {
+        OperationStatusDto result = new OperationStatusDto();
+        result.setStatus(InstallStatus.STATUS_SUCCESS);
+        try {
+            service.install();
+        } catch (SgInstallationAlreadyCompletedException e) {
+            result.setStatus(InstallStatus.STATUS_ALREADY_COMPLETED);
+        }
+        return result;
+    }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
     public @ResponseBody
