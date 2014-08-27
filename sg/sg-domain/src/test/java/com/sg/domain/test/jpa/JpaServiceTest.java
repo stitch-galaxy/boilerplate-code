@@ -7,7 +7,6 @@ package com.sg.domain.test.jpa;
  * and open the template in the editor.
  */
 import com.sg.constants.Roles;
-import com.sg.constants.UrlConstants;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
@@ -49,6 +48,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -61,6 +61,11 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class})
 public class JpaServiceTest {
 
+    @Value( "${admin.email}" ) private String adminEmail;
+    @Value( "${admin.password}" ) private String adminPassword;
+    @Value( "${user.email}" ) private String userEmail;
+    @Value( "${user.password}" ) private String userPassword;
+    
     @Autowired
     private SgService service;
 
@@ -337,18 +342,24 @@ public class JpaServiceTest {
     public void testInstallation() throws SgDataValidationException {
         service.install();
         
-        Long accountId = service.getAccountIdByRegistrationEmail(UrlConstants.SG_ROOT_USER_EMAIL);
+        Long accountId = service.getAccountIdByRegistrationEmail(adminEmail);
         
         AccountDto accountDto = service.getAccountInfo(accountId);
-        Assert.assertEquals(UrlConstants.SG_ROOT_USER_EMAIL, accountDto.getEmail());
-        Assert.assertEquals(UrlConstants.SG_ROOT_USER_BIRTH_DATE, accountDto.getUserBirthDate());
-        Assert.assertEquals(UrlConstants.SG_ROOT_USER_NAME, accountDto.getUserFirstName());
-        Assert.assertEquals(UrlConstants.SG_ROOT_USER_NAME, accountDto.getUserLastName());
+        Assert.assertEquals(adminEmail, accountDto.getEmail());
         Assert.assertEquals(Boolean.TRUE, accountDto.getEmailVerified());
         
         Assert.assertTrue(accountDto.getRoles().size() == 2);
         Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
         Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_ADMIN));
+        
+        accountId = service.getAccountIdByRegistrationEmail(userEmail);
+        
+        accountDto = service.getAccountInfo(accountId);
+        Assert.assertEquals(userEmail, accountDto.getEmail());
+        Assert.assertEquals(Boolean.TRUE, accountDto.getEmailVerified());
+        
+        Assert.assertTrue(accountDto.getRoles().size() == 1);
+        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
         
         try{
             service.install();

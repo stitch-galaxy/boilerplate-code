@@ -6,7 +6,6 @@
 package com.sg.domain.service;
 
 import com.sg.constants.Roles;
-import com.sg.constants.UrlConstants;
 import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
@@ -49,6 +48,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import ma.glasnost.orika.MapperFacade;
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -82,6 +82,11 @@ public class JpaServiceImpl implements SgService {
 
     @Resource
     private ValidatorComponent validatorComponent;
+    
+    @Value( "${admin.email}" ) private String adminEmail;
+    @Value( "${admin.password}" ) private String adminPassword;
+    @Value( "${user.email}" ) private String userEmail;
+    @Value( "${user.password}" ) private String userPassword;
 
     public void delete(final ThreadDeleteDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
@@ -441,21 +446,32 @@ public class JpaServiceImpl implements SgService {
         });
     }
     
+    private static final LocalDate BIRTH_DATE = LocalDate.parse("1984-07-10");
+    
     private void installImpl()
     {
-        Account account = accountsRepository.findByEmail(UrlConstants.SG_ROOT_USER_EMAIL);
+        Account account = accountsRepository.findByEmail(adminEmail);
         if (account != null) {
                 throw new SgInstallationAlreadyCompletedException();
         }
         account = new Account();
-        account.setEmail(UrlConstants.SG_ROOT_USER_EMAIL);
+        account.setEmail(adminEmail);
         account.setEmailVerified(Boolean.TRUE);
-        account.setPassword(UrlConstants.SG_ROOT_USER_FIRST_PWD);
-        account.setUserFirstName(UrlConstants.SG_ROOT_USER_NAME);
-        account.setUserLastName(UrlConstants.SG_ROOT_USER_NAME);
-        account.setUserBirthDate(UrlConstants.SG_ROOT_USER_BIRTH_DATE);
+        account.setPassword(adminPassword);
+        account.setUserFirstName("admin");
+        account.setUserLastName("admin");
+        account.setUserBirthDate(BIRTH_DATE);
         account.setRoles(Arrays.asList(Roles.ROLE_ADMIN, Roles.ROLE_USER));
         accountsRepository.save(account);
+        
+        account = new Account();
+        account.setEmail(userEmail);
+        account.setEmailVerified(Boolean.TRUE);
+        account.setPassword(userPassword);
+        account.setUserFirstName("user");
+        account.setUserLastName("user");
+        account.setUserBirthDate(BIRTH_DATE);
+        account.setRoles(Arrays.asList(Roles.ROLE_USER));
+        accountsRepository.save(account);
     }
-    
 }
