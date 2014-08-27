@@ -83,10 +83,10 @@ public class JpaServiceImpl implements SgService {
     @Resource
     private ValidatorComponent validatorComponent;
     
-    @Value( "${admin.email}" ) private String adminEmail;
-    @Value( "${admin.password}" ) private String adminPassword;
-    @Value( "${user.email}" ) private String userEmail;
-    @Value( "${user.password}" ) private String userPassword;
+    @Value( "${admin.email}" ) private String ADMIN_EMAIL;
+    @Value( "${admin.password}" ) private String ADMIN_PASSWORD;
+    @Value( "${user.email}" ) private String USER_EMAIL;
+    @Value( "${user.password}" ) private String USER_PASSWORD;
 
     public void delete(final ThreadDeleteDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
@@ -450,14 +450,14 @@ public class JpaServiceImpl implements SgService {
     
     private void installImpl()
     {
-        Account account = accountsRepository.findByEmail(adminEmail);
+        Account account = accountsRepository.findByEmail(ADMIN_EMAIL);
         if (account != null) {
                 throw new SgInstallationAlreadyCompletedException();
         }
         account = new Account();
-        account.setEmail(adminEmail);
+        account.setEmail(ADMIN_EMAIL);
         account.setEmailVerified(Boolean.TRUE);
-        account.setPassword(adminPassword);
+        account.setPassword(ADMIN_PASSWORD);
         account.setUserFirstName("admin");
         account.setUserLastName("admin");
         account.setUserBirthDate(BIRTH_DATE);
@@ -465,9 +465,9 @@ public class JpaServiceImpl implements SgService {
         accountsRepository.save(account);
         
         account = new Account();
-        account.setEmail(userEmail);
+        account.setEmail(USER_EMAIL);
         account.setEmailVerified(Boolean.TRUE);
-        account.setPassword(userPassword);
+        account.setPassword(USER_PASSWORD);
         account.setUserFirstName("user");
         account.setUserLastName("user");
         account.setUserBirthDate(BIRTH_DATE);

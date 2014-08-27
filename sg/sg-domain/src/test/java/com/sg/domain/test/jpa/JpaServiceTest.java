@@ -42,7 +42,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Test;

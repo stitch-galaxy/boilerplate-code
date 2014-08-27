@@ -4,16 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.sg;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+package com.sg.dto.serialization;
 
 /**
  *
  * @author tarasev
  */
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Order {
-    public int order();
+public class DateTimeFormatStrings {
+    public final static String DATE_FORMAT = "yyyy-MM-dd";
 }

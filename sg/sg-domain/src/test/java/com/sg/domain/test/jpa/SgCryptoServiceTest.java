@@ -17,7 +17,7 @@ import com.sg.domain.service.exception.SgTokenExpiredException;
 import com.sg.domain.spring.configuration.SgCryptoContext;
 import com.sg.dto.response.AccountDto;
 import java.util.Arrays;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.joda.time.Instant;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;

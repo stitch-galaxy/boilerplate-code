@@ -55,6 +55,12 @@
             <version>${rest-assured-version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-version}</version>
+            <scope>test</scope>
+        </dependency>
         <!--datetime utils-->
         <dependency>
             <groupId>joda-time</groupId>
@@ -67,9 +73,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.17</version>
+                <version>${maven-surefire-plugin-version}</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skipTests>false</skipTests>
+                    <systemPropertyVariables>
+                        <com.sg.environment>dev</com.sg.environment>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
