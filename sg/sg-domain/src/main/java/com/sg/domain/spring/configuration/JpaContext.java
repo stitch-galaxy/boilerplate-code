@@ -32,7 +32,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 @EnableJpaRepositories(basePackageClasses = {ThreadsRepository.class, CanvasesRepository.class, ProductRepository.class})
 //GAE do not support @Transactional annotation because where is a class on a call stack which is not in a white list
 //@EnableTransactionManagement
-@PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment:test}/domain.jpa.properties")
+@PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment:test}/rest_api.jpa.properties")
 public class JpaContext {
     
     @Value( "${jdbc.url}" ) private String jdbcUrl;

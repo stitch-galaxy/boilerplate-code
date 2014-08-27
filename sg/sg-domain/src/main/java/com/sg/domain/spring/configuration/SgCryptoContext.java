@@ -17,7 +17,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * @author tarasev
  */
 @Configuration
-@PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment}/security.properties")
+@PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment}/rest_api.security.properties")
 public class SgCryptoContext {
 
     @Bean

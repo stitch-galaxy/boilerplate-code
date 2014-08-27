@@ -14,7 +14,6 @@ import static com.jayway.restassured.config.EncoderConfig.encoderConfig;
 import static com.jayway.restassured.config.RestAssuredConfig.newConfig;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
-import com.jayway.restassured.response.ValidatableResponse;
 import com.sg.constants.CustomHttpHeaders;
 import com.sg.constants.InstallStatus;
 import com.sg.constants.SigninStatus;
@@ -23,7 +22,6 @@ import com.sg.constants.UrlConstants;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.ThreadCreateDto;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.apache.http.HttpStatus;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -31,7 +29,6 @@ import static org.hamcrest.Matchers.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
-import org.springframework.util.MimeTypeUtils;
 
 /**
  *
@@ -49,15 +46,12 @@ public class FlowTest {
     public FlowTest() {
     }
     
-    //TODO: check request/response with different charsets
-    //.contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
-
+ 
     @BeforeClass
     public static void setup() {
         RestAssured.baseURI = BASE_URI;
         RestAssured.config = newConfig().decoderConfig(decoderConfig().defaultContentCharset("UTF-8"));
         RestAssured.config = newConfig().encoderConfig(encoderConfig().defaultContentCharset("UTF-8"));
-        //RestAssured.config = newConfig().encoderConfig(encoderConfig().defaultContentCharset("utf-8"/*StandardCharsets.UTF_8.displayName()*/));
     }
     
     @Before
