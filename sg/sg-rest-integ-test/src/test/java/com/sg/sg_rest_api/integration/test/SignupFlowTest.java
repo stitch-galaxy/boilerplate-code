@@ -202,7 +202,21 @@ public class SignupFlowTest {
                 .contentType(ContentType.JSON)
                 .body("status", equalTo(CompleteSignupStatus.STATUS_ACCOUNT_NOT_FOUND));
 
-        //Signin
+        //Signin successfully
+        signInDto = new SigninDto();
+        signInDto.setEmail(USER_EMAIL);
+        signInDto.setPassword(USER_PASSWORD);
+        r = given().log().all()
+                .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
+                .body(jacksonObjectMapper.writeValueAsString(signInDto))
+                .when()
+                .post(RequestPath.REQUEST_SIGNIN);
+
+        r.then().log().all()
+                .statusCode(HttpStatus.SC_OK)
+                .contentType(ContentType.JSON)
+                .body("status", equalTo(SigninStatus.STATUS_SUCCESS))
+                .header(CustomHttpHeaders.X_AUTH_TOKEN, any(String.class));
     }
 
     @Test
