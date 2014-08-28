@@ -37,6 +37,9 @@ public class SigninFlowTest {
 
     @Autowired
     private IntegrationTestInitializer integrationTestInitializer;
+    
+    @Autowired
+    private ObjectMapper jacksonObjectMapper;
 
     @Before
     public void setup() {
@@ -51,14 +54,12 @@ public class SigninFlowTest {
 
     @Test
     public void testSuccessfullSignin() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
         SigninDto dto = new SigninDto();
         dto.setEmail(ADMIN_EMAIL);
         dto.setPassword(ADMIN_PASSWORD);
         Response r = given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
-                .body(mapper.writeValueAsString(dto))
+                .body(jacksonObjectMapper.writeValueAsString(dto))
                 .when()
                 .post(RequestPath.REQUEST_SIGNIN);
 
@@ -71,14 +72,12 @@ public class SigninFlowTest {
 
     @Test
     public void testSigninBadPassword() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
         SigninDto dto = new SigninDto();
         dto.setEmail(ADMIN_EMAIL);
         dto.setPassword(ADMIN_PASSWORD + "плохой");
         Response r = given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
-                .body(mapper.writeValueAsString(dto))
+                .body(jacksonObjectMapper.writeValueAsString(dto))
                 .when()
                 .post(RequestPath.REQUEST_SIGNIN);
 
@@ -90,14 +89,12 @@ public class SigninFlowTest {
     
     @Test
     public void testSigninUnknownUser() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
         SigninDto dto = new SigninDto();
         dto.setEmail("плохой" + ADMIN_EMAIL);
         dto.setPassword(ADMIN_PASSWORD);
         Response r = given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
-                .body(mapper.writeValueAsString(dto))
+                .body(jacksonObjectMapper.writeValueAsString(dto))
                 .when()
                 .post(RequestPath.REQUEST_SIGNIN);
 

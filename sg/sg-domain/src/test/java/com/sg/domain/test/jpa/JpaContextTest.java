@@ -8,6 +8,7 @@ package com.sg.domain.test.jpa;
  */
 
 import com.sg.domain.service.SgService;
+import com.sg.domain.spring.configuration.JacksonMapperContext;
 import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
@@ -26,7 +27,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {SgMailServiceContext.class, SgCryptoContext.class, ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {SgMailServiceContext.class, SgCryptoContext.class, JacksonMapperContext.class, ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class})
 public class JpaContextTest {
     
     @Autowired

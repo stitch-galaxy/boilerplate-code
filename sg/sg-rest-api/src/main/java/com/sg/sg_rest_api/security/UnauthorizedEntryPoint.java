@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -38,6 +39,9 @@ public class UnauthorizedEntryPoint extends BasicAuthenticationEntryPoint {
     public final static String REALM_NAME = "realm";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UnauthorizedEntryPoint.class);
+    
+    @Autowired
+    private ObjectMapper jacksonObjectMapper;
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx) throws IOException, ServletException {
@@ -46,9 +50,8 @@ public class UnauthorizedEntryPoint extends BasicAuthenticationEntryPoint {
         response.setContentType(CustomMediaTypes.APPLICATION_JSON_UTF8.toString());
         
         ErrorDto dto = Utils.logExceptionAndCreateErrorDto(LOGGER, authEx);
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(response.getWriter(), dto);
+        
+        jacksonObjectMapper.writeValue(response.getWriter(), dto);
     }
 
     @Override

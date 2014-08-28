@@ -8,10 +8,10 @@ package com.sg.domain.service;
 import com.sg.domain.service.exception.SgCryptoException;
 import com.sg.domain.service.exception.SgInvalidTokenException;
 import com.sg.domain.service.exception.SgTokenExpiredException;
-import java.io.IOException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jasypt.util.text.BasicTextEncryptor;
 import org.joda.time.Instant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class SgCryptoServiceImpl implements SgCryptoService {
 
+    @Autowired
+    private ObjectMapper jacksonObjectMapper;
+
+    public SgCryptoServiceImpl() {
+    }
+
     @Value("${security.key}")
     private String secret;
 
@@ -30,9 +36,7 @@ public class SgCryptoServiceImpl implements SgCryptoService {
         try {
             BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
             textEncryptor.setPassword(secret);
-
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(token);
+            String json = jacksonObjectMapper.writeValueAsString(token);
             return textEncryptor.encrypt(json);
         } catch (Exception e) {
             throw new SgCryptoException(e);
@@ -53,9 +57,7 @@ public class SgCryptoServiceImpl implements SgCryptoService {
         }
 
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            token = mapper.readValue(tokenBody, AuthToken.class);
-
+            token = jacksonObjectMapper.readValue(tokenBody, AuthToken.class);
         } catch (Exception e) {
             throw new SgInvalidTokenException(e);
         }

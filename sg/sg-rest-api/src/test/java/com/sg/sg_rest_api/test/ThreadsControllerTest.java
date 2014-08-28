@@ -59,6 +59,9 @@ public class ThreadsControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+    
+    @Autowired
+    private ObjectMapper jacksonObjectMapper;
 
     @Before
     public void setUp() {
@@ -128,14 +131,12 @@ public class ThreadsControllerTest {
 
     @Test
     public void testCreateAlreadyExists() throws IOException, Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgThreadAlreadyExistsException(dmcThreadDto.getCode())).when(serviceMock).create(dmcThreadDto);
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dmcThreadDto)))
+                .content(jacksonObjectMapper.writeValueAsString(dmcThreadDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status", is(ThreadOperationStatus.THREAD_ALREADY_EXISTS)));
         verify(serviceMock, times(1)).create(dmcThreadDto);
@@ -144,13 +145,10 @@ public class ThreadsControllerTest {
 
     @Test
     public void testCreate() throws IOException, Exception {
-
-        ObjectMapper mapper = new ObjectMapper();
-
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dmcThreadDto)))
+                .content(jacksonObjectMapper.writeValueAsString(dmcThreadDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status", is(ThreadOperationStatus.STATUS_SUCCESS)));
         verify(serviceMock, times(1)).create(dmcThreadDto);
@@ -159,14 +157,12 @@ public class ThreadsControllerTest {
     
     @Test
     public void testDeleteNotFound() throws IOException, Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgThreadNotFoundException(dmcThreadDeleteDto.getCode())).when(serviceMock).delete(dmcThreadDeleteDto);
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_DELETE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dmcThreadDeleteDto)))
+                .content(jacksonObjectMapper.writeValueAsString(dmcThreadDeleteDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status", is(ThreadOperationStatus.THREAD_NOT_FOUND)));
         verify(serviceMock, times(1)).delete(dmcThreadDeleteDto);
@@ -175,12 +171,10 @@ public class ThreadsControllerTest {
 
     @Test
     public void testDelete() throws IOException, Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_DELETE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dmcThreadDeleteDto)))
+                .content(jacksonObjectMapper.writeValueAsString(dmcThreadDeleteDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status", is(ThreadOperationStatus.STATUS_SUCCESS)));
         verify(serviceMock, times(1)).delete(dmcThreadDeleteDto);
@@ -189,14 +183,12 @@ public class ThreadsControllerTest {
     
     @Test
     public void testUpdateNotFound() throws IOException, Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgThreadNotFoundException(dmcThreadUpdateDto.getRefCode())).when(serviceMock).update(dmcThreadUpdateDto);
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_UPDATE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dmcThreadUpdateDto)))
+                .content(jacksonObjectMapper.writeValueAsString(dmcThreadUpdateDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status", is(ThreadOperationStatus.THREAD_NOT_FOUND)));
         verify(serviceMock, times(1)).update(dmcThreadUpdateDto);
@@ -205,14 +197,12 @@ public class ThreadsControllerTest {
     
     @Test
     public void testUpdateAlreadyExists() throws IOException, Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgThreadAlreadyExistsException(dmcThreadUpdateDto.getRefCode())).when(serviceMock).update(dmcThreadUpdateDto);
 
         mockMvc.perform(
                 post(RequestPath.REQUEST_THREAD_UPDATE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dmcThreadUpdateDto)))
+                .content(jacksonObjectMapper.writeValueAsString(dmcThreadUpdateDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status", is(ThreadOperationStatus.THREAD_ALREADY_EXISTS)));
         verify(serviceMock, times(1)).update(dmcThreadUpdateDto);

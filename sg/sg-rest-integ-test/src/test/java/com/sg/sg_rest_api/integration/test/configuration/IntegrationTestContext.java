@@ -1,5 +1,6 @@
 package com.sg.sg_rest_api.integration.test.configuration;
 
+import com.sg.domain.spring.configuration.JacksonMapperContext;
 import com.sg.domain.spring.configuration.SgCryptoContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * @author tarasev
  */
 @Configuration
-@Import({SgCryptoContext.class})
+@Import({SgCryptoContext.class, JacksonMapperContext.class})
 @PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment}/rest_api.integration.test.properties")
 public class IntegrationTestContext {
     

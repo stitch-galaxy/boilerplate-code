@@ -34,6 +34,9 @@ public class SignupFlowTest {
 
     @Autowired
     private IntegrationTestInitializer integrationTestInitializer;
+    
+    @Autowired
+    private ObjectMapper jacksonObjectMapper;
 
     @Before
     public void setup() {
@@ -50,11 +53,10 @@ public class SignupFlowTest {
         dto.setEmail("тарас");
         dto.setUserFirstName("");
         dto.setUserLastName("");
-        ObjectMapper mapper = new ObjectMapper();
         
         given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
-                .body(mapper.writeValueAsString(dto))
+                .body(jacksonObjectMapper.writeValueAsString(dto))
                 .header(CustomHttpHeaders.X_AUTH_TOKEN, integrationTestInitializer.getAdminAuthToken())
                 .when()
                 .post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)

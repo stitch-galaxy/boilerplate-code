@@ -14,6 +14,7 @@ import com.sg.domain.service.SgCryptoService;
 import com.sg.domain.service.exception.SgCryptoException;
 import com.sg.domain.service.exception.SgInvalidTokenException;
 import com.sg.domain.service.exception.SgTokenExpiredException;
+import com.sg.domain.spring.configuration.JacksonMapperContext;
 import com.sg.domain.spring.configuration.SgCryptoContext;
 import com.sg.dto.response.AccountDto;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {SgCryptoContext.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {SgCryptoContext.class, JacksonMapperContext.class})
 public class SgCryptoServiceTest {
 
     private static final Long ACCOUNT_ID = 1L;

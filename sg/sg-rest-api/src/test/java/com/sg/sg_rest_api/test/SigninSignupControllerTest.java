@@ -71,6 +71,9 @@ public class SigninSignupControllerTest {
     SgCryptoService security;
 
     @Autowired
+    private ObjectMapper jacksonObjectMapper;
+    
+    @Autowired
     private SgMailService mailServiceMock;
     
     @Autowired
@@ -182,8 +185,6 @@ public class SigninSignupControllerTest {
 
     @Test
     public void testUserSignupResentConfirmationEmail() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupUser(signupDto);
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountDto.getId());
         when(serviceMock.getAccountInfo(nonVerifiedUserAccountDto.getId())).thenReturn(nonVerifiedUserAccountDto);
@@ -191,7 +192,7 @@ public class SigninSignupControllerTest {
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signupDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT)));
@@ -209,8 +210,6 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testAdminSignupResentConfirmationEmail() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupAdmin(signupDto);
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountDto.getId());
         when(serviceMock.getAccountInfo(nonVerifiedAdminUserAccountDto.getId())).thenReturn(nonVerifiedAdminUserAccountDto);
@@ -218,7 +217,7 @@ public class SigninSignupControllerTest {
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signupDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT)));
@@ -236,13 +235,11 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testUserSignupAlreadyRegistered() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgSignupAlreadyCompletedException(USER_EMAIL)).when(serviceMock).signupUser(signupDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signupDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED)));
@@ -255,13 +252,11 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testAdminSignupAlreadyRegistered() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgSignupAlreadyCompletedException(USER_EMAIL)).when(serviceMock).signupAdmin(signupDto);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signupDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_EMAIL_ALREADY_REGISTERED)));
@@ -274,15 +269,13 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testUserSignupSuccessfully() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountDto.getId());
         when(serviceMock.getAccountInfo(nonVerifiedUserAccountDto.getId())).thenReturn(nonVerifiedUserAccountDto);
         when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signupDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)));
@@ -300,15 +293,13 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testAdminSignupSuccessfully() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountDto.getId());
         when(serviceMock.getAccountInfo(nonVerifiedAdminUserAccountDto.getId())).thenReturn(nonVerifiedAdminUserAccountDto);
         when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signupDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)));
@@ -339,13 +330,11 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testCompleteSignupAccountNotFound() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(serviceMock).completeSignup(ACCOUNT_ID, completeSignupDto);
         
         mockMvc.perform(post(RequestPath.REQUEST_COMPLETE_SIGNUP)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(completeSignupDto)))
+                .content(jacksonObjectMapper.writeValueAsString(completeSignupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(CompleteSignupStatus.STATUS_ACCOUNT_NOT_FOUND)));
@@ -359,13 +348,11 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testCompleteSignupAlreadyCompleted() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgSignupAlreadyCompletedException(USER_EMAIL)).when(serviceMock).completeSignup(ACCOUNT_ID, completeSignupDto);
         
         mockMvc.perform(post(RequestPath.REQUEST_COMPLETE_SIGNUP)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(completeSignupDto)))
+                .content(jacksonObjectMapper.writeValueAsString(completeSignupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(CompleteSignupStatus.STATUS_ALREADY_COMPLETED)));
@@ -379,11 +366,9 @@ public class SigninSignupControllerTest {
     
     @Test
     public void testCompleteSignupSuccessfully() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         mockMvc.perform(post(RequestPath.REQUEST_COMPLETE_SIGNUP)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(completeSignupDto)))
+                .content(jacksonObjectMapper.writeValueAsString(completeSignupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(CompleteSignupStatus.STATUS_SUCCESS)));
@@ -400,13 +385,11 @@ public class SigninSignupControllerTest {
     @Test
     public void testSigninAccountNotFound() throws Exception
     {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgAccountNotFoundException(signinDto.getEmail())).when(serviceMock).signIn(signinDto);
         
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signinDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signinDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_USER_NOT_FOUND)));
@@ -421,13 +404,11 @@ public class SigninSignupControllerTest {
     @Test
     public void testSigninInvalidPassword() throws Exception
     {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgInvalidPasswordException()).when(serviceMock).signIn(signinDto);
         
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signinDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signinDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_WRONG_PASSWORD)));
@@ -442,13 +423,11 @@ public class SigninSignupControllerTest {
     @Test
     public void testSigninEmailNonVerified() throws Exception
     {
-        ObjectMapper mapper = new ObjectMapper();
-
         doThrow(new SgEmailNonVerifiedException(signinDto.getEmail())).when(serviceMock).signIn(signinDto);
         
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signinDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signinDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_EMAIL_NOT_VERIFIED)));
@@ -463,15 +442,13 @@ public class SigninSignupControllerTest {
     @Test
     public void testSigninSuccessfully() throws Exception
     {
-        ObjectMapper mapper = new ObjectMapper();
-        
         when(serviceMock.getAccountIdByRegistrationEmail(signinDto.getEmail())).thenReturn(verifiedUserAccountDto.getId());
         when(serviceMock.getAccountInfo(verifiedUserAccountDto.getId())).thenReturn(verifiedUserAccountDto);
         when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(signinDto)))
+                .content(jacksonObjectMapper.writeValueAsString(signinDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_SUCCESS)))

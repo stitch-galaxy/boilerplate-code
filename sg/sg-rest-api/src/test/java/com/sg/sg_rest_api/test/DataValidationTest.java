@@ -61,6 +61,9 @@ public class DataValidationTest {
     private MockMvc mockMvc;
 
     @Autowired
+    ObjectMapper jacksonObjectMapper;
+    
+    @Autowired
     private SgService serviceMock;
 
     @Autowired
@@ -108,9 +111,7 @@ public class DataValidationTest {
     
 
     @Test
-    public void testSignupUserDtoError() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        
+    public void testSignupUserDtoError() throws Exception {        
         SignupDto dto = new SignupDto();
         dto.setEmail(INVALID_EMAIL);
         dto.setUserBirthDate(INVALID_USER_BIRTH_DATE);
@@ -119,7 +120,7 @@ public class DataValidationTest {
         
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(jacksonObjectMapper.writeValueAsString(dto)))
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.fieldErrors", hasSize(4)))
@@ -134,9 +135,7 @@ public class DataValidationTest {
     }
     
     @Test
-    public void testSignupAdminDtoError() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        
+    public void testSignupAdminDtoError() throws Exception {        
         SignupDto dto = new SignupDto();
         dto.setEmail(INVALID_EMAIL);
         dto.setUserBirthDate(INVALID_USER_BIRTH_DATE);
@@ -145,7 +144,7 @@ public class DataValidationTest {
         
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(jacksonObjectMapper.writeValueAsString(dto)))
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.fieldErrors", hasSize(4)))
@@ -160,15 +159,13 @@ public class DataValidationTest {
     }
     
     @Test
-    public void testCompleteSignupDtoError() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        
+    public void testCompleteSignupDtoError() throws Exception {        
         CompleteSignupDto dto = new CompleteSignupDto();
         dto.setPassword(INVALID_PASSWORD);
         
         mockMvc.perform(post(RequestPath.REQUEST_COMPLETE_SIGNUP)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(jacksonObjectMapper.writeValueAsString(dto)))
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.fieldErrors", hasSize(1)))
@@ -180,16 +177,14 @@ public class DataValidationTest {
     }
     
     @Test
-    public void testSigninDtoError() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        
+    public void testSigninDtoError() throws Exception {        
         SigninDto dto = new SigninDto();
         dto.setEmail(INVALID_EMAIL);
         dto.setPassword(EMPTY_PASSWORD);
         
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(jacksonObjectMapper.writeValueAsString(dto)))
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.fieldErrors", hasSize(2)))
@@ -203,14 +198,12 @@ public class DataValidationTest {
     
     @Test
     public void testThreadCreateDtoError() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        
         ThreadCreateDto dto = new ThreadCreateDto();
         dto.setCode(INVALID_THREAD_CODE);
         
         mockMvc.perform(post(RequestPath.REQUEST_THREAD_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(jacksonObjectMapper.writeValueAsString(dto)))
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.fieldErrors", hasSize(1)))
@@ -223,14 +216,12 @@ public class DataValidationTest {
     
     @Test
     public void testThreadDeleteDtoError() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        
         ThreadDeleteDto dto = new ThreadDeleteDto();
         dto.setCode(INVALID_THREAD_CODE);
         
         mockMvc.perform(post(RequestPath.REQUEST_THREAD_DELETE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(jacksonObjectMapper.writeValueAsString(dto)))
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.fieldErrors", hasSize(1)))
@@ -243,15 +234,13 @@ public class DataValidationTest {
     
     @Test
     public void testThreadUpdateDtoError() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        
         ThreadUpdateDto dto = new ThreadUpdateDto();
         dto.setRefCode(INVALID_THREAD_CODE);
         dto.setCode(INVALID_THREAD_CODE);
         
         mockMvc.perform(post(RequestPath.REQUEST_THREAD_UPDATE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                .content(jacksonObjectMapper.writeValueAsString(dto)))
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.fieldErrors", hasSize(2)))
