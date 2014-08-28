@@ -12,4 +12,5 @@ package com.sg.constants;
  */
 public class CustomHttpHeaders {
     public static final String X_AUTH_TOKEN = "X-Auth-Token";
+    public static final String X_ACCOUNT_ID = "X-Account-Id";
 }

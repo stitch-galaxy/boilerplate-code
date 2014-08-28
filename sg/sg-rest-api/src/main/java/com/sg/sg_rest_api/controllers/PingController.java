@@ -17,6 +17,7 @@ import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.response.OperationStatusDto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,21 +31,15 @@ public class PingController {
     SgService service;
 
     @RequestMapping(value = RequestPath.REQUEST_PING, method = RequestMethod.GET)
-    public @ResponseBody
-    OperationStatusDto ping() throws Exception {
+    public void ping() throws Exception {
         service.ping();
-        OperationStatusDto result = new OperationStatusDto();
-        result.setStatus(OperationStatus.STATUS_SUCCESS);
-        return result;
     }
     
     @RequestMapping(value = RequestPath.REQUEST_SECURE_PING, method = RequestMethod.GET)
     public @ResponseBody
-    OperationStatusDto securePing() throws Exception {
+    String securePing() throws Exception {
         service.ping();
-        OperationStatusDto result = new OperationStatusDto();
-        result.setStatus(OperationStatus.STATUS_SUCCESS);
-        return result;
+        return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
     }
 
     

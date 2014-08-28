@@ -113,8 +113,7 @@ public class SpringSecurityTest {
     public void testUnsecureResource() throws Exception {
         mockMvc.perform(get(RequestPath.REQUEST_PING))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(OperationStatus.STATUS_SUCCESS)));
+                .andExpect(content().bytes(new byte[0]));
         verify(serviceMock, times(1)).ping();
         verifyNoMoreInteractions(serviceMock);
     }
@@ -134,10 +133,14 @@ public class SpringSecurityTest {
         AuthToken token = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now());
         String authToken = security.encryptSecurityToken(token);
 
+        Long l = ACCOUNT_ID;
         mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(OperationStatus.STATUS_SUCCESS)));
+                .andExpect(content().string(l.toString()));
+//                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+//                .andExpect(jsonPath("$.status", is(OperationStatus.STATUS_SUCCESS)));
+        
+        
         verify(serviceMock, times(1)).ping();
         verifyNoMoreInteractions(serviceMock);
     }

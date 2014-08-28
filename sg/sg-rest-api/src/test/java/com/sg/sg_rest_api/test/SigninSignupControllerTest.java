@@ -72,10 +72,10 @@ public class SigninSignupControllerTest {
 
     @Autowired
     private ObjectMapper jacksonObjectMapper;
-    
+
     @Autowired
     private SgMailService mailServiceMock;
-    
+
     @Autowired
     private SgCryptoService cryptoMock;
 
@@ -112,7 +112,6 @@ public class SigninSignupControllerTest {
     private static final AccountDto verifiedUserAccountDto;
     private static final CompleteSignupDto completeSignupDto;
     private static final SigninDto signinDto;
-    
 
     static {
         signupDto = new SignupDto();
@@ -129,7 +128,7 @@ public class SigninSignupControllerTest {
         nonVerifiedUserAccountDto.setUserBirthDate(USER_BIRTH_DATE);
         nonVerifiedUserAccountDto.setUserFirstName(USER_FIRST_NAME);
         nonVerifiedUserAccountDto.setUserLastName(USER_LAST_NAME);
-        
+
         verifiedUserAccountDto = new AccountDto();
         verifiedUserAccountDto.setEmail(USER_EMAIL);
         verifiedUserAccountDto.setEmailVerified(Boolean.TRUE);
@@ -138,9 +137,7 @@ public class SigninSignupControllerTest {
         verifiedUserAccountDto.setUserBirthDate(USER_BIRTH_DATE);
         verifiedUserAccountDto.setUserFirstName(USER_FIRST_NAME);
         verifiedUserAccountDto.setUserLastName(USER_LAST_NAME);
-        
-        
-        
+
         nonVerifiedAdminUserAccountDto = new AccountDto();
         nonVerifiedAdminUserAccountDto.setEmail(USER_EMAIL);
         nonVerifiedAdminUserAccountDto.setEmailVerified(Boolean.FALSE);
@@ -149,15 +146,15 @@ public class SigninSignupControllerTest {
         nonVerifiedAdminUserAccountDto.setUserBirthDate(USER_BIRTH_DATE);
         nonVerifiedAdminUserAccountDto.setUserFirstName(USER_FIRST_NAME);
         nonVerifiedAdminUserAccountDto.setUserLastName(USER_LAST_NAME);
-        
+
         completeSignupDto = new CompleteSignupDto();
         completeSignupDto.setPassword(USER_PASSWORD);
-        
+
         signinDto = new SigninDto();
         signinDto.setEmail(USER_EMAIL);
         signinDto.setPassword(USER_PASSWORD);
     }
-    
+
     @Test
     public void testInstallAlreadyCompleted() throws Exception {
         doThrow(new SgInstallationAlreadyCompletedException()).when(serviceMock).install();
@@ -169,9 +166,9 @@ public class SigninSignupControllerTest {
 
         verify(serviceMock, times(1)).install();
         verifyNoMoreInteractions(serviceMock);
-        
+
     }
-    
+
     @Test
     public void testInstall() throws Exception {
         mockMvc.perform(get(RequestPath.REQUEST_INSTALL))
@@ -207,7 +204,7 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
     public void testAdminSignupResentConfirmationEmail() throws Exception {
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupAdmin(signupDto);
@@ -232,7 +229,7 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
     public void testUserSignupAlreadyRegistered() throws Exception {
         doThrow(new SgSignupAlreadyCompletedException(USER_EMAIL)).when(serviceMock).signupUser(signupDto);
@@ -249,7 +246,7 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
     public void testAdminSignupAlreadyRegistered() throws Exception {
         doThrow(new SgSignupAlreadyCompletedException(USER_EMAIL)).when(serviceMock).signupAdmin(signupDto);
@@ -266,7 +263,7 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
     public void testUserSignupSuccessfully() throws Exception {
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountDto.getId());
@@ -278,7 +275,8 @@ public class SigninSignupControllerTest {
                 .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)));
+                .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)))
+                .andExpect(header().string(CustomHttpHeaders.X_ACCOUNT_ID, org.hamcrest.Matchers.any(String.class)));
 
         verify(serviceMock, times(1)).signupUser(signupDto);
         verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
@@ -290,7 +288,7 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
     public void testAdminSignupSuccessfully() throws Exception {
         when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountDto.getId());
@@ -302,7 +300,8 @@ public class SigninSignupControllerTest {
                 .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)));
+                .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)))
+                .andExpect(header().string(CustomHttpHeaders.X_ACCOUNT_ID, org.hamcrest.Matchers.any(String.class)));
 
         verify(serviceMock, times(1)).signupAdmin(signupDto);
         verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
@@ -314,24 +313,22 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @BeforeClass
-    public static void setup()
-    {
+    public static void setup() {
         SecurityContextHolder.getContext().setAuthentication(
-		new UsernamePasswordAuthenticationToken(ACCOUNT_ID, null));
+                new UsernamePasswordAuthenticationToken(ACCOUNT_ID, null));
     }
-    
+
     @AfterClass
-    public static void tearDown()
-    {
+    public static void tearDown() {
         SecurityContextHolder.getContext().setAuthentication(null);
     }
-    
+
     @Test
     public void testCompleteSignupAccountNotFound() throws Exception {
         doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(serviceMock).completeSignup(ACCOUNT_ID, completeSignupDto);
-        
+
         mockMvc.perform(post(RequestPath.REQUEST_COMPLETE_SIGNUP)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonObjectMapper.writeValueAsString(completeSignupDto)))
@@ -345,11 +342,11 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
     public void testCompleteSignupAlreadyCompleted() throws Exception {
         doThrow(new SgSignupAlreadyCompletedException(USER_EMAIL)).when(serviceMock).completeSignup(ACCOUNT_ID, completeSignupDto);
-        
+
         mockMvc.perform(post(RequestPath.REQUEST_COMPLETE_SIGNUP)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonObjectMapper.writeValueAsString(completeSignupDto)))
@@ -363,7 +360,7 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
     public void testCompleteSignupSuccessfully() throws Exception {
         mockMvc.perform(post(RequestPath.REQUEST_COMPLETE_SIGNUP)
@@ -379,14 +376,12 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
-    //, ;
 
+    //, ;
     @Test
-    public void testSigninAccountNotFound() throws Exception
-    {
+    public void testSigninAccountNotFound() throws Exception {
         doThrow(new SgAccountNotFoundException(signinDto.getEmail())).when(serviceMock).signIn(signinDto);
-        
+
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonObjectMapper.writeValueAsString(signinDto)))
@@ -400,12 +395,11 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
-    public void testSigninInvalidPassword() throws Exception
-    {
+    public void testSigninInvalidPassword() throws Exception {
         doThrow(new SgInvalidPasswordException()).when(serviceMock).signIn(signinDto);
-        
+
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonObjectMapper.writeValueAsString(signinDto)))
@@ -419,12 +413,11 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
-    public void testSigninEmailNonVerified() throws Exception
-    {
+    public void testSigninEmailNonVerified() throws Exception {
         doThrow(new SgEmailNonVerifiedException(signinDto.getEmail())).when(serviceMock).signIn(signinDto);
-        
+
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonObjectMapper.writeValueAsString(signinDto)))
@@ -438,10 +431,9 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
     @Test
-    public void testSigninSuccessfully() throws Exception
-    {
+    public void testSigninSuccessfully() throws Exception {
         when(serviceMock.getAccountIdByRegistrationEmail(signinDto.getEmail())).thenReturn(verifiedUserAccountDto.getId());
         when(serviceMock.getAccountInfo(verifiedUserAccountDto.getId())).thenReturn(verifiedUserAccountDto);
         when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
@@ -463,5 +455,5 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(cryptoMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
-    
+
 }

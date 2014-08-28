@@ -72,7 +72,7 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto signupUser(@Valid @RequestBody SignupDto dto) throws SgCryptoException, SgDataValidationException {
+    OperationStatusDto signupUser(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws SgCryptoException, SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -89,13 +89,13 @@ public class SigninSignupController {
         AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());
         String token = security.encryptSecurityToken(authToken);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
-
+        response.setHeader(CustomHttpHeaders.X_ACCOUNT_ID, accountId.toString());
         return result;
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_ADMIN_USER, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto signupAdmin(@Valid @RequestBody SignupDto dto) throws IOException, SgCryptoException, SgDataValidationException {
+    OperationStatusDto signupAdmin(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws IOException, SgCryptoException, SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -112,7 +112,7 @@ public class SigninSignupController {
         AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());
         String token = security.encryptSecurityToken(authToken);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
-
+        response.setHeader(CustomHttpHeaders.X_ACCOUNT_ID, accountId.toString());
         return result;
     }
 

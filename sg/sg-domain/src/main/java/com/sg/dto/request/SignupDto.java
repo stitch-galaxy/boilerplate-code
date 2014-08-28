@@ -36,7 +36,7 @@ public class SignupDto {
     @NotBlank(message = FIELD_SIGNUP_USER_LAST_NAME)
     private String userLastName;
     @NotNull(message = FIELD_SIGNUP_USER_BIRTH_DATE)
-    @Past
+    @Past(message = FIELD_SIGNUP_USER_BIRTH_DATE)
     @JsonSerialize(using = JodaLocalDateJsonSerializer.class)
     @JsonDeserialize(using = JodaLocalDateJsonDeserializer.class)
 
