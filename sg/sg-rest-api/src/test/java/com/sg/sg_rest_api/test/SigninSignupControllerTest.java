@@ -18,7 +18,7 @@ import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
 import com.sg.constants.TokenExpirationType;
 import com.sg.dto.request.SignupDto;
-import com.sg.dto.response.AccountDto;
+import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.domain.service.SgMailService;
 import com.sg.domain.service.AuthToken;
 import com.sg.domain.service.SgCryptoService;
@@ -107,9 +107,9 @@ public class SigninSignupControllerTest {
     private static final String USER_FIRST_NAME = "Evgeny";
     private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
     private static final SignupDto signupDto;
-    private static final AccountDto nonVerifiedUserAccountDto;
-    private static final AccountDto nonVerifiedAdminUserAccountDto;
-    private static final AccountDto verifiedUserAccountDto;
+    private static final AccountPrincipalDto nonVerifiedUserAccountPrincipalDto;
+    private static final AccountPrincipalDto nonVerifiedAdminUserAccountPrincipalDto;
+    private static final AccountPrincipalDto verifiedUserAccountPrincipalDto;
     private static final CompleteSignupDto completeSignupDto;
     private static final SigninDto signinDto;
 
@@ -120,32 +120,20 @@ public class SigninSignupControllerTest {
         signupDto.setUserLastName(USER_LAST_NAME);
         signupDto.setUserBirthDate(USER_BIRTH_DATE);
 
-        nonVerifiedUserAccountDto = new AccountDto();
-        nonVerifiedUserAccountDto.setEmail(USER_EMAIL);
-        nonVerifiedUserAccountDto.setEmailVerified(Boolean.FALSE);
-        nonVerifiedUserAccountDto.setId(ACCOUNT_ID);
-        nonVerifiedUserAccountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER}));
-        nonVerifiedUserAccountDto.setUserBirthDate(USER_BIRTH_DATE);
-        nonVerifiedUserAccountDto.setUserFirstName(USER_FIRST_NAME);
-        nonVerifiedUserAccountDto.setUserLastName(USER_LAST_NAME);
+        nonVerifiedUserAccountPrincipalDto = new AccountPrincipalDto();
+        nonVerifiedUserAccountPrincipalDto.setEmailVerified(Boolean.FALSE);
+        nonVerifiedUserAccountPrincipalDto.setId(ACCOUNT_ID);
+        nonVerifiedUserAccountPrincipalDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER}));
 
-        verifiedUserAccountDto = new AccountDto();
-        verifiedUserAccountDto.setEmail(USER_EMAIL);
-        verifiedUserAccountDto.setEmailVerified(Boolean.TRUE);
-        verifiedUserAccountDto.setId(ACCOUNT_ID);
-        verifiedUserAccountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER}));
-        verifiedUserAccountDto.setUserBirthDate(USER_BIRTH_DATE);
-        verifiedUserAccountDto.setUserFirstName(USER_FIRST_NAME);
-        verifiedUserAccountDto.setUserLastName(USER_LAST_NAME);
+        verifiedUserAccountPrincipalDto = new AccountPrincipalDto();
+        verifiedUserAccountPrincipalDto.setEmailVerified(Boolean.TRUE);
+        verifiedUserAccountPrincipalDto.setId(ACCOUNT_ID);
+        verifiedUserAccountPrincipalDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER}));
 
-        nonVerifiedAdminUserAccountDto = new AccountDto();
-        nonVerifiedAdminUserAccountDto.setEmail(USER_EMAIL);
-        nonVerifiedAdminUserAccountDto.setEmailVerified(Boolean.FALSE);
-        nonVerifiedAdminUserAccountDto.setId(ACCOUNT_ID);
-        nonVerifiedAdminUserAccountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
-        nonVerifiedAdminUserAccountDto.setUserBirthDate(USER_BIRTH_DATE);
-        nonVerifiedAdminUserAccountDto.setUserFirstName(USER_FIRST_NAME);
-        nonVerifiedAdminUserAccountDto.setUserLastName(USER_LAST_NAME);
+        nonVerifiedAdminUserAccountPrincipalDto = new AccountPrincipalDto();
+        nonVerifiedAdminUserAccountPrincipalDto.setEmailVerified(Boolean.FALSE);
+        nonVerifiedAdminUserAccountPrincipalDto.setId(ACCOUNT_ID);
+        nonVerifiedAdminUserAccountPrincipalDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
 
         completeSignupDto = new CompleteSignupDto();
         completeSignupDto.setPassword(USER_PASSWORD);
@@ -183,8 +171,7 @@ public class SigninSignupControllerTest {
     @Test
     public void testUserSignupResentConfirmationEmail() throws Exception {
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupUser(signupDto);
-        when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountDto.getId());
-        when(serviceMock.getAccountInfo(nonVerifiedUserAccountDto.getId())).thenReturn(nonVerifiedUserAccountDto);
+        when(serviceMock.getAccountPrincipal(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountPrincipalDto);
         when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
@@ -195,8 +182,7 @@ public class SigninSignupControllerTest {
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT)));
 
         verify(serviceMock, times(1)).signupUser(signupDto);
-        verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
-        verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
+        verify(serviceMock, times(1)).getAccountPrincipal(signupDto.getEmail());
         verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
@@ -208,8 +194,7 @@ public class SigninSignupControllerTest {
     @Test
     public void testAdminSignupResentConfirmationEmail() throws Exception {
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupAdmin(signupDto);
-        when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountDto.getId());
-        when(serviceMock.getAccountInfo(nonVerifiedAdminUserAccountDto.getId())).thenReturn(nonVerifiedAdminUserAccountDto);
+        when(serviceMock.getAccountPrincipal(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountPrincipalDto);
         when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
@@ -220,8 +205,7 @@ public class SigninSignupControllerTest {
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT)));
 
         verify(serviceMock, times(1)).signupAdmin(signupDto);
-        verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
-        verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
+        verify(serviceMock, times(1)).getAccountPrincipal(signupDto.getEmail());
         verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
@@ -266,8 +250,7 @@ public class SigninSignupControllerTest {
 
     @Test
     public void testUserSignupSuccessfully() throws Exception {
-        when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountDto.getId());
-        when(serviceMock.getAccountInfo(nonVerifiedUserAccountDto.getId())).thenReturn(nonVerifiedUserAccountDto);
+        when(serviceMock.getAccountPrincipal(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountPrincipalDto);
         when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
@@ -279,8 +262,7 @@ public class SigninSignupControllerTest {
                 .andExpect(header().string(CustomHttpHeaders.X_ACCOUNT_ID, org.hamcrest.Matchers.any(String.class)));
 
         verify(serviceMock, times(1)).signupUser(signupDto);
-        verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
-        verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
+        verify(serviceMock, times(1)).getAccountPrincipal(signupDto.getEmail());
         verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
@@ -291,8 +273,7 @@ public class SigninSignupControllerTest {
 
     @Test
     public void testAdminSignupSuccessfully() throws Exception {
-        when(serviceMock.getAccountIdByRegistrationEmail(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountDto.getId());
-        when(serviceMock.getAccountInfo(nonVerifiedAdminUserAccountDto.getId())).thenReturn(nonVerifiedAdminUserAccountDto);
+        when(serviceMock.getAccountPrincipal(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountPrincipalDto);
         when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
@@ -304,8 +285,7 @@ public class SigninSignupControllerTest {
                 .andExpect(header().string(CustomHttpHeaders.X_ACCOUNT_ID, org.hamcrest.Matchers.any(String.class)));
 
         verify(serviceMock, times(1)).signupAdmin(signupDto);
-        verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signupDto.getEmail());
-        verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
+        verify(serviceMock, times(1)).getAccountPrincipal(signupDto.getEmail());
         verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
@@ -434,8 +414,7 @@ public class SigninSignupControllerTest {
 
     @Test
     public void testSigninSuccessfully() throws Exception {
-        when(serviceMock.getAccountIdByRegistrationEmail(signinDto.getEmail())).thenReturn(verifiedUserAccountDto.getId());
-        when(serviceMock.getAccountInfo(verifiedUserAccountDto.getId())).thenReturn(verifiedUserAccountDto);
+        when(serviceMock.getAccountPrincipal(signinDto.getEmail())).thenReturn(verifiedUserAccountPrincipalDto);
         when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
@@ -447,8 +426,7 @@ public class SigninSignupControllerTest {
                 .andExpect(header().string(CustomHttpHeaders.X_AUTH_TOKEN, is(SECURE_TOKEN_STRING)));
 
         verify(serviceMock, times(1)).signIn(signinDto);
-        verify(serviceMock, times(1)).getAccountIdByRegistrationEmail(signinDto.getEmail());
-        verify(serviceMock, times(1)).getAccountInfo(ACCOUNT_ID);
+        verify(serviceMock, times(1)).getAccountPrincipal(signinDto.getEmail());
         verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
 
         verifyNoMoreInteractions(serviceMock);

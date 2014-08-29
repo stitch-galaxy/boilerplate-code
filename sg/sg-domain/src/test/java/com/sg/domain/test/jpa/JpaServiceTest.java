@@ -29,7 +29,7 @@ import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
 import com.sg.domain.spring.configuration.ValidatorContext;
-import com.sg.dto.response.AccountDto;
+import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
@@ -314,23 +314,11 @@ public class JpaServiceTest {
     }
     
     @Test 
-    public void testGetAccountIdByRegistrationEmailThrowsExceptionIfAccountNotFound() throws SgDataValidationException
+    public void testGetAccountPrincipalThrowsExceptionIfAccountNotFound() throws SgDataValidationException
     {
         try
         {
-            service.getAccountIdByRegistrationEmail(signupDto.getEmail());
-            Assert.fail("Expected  " + SgAccountNotFoundException.class.getName());
-        }
-        catch(SgAccountNotFoundException e){
-        }
-    }
-    
-    @Test 
-    public void testGetAccountInfoThrowsExceptionIfAccountNotFound() throws SgDataValidationException
-    {
-        try
-        {
-            service.getAccountInfo(1L);
+            service.getAccountPrincipal(signupDto.getEmail());
             Assert.fail("Expected  " + SgAccountNotFoundException.class.getName());
         }
         catch(SgAccountNotFoundException e){
@@ -342,24 +330,18 @@ public class JpaServiceTest {
     public void testInstallation() throws SgDataValidationException {
         service.install();
         
-        Long accountId = service.getAccountIdByRegistrationEmail(adminEmail);
+        AccountPrincipalDto accountPrincipalDto = service.getAccountPrincipal(adminEmail);
+        Assert.assertEquals(Boolean.TRUE, accountPrincipalDto.getEmailVerified());
         
-        AccountDto accountDto = service.getAccountInfo(accountId);
-        Assert.assertEquals(adminEmail, accountDto.getEmail());
-        Assert.assertEquals(Boolean.TRUE, accountDto.getEmailVerified());
+        Assert.assertTrue(accountPrincipalDto.getRoles().size() == 2);
+        Assert.assertTrue(accountPrincipalDto.getRoles().contains(Roles.ROLE_USER));
+        Assert.assertTrue(accountPrincipalDto.getRoles().contains(Roles.ROLE_ADMIN));
         
-        Assert.assertTrue(accountDto.getRoles().size() == 2);
-        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
-        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_ADMIN));
+        accountPrincipalDto = service.getAccountPrincipal(userEmail);
+        Assert.assertEquals(Boolean.TRUE, accountPrincipalDto.getEmailVerified());
         
-        accountId = service.getAccountIdByRegistrationEmail(userEmail);
-        
-        accountDto = service.getAccountInfo(accountId);
-        Assert.assertEquals(userEmail, accountDto.getEmail());
-        Assert.assertEquals(Boolean.TRUE, accountDto.getEmailVerified());
-        
-        Assert.assertTrue(accountDto.getRoles().size() == 1);
-        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
+        Assert.assertTrue(accountPrincipalDto.getRoles().size() == 1);
+        Assert.assertTrue(accountPrincipalDto.getRoles().contains(Roles.ROLE_USER));
         
         try{
             service.install();
@@ -373,18 +355,12 @@ public class JpaServiceTest {
     public void testSignupAdmin() throws SgDataValidationException {
         service.signupAdmin(signupDto);
         
-        Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
+        AccountPrincipalDto accountPrincipalDto = service.getAccountPrincipal(signupDto.getEmail());
+        Assert.assertEquals(Boolean.FALSE, accountPrincipalDto.getEmailVerified());
         
-        AccountDto accountDto = service.getAccountInfo(accountId);
-        Assert.assertEquals(signupDto.getEmail(), accountDto.getEmail());
-        Assert.assertEquals(signupDto.getUserBirthDate(), accountDto.getUserBirthDate());
-        Assert.assertEquals(signupDto.getUserFirstName(), accountDto.getUserFirstName());
-        Assert.assertEquals(signupDto.getUserLastName(), accountDto.getUserLastName());
-        Assert.assertEquals(Boolean.FALSE, accountDto.getEmailVerified());
-        
-        Assert.assertTrue(accountDto.getRoles().size() == 2);
-        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
-        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_ADMIN));
+        Assert.assertTrue(accountPrincipalDto.getRoles().size() == 2);
+        Assert.assertTrue(accountPrincipalDto.getRoles().contains(Roles.ROLE_USER));
+        Assert.assertTrue(accountPrincipalDto.getRoles().contains(Roles.ROLE_ADMIN));
         
         try{
             service.signupUser(signupDto);
@@ -393,7 +369,7 @@ public class JpaServiceTest {
         catch(SgSignupForRegisteredButNonVerifiedEmailException e){
         }
         
-        service.completeSignup(accountId, completeSignupDto);
+        service.completeSignup(accountPrincipalDto.getId(), completeSignupDto);
         
         try{
             service.signupUser(signupDto);
@@ -407,17 +383,11 @@ public class JpaServiceTest {
     public void testSignupUser() throws SgDataValidationException {
         service.signupUser(signupDto);
         
-        Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
+        AccountPrincipalDto accountPrincipalDto = service.getAccountPrincipal(signupDto.getEmail());
+        Assert.assertEquals(Boolean.FALSE, accountPrincipalDto.getEmailVerified());
         
-        AccountDto accountDto = service.getAccountInfo(accountId);
-        Assert.assertEquals(signupDto.getEmail(), accountDto.getEmail());
-        Assert.assertEquals(signupDto.getUserBirthDate(), accountDto.getUserBirthDate());
-        Assert.assertEquals(signupDto.getUserFirstName(), accountDto.getUserFirstName());
-        Assert.assertEquals(signupDto.getUserLastName(), accountDto.getUserLastName());
-        Assert.assertEquals(Boolean.FALSE, accountDto.getEmailVerified());
-        
-        Assert.assertTrue(accountDto.getRoles().size() == 1);
-        Assert.assertTrue(accountDto.getRoles().contains(Roles.ROLE_USER));
+        Assert.assertTrue(accountPrincipalDto.getRoles().size() == 1);
+        Assert.assertTrue(accountPrincipalDto.getRoles().contains(Roles.ROLE_USER));
         
         try{
             service.signupUser(signupDto);
@@ -426,7 +396,7 @@ public class JpaServiceTest {
         catch(SgSignupForRegisteredButNonVerifiedEmailException e){
         }
         
-        service.completeSignup(accountId, completeSignupDto);
+        service.completeSignup(accountPrincipalDto.getId(), completeSignupDto);
         
         try{
             service.signupUser(signupDto);
@@ -448,13 +418,13 @@ public class JpaServiceTest {
         
         service.signupUser(signupDto);
         
-        Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
+        AccountPrincipalDto dto = service.getAccountPrincipal(signupDto.getEmail());
         
-        service.completeSignup(accountId, completeSignupDto);
+        service.completeSignup(dto.getId(), completeSignupDto);
         
         try
         {
-            service.completeSignup(accountId, completeSignupDto);
+            service.completeSignup(dto.getId(), completeSignupDto);
             Assert.fail("Expected " + SgSignupAlreadyCompletedException.class.getName());
         }
         catch(SgSignupAlreadyCompletedException e) {
@@ -480,8 +450,9 @@ public class JpaServiceTest {
         catch(SgEmailNonVerifiedException e)
         {}
         
-        Long accountId = service.getAccountIdByRegistrationEmail(signupDto.getEmail());
-        service.completeSignup(accountId, completeSignupDto);
+        AccountPrincipalDto dto = service.getAccountPrincipal(signupDto.getEmail());
+        
+        service.completeSignup(dto.getId(), completeSignupDto);
         
         service.signIn(signinDto);
         

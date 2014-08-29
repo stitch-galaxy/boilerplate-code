@@ -18,7 +18,7 @@ import com.sg.constants.TokenExpirationIntervals;
 import com.sg.constants.TokenExpirationType;
 import com.sg.domain.service.AuthToken;
 import com.sg.domain.service.SgCryptoService;
-import com.sg.dto.response.AccountDto;
+import com.sg.dto.response.AccountPrincipalDto;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.annotation.Resource;
@@ -62,25 +62,16 @@ import org.springframework.web.context.WebApplicationContext;
 @ContextConfiguration(classes = {WebApplicationIntegrationTestContext.class, ServletContext.class})
 public class SpringSecurityTest {
 
-    private static final String AIDA_14 = "Aida 14";
     private static final long ACCOUNT_ID = 1L;
     private static final String BAD_TOKEN = "BAD_TOKEN";
-    private static final AccountDto accountDto;
-    private static final String USER_EMAIL = "test@example.com";
-    private static final String USER_LAST_NAME = "Tarasov";
-    private static final String USER_FIRST_NAME = "Evgeny";
-    private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
+    private static final AccountPrincipalDto accountDto;
     
     static
     {
-        accountDto = new AccountDto();
-        accountDto.setEmail(USER_EMAIL);
+        accountDto = new AccountPrincipalDto();
         accountDto.setEmailVerified(Boolean.FALSE);
         accountDto.setId(ACCOUNT_ID);
         accountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
-        accountDto.setUserBirthDate(USER_BIRTH_DATE);
-        accountDto.setUserFirstName(USER_FIRST_NAME);
-        accountDto.setUserLastName(USER_LAST_NAME);
     }
 
     private MockMvc mockMvc;
@@ -137,9 +128,6 @@ public class SpringSecurityTest {
         mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().isOk())
                 .andExpect(content().string(l.toString()));
-//                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-//                .andExpect(jsonPath("$.status", is(OperationStatus.STATUS_SUCCESS)));
-        
         
         verify(serviceMock, times(1)).ping();
         verifyNoMoreInteractions(serviceMock);

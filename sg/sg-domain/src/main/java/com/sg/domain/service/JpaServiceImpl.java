@@ -13,7 +13,7 @@ import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
-import com.sg.dto.response.AccountDto;
+import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.domain.entities.jpa.Canvas;
 import com.sg.domain.entities.jpa.CanvasesRepository;
 import com.sg.domain.entities.jpa.ProductRepository;
@@ -42,10 +42,6 @@ import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Set;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import ma.glasnost.orika.MapperFacade;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Value;
@@ -329,50 +325,6 @@ public class JpaServiceImpl implements SgService {
         accountsRepository.save(account);
     }
 
-    public Long getAccountIdByRegistrationEmail(final String email) {
-        return transactionTemplate.execute(new TransactionCallback<Long>() {
-            public Long doInTransaction(TransactionStatus status) {
-                try {
-                    return getAccountIdByRegistrationEmailImpl(email);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    public Long getAccountIdByRegistrationEmailImpl(String email) {
-        Account account = accountsRepository.findByEmail(email);
-        if (account == null) {
-            throw new SgAccountNotFoundException(email);
-        }
-        return account.getId();
-    }
-
-    public AccountDto getAccountInfo(final Long accountId) {
-        return transactionTemplate.execute(new TransactionCallback<AccountDto>() {
-            public AccountDto doInTransaction(TransactionStatus status) {
-                try {
-                    return getAccountInfoImpl(accountId);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    public AccountDto getAccountInfoImpl(Long accountId) {
-        Account account = accountsRepository.findOne(accountId);
-        if (account == null) {
-            throw new SgAccountNotFoundException(accountId);
-        }
-        return mapper.map(account, AccountDto.class);
-    }
-
     public void completeSignup(final Long userId, final CompleteSignupDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
@@ -473,5 +425,28 @@ public class JpaServiceImpl implements SgService {
         account.setUserBirthDate(BIRTH_DATE);
         account.setRoles(Arrays.asList(Roles.ROLE_USER));
         accountsRepository.save(account);
+    }
+
+    public AccountPrincipalDto getAccountPrincipal(final String email) throws SgDataValidationException, SgAccountNotFoundException {
+        return transactionTemplate.execute(new TransactionCallback<AccountPrincipalDto>() {
+            public AccountPrincipalDto doInTransaction(TransactionStatus status) {
+                try {
+                    return getAccountPrincipalImpl(email);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    private AccountPrincipalDto getAccountPrincipalImpl(String email)
+    {
+        Account account = accountsRepository.findByEmail(email);
+        if (account == null) {
+            throw new SgAccountNotFoundException(email);
+        }
+        return mapper.map(account, AccountPrincipalDto.class);
     }
 }

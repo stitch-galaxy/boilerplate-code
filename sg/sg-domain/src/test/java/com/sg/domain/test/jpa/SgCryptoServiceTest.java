@@ -16,7 +16,7 @@ import com.sg.domain.service.exception.SgInvalidTokenException;
 import com.sg.domain.service.exception.SgTokenExpiredException;
 import com.sg.domain.spring.configuration.JacksonMapperContext;
 import com.sg.domain.spring.configuration.SgCryptoContext;
-import com.sg.dto.response.AccountDto;
+import com.sg.dto.response.AccountPrincipalDto;
 import java.util.Arrays;
 import org.junit.Assert;
 import org.joda.time.Instant;
@@ -42,19 +42,15 @@ public class SgCryptoServiceTest {
     private static final String USER_FIRST_NAME = "Nadezhda";
     private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
     private static final String USER_EMAIL = "test@example.com";
-    private static final AccountDto accountDto;
+    private static final AccountPrincipalDto accountDto;
     
     private static final String INVALID_TOKEN = "INVALID_TOKEN";
 
     static {
-        accountDto = new AccountDto();
+        accountDto = new AccountPrincipalDto();
         accountDto.setId(ACCOUNT_ID);
         accountDto.setRoles(Arrays.asList(Roles.ROLE_ADMIN, Roles.ROLE_USER));
-        accountDto.setEmail(USER_EMAIL);
         accountDto.setEmailVerified(Boolean.TRUE);
-        accountDto.setUserBirthDate(USER_BIRTH_DATE);
-        accountDto.setUserFirstName(USER_FIRST_NAME);
-        accountDto.setUserFirstName(USER_LAST_NAME);
     }
 
     @Autowired

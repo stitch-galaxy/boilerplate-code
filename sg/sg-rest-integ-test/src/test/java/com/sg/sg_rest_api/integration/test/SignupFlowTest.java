@@ -21,7 +21,7 @@ import com.sg.domain.service.exception.SgCryptoException;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
-import com.sg.dto.response.AccountDto;
+import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.sg_rest_api.integration.test.configuration.IntegrationTestContext;
 import com.sg.sg_rest_api.integration.test.configuration.IntegrationTestInitializer;
 import java.io.IOException;
@@ -30,7 +30,6 @@ import java.util.Arrays;
 import org.apache.http.HttpStatus;
 import org.codehaus.jackson.map.ObjectMapper;
 import static org.hamcrest.Matchers.*;
-import org.joda.time.DateTime;
 import org.joda.time.Instant;
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -128,8 +127,8 @@ public class SignupFlowTest {
                 .body("status", equalTo(SigninStatus.STATUS_EMAIL_NOT_VERIFIED));
 
         //Complete signup
-        //Generate auth token
-        AccountDto accountDto = new AccountDto();
+        //Generate auth tokenAccountPrincipalDtoccountDtoAccountPrincipalDtoo = new AccountDto();
+        AccountPrincipalDto accountDto = new AccountPrincipalDto();
         accountDto.setId(accountId);
         accountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_ADMIN, Roles.ROLE_USER}));
         AuthToken token = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());
@@ -183,8 +182,7 @@ public class SignupFlowTest {
                 .body("status", equalTo(CompleteSignupStatus.STATUS_ALREADY_COMPLETED));
 
         //CompleteSignupStatus.STATUS_ACCOUNT_NOT_FOUND
-        //Generate wrong auth token
-        accountDto = new AccountDto();
+        //Generate wrong auth tokeAccountPrincipalDtoaccountDto = new AccountDto();
         accountDto.setId(Long.MAX_VALUE);
         accountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_ADMIN, Roles.ROLE_USER}));
         token = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());

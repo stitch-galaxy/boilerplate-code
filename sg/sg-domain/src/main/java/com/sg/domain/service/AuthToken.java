@@ -8,7 +8,7 @@ package com.sg.domain.service;
 import com.sg.constants.Roles;
 import com.sg.constants.TokenExpirationIntervals;
 import com.sg.constants.TokenExpirationType;
-import com.sg.dto.response.AccountDto;
+import com.sg.dto.response.AccountPrincipalDto;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -27,7 +27,7 @@ public class AuthToken {
 
     private long expirationInstantMillis;
 
-    public AuthToken(AccountDto dto, TokenExpirationType expirationType, Instant issueTime) {
+    public AuthToken(AccountPrincipalDto dto, TokenExpirationType expirationType, Instant issueTime) {
         this.accountId = dto.getId();
         List<String> authoritiesToGrantAccess = new ArrayList<String>();
         for (String r : dto.getRoles()) {

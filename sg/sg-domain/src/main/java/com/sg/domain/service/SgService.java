@@ -24,7 +24,7 @@ import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.dto.request.CompleteSignupDto;
-import com.sg.dto.response.AccountDto;
+import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.response.CanvasesListDto;
@@ -52,12 +52,9 @@ public interface SgService {
     public void signupUser(SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     public void signupAdmin(SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     
-    //put email to dto and check validity
-    public Long getAccountIdByRegistrationEmail(String email) throws SgDataValidationException, SgAccountNotFoundException;
-    //put accountId to dto and check validity
+    public AccountPrincipalDto getAccountPrincipal(String email) throws SgDataValidationException, SgAccountNotFoundException;
+    
     public void completeSignup(Long accountId, CompleteSignupDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgSignupAlreadyCompletedException;
-    //put accountId to dto and check validity
-    public AccountDto getAccountInfo(Long accountId) throws SgDataValidationException, SgAccountNotFoundException;
     
     public void signIn(SigninDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;
     

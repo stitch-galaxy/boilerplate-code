@@ -9,7 +9,7 @@ import com.sg.constants.CompleteSignupStatus;
 import com.sg.constants.CustomHttpHeaders;
 import com.sg.constants.InstallStatus;
 import com.sg.constants.RequestPath;
-import com.sg.dto.response.AccountDto;
+import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.domain.service.SgService;
 import com.sg.dto.request.SigninDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,12 +84,12 @@ public class SigninSignupController {
         } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
             result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
-        Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
-        AccountDto accountDto = service.getAccountInfo(accountId);
+        AccountPrincipalDto accountDto = service.getAccountPrincipal(dto.getEmail());
         AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());
         String token = security.encryptSecurityToken(authToken);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
-        response.setHeader(CustomHttpHeaders.X_ACCOUNT_ID, accountId.toString());
+        //TODO: try to get rid of this stuff for integration tests
+        response.setHeader(CustomHttpHeaders.X_ACCOUNT_ID, accountDto.getId().toString());
         return result;
     }
 
@@ -107,12 +107,12 @@ public class SigninSignupController {
         } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
             result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
-        Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
-        AccountDto accountDto = service.getAccountInfo(accountId);
+        AccountPrincipalDto accountDto = service.getAccountPrincipal(dto.getEmail());
         AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());
         String token = security.encryptSecurityToken(authToken);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
-        response.setHeader(CustomHttpHeaders.X_ACCOUNT_ID, accountId.toString());
+        //TODO: try to get rid of this stuff for integration tests
+        response.setHeader(CustomHttpHeaders.X_ACCOUNT_ID, accountDto.getId().toString());
         return result;
     }
 
@@ -145,8 +145,7 @@ public class SigninSignupController {
 
         try {
             service.signIn(dto);
-            Long accountId = service.getAccountIdByRegistrationEmail(dto.getEmail());
-            AccountDto accountDto = service.getAccountInfo(accountId);
+            AccountPrincipalDto accountDto = service.getAccountPrincipal(dto.getEmail());
             AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now());
             String token = security.encryptSecurityToken(authToken);
             response.setHeader(CustomHttpHeaders.X_AUTH_TOKEN, token);

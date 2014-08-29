@@ -14,28 +14,10 @@ import org.joda.time.LocalDate;
  *
  * @author tarasev
  */
-public class AccountDto {
+public class AccountPrincipalDto {
     private Long id;
-    private String email;
     private List<String> roles;
-    private String userFirstName;
-    private String userLastName;
-    private LocalDate userBirthDate;
     private Boolean emailVerified;
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     /**
      * @return the roles
@@ -60,58 +42,12 @@ public class AccountDto {
             return false;
         }
 
-        AccountDto other = (AccountDto) obj;
+        AccountPrincipalDto other = (AccountPrincipalDto) obj;
         return new EqualsBuilder().
                 append(this.getId(), other.getId()).
-                append(this.email, other.email).
                 append(this.roles, other.roles).
-                append(this.userFirstName, other.userFirstName).
-                append(this.userLastName, other.userLastName).
-                append(this.userBirthDate, other.userBirthDate).
                 append(this.getEmailVerified(), other.getEmailVerified()).
                 isEquals();
-    }
-
-    /**
-     * @return the userFirstName
-     */
-    public String getUserFirstName() {
-        return userFirstName;
-    }
-
-    /**
-     * @param userFirstName the userFirstName to set
-     */
-    public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
-    }
-
-    /**
-     * @return the userLastName
-     */
-    public String getUserLastName() {
-        return userLastName;
-    }
-
-    /**
-     * @param userLastName the userLastName to set
-     */
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
-    }
-
-    /**
-     * @return the userBirthDate
-     */
-    public LocalDate getUserBirthDate() {
-        return userBirthDate;
-    }
-
-    /**
-     * @param userBirthDate the userBirthDate to set
-     */
-    public void setUserBirthDate(LocalDate userBirthDate) {
-        this.userBirthDate = userBirthDate;
     }
 
     /**
