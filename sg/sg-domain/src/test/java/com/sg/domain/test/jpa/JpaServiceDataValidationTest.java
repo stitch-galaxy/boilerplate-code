@@ -17,16 +17,19 @@ import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.CompleteSignupDto;
+import com.sg.dto.request.ResetPasswordDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadUpdateDto;
+import com.sg.dto.request.UserInfoUpdateDto;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashSet;
 import javax.annotation.Resource;
+import org.joda.time.Instant;
 import org.junit.Assert;
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -57,7 +60,7 @@ public class JpaServiceDataValidationTest {
     
     private static final String INVALID_USER_LAST_NAME = "";
     private static final String INVALID_USER_FIRST_NAME = "";
-    private static final LocalDate INVALID_USER_BIRTH_DATE = null;
+    private static final LocalDate INVALID_USER_BIRTH_DATE = Instant.now().toDateTime().toLocalDate().plusDays(1);
     private static final String INVALID_EMAIL = " abc ";
     
     private static final String VALID_PASSWORD = "1хороший пароль";
@@ -77,7 +80,6 @@ public class JpaServiceDataValidationTest {
     public void testInvalidSignupUserDto() {
         SignupDto dto = new SignupDto();
         dto.setEmail(INVALID_EMAIL);
-        dto.setUserBirthDate(INVALID_USER_BIRTH_DATE);
         dto.setUserFirstName(INVALID_USER_FIRST_NAME);
         dto.setUserLastName(INVALID_USER_LAST_NAME);
         
@@ -87,7 +89,6 @@ public class JpaServiceDataValidationTest {
         } catch (SgDataValidationException e) {
             Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
                 SignupDto.FIELD_SIGNUP_EMAIL,
-                SignupDto.FIELD_SIGNUP_USER_BIRTH_DATE,
                 SignupDto.FIELD_SIGNUP_USER_FIRST_NAME,
                 SignupDto.FIELD_SIGNUP_USER_LAST_NAME,})),
                     e.getFieldErrors());
@@ -98,7 +99,6 @@ public class JpaServiceDataValidationTest {
     public void testInvalidSignupAdminDto() {
         SignupDto dto = new SignupDto();
         dto.setEmail(INVALID_EMAIL);
-        dto.setUserBirthDate(INVALID_USER_BIRTH_DATE);
         dto.setUserFirstName(INVALID_USER_FIRST_NAME);
         dto.setUserLastName(INVALID_USER_LAST_NAME);
         try {
@@ -107,7 +107,6 @@ public class JpaServiceDataValidationTest {
         } catch (SgDataValidationException e) {
             Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
                 SignupDto.FIELD_SIGNUP_EMAIL,
-                SignupDto.FIELD_SIGNUP_USER_BIRTH_DATE,
                 SignupDto.FIELD_SIGNUP_USER_FIRST_NAME,
                 SignupDto.FIELD_SIGNUP_USER_LAST_NAME,})),
                     e.getFieldErrors());
@@ -118,7 +117,6 @@ public class JpaServiceDataValidationTest {
     public void testValidSignupDto() throws SgDataValidationException {
         SignupDto dto = new SignupDto();
         dto.setEmail(VALID_EMAIL);
-        dto.setUserBirthDate(VALID_USER_BIRTH_DATE);
         dto.setUserFirstName(VALID_USER_FIRST_NAME);
         dto.setUserLastName(VALID_USER_LAST_NAME);
         validatorComponent.validate(dto);
@@ -318,5 +316,58 @@ public class JpaServiceDataValidationTest {
         dto.setStitchesPerInch(VALID_STITCHES_PER_INCH);
         validatorComponent.validate(dto);
     }
+    
+    @Test
+    public void testInvalidUserInfoUpdateDto() {
+        UserInfoUpdateDto dto = new UserInfoUpdateDto();
+        dto.setUserBirthDate(INVALID_USER_BIRTH_DATE);
+        
+        try {
+            service.setUserInfo(1L, dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                UserInfoUpdateDto.FIELD_USER_INFO_UPDATE_USER_BIRTH_DATE,
+            })),
+                    e.getFieldErrors());
+        }
+    }
 
+    @Test
+    public void testValidUserInfoUpdateDto1() throws SgDataValidationException {
+        UserInfoUpdateDto dto = new UserInfoUpdateDto();
+        validatorComponent.validate(dto);
+    }
+    
+    @Test
+    public void testValidUserInfoUpdateDto2() throws SgDataValidationException {
+        UserInfoUpdateDto dto = new UserInfoUpdateDto();
+        dto.setUserBirthDate(VALID_USER_BIRTH_DATE);
+        validatorComponent.validate(dto);
+    }
+    
+    @Test
+    public void testInvalidResetPasswordDto()
+    {
+        ResetPasswordDto dto = new ResetPasswordDto();
+        dto.setPassword(INVALID_PASSWORD);
+        
+        try {
+            service.resetPassword(Long.MIN_VALUE, dto);
+            Assert.fail("Expected " + SgDataValidationException.class.getName());
+        } catch (SgDataValidationException e) {
+            Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[]{
+                ResetPasswordDto.FIELD_RESET_PASSWORD_PASSWORD,
+            })),
+                    e.getFieldErrors());
+        }
+    }
+    
+    @Test
+    public void testValidResetPasswordDto() throws SgDataValidationException
+    {
+        ResetPasswordDto dto = new ResetPasswordDto();
+        dto.setPassword(VALID_PASSWORD);
+        validatorComponent.validate(dto);
+    }
 }

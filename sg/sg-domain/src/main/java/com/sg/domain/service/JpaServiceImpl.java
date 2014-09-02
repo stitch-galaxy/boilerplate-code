@@ -25,6 +25,7 @@ import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
 import com.sg.domain.entities.jpa.AccountsRepository;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
+import com.sg.domain.service.exception.SgAccountWithoutEmailException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgDataValidationException;
@@ -36,10 +37,13 @@ import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailE
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.request.CompleteSignupDto;
+import com.sg.dto.request.ResetPasswordDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
+import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
+import com.sg.dto.response.UserInfoDto;
 import java.util.ArrayList;
 import java.util.Arrays;
 import ma.glasnost.orika.MapperFacade;
@@ -448,5 +452,105 @@ public class JpaServiceImpl implements SgService {
             throw new SgAccountNotFoundException(email);
         }
         return mapper.map(account, AccountPrincipalDto.class);
+    }
+
+    public void setUserInfo(final Long accountId, final UserInfoUpdateDto dto) throws SgDataValidationException, SgAccountNotFoundException {
+        validatorComponent.validate(dto);
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    setUserInfoImpl(accountId, dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    private void setUserInfoImpl(Long accountId, UserInfoUpdateDto dto) throws SgDataValidationException, SgAccountNotFoundException {
+        Account account = accountsRepository.findOne(accountId);
+        if (account == null) {
+            throw new SgAccountNotFoundException(accountId);
+        }
+        mapper.map(dto, account);
+        accountsRepository.save(account);
+    }
+
+    public UserInfoDto getUserInfo(final Long accountId) throws SgAccountNotFoundException {
+        return transactionTemplate.execute(new TransactionCallback<UserInfoDto>() {
+            public UserInfoDto doInTransaction(TransactionStatus status) {
+                try {
+                    return getUserInfoImpl(accountId);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    private UserInfoDto getUserInfoImpl(final Long accountId) throws SgAccountNotFoundException {
+        Account account = accountsRepository.findOne(accountId);
+        if (account == null) {
+            throw new SgAccountNotFoundException(accountId);
+        }
+        return mapper.map(account, UserInfoDto.class);
+    } 
+
+    public void deleteAccount(final Long accountId) throws SgAccountNotFoundException {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    deleteAccountImpl(accountId);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    private void deleteAccountImpl(Long accountId) throws SgAccountNotFoundException {
+        Account account = accountsRepository.findOne(accountId);
+        if (account == null) {
+            throw new SgAccountNotFoundException(accountId);
+        }
+        accountsRepository.delete(account);
+    }
+
+    public void resetPassword(final Long accountId, final ResetPasswordDto dto) throws SgDataValidationException, SgAccountNotFoundException {
+        validatorComponent.validate(dto);
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    resetPasswordImpl(accountId, dto);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+    
+    private void resetPasswordImpl(Long accountId, ResetPasswordDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgAccountWithoutEmailException {
+        Account account = accountsRepository.findOne(accountId);
+        if (account == null) {
+            throw new SgAccountNotFoundException(accountId);
+        }
+        if (account.getEmail() == null)
+        {
+            throw new SgAccountWithoutEmailException(accountId);
+        }
+        if (account.getEmailVerified() == Boolean.FALSE)
+        {
+            throw new SgEmailNonVerifiedException((account.getEmail()));
+        }
+        mapper.map(dto, account);
+        accountsRepository.save(account);
     }
 }

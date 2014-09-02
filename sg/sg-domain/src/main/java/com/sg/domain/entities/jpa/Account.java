@@ -5,11 +5,14 @@
  */
 package com.sg.domain.entities.jpa;
 
+import com.sg.constants.Sex;
 import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,17 +31,23 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
     private Long id;
-    
-    @Column(name="user_birth_date")
-    
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate userBirthDate;
 
     @Column(name="user_first_name")
     private String userFirstName;
     
     @Column(name="user_last_name")
     private String userLastName;
+    
+    @Column(name="nickname")
+    private String nickname;
+    
+    @Column(name="user_birth_date")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate userBirthDate;
+    
+    @Column(name = "sex")
+    @Enumerated(EnumType.ORDINAL)
+    private Sex sex;
     
     @Column(name = "email", unique = true)
     private String email;
@@ -168,7 +177,32 @@ public class Account {
     public void setUserBirthDate(LocalDate userBirthDate) {
         this.userBirthDate = userBirthDate;
     }
-    
-    
-    
+
+    /**
+     * @return the sex
+     */
+    public Sex getSex() {
+        return sex;
+    }
+
+    /**
+     * @param sex the sex to set
+     */
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    /**
+     * @return the nickname
+     */
+    public String getNickname() {
+        return nickname;
+    }
+
+    /**
+     * @param nickname the nickname to set
+     */
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

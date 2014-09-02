@@ -10,8 +10,7 @@ package com.sg.constants;
  *
  * @author tarasev
  */
-public enum TokenExpirationType {
-    NEVER_EXPIRES,
-    USER_SESSION_TOKEN,
-    LONG_TOKEN
+public enum Sex {
+    MALE,
+    FEMALE
 }

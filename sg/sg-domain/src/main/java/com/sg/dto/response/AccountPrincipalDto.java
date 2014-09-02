@@ -8,7 +8,6 @@ package com.sg.dto.response;
 
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.joda.time.LocalDate;
 
 /**
  *

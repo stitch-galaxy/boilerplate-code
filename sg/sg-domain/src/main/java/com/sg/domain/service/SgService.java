@@ -7,6 +7,7 @@
 package com.sg.domain.service;
 
 import com.sg.domain.service.exception.SgAccountNotFoundException;
+import com.sg.domain.service.exception.SgAccountWithoutEmailException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
 import com.sg.domain.service.exception.SgDataValidationException;
@@ -24,12 +25,14 @@ import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.dto.request.CompleteSignupDto;
+import com.sg.dto.request.ResetPasswordDto;
 import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
+import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
-import java.util.List;
+import com.sg.dto.response.UserInfoDto;
 
 /**
  *
@@ -59,4 +62,10 @@ public interface SgService {
     public void signIn(SigninDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;
     
     public void ping() throws Exception;
+    
+    public void setUserInfo(Long accountId, UserInfoUpdateDto dto)  throws SgDataValidationException, SgAccountNotFoundException;
+    public UserInfoDto getUserInfo(Long accountId)  throws SgAccountNotFoundException;
+    
+    public void deleteAccount(Long accountId)  throws SgAccountNotFoundException;
+    public void resetPassword(Long accountId, ResetPasswordDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgAccountWithoutEmailException, SgEmailNonVerifiedException;
 }

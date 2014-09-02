@@ -3,57 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.sg.dto.request;
 
+import com.sg.constants.Sex;
 import com.sg.dto.serialization.JodaLocalDateJsonDeserializer;
 import com.sg.dto.serialization.JodaLocalDateJsonSerializer;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.text.WordUtils;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.LocalDate;
 
 /**
  *
  * @author tarasev
  */
-public class SignupDto {
-
-    public static final String FIELD_SIGNUP_EMAIL = "SignupDto.Email";
-    public static final String FIELD_SIGNUP_USER_FIRST_NAME = "SignupDto.FirstName";
-    public static final String FIELD_SIGNUP_USER_LAST_NAME = "SignupDto.LastName";
-
-    @NotBlank(message = FIELD_SIGNUP_EMAIL)
-    @Email(message = FIELD_SIGNUP_EMAIL)
-    private String email;
+public class UserInfoUpdateDto {
+ 
+    public static final String FIELD_USER_INFO_UPDATE_USER_BIRTH_DATE = "AccountInfoUpdateDto.Birthdate";
     
-    @NotBlank(message = FIELD_SIGNUP_USER_FIRST_NAME)
+    @Past(message = FIELD_USER_INFO_UPDATE_USER_BIRTH_DATE)
+    @JsonSerialize(using = JodaLocalDateJsonSerializer.class)
+    @JsonDeserialize(using = JodaLocalDateJsonDeserializer.class)
+    private LocalDate userBirthDate;
+
     private String userFirstName;
     
-    @NotBlank(message = FIELD_SIGNUP_USER_LAST_NAME)
     private String userLastName;
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = null;
-        if (email != null) {
-            this.email = email.toLowerCase().trim();
-        }
-    }
-
+ 
+    private Sex sex;
+    
+    private String nickname;
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -63,13 +46,28 @@ public class SignupDto {
             return false;
         }
 
-        SignupDto other = (SignupDto) obj;
+        UserInfoUpdateDto other = (UserInfoUpdateDto) obj;
         return new EqualsBuilder().
-                append(this.email, other.email).
-                append(this.userFirstName, other.userFirstName).
-                append(this.userLastName, other.userLastName).
+                append(this.getUserBirthDate(), other.getUserBirthDate()).
+                append(this.getUserFirstName(), other.getUserFirstName()).
+                append(this.getUserLastName(), other.getUserLastName()).
+                append(this.getSex(), other.getSex()).
+                append(this.getNickname(), other.getNickname()).
                 isEquals();
+    }
 
+    /**
+     * @return the userBirthDate
+     */
+    public LocalDate getUserBirthDate() {
+        return userBirthDate;
+    }
+
+    /**
+     * @param userBirthDate the userBirthDate to set
+     */
+    public void setUserBirthDate(LocalDate userBirthDate) {
+        this.userBirthDate = userBirthDate;
     }
 
     /**
@@ -103,6 +101,37 @@ public class SignupDto {
         this.userLastName = null;
         if (userLastName != null) {
             this.userLastName = WordUtils.capitalizeFully(userLastName.trim());
+        }
+    }
+
+    /**
+     * @return the sex
+     */
+    public Sex getSex() {
+        return sex;
+    }
+
+    /**
+     * @param sex the sex to set
+     */
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    /**
+     * @return the nickname
+     */
+    public String getNickname() {
+        return nickname;
+    }
+
+    /**
+     * @param nickname the nickname to set
+     */
+    public void setNickname(String nickname) {
+        this.nickname = null;
+        if (nickname != null) {
+            this.nickname = WordUtils.capitalizeFully(nickname.trim());
         }
     }
 }

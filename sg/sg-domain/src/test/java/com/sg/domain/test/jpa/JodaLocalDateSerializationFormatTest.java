@@ -7,8 +7,8 @@
 package com.sg.domain.test.jpa;
 
 import com.sg.domain.spring.configuration.JacksonMapperContext;
-import com.sg.domain.spring.configuration.SgCryptoContext;
 import com.sg.dto.request.SignupDto;
+import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.serialization.DateTimeFormatStrings;
 import java.io.IOException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -37,7 +37,7 @@ public class JodaLocalDateSerializationFormatTest {
     
     @Test
     public void test() throws IOException {
-        SignupDto dto = new SignupDto();
+        UserInfoUpdateDto dto = new UserInfoUpdateDto();
         dto.setUserBirthDate(DATE);
         String s = jacksonObjectMapper.writeValueAsString(dto);
         
@@ -45,7 +45,7 @@ public class JodaLocalDateSerializationFormatTest {
         
         Assert.assertTrue(s.contains(sExpectedDate));
         
-        SignupDto read = jacksonObjectMapper.readValue(s, SignupDto.class);
+        UserInfoUpdateDto read = jacksonObjectMapper.readValue(s, UserInfoUpdateDto.class);
         
         Assert.assertEquals(dto, read);
     }
