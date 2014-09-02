@@ -118,7 +118,6 @@ public class SigninSignupControllerTest {
         signupDto.setEmail(USER_EMAIL);
         signupDto.setUserFirstName(USER_FIRST_NAME);
         signupDto.setUserLastName(USER_LAST_NAME);
-        signupDto.setUserBirthDate(USER_BIRTH_DATE);
 
         nonVerifiedUserAccountPrincipalDto = new AccountPrincipalDto();
         nonVerifiedUserAccountPrincipalDto.setEmailVerified(Boolean.FALSE);

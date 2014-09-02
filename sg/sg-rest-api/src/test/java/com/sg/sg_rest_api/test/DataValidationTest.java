@@ -114,7 +114,6 @@ public class DataValidationTest {
     public void testSignupUserDtoError() throws Exception {        
         SignupDto dto = new SignupDto();
         dto.setEmail(INVALID_EMAIL);
-        dto.setUserBirthDate(INVALID_USER_BIRTH_DATE);
         dto.setUserFirstName(INVALID_USER_FIRST_NAME);
         dto.setUserLastName(INVALID_USER_LAST_NAME);
         
@@ -123,10 +122,9 @@ public class DataValidationTest {
                 .content(jacksonObjectMapper.writeValueAsString(dto)))
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.fieldErrors", hasSize(4)))
+                .andExpect(jsonPath("$.fieldErrors", hasSize(3)))
                 .andExpect((jsonPath("$.fieldErrors", containsInAnyOrder(
                         SignupDto.FIELD_SIGNUP_EMAIL, 
-                        SignupDto.FIELD_SIGNUP_USER_BIRTH_DATE, 
                         SignupDto.FIELD_SIGNUP_USER_FIRST_NAME, 
                         SignupDto.FIELD_SIGNUP_USER_LAST_NAME
                 ))));
@@ -138,7 +136,6 @@ public class DataValidationTest {
     public void testSignupAdminDtoError() throws Exception {        
         SignupDto dto = new SignupDto();
         dto.setEmail(INVALID_EMAIL);
-        dto.setUserBirthDate(INVALID_USER_BIRTH_DATE);
         dto.setUserFirstName(INVALID_USER_FIRST_NAME);
         dto.setUserLastName(INVALID_USER_LAST_NAME);
         
@@ -147,10 +144,9 @@ public class DataValidationTest {
                 .content(jacksonObjectMapper.writeValueAsString(dto)))
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.fieldErrors", hasSize(4)))
+                .andExpect(jsonPath("$.fieldErrors", hasSize(3)))
                 .andExpect((jsonPath("$.fieldErrors", containsInAnyOrder(
                         SignupDto.FIELD_SIGNUP_EMAIL, 
-                        SignupDto.FIELD_SIGNUP_USER_BIRTH_DATE, 
                         SignupDto.FIELD_SIGNUP_USER_FIRST_NAME, 
                         SignupDto.FIELD_SIGNUP_USER_LAST_NAME
                 ))));

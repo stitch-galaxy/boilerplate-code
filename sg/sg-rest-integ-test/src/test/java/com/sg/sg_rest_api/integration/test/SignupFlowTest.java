@@ -80,7 +80,6 @@ public class SignupFlowTest {
         dto.setEmail(USER_EMAIL);
         dto.setUserFirstName(USER_FIRST_NAME);
         dto.setUserLastName(USER_LAST_NAME);
-        dto.setUserBirthDate(USER_BIRTH_DATE);
 
         //SignupStatus.STATUS_SUCCESS
         Response r = given().log().all()
@@ -223,7 +222,6 @@ public class SignupFlowTest {
         dto.setEmail("тарас");
         dto.setUserFirstName("");
         dto.setUserLastName("");
-        dto.setUserBirthDate(new LocalDate().plusDays(1));
 
         given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
@@ -237,7 +235,6 @@ public class SignupFlowTest {
                 .body("fieldErrors", hasSize(4))
                 .body("fieldErrors", containsInAnyOrder(
                                 SignupDto.FIELD_SIGNUP_EMAIL,
-                                SignupDto.FIELD_SIGNUP_USER_BIRTH_DATE,
                                 SignupDto.FIELD_SIGNUP_USER_FIRST_NAME,
                                 SignupDto.FIELD_SIGNUP_USER_LAST_NAME
                         ));
