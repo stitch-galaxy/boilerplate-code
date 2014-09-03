@@ -5,17 +5,11 @@
  */
 package com.sg.dto.request;
 
-import com.sg.dto.serialization.JodaLocalDateJsonDeserializer;
-import com.sg.dto.serialization.JodaLocalDateJsonSerializer;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import com.sg.constants.DtoFieldCodes;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.text.WordUtils;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.joda.time.LocalDate;
 
 /**
  *
@@ -23,18 +17,14 @@ import org.joda.time.LocalDate;
  */
 public class SignupDto {
 
-    public static final String FIELD_SIGNUP_EMAIL = "SignupDto.Email";
-    public static final String FIELD_SIGNUP_USER_FIRST_NAME = "SignupDto.FirstName";
-    public static final String FIELD_SIGNUP_USER_LAST_NAME = "SignupDto.LastName";
-
-    @NotBlank(message = FIELD_SIGNUP_EMAIL)
-    @Email(message = FIELD_SIGNUP_EMAIL)
+    @NotBlank(message = DtoFieldCodes.FIELD_SIGNUP_DTO_USER_EMAIL)
+    @Email(message = DtoFieldCodes.FIELD_SIGNUP_DTO_USER_EMAIL)
     private String email;
-    
-    @NotBlank(message = FIELD_SIGNUP_USER_FIRST_NAME)
+
+    @NotBlank(message = DtoFieldCodes.FIELD_SIGNUP_DTO_USER_FIRST_NAME)
     private String userFirstName;
-    
-    @NotBlank(message = FIELD_SIGNUP_USER_LAST_NAME)
+
+    @NotBlank(message = DtoFieldCodes.FIELD_SIGNUP_DTO_USER_LAST_NAME)
     private String userLastName;
 
     /**
@@ -48,10 +38,7 @@ public class SignupDto {
      * @param email the email to set
      */
     public void setEmail(String email) {
-        this.email = null;
-        if (email != null) {
-            this.email = email.toLowerCase().trim();
-        }
+        this.email = email;
     }
 
     @Override
@@ -83,10 +70,7 @@ public class SignupDto {
      * @param userFirstName the userFirstName to set
      */
     public void setUserFirstName(String userFirstName) {
-        this.userFirstName = null;
-        if (userFirstName != null) {
-            this.userFirstName = WordUtils.capitalizeFully(userFirstName.trim());
-        }
+        this.userFirstName = userFirstName;
     }
 
     /**
@@ -100,9 +84,6 @@ public class SignupDto {
      * @param userLastName the userLastName to set
      */
     public void setUserLastName(String userLastName) {
-        this.userLastName = null;
-        if (userLastName != null) {
-            this.userLastName = WordUtils.capitalizeFully(userLastName.trim());
-        }
+        this.userLastName = userLastName;
     }
 }

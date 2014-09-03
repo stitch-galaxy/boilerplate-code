@@ -5,13 +5,10 @@
  */
 package com.sg.dto.request;
 
-import com.sg.constants.PasswordRegexp;
-import javax.validation.constraints.Pattern;
+import com.sg.constants.DtoFieldCodes;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDate;
 
 /**
  *
@@ -19,14 +16,12 @@ import org.joda.time.LocalDate;
  */
 public class SigninDto {
 
-    public static final String FIELD_SIGNIN_EMAIL = "SigninDto.Email";
 
-    @NotBlank(message = FIELD_SIGNIN_EMAIL)
-    @Email(message = FIELD_SIGNIN_EMAIL)
+    @NotBlank(message = DtoFieldCodes.FIELD_SIGNIN_DTO_EMAIL)
+    @Email(message = DtoFieldCodes.FIELD_SIGNIN_DTO_EMAIL)
     private String email;
 
-    public static final String FIELD_SIGNIN_PASSWORD = "SigninDto.Password";
-    @NotBlank(message = FIELD_SIGNIN_PASSWORD)
+    @NotBlank(message = DtoFieldCodes.FIELD_SIGNIN_DTO_PASSWORD)
     private String password;
 
     /**
@@ -40,10 +35,7 @@ public class SigninDto {
      * @param email the email to set
      */
     public void setEmail(String email) {
-        this.email = null;
-        if (email != null) {
-            this.email = email.toLowerCase().trim();
-        }
+        this.email = email;
     }
 
     /**

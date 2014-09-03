@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sg.dto.request;
 
+import com.sg.constants.DtoFieldCodes;
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -16,13 +16,11 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author tarasev
  */
 public class CanvasCreateDto {
-    public static final String FIELD_CANVAS_CODE = "CanvasCreateDto.Code";
-    public static final String FIELD_STITCHES_PER_INCH = "CanvasCreateDto.StitchesPerInch";
-    
-    @NotBlank(message = FIELD_CANVAS_CODE)
+
+    @NotBlank(message = DtoFieldCodes.FIELD_CREATE_CANVAS_DTO_CODE)
     private String code;
-    
-    @NotNull(message = FIELD_STITCHES_PER_INCH)
+
+    @NotNull(message = DtoFieldCodes.FIELD_CREATE_CANVAS_DTO_STITCHES_PER_INCH)
     private BigDecimal stitchesPerInch;
 
     /**
@@ -36,10 +34,7 @@ public class CanvasCreateDto {
      * @param code the code to set
      */
     public void setCode(String code) {
-        this.code = null;
-        if (code != null) {
-            this.code = code.trim();
-        }
+        this.code = code;
     }
 
     /**
@@ -55,7 +50,7 @@ public class CanvasCreateDto {
     public void setStitchesPerInch(BigDecimal stitchesPerInch) {
         this.stitchesPerInch = stitchesPerInch;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

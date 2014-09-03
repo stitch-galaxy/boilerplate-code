@@ -6,6 +6,7 @@
 
 package com.sg.dto.request;
 
+import com.sg.constants.DtoFieldCodes;
 import com.sg.constants.PasswordRegexp;
 import javax.validation.constraints.Pattern;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -16,9 +17,8 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author tarasev
  */
 public class ResetPasswordDto {
-    public static final String FIELD_RESET_PASSWORD_PASSWORD = "ResetPasswordDto.Password";
-    @NotBlank(message = FIELD_RESET_PASSWORD_PASSWORD)
-    @Pattern(regexp = PasswordRegexp.PASSWORD_REGULAR_EXPRESSION, message = FIELD_RESET_PASSWORD_PASSWORD)
+    @NotBlank(message = DtoFieldCodes.FIELD_RESET_PASSWORD_DTO_PASSWORD)
+    @Pattern(regexp = PasswordRegexp.PASSWORD_REGULAR_EXPRESSION, message = DtoFieldCodes.FIELD_RESET_PASSWORD_DTO_PASSWORD)
     private String password;
     
     

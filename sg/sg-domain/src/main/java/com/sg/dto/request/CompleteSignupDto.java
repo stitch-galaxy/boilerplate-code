@@ -6,6 +6,7 @@
 
 package com.sg.dto.request;
 
+import com.sg.constants.DtoFieldCodes;
 import com.sg.constants.PasswordRegexp;
 import javax.validation.constraints.Pattern;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -17,9 +18,8 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author tarasev
  */
 public class CompleteSignupDto {
-    public static final String FIELD_COMPLETE_SIGNUP_PASSWORD = "CompleteSignupDto.Password";
-    @NotBlank(message = FIELD_COMPLETE_SIGNUP_PASSWORD)
-    @Pattern(regexp = PasswordRegexp.PASSWORD_REGULAR_EXPRESSION, message = FIELD_COMPLETE_SIGNUP_PASSWORD)
+    @NotBlank(message = DtoFieldCodes.FIELD_COMPLETE_SIGNUP_DTO_PASSWORD)
+    @Pattern(regexp = PasswordRegexp.PASSWORD_REGULAR_EXPRESSION, message = DtoFieldCodes.FIELD_COMPLETE_SIGNUP_DTO_PASSWORD)
     private String password;
     
     

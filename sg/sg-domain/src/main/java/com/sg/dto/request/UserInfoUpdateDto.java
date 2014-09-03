@@ -6,6 +6,7 @@
 
 package com.sg.dto.request;
 
+import com.sg.constants.DtoFieldCodes;
 import com.sg.constants.Sex;
 import com.sg.dto.serialization.JodaLocalDateJsonDeserializer;
 import com.sg.dto.serialization.JodaLocalDateJsonSerializer;
@@ -22,9 +23,7 @@ import org.joda.time.LocalDate;
  */
 public class UserInfoUpdateDto {
  
-    public static final String FIELD_USER_INFO_UPDATE_USER_BIRTH_DATE = "AccountInfoUpdateDto.Birthdate";
-    
-    @Past(message = FIELD_USER_INFO_UPDATE_USER_BIRTH_DATE)
+    @Past(message = DtoFieldCodes.FIELD_USER_INFO_UPDATE_DTO_USER_BIRTH_DATE)
     @JsonSerialize(using = JodaLocalDateJsonSerializer.class)
     @JsonDeserialize(using = JodaLocalDateJsonDeserializer.class)
     private LocalDate userBirthDate;
