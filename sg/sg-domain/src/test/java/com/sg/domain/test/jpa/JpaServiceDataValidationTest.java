@@ -46,7 +46,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class})
-public class JpaServiceDataValidationTestNew {
+public class JpaServiceDataValidationTest {
 
     @Autowired
     private SgService service;
