@@ -5,13 +5,13 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!-- build:css(.) styles/dependecies.css -->
+    <!-- build:css(app) css/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css(app) styles/site.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <!-- build:css(app) css/site.css -->
+    <link rel="stylesheet" href="css/app.css">
     <!-- endbuild -->
   </head>
   <body ng-app="sgApp">
@@ -20,8 +20,10 @@
     <![endif]-->
 
 
-    <div ng-view=""></div>
-    <!-- build:js(.) scripts/dependecies.js -->
+    <div ng-view="">
+       <img src="images/test.png"/>
+    </div>
+    <!-- build:js(app) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>

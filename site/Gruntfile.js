@@ -10,11 +10,18 @@ module.exports = function(grunt) {
 
     // Configurable paths for the application
     var appConfig = {
-        src: require('./bower.json').appPath,
+        src: 'app',
         dist: 'dist',
         test: 'test',
-        tmp: './tmp',
-        sass_cache: './.sass-cache'
+        useminCache: './.tmp',
+        sassCache: './.sass-cache',
+        bowerComponents: 'bower_components',
+        components: 'components',
+        partials: 'partials',
+        sass: 'sass',
+        css: 'css',
+        images: 'images',
+        javascript: 'scripts'
     };
 
     grunt.initConfig({
@@ -22,36 +29,32 @@ module.exports = function(grunt) {
         bower: {
             install: {
                 options: {
-                    targetDir: '<%= sg.src %>/bower_components'
+                    targetDir: '<%= sg.src %>/<%= sg.bowerComponents %>'
                 }
             }
         },
         jshint: {
             options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
+                jshintrc: '.jshintrc'
             },
             src: {
                 src: [
                     'Gruntfile.js',
-                    '<%= sg.src %>/components/**/*.js',
+                    '<%= sg.src %>/<%= sg.components %>/**/*.js',
                     '<%= sg.test %>/**/*.js',
                 ]
             }
         },
         wiredep: {
             src: {
-                src: [
-                    '<%= sg.src %>/*.html',
-                    '<%= sg.src %>/partials/**/*.html'
-                ]
+                src: '<%= sg.src %>/*.html'
             }
         },
         compass: {
             src: {
                 options: {
-                    sassDir: '<%= sg.src %>/sass',
-                    cssDir: '<%= sg.src %>/css'
+                    sassDir: '<%= sg.src %>/<%= sg.sass %>',
+                    cssDir: '<%= sg.src %>/<%= sg.css %>'
                 }
             }
         },
@@ -60,9 +63,72 @@ module.exports = function(grunt) {
                 browsers: ['last 1 version']
             },
             src: {
+                src: '<%= sg.src %>/<%= sg.css %>/*.css'
+            }
+        },
+        clean: {
+            dist: {
+                src: '<%= sg.dist %>'
+            },
+            useminCache: {
+                src: '<%= sg.useminCache %>'
+            },
+            sassCache: {
+                src: '<%= sg.sassCache %>'
+            },
+            generatedCss: {
+                src: '<%= sg.src %>/<%= sg.css %>'
+            }
+        },
+        useminPrepare: {
+            src: '<%= sg.src %>/*.html',
+            options: {
+                dest: '<%= sg.dist %>'
+            }
+        },
+        concat: {
+            options: {
+                separator: ';'
+            }
+        },
+        copy: {
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= sg.src %>',
+                        src: [
+                            '<%= sg.images %>/**/*',
+                            '*.html',
+                            '<%= sg.partials %>/**/*.html',
+                        ],
+                        dest: '<%= sg.dist %>'
+                    }
+                ]
+            }
+        },
+        filerev: {
+            options: {
+                encoding: 'utf8',
+                algorithm: 'md5',
+                length: 20
+            },
+            dist: {
                 files: [{
-                        src: ['<%= sg.src %>/css/*.css']
+                        cwd: '<%= sg.dist %>',
+                        src: [
+                            '<%= sg.images %>/**/*',
+                            '<%= sg.javascript %>/*.js',
+                            '<%= sg.css %>/*.css',
+                        ]
                     }]
+            }
+        },
+        usemin: {
+            html: '<%= sg.dist %>/*.html',
+            css: '<%= sg.dist %>/<%= sg.css %>/**/*.css',
+            options: {
+                assetsDirs: ['<%= sg.dist %>']
             }
         },
         ngAnnotate: {
@@ -72,24 +138,24 @@ module.exports = function(grunt) {
                     }]
             }
         },
-        clean: {
-            dist: {
-                files: [{
-                        dot: true,
-                        src: [
-                            '<%= sg.dist %>/**/*',
-                            '<%= sg.tmp %>/**/*',
-                            '<%= sg.sass_cache %>/**/*'
-                        ]
-                    }]
-            }
-        },
     });
 
     //add watch commands to compass and autoprefixer
-    grunt.registerTask('build', ['newer:jshint', 'bower:install', 'wiredep', 'compass', 'autoprefixer', 'ngAnnotate']);
-    //dist process: take html, concat js'es and css'es, cssmin css'es, uglify js'es, 
 
-    grunt.registerTask('dist', ['build', 'clean']);
+    //build process
+    grunt.registerTask('build', ['bower:install', 'jshint', 'wiredep', 'compass', 'autoprefixer']);
+
+    //dist process: take html, concat js'es and css'es, cssmin css'es, uglify js'es, 
+    grunt.registerTask('dist', [/*'build', */
+        'clean:dist',
+        'clean:useminCache',
+        'useminPrepare',
+        'concat',
+        'uglify',
+        'cssmin',
+        'copy',
+        'filerev',
+        'usemin'
+    ]);
 
 };
