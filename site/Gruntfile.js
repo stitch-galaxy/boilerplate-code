@@ -139,16 +139,79 @@ module.exports = function(grunt) {
             options: {
                 assetsDirs: ['<%= sg.dist %>']
             }
+        },
+        connect: {
+            options: {
+                port: 9000,
+                // Change this to '0.0.0.0' to access the server from outside.
+                hostname: 'localhost',
+                livereload: 35729
+            },
+            src: {
+                options: {
+                    open: true,
+                    base: '<%= sg.src %>'
+                }
+            },
+            test: {
+                options: {
+                    port: 9001,
+                    base: '<%= sg.src %>'
+                }
+            },
+            dist: {
+                options: {
+                    open: true,
+                    base: '<%= sg.dist %>'
+                }
+            }
+        },
+        watch: {
+            bower: {
+                files: ['bower.json'],
+                tasks: ['bower', 'wiredep']
+            },
+            js: {
+                files: ['<%= sg.src %>/<%= sg.components %>/**/*.js',
+                    '<%= sg.test %>/**/*.js'],
+                tasks: ['newer:jshint']
+            },
+            sass: {
+                files: ['<%= sg.src %>/<%= sg.sass %>/**/*.{scss,sass}'],
+                tasks: ['compass', 'autoprefixer']
+            },
+            gruntfile: {
+                files: ['Gruntfile.js']
+            },
+            files: {
+                options: {
+                    livereload: '<%= connect.options.livereload %>'
+                },
+                files: [
+                    '<%= sg.src %>/*.html',//html
+                    '<%= sg.partials %>/**/*.html',//partials
+                    '<%= sg.src %>/<%= sg.css %>/*.css',//css styles
+                    '<%= sg.dist %>/<%= sg.images %>/**/*',//images
+                    '<%= sg.src %>/<%= sg.components %>/**/*.js'//scripts
+                ]
+            }
         }
     });
 
     //add watch commands to compass and autoprefixer
 
     //build process
-    grunt.registerTask('build', ['bower:install', 'jshint', 'wiredep', 'compass', 'autoprefixer']);
+    grunt.registerTask('build', [
+        'bower',
+        'wiredep',
+        'jshint',
+        'compass',
+        'autoprefixer'
+    ]);
 
     //dist process: take html, concat js'es and css'es, cssmin css'es, uglify js'es, 
-    grunt.registerTask('dist', [/*'build', */
+    grunt.registerTask('dist', [
+        'build',
         'clean:dist',
         'clean:useminCache',
         'useminPrepare',
@@ -160,5 +223,15 @@ module.exports = function(grunt) {
         'filerev',
         'usemin'
     ]);
+
+    grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
+        if (target === 'dist') {
+            return grunt.task.run(['dist', 'connect:dist:keepalive']);
+        }
+        if (target === 'src') {
+            return grunt.task.run(['build', 'connect:src', 'watch']);
+        }
+        grunt.log.warn('Please specify dist or src target!');
+    });
 
 };
