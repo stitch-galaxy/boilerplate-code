@@ -1,0 +1,6 @@
+favicon.ico - replace with proper icon
+
+#http://sigov.ru/2012/05/10/%D1%87%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-apple-touch-icon-png/
+apple-touch-icon.png - replace with proper icon
+
+sitemap.xml 

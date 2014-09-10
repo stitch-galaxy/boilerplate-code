@@ -1,0 +1,14 @@
+{
+  "name": "sg",
+  "description": "Stitch galaxy project",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.23",
+    "angular-route": "1.2.23",
+    "bootstrap": "~3.2.0"
+  },
+  "devDependencies": {
+  },
+  "appPath": "app"
+}
