@@ -13,8 +13,8 @@ module.exports = function(grunt) {
         src: 'app',
         dist: 'dist',
         test: 'test',
-        useminCache: './.tmp',
-        sassCache: './.sass-cache',
+        useminCache: '.tmp',
+        sassCache: '.sass-cache',
         bowerComponents: 'bower_components',
         components: 'components',
         partials: 'partials',
@@ -91,6 +91,14 @@ module.exports = function(grunt) {
                 separator: ';'
             }
         },
+        ngAnnotate: {
+            options: {
+                singleQuotes: true
+            },
+            dist: {
+                src: '<%= sg.useminCache %>/concat/<%= sg.javascript %>/*.js'
+            }
+        },
         copy: {
             dist: {
                 files: [
@@ -115,7 +123,8 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: [{
-                        //cwd: '<%= sg.dist %>', --not working with filerev
+                        exapand: true,
+                        //cwd: '<%= sg.dist %>', //not working with filerev
                         src: [
                             '<%= sg.dist %>/<%= sg.images %>/**/*',
                             '<%= sg.dist %>/<%= sg.javascript %>/*.js',
@@ -129,13 +138,6 @@ module.exports = function(grunt) {
             css: '<%= sg.dist %>/<%= sg.css %>/**/*.css',
             options: {
                 assetsDirs: ['<%= sg.dist %>']
-            }
-        },
-        ngAnnotate: {
-            src: {
-                files: [{
-                        src: ['<%= sg.src %>/components/**/*.js']
-                    }]
             }
         }
     });
@@ -151,6 +153,7 @@ module.exports = function(grunt) {
         'clean:useminCache',
         'useminPrepare',
         'concat',
+        'ngAnnotate',
         'uglify',
         'cssmin',
         'copy',
