@@ -41,7 +41,7 @@ module.exports = function(grunt) {
                 src: [
                     'Gruntfile.js',
                     '<%= sg.src %>/<%= sg.components %>/**/*.js',
-                    '<%= sg.test %>/**/*.js',
+                    '<%= sg.test %>/**/*.js'
                 ]
             }
         },
@@ -100,7 +100,7 @@ module.exports = function(grunt) {
                         src: [
                             '<%= sg.images %>/**/*',
                             '*.html',
-                            '<%= sg.partials %>/**/*.html',
+                            '<%= sg.partials %>/**/*.html'
                         ],
                         dest: '<%= sg.dist %>'
                     }
@@ -115,11 +115,11 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: [{
-                        cwd: '<%= sg.dist %>',
+                        //cwd: '<%= sg.dist %>', --not working with filerev
                         src: [
-                            '<%= sg.images %>/**/*',
-                            '<%= sg.javascript %>/*.js',
-                            '<%= sg.css %>/*.css',
+                            '<%= sg.dist %>/<%= sg.images %>/**/*',
+                            '<%= sg.dist %>/<%= sg.javascript %>/*.js',
+                            '<%= sg.dist %>/<%= sg.css %>/*.css'
                         ]
                     }]
             }
@@ -134,10 +134,10 @@ module.exports = function(grunt) {
         ngAnnotate: {
             src: {
                 files: [{
-                        src: ['<%= sg.src %>/components/**/*.js'],
+                        src: ['<%= sg.src %>/components/**/*.js']
                     }]
             }
-        },
+        }
     });
 
     //add watch commands to compass and autoprefixer
