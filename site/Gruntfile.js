@@ -80,6 +80,32 @@ module.exports = function(grunt) {
                 src: '<%= sg.src %>/<%= sg.css %>'
             }
         },
+        copy: {
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= sg.src %>',
+                        src: [
+                            '<%= sg.images %>/**/*',
+                            '*.html',
+                            '<%= sg.partials %>/**/*.html'
+                        ],
+                        dest: '<%= sg.dist %>'
+                    }
+                ]
+            }
+        },
+        imagemin: {
+            dist: {
+                files: [{
+                        expand: true,
+                        cwd: '<%= sg.src %>/<%= sg.images %>',
+                        src: '**/*.{png,jpg,jpeg,gif}',
+                        dest: '<%= sg.dist %>/<%= sg.images %>'
+                    }]
+            }
+        },
         useminPrepare: {
             src: '<%= sg.src %>/*.html',
             options: {
@@ -97,22 +123,6 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: '<%= sg.useminCache %>/concat/<%= sg.javascript %>/*.js'
-            }
-        },
-        copy: {
-            dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= sg.src %>',
-                        src: [
-                            '<%= sg.images %>/**/*',
-                            '*.html',
-                            '<%= sg.partials %>/**/*.html'
-                        ],
-                        dest: '<%= sg.dist %>'
-                    }
-                ]
             }
         },
         filerev: {
@@ -188,10 +198,10 @@ module.exports = function(grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= sg.src %>/*.html',//html
-                    '<%= sg.partials %>/**/*.html',//partials
-                    '<%= sg.src %>/<%= sg.css %>/*.css',//css styles
-                    '<%= sg.dist %>/<%= sg.images %>/**/*',//images
+                    '<%= sg.src %>/*.html', //html
+                    '<%= sg.partials %>/**/*.html', //partials
+                    '<%= sg.src %>/<%= sg.css %>/*.css', //css styles
+                    '<%= sg.dist %>/<%= sg.images %>/**/*', //images
                     '<%= sg.src %>/<%= sg.components %>/**/*.js'//scripts
                 ]
             }
@@ -214,12 +224,13 @@ module.exports = function(grunt) {
         'build',
         'clean:dist',
         'clean:useminCache',
+        'copy',
+        'imagemin',
         'useminPrepare',
         'concat',
         'ngAnnotate',
         'uglify',
         'cssmin',
-        'copy',
         'filerev',
         'usemin'
     ]);
