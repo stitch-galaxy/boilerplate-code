@@ -166,7 +166,7 @@ module.exports = function(grunt) {
             },
             test: {
                 options: {
-                    port: 9001,
+                    port: 9999,
                     base: '<%= sg.src %>'
                 }
             },
@@ -215,6 +215,10 @@ module.exports = function(grunt) {
                     '<%= sg.dist %>/<%= sg.images %>/**/*', //images
                     '<%= sg.src %>/<%= sg.components %>/**/*.js'//scripts
                 ]
+            },
+            e2e: {
+                files: ['<%= sg.test %>/e2e/**/*.js'],
+                tasks: ['protractor:auto']
             }
         },
         htmlmin: {
@@ -259,7 +263,25 @@ module.exports = function(grunt) {
                     dir: 'coverage/'
                 }
             }
+        },
+        //e2e tests
+        shell: {
+            options: {
+                stdout: true
+            },
+            protractor_install: {
+                command: 'node ./node_modules/protractor/bin/webdriver-manager update'
+            }
+        },
+        protractor: {
+            options: {
+                keepAlive: true,
+                configFile: "<%= sg.test %>/protractor.conf.js"
+            },
+            singlerun: {},
+            auto: {}
         }
+
     });
 
     //add watch commands to compass and autoprefixer
@@ -302,14 +324,14 @@ module.exports = function(grunt) {
 
 
     //single run tests
-    grunt.registerTask('test', ['test:unit'/*, 'test:e2e'*/]);
+    grunt.registerTask('test', ['test:unit', 'test:e2e']);
     grunt.registerTask('test:unit', ['karma:unit']);
-    //grunt.registerTask('test:e2e', ['connect:testserver', 'protractor:singlerun']);
+    grunt.registerTask('test:e2e', ['shell:protractor_install', 'connect:test', 'protractor:singlerun']);
 
     //autotest and watch tests
     grunt.registerTask('autotest', ['karma:unit_auto']);
     grunt.registerTask('autotest:unit', ['karma:unit_auto']);
-    //grunt.registerTask('autotest:e2e', ['connect:testserver', 'shell:selenium', 'watch:protractor']);
+    grunt.registerTask('autotest:e2e', ['shell:protractor_install', 'connect:test', 'protractor:auto', 'watch:e2e']);
 
     //unit tests coverage
     grunt.registerTask('coverage', ['karma:unit_coverage', 'connect:coverage']);
