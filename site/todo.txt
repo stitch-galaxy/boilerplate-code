@@ -4,3 +4,6 @@ favicon.ico - replace with proper icon
 apple-touch-icon.png - replace with proper icon
 
 sitemap.xml 
+
+lang tag
+http://wyw.dcweb.cn/lang_utf8.htm

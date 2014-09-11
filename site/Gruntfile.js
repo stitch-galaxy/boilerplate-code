@@ -205,6 +205,49 @@ module.exports = function(grunt) {
                     '<%= sg.src %>/<%= sg.components %>/**/*.js'//scripts
                 ]
             }
+        },
+        htmlmin: {
+            dist: {
+                options: {
+                    collapseWhitespace: true,
+                    conservativeCollapse: true,
+                    collapseBooleanAttributes: true,
+                    removeCommentsFromCDATA: true,
+                    removeOptionalTags: true
+                },
+                files: [{
+                        expand: true,
+                        cwd: '<%= sg.dist %>',
+                        src: ['*.html', '<%= sg.partials %>/**/*.html'],
+                        dest: '<%= sg.dist %>'
+                    }]
+            }
+        },
+        //unit test tasks
+        karma: {
+            unit: {
+                configFile: '<%= sg.test %>/karma-unit.conf.js',
+                autoWatch: false,
+                singleRun: true
+            },
+            unit_auto: {
+                configFile: '<%= sg.test %>/karma-unit.conf.js',
+                autoWatch: true,
+                singleRun: false
+            },
+            unit_coverage: {
+                configFile: '<%= sg.test %>/karma-unit.conf.js',
+                autoWatch: false,
+                singleRun: true,
+                reporters: ['progress', 'coverage'],
+                preprocessors: {
+                    'app/scripts/*.js': ['coverage']
+                },
+                coverageReporter: {
+                    type: 'html',
+                    dir: 'coverage/'
+                }
+            }
         }
     });
 
@@ -224,15 +267,16 @@ module.exports = function(grunt) {
         'build',
         'clean:dist',
         'clean:useminCache',
-        'copy',
-        'imagemin',
+        'copy', //related to usemin as soon as usemin replace <build></build> blocks
+        'imagemin', //related to filerev=>usemin as soon as filerev rename minified and copied files
         'useminPrepare',
         'concat',
         'ngAnnotate',
         'uglify',
         'cssmin',
         'filerev',
-        'usemin'
+        'usemin',
+        'htmlmin'
     ]);
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
@@ -244,5 +288,20 @@ module.exports = function(grunt) {
         }
         grunt.log.warn('Please specify dist or src target!');
     });
+
+
+    //single run tests
+    grunt.registerTask('test', ['test:unit'/*, 'test:e2e'*/]);
+    grunt.registerTask('test:unit', ['karma:unit']);
+    //grunt.registerTask('test:e2e', ['connect:testserver', 'protractor:singlerun']);
+
+    //autotest and watch tests
+    grunt.registerTask('autotest', ['karma:unit_auto']);
+    grunt.registerTask('autotest:unit', ['karma:unit_auto']);
+    //grunt.registerTask('autotest:e2e', ['connect:testserver', 'shell:selenium', 'watch:protractor']);
+
+
+
+
 
 };
