@@ -21,7 +21,8 @@ module.exports = function(grunt) {
         sass: 'sass',
         css: 'css',
         images: 'images',
-        javascript: 'scripts'
+        javascript: 'scripts',
+        coverage: 'coverage'
     };
 
     grunt.initConfig({
@@ -172,9 +173,19 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     open: true,
-                    base: '<%= sg.dist %>'
+                    base: '<%= sg.dist %>',
+                    keepalive: true
+                }
+            },
+            coverage: {
+                options: {
+                    open: true,
+                    base: '<%= sg.coverage %>',
+                    port: 5555,
+                    keepalive: true
                 }
             }
+
         },
         watch: {
             bower: {
@@ -241,7 +252,7 @@ module.exports = function(grunt) {
                 singleRun: true,
                 reporters: ['progress', 'coverage'],
                 preprocessors: {
-                    'app/scripts/*.js': ['coverage']
+                    'app/components/**/*.js': ['coverage']
                 },
                 coverageReporter: {
                     type: 'html',
@@ -281,7 +292,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
         if (target === 'dist') {
-            return grunt.task.run(['dist', 'connect:dist:keepalive']);
+            return grunt.task.run(['dist', 'connect:dist']);
         }
         if (target === 'src') {
             return grunt.task.run(['build', 'connect:src', 'watch']);
@@ -300,8 +311,7 @@ module.exports = function(grunt) {
     grunt.registerTask('autotest:unit', ['karma:unit_auto']);
     //grunt.registerTask('autotest:e2e', ['connect:testserver', 'shell:selenium', 'watch:protractor']);
 
-
-
-
+    //unit tests coverage
+    grunt.registerTask('coverage', ['karma:unit_coverage', 'connect:coverage']);
 
 };
