@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author tarasev
  */
 @Repository
-@Qualifier("canvasesRepository")
 public interface CanvasesRepository extends CrudRepository<Canvas, Integer> {
     Canvas findByCode(String code);
 }

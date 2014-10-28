@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import ma.glasnost.orika.MapperFacade;
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -62,25 +63,25 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 @Service
 public class JpaServiceImpl implements SgService {
 
-    @Resource(name = "productRepository")
+    @Autowired
     private ProductRepository productRepository;
 
-    @Resource(name = "threadsRepository")
+    @Autowired
     private ThreadsRepository threadsRepository;
 
-    @Resource(name = "canvasesRepository")
+    @Autowired
     private CanvasesRepository canvasesRepository;
 
-    @Resource(name = "accountsRepository")
+    @Autowired
     private AccountsRepository accountsRepository;
 
-    @Resource(name = "mapper")
+    @Autowired
     private MapperFacade mapper;
 
-    @Resource(name = "transactionTemplate")
+    @Autowired
     private TransactionTemplate transactionTemplate;
 
-    @Resource
+    @Autowired
     private ValidatorComponent validatorComponent;
     
     @Value( "${admin.email}" ) private String ADMIN_EMAIL;

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author tarasev
  */
 @Repository
-@Qualifier("threadsRepository")
 public interface ThreadsRepository extends CrudRepository<Thread, Integer> {
     Thread findByCode(String code);
 }

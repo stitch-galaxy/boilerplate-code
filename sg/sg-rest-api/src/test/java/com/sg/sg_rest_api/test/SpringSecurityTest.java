@@ -82,7 +82,7 @@ public class SpringSecurityTest {
     @Autowired
     SgCryptoService security;
 
-    @Resource
+    @Autowired
     private FilterChainProxy springSecurityFilterChain;
 
     @Autowired

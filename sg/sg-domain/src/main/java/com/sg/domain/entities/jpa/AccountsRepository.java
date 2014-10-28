@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author tarasev
  */
 @Repository
-@Qualifier("accountsRepository")
 public interface AccountsRepository extends CrudRepository<Account, Long> {
     Account findByEmail(String email);
 }

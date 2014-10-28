@@ -51,7 +51,7 @@ public class JpaServiceDataValidationTest {
     @Autowired
     private SgService service;
 
-    @Resource
+    @Autowired
     private ValidatorComponent validatorComponent;
 
     private static final String INVALID_EMAIL_NULL = null;

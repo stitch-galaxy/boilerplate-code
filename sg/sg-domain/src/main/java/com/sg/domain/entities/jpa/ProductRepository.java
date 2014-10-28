@@ -15,6 +15,5 @@ import org.springframework.stereotype.Repository;
  * @author tarasev
  */
 @Repository
-@Qualifier("productRepository")
 public interface ProductRepository extends CrudRepository<Product, Long> {
 }
