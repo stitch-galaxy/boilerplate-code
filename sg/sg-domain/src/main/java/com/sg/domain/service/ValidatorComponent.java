@@ -10,7 +10,9 @@ import com.sg.domain.service.exception.SgDataValidationException;
 import java.util.Set;
 import javax.annotation.Resource;
 import javax.validation.ConstraintViolation;
+//import org.springframework.validation.Validator;
 import javax.validation.Validator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -18,7 +20,7 @@ import javax.validation.Validator;
  */
 public class ValidatorComponent {
     
-    @Resource
+    @Autowired
     private Validator validator;
     
     public void validate(Object object) throws SgDataValidationException
