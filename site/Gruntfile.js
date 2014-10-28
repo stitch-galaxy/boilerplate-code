@@ -118,6 +118,11 @@ module.exports = function(grunt) {
                 separator: ';'
             }
         },
+        uglify: {
+            options: {
+                sourceMap: true
+            }
+        },
         ngAnnotate: {
             options: {
                 singleQuotes: true
@@ -210,7 +215,7 @@ module.exports = function(grunt) {
                 },
                 files: [
                     '<%= sg.src %>/*.html', //html
-                    '<%= sg.partials %>/**/*.html', //partials
+                    '<%= sg.src %>/<%= sg.partials %>/**/*.html', //partials
                     '<%= sg.src %>/<%= sg.css %>/*.css', //css styles
                     '<%= sg.dist %>/<%= sg.images %>/**/*', //images
                     '<%= sg.src %>/<%= sg.components %>/**/*.js'//scripts
@@ -245,12 +250,12 @@ module.exports = function(grunt) {
                 autoWatch: false,
                 singleRun: true
             },
-            unit_auto: {
+            unitAuto: {
                 configFile: '<%= sg.test %>/karma-unit.conf.js',
                 autoWatch: true,
                 singleRun: false
             },
-            unit_coverage: {
+            unitCoverage: {
                 configFile: '<%= sg.test %>/karma-unit.conf.js',
                 autoWatch: false,
                 singleRun: true,
@@ -269,14 +274,14 @@ module.exports = function(grunt) {
             options: {
                 stdout: true
             },
-            protractor_install: {
+            protractorInstall: {
                 command: 'node ./node_modules/protractor/bin/webdriver-manager update'
             }
         },
         protractor: {
             options: {
                 keepAlive: true,
-                configFile: "<%= sg.test %>/protractor.conf.js"
+                configFile: '<%= sg.test %>/protractor.conf.js'
             },
             singlerun: {},
             auto: {}
@@ -326,14 +331,14 @@ module.exports = function(grunt) {
     //single run tests
     grunt.registerTask('test', ['test:unit', 'test:e2e']);
     grunt.registerTask('test:unit', ['karma:unit']);
-    grunt.registerTask('test:e2e', ['shell:protractor_install', 'connect:test', 'protractor:singlerun']);
+    grunt.registerTask('test:e2e', ['shell:protractorInstall', 'connect:test', 'protractor:singlerun']);
 
     //autotest and watch tests
-    grunt.registerTask('autotest', ['karma:unit_auto']);
-    grunt.registerTask('autotest:unit', ['karma:unit_auto']);
-    grunt.registerTask('autotest:e2e', ['shell:protractor_install', 'connect:test', 'protractor:auto', 'watch:e2e']);
+    grunt.registerTask('autotest', ['karma:unitAuto']);
+    grunt.registerTask('autotest:unit', ['karma:unitAuto']);
+    grunt.registerTask('autotest:e2e', ['shell:protractorInstall', 'connect:test', 'protractor:auto', 'watch:e2e']);
 
     //unit tests coverage
-    grunt.registerTask('coverage', ['karma:unit_coverage', 'connect:coverage']);
+    grunt.registerTask('coverage', ['karma:unitCoverage', 'connect:coverage']);
 
 };

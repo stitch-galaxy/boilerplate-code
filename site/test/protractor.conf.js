@@ -1,3 +1,5 @@
+'use strict';
+
 // A reference configuration file.
 exports.config = {
   // ----- How to setup Selenium -----

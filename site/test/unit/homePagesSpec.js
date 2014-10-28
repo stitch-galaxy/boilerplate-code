@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Home Pages', function() {
 
   beforeEach(module('app.homePages'));
@@ -6,7 +8,7 @@ describe('Home Pages', function() {
     var ctrl = $controller('HomeCtrl', {
       $scope : $rootScope
     });
-    expect($rootScope.welcome_message.length).toBeGreaterThan(0);
+    expect($rootScope.welcomeMessage.length).toBeGreaterThan(0);
   }));
 
   it('should properly provide a welcome message', inject(function(welcomeMessage) {

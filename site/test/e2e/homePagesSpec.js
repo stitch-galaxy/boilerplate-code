@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Home Pages', function() {
 
   var ptor = protractor.getInstance();

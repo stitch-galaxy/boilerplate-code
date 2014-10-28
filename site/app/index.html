@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html ng-app="stitchGalaxy">
   <head>
     <meta charset="utf-8">
     <title></title>
@@ -14,16 +14,13 @@
     <link rel="stylesheet" href="css/app.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="sgApp">
+  <body>
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-
-    <div ng-view="">
-       <img src="images/test1.png"/>
-       <img src="images/test.png"/>
-    </div>
+    <div ng-view="login.html"></div>
+    
     <!-- build:js(app) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>

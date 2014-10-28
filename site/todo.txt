@@ -7,3 +7,9 @@ sitemap.xml
 
 lang tag
 http://wyw.dcweb.cn/lang_utf8.htm
+
+put site into war
+http://imwill.com/spring-mvc-4-add-static-resources-by-annotation/#.VCq8Avl_sa8
+
+source map
+https://github.com/gruntjs/grunt-contrib-uglify
