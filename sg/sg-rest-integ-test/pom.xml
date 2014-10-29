@@ -75,9 +75,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin-version}</version>
                 <configuration>
-                    <skipTests>false</skipTests>
+                    <skipTests>true</skipTests>
                     <systemPropertyVariables>
-                        <com.sg.environment>dev</com.sg.environment>
+                        <com.sg.environment.provider>internal</com.sg.environment.provider>
+                        <com.sg.environment.circle>dev</com.sg.environment.circle>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

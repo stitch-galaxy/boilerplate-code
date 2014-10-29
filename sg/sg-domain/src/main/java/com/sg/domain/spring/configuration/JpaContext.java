@@ -32,7 +32,6 @@ import org.springframework.transaction.support.TransactionTemplate;
 @EnableJpaRepositories(basePackageClasses = {ThreadsRepository.class, CanvasesRepository.class, ProductRepository.class})
 //GAE do not support @Transactional annotation because where is a class on a call stack which is not in a white list
 //@EnableTransactionManagement
-@PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment:test}/rest_api.jpa.properties")
 public class JpaContext {
     
     @Value( "${jdbc.url}" ) private String jdbcUrl;
@@ -43,13 +42,6 @@ public class JpaContext {
     @Value( "${hibernate.hbm2ddl.auto:}" ) private String hibernateHbm2ddlAuto;
     @Value( "${hibernate.show_sql:false}" ) private Boolean hibernateShowSql;
     @Value( "${hibernate.format_sql:false}" ) private Boolean hibernateFormatSql;      
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
-        
-        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        return configurer;
-    }
     
     @Bean
     public EntityManagerFactory entityManagerFactory() {

@@ -20,7 +20,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  */
 @Configuration
 @Import({SgCryptoContext.class, JacksonMapperContext.class})
-@PropertySource("classpath:/com/sg/configuration/properties/${com.sg.environment}/rest_api.integration.test.properties")
+@PropertySource("classpath:/com/sg/conf/${com.sg.environment.provider:internal}.${com.sg.environment.circle:dev}.properties")
 public class IntegrationTestContext {
     
     @Bean

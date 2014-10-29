@@ -10,6 +10,7 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import com.sg.constants.CompleteSignupStatus;
 import com.sg.constants.CustomHttpHeaders;
+import com.sg.constants.DtoFieldCodes;
 import com.sg.constants.RequestPath;
 import com.sg.constants.Roles;
 import com.sg.constants.SigninStatus;
@@ -148,7 +149,7 @@ public class SignupFlowTest {
                 .contentType(ContentType.JSON)
                 .body("fieldErrors", hasSize(1))
                 .body("fieldErrors", containsInAnyOrder(
-                                CompleteSignupDto.FIELD_COMPLETE_SIGNUP_PASSWORD
+                                DtoFieldCodes.FIELD_COMPLETE_SIGNUP_DTO_PASSWORD
                         ));
 
         //CompleteSignupStatus.STATUS_SUCCESS
@@ -234,9 +235,9 @@ public class SignupFlowTest {
                 .contentType(ContentType.JSON)
                 .body("fieldErrors", hasSize(4))
                 .body("fieldErrors", containsInAnyOrder(
-                                SignupDto.FIELD_SIGNUP_EMAIL,
-                                SignupDto.FIELD_SIGNUP_USER_FIRST_NAME,
-                                SignupDto.FIELD_SIGNUP_USER_LAST_NAME
+                                DtoFieldCodes.FIELD_SIGNUP_DTO_USER_EMAIL,
+                                DtoFieldCodes.FIELD_SIGNUP_DTO_USER_FIRST_NAME,
+                                DtoFieldCodes.FIELD_SIGNUP_DTO_USER_LAST_NAME
                         ));
     }
 

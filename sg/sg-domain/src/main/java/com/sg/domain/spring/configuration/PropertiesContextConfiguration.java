@@ -5,8 +5,6 @@
  */
 package com.sg.domain.spring.configuration;
 
-import com.sg.domain.service.SgCryptoService;
-import com.sg.domain.service.SgCryptoServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -17,17 +15,13 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * @author tarasev
  */
 @Configuration
-public class SgCryptoContext {
+@PropertySource("classpath:/com/sg/conf/rest.${com.sg.environment.provider}.${com.sg.environment.circle}.properties")
+public class PropertiesContextConfiguration {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
 
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
         return configurer;
-    }
-
-    @Bean
-    public SgCryptoService sgCryptoService() {
-        return new SgCryptoServiceImpl();
     }
 }

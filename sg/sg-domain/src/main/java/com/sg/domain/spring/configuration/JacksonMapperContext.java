@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sg.domain.spring.configuration;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -16,9 +15,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JacksonMapperContext {
+
     @Bean
-    public ObjectMapper jacksonObjectMapper()
-    {
+    public ObjectMapper jacksonObjectMapper() {
         return new ObjectMapper();
     }
 }

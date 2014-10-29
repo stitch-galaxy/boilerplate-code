@@ -24,12 +24,11 @@ public class MapperContext {
     public MyCustomMapper mapper() {
         return new MyCustomMapper();
     }
-    
+
     public static class MyCustomMapper extends ConfigurableMapper {
 
         @Override
         public void configure(MapperFactory mapperFactory) {
-
             mapperFactory.getConverterFactory().registerConverter(new PassThroughConverter(LocalDate.class));
         }
 

@@ -11,6 +11,7 @@ import com.sg.domain.spring.configuration.SgMailServiceContext;
 import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
+import com.sg.domain.spring.configuration.PropertiesContextConfiguration;
 import com.sg.domain.spring.configuration.ValidatorContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -26,7 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //http://www.robinhowlett.com/blog/2013/02/13/spring-app-migration-from-xml-to-java-based-config/
 @Configuration
 @EnableWebMvc
-@Import({ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class, SgCryptoContext.class, JacksonMapperContext.class, SecurityContext.class, SgMailServiceContext.class})
+@Import({PropertiesContextConfiguration.class, ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class, SgCryptoContext.class, JacksonMapperContext.class, SecurityContext.class, SgMailServiceContext.class})
 public class WebApplicationContext extends WebMvcConfigurerAdapter {
 
     //https://jira.spring.io/browse/SPR-6443
