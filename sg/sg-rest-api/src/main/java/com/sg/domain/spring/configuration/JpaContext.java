@@ -54,15 +54,18 @@ public class JpaContext {
     @Value("${hibernate.format_sql:false}")
     private Boolean hibernateFormatSql;
 
+    //http://blog.ippon.fr/2014/09/29/spring-javaconfig-tips-les-factorybean/
+    //http://stackoverflow.com/questions/19747789/beandefinitionstoreexception-exception-since-trying-to-switch-app-to-javaconfig
+    //http://forum.spring.io/forum/spring-projects/container/45760-correct-usage-of-factorybeans-in-javaconfig
     @Bean
-    public EntityManagerFactory entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("com.sg.domain.entities.jpa");
-        factory.setDataSource(dataSource());
+        factory.setDataSource(dataSource);
 
         Properties jpaProperties = new Properties();
         jpaProperties.put(org.hibernate.cfg.Environment.SHOW_SQL, hibernateShowSql);
@@ -74,9 +77,7 @@ public class JpaContext {
 
         factory.setJpaProperties(jpaProperties);
         
-        factory.afterPropertiesSet();
-        EntityManagerFactory result = factory.getObject();
-        return result;
+        return factory;
     }
     
     @Bean DataSource dataSource()
@@ -90,15 +91,15 @@ public class JpaContext {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager() {
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager txManager = new JpaTransactionManager();
-        txManager.setEntityManagerFactory(entityManagerFactory());
+        txManager.setEntityManagerFactory(emf);
         return txManager;
     }
 
     @Bean
-    public TransactionTemplate transactionTemplate() {
-        TransactionTemplate template = new TransactionTemplate(transactionManager());
+    public TransactionTemplate transactionTemplate(PlatformTransactionManager transactionManager) {
+        TransactionTemplate template = new TransactionTemplate(transactionManager);
         template.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         return template;
     }
