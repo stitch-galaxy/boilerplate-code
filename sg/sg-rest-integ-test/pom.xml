@@ -19,11 +19,6 @@
             <groupId>com.sg</groupId>
             <artifactId>sg-configuration</artifactId>
         </dependency>
-        <!--Common stuff-->
-        <dependency>
-            <groupId>com.sg</groupId>
-            <artifactId>sg-domain</artifactId>
-        </dependency>
         <!--testing framework-->
         <dependency>
             <groupId>org.hamcrest</groupId>
