@@ -71,28 +71,61 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
         <dependency> 
             <groupId>org.springframework.security</groupId> 
-            <artifactId>spring-security-web</artifactId>           
+            <artifactId>spring-security-core</artifactId>           
         </dependency> 
         <dependency> 
             <groupId>org.springframework.security</groupId> 
             <artifactId>spring-security-config</artifactId>           
         </dependency>
+        <dependency> 
+            <groupId>org.springframework.security</groupId> 
+            <artifactId>spring-security-web</artifactId>           
+        </dependency> 
         <!--DAO-->
         <dependency>
             <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>${hibernate-jpa-2.1-api-version}</version>
         </dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>
@@ -118,6 +151,10 @@
         <!--JSON serializtion-->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
         <!--dto to domain object mapper-->
@@ -130,6 +167,10 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
@@ -147,11 +188,14 @@
             <version>${usertype.core-version}</version>
         </dependency>    
         <!--logging-->
+        
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <!--do we need it-->
-            <scope>runtime</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency> 
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
         </dependency>
         <!-- test dependencies -->
         <dependency>
@@ -184,51 +228,7 @@
             <artifactId>json-path-assert</artifactId>
             <version>${json-path-version}</version>
             <scope>test</scope>
-        </dependency>
-        
-        <!--to delete-->
-        <!--        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-        </dependency>-->
-        <!--        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>-->
-        <!--        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>-->
-        <!--        <dependency> 
-            <groupId>org.springframework.security</groupId> 
-            <artifactId>spring-security-core</artifactId>           
-        </dependency>  -->
-        <!--        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>-->
-        <!--orm-->
-        <!--        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-        </dependency>-->
-        <!--        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-        </dependency>-->
-        <!--        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time-hibernate</artifactId>
-            <version>${joda-time-hibernate-version}</version>
-        </dependency>-->
-        <!--do we need it-->
-        <!--        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>${mail-version}</version>
-            <scope>test</scope>
-        </dependency>-->
-        
+        </dependency> 
     </dependencies>
     <build>
         <finalName>rest-api</finalName>
