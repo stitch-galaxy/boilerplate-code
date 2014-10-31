@@ -3,12 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>sg</artifactId>
-        <groupId>com.sg</groupId>
+        <artifactId>project</artifactId>
+        <groupId>com.sg.rest</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>sg-configuration</artifactId>
-    <name>configuration</name>
+    <artifactId>configuration</artifactId>
+    <name>com.sg.rest.configuration</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

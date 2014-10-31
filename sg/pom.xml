@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.sg</groupId>
-    <artifactId>sg</artifactId>
+    <groupId>com.sg.rest</groupId>
+    <artifactId>project</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
   
@@ -17,12 +17,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <appengine.target.version>1.9.7</appengine.target.version>
 
-        <sg-configuration-version>1.0.0-SNAPSHOT</sg-configuration-version>
-        <sg-rest-api-version>1.0.0-SNAPSHOT</sg-rest-api-version>
+        <sg.rest.api.version>1.0.0-SNAPSHOT</sg.rest.api.version>
 
         <spring-version>4.0.6.RELEASE</spring-version>
         <spring-data-jpa-version>1.6.1.RELEASE</spring-data-jpa-version>
         <spring-boot-starter-data-jpa-version>1.1.4.RELEASE</spring-boot-starter-data-jpa-version>
+
+
+        <!--json-path-assert currently not in bom: when upgrade bom version check json path version-->
+        <json-path-version>0.9.1</json-path-version>
 
         <junit-version>4.11</junit-version>
         <joda-version>2.3</joda-version>
@@ -38,7 +41,7 @@
         <dozer-version>5.5.1</dozer-version>
         <hamcrest-all-version>1.3</hamcrest-all-version>
         <mockito-core-version>1.9.5</mockito-core-version>
-        <json-path-version>0.9.1</json-path-version>
+        
         <json-path-assert-version>0.9.1</json-path-assert-version>
         <commons-io-version>1.3.2</commons-io-version>
         <jasypt-version>1.9.2</jasypt-version>
@@ -56,15 +59,35 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.sg</groupId>
-                <artifactId>sg-configuration</artifactId>
-                <version>${sg-configuration-version}</version>
+                <groupId>com.sg.rest</groupId>
+                <artifactId>configuration</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.sg</groupId>
-                <artifactId>sg-rest-api</artifactId>
-                <version>${sg-rest-api-version}</version>
+                <groupId>com.sg.rest</groupId>
+                <artifactId>dto</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sg.rest</groupId>
+                <artifactId>enum</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sg.rest</groupId>
+                <artifactId>ear</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sg.rest</groupId>
+                <artifactId>rest-api</artifactId>
+                <version>${project.version}</version>
                 <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.sg.rest</groupId>
+                <artifactId>rest-integ-test</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -82,9 +105,11 @@
         </pluginManagement>
     </build>
     <modules>
-        <module>sg-configuration</module>
-        <module>sg-ear</module>
-        <module>sg-rest-api</module>
-        <module>sg-rest-integ-test</module>
+        <module>configuration</module>
+        <module>dto</module>
+        <module>enum</module>
+        <module>ear</module>
+        <module>rest-api</module>
+        <module>rest-integ-test</module>
     </modules>
 </project>

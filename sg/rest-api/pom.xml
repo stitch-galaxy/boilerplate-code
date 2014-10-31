@@ -3,15 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>sg</artifactId>
-        <groupId>com.sg</groupId>
+        <artifactId>project</artifactId>
+        <groupId>com.sg.rest</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.sg</groupId>
-    <artifactId>sg-rest-api</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>rest-api</artifactId>
     <packaging>war</packaging>
-    <name>rest_api</name>
+    <name>com.sg.rest.rest-api</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -54,9 +52,18 @@
         <!--TODO: specify specific servlet version-->
         <!--internal dependencies-->
         <dependency>
-            <groupId>com.sg</groupId>
-            <artifactId>sg-configuration</artifactId>
+            <groupId>com.sg.rest</groupId>
+            <artifactId>configuration</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sg.rest</groupId>
+            <artifactId>enum</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sg.rest</groupId>
+            <artifactId>dto</artifactId>
+        </dependency>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -175,7 +182,7 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path-assert</artifactId>
-            <version>${json-path-assert-version}</version>
+            <version>${json-path-version}</version>
             <scope>test</scope>
         </dependency>
         
@@ -224,7 +231,7 @@
         
     </dependencies>
     <build>
-        <finalName>sg-rest-api</finalName>
+        <finalName>rest-api</finalName>
 
         <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory> 
                                    

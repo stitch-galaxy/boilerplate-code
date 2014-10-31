@@ -39,7 +39,7 @@ public class RestErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ValidationErrorDto processServiceValidationError(SgDataValidationException ex) {
-        return new ValidationErrorDto(ex);
+        return new ValidationErrorDto(ex.getFieldErrors());
     }
     
     @ExceptionHandler(MethodArgumentNotValidException.class)

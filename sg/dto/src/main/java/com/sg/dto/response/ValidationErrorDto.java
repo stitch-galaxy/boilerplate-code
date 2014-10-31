@@ -6,7 +6,6 @@
 
 package com.sg.dto.response;
 
-import com.sg.domain.service.exception.SgDataValidationException;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -21,11 +20,6 @@ public class ValidationErrorDto {
     public ValidationErrorDto(Set<String> fieldErrors)
     {
         this.fieldErrors = fieldErrors;
-    }
-    
-    public ValidationErrorDto(SgDataValidationException e)
-    {
-        this.fieldErrors = e.getFieldErrors();
     }
     
     @Override

@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>com.sg</groupId>
-  <artifactId>sg-ear</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
-  <packaging>ear</packaging>
-  <name>ear</name>
-
   <parent>
-    <groupId>com.sg</groupId>
-    <artifactId>sg</artifactId>
+    <groupId>com.sg.rest</groupId>
+    <artifactId>project</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
+
+  <artifactId>ear</artifactId>
+  <packaging>ear</packaging>
+  <name>com.sg.rest.ear</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.sg.rest</groupId>
+      <artifactId>rest-api</artifactId>
+
+      <type>war</type>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>
@@ -34,12 +40,4 @@
     </plugins>
   </build>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.sg</groupId>
-      <artifactId>sg-rest-api</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-      <type>war</type>
-    </dependency>
-  </dependencies>
 </project>
