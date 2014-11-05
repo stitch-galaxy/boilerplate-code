@@ -21,6 +21,7 @@
         
         <orika-core-version>1.4.5</orika-core-version>
         <rest-assured-version>2.3.2</rest-assured-version>
+        <jsontoken-version>1.1</jsontoken-version>
         
         <!--???-->
         <hibernate-jpa-2.1-api-version>1.0.0.Final</hibernate-jpa-2.1-api-version>
@@ -91,5 +92,6 @@
         <module>ear</module>
         <module>rest-api</module>
         <module>rest-integ-test</module>
+        <module>authtoken</module>
     </modules>
 </project>
