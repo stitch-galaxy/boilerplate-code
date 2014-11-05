@@ -151,7 +151,11 @@ public class SigninSignupControllerTest {
     public void testUserSignupResentConfirmationEmail() throws Exception {
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupUser(signupDto);
         when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
-        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
+        when(webSecurityServiceMock.generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        )).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -162,7 +166,11 @@ public class SigninSignupControllerTest {
 
         verify(serviceMock, times(1)).signupUser(signupDto);
         verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
-        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
+        verify(webSecurityServiceMock, times(1)).generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        );
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
@@ -174,7 +182,11 @@ public class SigninSignupControllerTest {
     public void testAdminSignupResentConfirmationEmail() throws Exception {
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupAdmin(signupDto);
         when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
-        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
+        when(webSecurityServiceMock.generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        )).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -185,7 +197,11 @@ public class SigninSignupControllerTest {
 
         verify(serviceMock, times(1)).signupAdmin(signupDto);
         verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
-        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
+        verify(webSecurityServiceMock, times(1)).generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        );
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
@@ -230,7 +246,11 @@ public class SigninSignupControllerTest {
     @Test
     public void testUserSignupSuccessfully() throws Exception {
         when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
-        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
+        when(webSecurityServiceMock.generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        )).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -241,7 +261,11 @@ public class SigninSignupControllerTest {
 
         verify(serviceMock, times(1)).signupUser(signupDto);
         verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
-        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
+        verify(webSecurityServiceMock, times(1)).generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        );
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
@@ -252,7 +276,11 @@ public class SigninSignupControllerTest {
     @Test
     public void testAdminSignupSuccessfully() throws Exception {
         when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
-        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
+        when(webSecurityServiceMock.generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        )).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -263,7 +291,11 @@ public class SigninSignupControllerTest {
 
         verify(serviceMock, times(1)).signupAdmin(signupDto);
         verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
-        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
+        verify(webSecurityServiceMock, times(1)).generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        );
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
@@ -392,7 +424,11 @@ public class SigninSignupControllerTest {
     @Test
     public void testSigninSuccessfully() throws Exception {
         when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
-        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
+        when(webSecurityServiceMock.generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        )).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -404,7 +440,11 @@ public class SigninSignupControllerTest {
 
         verify(serviceMock, times(1)).signIn(signinDto);
         verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
-        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
+        verify(webSecurityServiceMock, times(1)).generateToken(
+                org.mockito.Matchers.eq(ACCOUNT_ID),
+                org.mockito.Matchers.any(Instant.class),
+                org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
+        );
 
         verifyNoMoreInteractions(serviceMock);
         verifyNoMoreInteractions(webSecurityServiceMock);
