@@ -18,8 +18,9 @@ public class JwtAuthTokenServiceTest {
 
     private static final String SECURITY_KEY = "kjdhasdkjhaskdjhaskdjhaskdjh";
     private static final String UID = "tarasov.e.a@gmail.com";
+    private static final long ACCEPTABLE_CLOCK_SKEW_MINUTES = 2;
 
-    private final AuthTokenService jwtComponent = new JwtAuthTokenService(SECURITY_KEY);
+    private final AuthTokenService jwtComponent = new JwtAuthTokenService(SECURITY_KEY, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
 
     @Test
     public void testValidToken() throws BadTokenException, TokenExpiredException {
@@ -30,6 +31,36 @@ public class JwtAuthTokenServiceTest {
 
         Token parsed = jwtComponent.verifySignatureAndExtractToken(signedToken);
         Assert.assertEquals(UID, parsed.getUid());
+    }
+
+    @Test
+    public void testValidClocksShift() throws BadTokenException, TokenExpiredException {
+        Token toSign = new Token();
+        toSign.setUid(UID);
+        Instant now = Instant.now();
+        Instant nowMinusAcceptableSkewPlusOneMinute = now.minus(Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES)).plus(Duration.standardMinutes(1));
+        Instant oneHourAgo = now.minus(Duration.standardHours(1));
+
+        String signedToken = jwtComponent.signToken(toSign, oneHourAgo, nowMinusAcceptableSkewPlusOneMinute);
+
+        Token parsed = jwtComponent.verifySignatureAndExtractToken(signedToken);
+        Assert.assertEquals(UID, parsed.getUid());
+    }
+
+    @Test
+    public void testInvalidClocksShift() throws BadTokenException, TokenExpiredException {
+        Token toSign = new Token();
+        toSign.setUid(UID);
+        Instant now = Instant.now();
+        Instant nowMinusAcceptableSkew = now.minus(Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
+        Instant oneHourAgo = now.minus(Duration.standardHours(1));
+
+        String signedToken = jwtComponent.signToken(toSign, oneHourAgo, nowMinusAcceptableSkew);
+        try {
+            Token parsed = jwtComponent.verifySignatureAndExtractToken(signedToken);
+            Assert.fail("Expected " + TokenExpiredException.class.getSimpleName());
+        } catch (TokenExpiredException e) {
+        }
     }
 
     @Test
@@ -93,7 +124,7 @@ public class JwtAuthTokenServiceTest {
     @Test
     public void testInvlidJwtAuthTokenService() {
         try {
-            JwtAuthTokenService jwtAuthTokenService = new JwtAuthTokenService(null);
+            JwtAuthTokenService jwtAuthTokenService = new JwtAuthTokenService(null, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
             Assert.fail("Expected " + RuntimeException.class.getSimpleName());
         } catch (RuntimeException e) {
         }

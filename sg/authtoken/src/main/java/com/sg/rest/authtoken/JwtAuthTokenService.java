@@ -22,6 +22,7 @@ import net.oauth.jsontoken.crypto.Verifier;
 import net.oauth.jsontoken.discovery.VerifierProvider;
 import net.oauth.jsontoken.discovery.VerifierProviders;
 import net.oauth.signatures.SignedTokenAudienceChecker;
+import org.joda.time.Duration;
 import org.joda.time.Instant;
 
 public class JwtAuthTokenService implements AuthTokenService {
@@ -37,9 +38,9 @@ public class JwtAuthTokenService implements AuthTokenService {
     private static final String UID_PARAM = "uid";
     private static final String KEY_NAME = "symmetric_key";
 
-    public JwtAuthTokenService(String sSymmetricKey) {
+    public JwtAuthTokenService(String sSymmetricKey, Duration acceptableClockSkew) {
         symmetricKey = sSymmetricKey.getBytes();
-        clock = new SystemClock();
+        clock = new SystemClock(acceptableClockSkew);
 
         try {
             signer = new HmacSHA256Signer(DOMAIN_URI, KEY_NAME, symmetricKey);
