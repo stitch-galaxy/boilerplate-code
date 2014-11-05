@@ -37,10 +37,7 @@ public class PingController {
     
     @RequestMapping(value = RequestPath.REQUEST_SECURE_PING, method = RequestMethod.GET)
     public @ResponseBody
-    String securePing() throws Exception {
+    void securePing() throws Exception {
         service.ping();
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
     }
-
-    
 }
