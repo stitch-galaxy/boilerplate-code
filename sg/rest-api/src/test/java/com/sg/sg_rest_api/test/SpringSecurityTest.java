@@ -8,28 +8,17 @@ package com.sg.sg_rest_api.test;
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationIntegrationTestContext;
 import com.sg.domain.service.SgService;
-import com.sg.dto.request.ThreadCreateDto;
 import com.sg.constants.CustomHttpHeaders;
-import com.sg.constants.OperationStatus;
-import com.sg.constants.Roles;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
-import com.sg.constants.TokenExpirationIntervals;
-import com.sg.constants.TokenExpirationType;
-import com.sg.domain.service.AuthToken;
-import com.sg.domain.service.SgCryptoService;
-import com.sg.dto.response.AccountPrincipalDto;
+import com.sg.rest.service.websecurity.TokenExpirationStandardDurations;
+import com.sg.rest.service.websecurity.WebSecurityService;
 import java.io.IOException;
-import java.util.Arrays;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import org.codehaus.jackson.map.ObjectMapper;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
+import org.joda.time.Duration;
 import org.joda.time.Instant;
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,16 +26,13 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -64,15 +50,15 @@ public class SpringSecurityTest {
 
     private static final long ACCOUNT_ID = 1L;
     private static final String BAD_TOKEN = "BAD_TOKEN";
-    private static final AccountPrincipalDto accountDto;
+//    private static final AccountPrincipalDto accountDto;
     
-    static
-    {
-        accountDto = new AccountPrincipalDto();
-        accountDto.setEmailVerified(Boolean.FALSE);
-        accountDto.setId(ACCOUNT_ID);
-        accountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
-    }
+//    static
+//    {
+//        accountDto = new AccountPrincipalDto();
+//        accountDto.setEmailVerified(Boolean.FALSE);
+//        accountDto.setId(ACCOUNT_ID);
+//        accountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
+//    }
 
     private MockMvc mockMvc;
 
@@ -80,7 +66,7 @@ public class SpringSecurityTest {
     private SgService serviceMock;
 
     @Autowired
-    SgCryptoService security;
+    private WebSecurityService webSecurityService;
 
     @Autowired
     private FilterChainProxy springSecurityFilterChain;
@@ -121,8 +107,7 @@ public class SpringSecurityTest {
     
     @Test
     public void testSecureResourceWithAuthToken() throws IOException, Exception {
-        AuthToken token = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now());
-        String authToken = security.encryptSecurityToken(token);
+        String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
 
         Long l = ACCOUNT_ID;
         mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
@@ -135,9 +120,7 @@ public class SpringSecurityTest {
 
     @Test
     public void testExpiredAuthToken() throws IOException, Exception {
-        AuthToken token = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now().minus(TokenExpirationIntervals.USER_SESSION_TOKEN_EXPIRATION_INTERVAL));
-        token.setExpirationInstantMillis(Instant.now().getMillis() - 1);
-        String authToken = security.encryptSecurityToken(token);
+        String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now().minus(TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION).minus(Duration.standardHours(1)), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
 
         mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))

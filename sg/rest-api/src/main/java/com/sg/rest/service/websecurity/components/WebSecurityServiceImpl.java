@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.service.securitytoken.component;
+package com.sg.rest.service.websecurity.components;
 
 import com.sg.rest.authtoken.AuthTokenComponent;
 import com.sg.rest.authtoken.BadTokenException;
 import com.sg.rest.authtoken.Token;
 import com.sg.rest.authtoken.TokenExpiredException;
 import com.sg.rest.authtoken.jwt.JwtAuthTokenComponent;
-import com.sg.rest.service.securitytoken.WebSecurityTokenService;
+import com.sg.rest.service.websecurity.WebSecurityBadTokenException;
+import com.sg.rest.service.websecurity.WebSecurityTokenExpiredException;
+import com.sg.rest.service.websecurity.WebSecurityService;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,12 @@ import org.springframework.stereotype.Service;
  * @author tarasev
  */
 @Service
-public class WebSecurityTokenServiceImpl implements WebSecurityTokenService {
+public class WebSecurityServiceImpl implements WebSecurityService {
 
     private final AuthTokenComponent authTokenComponent;
 
     @Autowired
-    public WebSecurityTokenServiceImpl(@Value("${security.key}") String symmetricKey) {
+    public WebSecurityServiceImpl(@Value("${security.key}") String symmetricKey) {
         this.authTokenComponent = new JwtAuthTokenComponent(symmetricKey, Duration.standardMinutes(2));
     }
 
@@ -40,12 +42,16 @@ public class WebSecurityTokenServiceImpl implements WebSecurityTokenService {
     }
 
     @Override
-    public Long getAccountIdAndVerifyToken(String sToken) throws BadTokenException, TokenExpiredException {
-        Token token = authTokenComponent.verifySignatureAndExtractToken(sToken);
+    public Long getAccountIdAndVerifyToken(String sToken) throws WebSecurityBadTokenException, WebSecurityTokenExpiredException {
         try {
+            Token token = authTokenComponent.verifySignatureAndExtractToken(sToken);
             return Long.parseLong(token.getUid());
+        } catch (BadTokenException e) {
+            throw new WebSecurityBadTokenException(e);
+        } catch (TokenExpiredException e) {
+            throw new WebSecurityTokenExpiredException(e);
         } catch (NumberFormatException e) {
-            throw new BadTokenException(e);
+            throw new WebSecurityBadTokenException(e);
         }
     }
 

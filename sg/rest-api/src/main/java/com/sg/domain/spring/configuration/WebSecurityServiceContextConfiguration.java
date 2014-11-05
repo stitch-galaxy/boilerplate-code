@@ -5,11 +5,10 @@
  */
 package com.sg.domain.spring.configuration;
 
-import com.sg.domain.service.SgCryptoService;
-import com.sg.domain.service.SgCryptoServiceImpl;
+import com.sg.rest.service.websecurity.components.NoOpClass;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
@@ -17,17 +16,13 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * @author tarasev
  */
 @Configuration
-public class SgCryptoContext {
+@ComponentScan(basePackageClasses = {NoOpClass.class})
+public class WebSecurityServiceContextConfiguration {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
 
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
         return configurer;
-    }
-
-    @Bean
-    public SgCryptoService sgCryptoService() {
-        return new SgCryptoServiceImpl();
     }
 }

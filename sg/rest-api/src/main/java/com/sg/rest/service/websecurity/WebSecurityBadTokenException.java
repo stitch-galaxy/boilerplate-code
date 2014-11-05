@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package com.sg.domain.service.exception;
+package com.sg.rest.service.websecurity;
 
 /**
  *
  * @author tarasev
  */
-public class SgInvalidTokenException extends SgCryptoException {
+public class WebSecurityBadTokenException extends WebSecurityBaseAuthenticationException {
 
-    public SgInvalidTokenException(Exception e) {
-        super("Security token is not valid.", e);
+    public WebSecurityBadTokenException(Throwable t) {
+        super("Bad token", t);
     }
+
 }

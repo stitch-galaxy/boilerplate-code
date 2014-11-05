@@ -16,12 +16,8 @@ import com.sg.constants.RequestPath;
 import com.sg.constants.Roles;
 import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
-import com.sg.constants.TokenExpirationType;
 import com.sg.dto.request.SignupDto;
-import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.domain.service.SgMailService;
-import com.sg.domain.service.AuthToken;
-import com.sg.domain.service.SgCryptoService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
@@ -30,6 +26,8 @@ import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
+import com.sg.rest.service.websecurity.TokenExpirationStandardDurations;
+import com.sg.rest.service.websecurity.WebSecurityService;
 import java.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +40,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import static org.hamcrest.Matchers.*;
+import org.joda.time.Duration;
+import org.joda.time.Instant;
 import org.joda.time.LocalDate;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -68,16 +68,13 @@ public class SigninSignupControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    SgCryptoService security;
-
-    @Autowired
     private ObjectMapper jacksonObjectMapper;
 
     @Autowired
     private SgMailService mailServiceMock;
 
     @Autowired
-    private SgCryptoService cryptoMock;
+    private WebSecurityService webSecurityServiceMock;
 
     @Autowired
     private SgService serviceMock;
@@ -92,7 +89,7 @@ public class SigninSignupControllerTest {
         //stubbing and verified behavior would "leak" from one test to another.
         Mockito.reset(serviceMock);
         Mockito.reset(mailServiceMock);
-        Mockito.reset(cryptoMock);
+        Mockito.reset(webSecurityServiceMock);
 
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .build();
@@ -107,9 +104,7 @@ public class SigninSignupControllerTest {
     private static final String USER_FIRST_NAME = "Evgeny";
     private static final LocalDate USER_BIRTH_DATE = LocalDate.parse("1985-01-28");
     private static final SignupDto signupDto;
-    private static final AccountPrincipalDto nonVerifiedUserAccountPrincipalDto;
-    private static final AccountPrincipalDto nonVerifiedAdminUserAccountPrincipalDto;
-    private static final AccountPrincipalDto verifiedUserAccountPrincipalDto;
+
     private static final CompleteSignupDto completeSignupDto;
     private static final SigninDto signinDto;
 
@@ -118,21 +113,6 @@ public class SigninSignupControllerTest {
         signupDto.setEmail(USER_EMAIL);
         signupDto.setUserFirstName(USER_FIRST_NAME);
         signupDto.setUserLastName(USER_LAST_NAME);
-
-        nonVerifiedUserAccountPrincipalDto = new AccountPrincipalDto();
-        nonVerifiedUserAccountPrincipalDto.setEmailVerified(Boolean.FALSE);
-        nonVerifiedUserAccountPrincipalDto.setId(ACCOUNT_ID);
-        nonVerifiedUserAccountPrincipalDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER}));
-
-        verifiedUserAccountPrincipalDto = new AccountPrincipalDto();
-        verifiedUserAccountPrincipalDto.setEmailVerified(Boolean.TRUE);
-        verifiedUserAccountPrincipalDto.setId(ACCOUNT_ID);
-        verifiedUserAccountPrincipalDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER}));
-
-        nonVerifiedAdminUserAccountPrincipalDto = new AccountPrincipalDto();
-        nonVerifiedAdminUserAccountPrincipalDto.setEmailVerified(Boolean.FALSE);
-        nonVerifiedAdminUserAccountPrincipalDto.setId(ACCOUNT_ID);
-        nonVerifiedAdminUserAccountPrincipalDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
 
         completeSignupDto = new CompleteSignupDto();
         completeSignupDto.setPassword(USER_PASSWORD);
@@ -170,8 +150,8 @@ public class SigninSignupControllerTest {
     @Test
     public void testUserSignupResentConfirmationEmail() throws Exception {
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupUser(signupDto);
-        when(serviceMock.getAccountPrincipal(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountPrincipalDto);
-        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
+        when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
+        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -181,20 +161,20 @@ public class SigninSignupControllerTest {
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT)));
 
         verify(serviceMock, times(1)).signupUser(signupDto);
-        verify(serviceMock, times(1)).getAccountPrincipal(signupDto.getEmail());
-        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
+        verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
+        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
     @Test
     public void testAdminSignupResentConfirmationEmail() throws Exception {
         doThrow(new SgSignupForRegisteredButNonVerifiedEmailException(signupDto.getEmail())).when(serviceMock).signupAdmin(signupDto);
-        when(serviceMock.getAccountPrincipal(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountPrincipalDto);
-        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
+        when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
+        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -204,12 +184,12 @@ public class SigninSignupControllerTest {
                 .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT)));
 
         verify(serviceMock, times(1)).signupAdmin(signupDto);
-        verify(serviceMock, times(1)).getAccountPrincipal(signupDto.getEmail());
-        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
+        verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
+        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
@@ -226,7 +206,7 @@ public class SigninSignupControllerTest {
 
         verify(serviceMock, times(1)).signupUser(signupDto);
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
@@ -243,53 +223,51 @@ public class SigninSignupControllerTest {
 
         verify(serviceMock, times(1)).signupAdmin(signupDto);
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
     @Test
     public void testUserSignupSuccessfully() throws Exception {
-        when(serviceMock.getAccountPrincipal(signupDto.getEmail())).thenReturn(nonVerifiedUserAccountPrincipalDto);
-        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
+        when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
+        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_USER)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)))
-                .andExpect(header().string(CustomHttpHeaders.X_ACCOUNT_ID, org.hamcrest.Matchers.any(String.class)));
+                .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)));
 
         verify(serviceMock, times(1)).signupUser(signupDto);
-        verify(serviceMock, times(1)).getAccountPrincipal(signupDto.getEmail());
-        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
+        verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
+        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
     @Test
     public void testAdminSignupSuccessfully() throws Exception {
-        when(serviceMock.getAccountPrincipal(signupDto.getEmail())).thenReturn(nonVerifiedAdminUserAccountPrincipalDto);
-        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
+        when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
+        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonObjectMapper.writeValueAsString(signupDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)))
-                .andExpect(header().string(CustomHttpHeaders.X_ACCOUNT_ID, org.hamcrest.Matchers.any(String.class)));
+                .andExpect(jsonPath("$.status", is(SignupStatus.STATUS_SUCCESS)));
 
         verify(serviceMock, times(1)).signupAdmin(signupDto);
-        verify(serviceMock, times(1)).getAccountPrincipal(signupDto.getEmail());
-        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
+        verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
+        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
 
         verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
@@ -318,7 +296,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).completeSignup(ACCOUNT_ID, completeSignupDto);
 
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
@@ -336,7 +314,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).completeSignup(ACCOUNT_ID, completeSignupDto);
 
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
@@ -352,7 +330,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).completeSignup(ACCOUNT_ID, completeSignupDto);
 
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
@@ -371,7 +349,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).signIn(signinDto);
 
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
@@ -389,7 +367,7 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).signIn(signinDto);
 
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
@@ -407,14 +385,14 @@ public class SigninSignupControllerTest {
         verify(serviceMock, times(1)).signIn(signinDto);
 
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 
     @Test
     public void testSigninSuccessfully() throws Exception {
-        when(serviceMock.getAccountPrincipal(signinDto.getEmail())).thenReturn(verifiedUserAccountPrincipalDto);
-        when(cryptoMock.encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class))).thenReturn(SECURE_TOKEN_STRING);
+        when(serviceMock.getAccountId(signupDto.getEmail())).thenReturn(ACCOUNT_ID);
+        when(webSecurityServiceMock.generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)).thenReturn(SECURE_TOKEN_STRING);
 
         mockMvc.perform(post(RequestPath.REQUEST_SIGNIN)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -425,11 +403,11 @@ public class SigninSignupControllerTest {
                 .andExpect(header().string(CustomHttpHeaders.X_AUTH_TOKEN, is(SECURE_TOKEN_STRING)));
 
         verify(serviceMock, times(1)).signIn(signinDto);
-        verify(serviceMock, times(1)).getAccountPrincipal(signinDto.getEmail());
-        verify(cryptoMock, times(1)).encryptSecurityToken(org.mockito.Matchers.any(AuthToken.class));
+        verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());
+        verify(webSecurityServiceMock, times(1)).generateToken(ACCOUNT_ID, org.mockito.Matchers.any(Instant.class), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
 
         verifyNoMoreInteractions(serviceMock);
-        verifyNoMoreInteractions(cryptoMock);
+        verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
     }
 

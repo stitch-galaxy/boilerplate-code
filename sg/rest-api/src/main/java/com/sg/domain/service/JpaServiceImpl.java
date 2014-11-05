@@ -13,7 +13,6 @@ import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
-import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.domain.entities.jpa.Canvas;
 import com.sg.domain.entities.jpa.CanvasesRepository;
 import com.sg.domain.entities.jpa.ProductRepository;
@@ -434,28 +433,6 @@ public class JpaServiceImpl implements SgService {
         account.setUserBirthDate(BIRTH_DATE);
         account.setRoles(Arrays.asList(Roles.ROLE_USER));
         accountsRepository.save(account);
-    }
-
-    public AccountPrincipalDto getAccountPrincipal(final String email) throws SgDataValidationException, SgAccountNotFoundException {
-        return transactionTemplate.execute(new TransactionCallback<AccountPrincipalDto>() {
-            public AccountPrincipalDto doInTransaction(TransactionStatus status) {
-                try {
-                    return getAccountPrincipalImpl(email);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private AccountPrincipalDto getAccountPrincipalImpl(String email) {
-        Account account = accountsRepository.findByEmail(email);
-        if (account == null) {
-            throw new SgAccountNotFoundException(email);
-        }
-        return mapper.map(account, AccountPrincipalDto.class);
     }
 
     public void setUserInfo(final Long accountId, final UserInfoUpdateDto dto) throws SgDataValidationException, SgAccountNotFoundException {

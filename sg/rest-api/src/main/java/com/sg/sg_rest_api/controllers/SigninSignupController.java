@@ -9,7 +9,6 @@ import com.sg.constants.CompleteSignupStatus;
 import com.sg.constants.CustomHttpHeaders;
 import com.sg.constants.InstallStatus;
 import com.sg.constants.RequestPath;
-import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.domain.service.SgService;
 import com.sg.dto.request.SigninDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +19,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
-import com.sg.constants.TokenExpirationType;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.dto.response.OperationStatusDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.domain.service.SgMailService;
-import com.sg.domain.service.AuthToken;
-import com.sg.domain.service.SgCryptoService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
-import com.sg.domain.service.exception.SgCryptoException;
 import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
+import com.sg.rest.service.websecurity.WebSecurityService;
+import com.sg.rest.service.websecurity.TokenExpirationStandardDurations;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -49,14 +46,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SigninSignupController {
 
     @Autowired
-    SgMailService mailService;
+    private SgMailService mailService;
 
     @Autowired
-    SgService service;
+    private SgService service;
 
     @Autowired
-    SgCryptoService security;
-    
+    private WebSecurityService securityService;
+
     @RequestMapping(value = RequestPath.REQUEST_INSTALL, method = RequestMethod.GET)
     public @ResponseBody
     OperationStatusDto signupUser() {
@@ -72,7 +69,7 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto signupUser(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws SgCryptoException, SgDataValidationException {
+    OperationStatusDto signupUser(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -84,18 +81,14 @@ public class SigninSignupController {
         } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
             result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
-        AccountPrincipalDto accountDto = service.getAccountPrincipal(dto.getEmail());
-        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());
-        String token = security.encryptSecurityToken(authToken);
+        String token = securityService.generateToken(service.getAccountId(dto.getEmail()), Instant.now(), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
-        //TODO: try to get rid of this stuff for integration tests
-        response.setHeader(CustomHttpHeaders.X_ACCOUNT_ID, accountDto.getId().toString());
         return result;
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_ADMIN_USER, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto signupAdmin(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws IOException, SgCryptoException, SgDataValidationException {
+    OperationStatusDto signupAdmin(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws IOException, SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -107,12 +100,8 @@ public class SigninSignupController {
         } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
             result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
-        AccountPrincipalDto accountDto = service.getAccountPrincipal(dto.getEmail());
-        AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.LONG_TOKEN, Instant.now());
-        String token = security.encryptSecurityToken(authToken);
+        String token = securityService.generateToken(service.getAccountId(dto.getEmail()), Instant.now(), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
         mailService.sendEmailVerificationEmail(token, dto.getEmail());
-        //TODO: try to get rid of this stuff for integration tests
-        response.setHeader(CustomHttpHeaders.X_ACCOUNT_ID, accountDto.getId().toString());
         return result;
     }
 
@@ -139,15 +128,13 @@ public class SigninSignupController {
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
     public @ResponseBody
-    OperationStatusDto signin(@Valid @RequestBody SigninDto dto, HttpServletResponse response) throws IOException, SgCryptoException, SgDataValidationException {
+    OperationStatusDto signin(@Valid @RequestBody SigninDto dto, HttpServletResponse response) throws IOException, SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SigninStatus.STATUS_SUCCESS);
 
         try {
             service.signIn(dto);
-            AccountPrincipalDto accountDto = service.getAccountPrincipal(dto.getEmail());
-            AuthToken authToken = new AuthToken(accountDto, TokenExpirationType.USER_SESSION_TOKEN, Instant.now());
-            String token = security.encryptSecurityToken(authToken);
+            String token = securityService.generateToken(service.getAccountId(dto.getEmail()), Instant.now(), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
             response.setHeader(CustomHttpHeaders.X_AUTH_TOKEN, token);
         } catch (SgAccountNotFoundException e) {
             result.setStatus(SigninStatus.STATUS_USER_NOT_FOUND);

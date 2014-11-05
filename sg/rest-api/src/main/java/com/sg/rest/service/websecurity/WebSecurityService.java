@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.rest.service.securitytoken;
+package com.sg.rest.service.websecurity;
 
 import com.sg.rest.authtoken.BadTokenException;
 import com.sg.rest.authtoken.TokenExpiredException;
@@ -15,9 +15,9 @@ import org.joda.time.Instant;
  *
  * @author tarasev
  */
-public interface WebSecurityTokenService {
+public interface WebSecurityService {
     
     public String generateToken(Long accountId, Instant issuedAt, Duration validDuration);
-    public Long getAccountIdAndVerifyToken(String sToken)  throws BadTokenException, TokenExpiredException;
+    public Long getAccountIdAndVerifyToken(String sToken)  throws WebSecurityAccountNotFoundException, WebSecurityBadTokenException, WebSecurityTokenExpiredException;
     
 }

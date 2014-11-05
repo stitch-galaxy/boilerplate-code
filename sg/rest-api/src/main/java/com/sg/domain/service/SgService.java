@@ -26,7 +26,6 @@ import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.ResetPasswordDto;
-import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
@@ -59,8 +58,6 @@ public interface SgService {
     public Long getAccountId(String email) throws SgDataValidationException, SgAccountNotFoundException;
     
     public AccountRolesDto getAccountRoles(Long accountId) throws SgAccountNotFoundException;
-    
-    public AccountPrincipalDto getAccountPrincipal(String email) throws SgDataValidationException, SgAccountNotFoundException;
     
     public void completeSignup(Long accountId, CompleteSignupDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgSignupAlreadyCompletedException;
     

@@ -12,7 +12,7 @@ import com.sg.domain.spring.configuration.JacksonMapperContext;
 import com.sg.domain.spring.configuration.JpaContext;
 import com.sg.domain.spring.configuration.JpaServiceContext;
 import com.sg.domain.spring.configuration.MapperContext;
-import com.sg.domain.spring.configuration.SgCryptoContext;
+import com.sg.domain.spring.configuration.WebSecurityServiceContextConfiguration;
 import com.sg.domain.spring.configuration.SgMailServiceContext;
 import com.sg.domain.spring.configuration.ValidatorContext;
 import com.sg.domain.test.spring.configuration.TestJpaServicePropertiesContextConfiguration;

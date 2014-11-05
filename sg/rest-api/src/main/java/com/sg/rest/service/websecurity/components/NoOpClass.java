@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package com.sg.domain.service.exception;
+package com.sg.rest.service.websecurity.components;
 
 /**
  *
  * @author tarasev
  */
-public class SgTokenExpiredException extends SgCryptoException {
-
-    public SgTokenExpiredException() {
-        super("Security token expired.");
-    }
+public class NoOpClass {
+    
 }
