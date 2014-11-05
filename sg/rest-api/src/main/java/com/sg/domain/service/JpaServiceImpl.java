@@ -41,6 +41,7 @@ import com.sg.dto.request.ResetPasswordDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
+import com.sg.dto.response.AccountRolesDto;
 import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
@@ -83,11 +84,15 @@ public class JpaServiceImpl implements SgService {
 
     @Autowired
     private ValidatorComponent validatorComponent;
-    
-    @Value( "${admin.email}" ) private String ADMIN_EMAIL;
-    @Value( "${admin.password}" ) private String ADMIN_PASSWORD;
-    @Value( "${user.email}" ) private String USER_EMAIL;
-    @Value( "${user.password}" ) private String USER_PASSWORD;
+
+    @Value("${admin.email}")
+    private String ADMIN_EMAIL;
+    @Value("${admin.password}")
+    private String ADMIN_PASSWORD;
+    @Value("${user.email}")
+    private String USER_EMAIL;
+    @Value("${user.password}")
+    private String USER_PASSWORD;
 
     public void delete(final ThreadDeleteDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
@@ -153,12 +158,12 @@ public class JpaServiceImpl implements SgService {
     private ThreadsListDto listThreadsImpl() {
         ThreadsListDto result = new ThreadsListDto();
         Iterable<Thread> threads = threadsRepository.findAll();
-        
+
         List<ThreadsListDto.ThreadInfo> list = new ArrayList<ThreadsListDto.ThreadInfo>();
         for (Thread t : threads) {
             list.add(mapper.map(t, ThreadsListDto.ThreadInfo.class));
         }
-        
+
         result.setThreads(list);
         return result;
     }
@@ -281,16 +286,16 @@ public class JpaServiceImpl implements SgService {
     private CanvasesListDto listCanvasesImpl() {
         CanvasesListDto result = new CanvasesListDto();
         Iterable<Canvas> canvases = canvasesRepository.findAll();
-        
+
         List<CanvasesListDto.CanvasInfo> list = new ArrayList<CanvasesListDto.CanvasInfo>();
         for (Canvas c : canvases) {
             list.add(mapper.map(c, CanvasesListDto.CanvasInfo.class));
         }
-        
+
         result.setCanvases(list);
         return result;
     }
-    
+
     public void signupUser(final SignupDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
         signup(dto, Roles.ROLE_USER);
@@ -390,7 +395,7 @@ public class JpaServiceImpl implements SgService {
     }
 
     public void install() throws SgInstallationAlreadyCompletedException {
-         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
                     installImpl();
@@ -402,14 +407,13 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private static final LocalDate BIRTH_DATE = LocalDate.parse("1984-07-10");
-    
-    private void installImpl()
-    {
+
+    private void installImpl() {
         Account account = accountsRepository.findByEmail(ADMIN_EMAIL);
         if (account != null) {
-                throw new SgInstallationAlreadyCompletedException();
+            throw new SgInstallationAlreadyCompletedException();
         }
         account = new Account();
         account.setEmail(ADMIN_EMAIL);
@@ -420,7 +424,7 @@ public class JpaServiceImpl implements SgService {
         account.setUserBirthDate(BIRTH_DATE);
         account.setRoles(Arrays.asList(Roles.ROLE_ADMIN, Roles.ROLE_USER));
         accountsRepository.save(account);
-        
+
         account = new Account();
         account.setEmail(USER_EMAIL);
         account.setEmailVerified(Boolean.TRUE);
@@ -445,9 +449,8 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
-    private AccountPrincipalDto getAccountPrincipalImpl(String email)
-    {
+
+    private AccountPrincipalDto getAccountPrincipalImpl(String email) {
         Account account = accountsRepository.findByEmail(email);
         if (account == null) {
             throw new SgAccountNotFoundException(email);
@@ -469,7 +472,7 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private void setUserInfoImpl(Long accountId, UserInfoUpdateDto dto) throws SgDataValidationException, SgAccountNotFoundException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
@@ -492,14 +495,14 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private UserInfoDto getUserInfoImpl(final Long accountId) throws SgAccountNotFoundException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);
         }
         return mapper.map(account, UserInfoDto.class);
-    } 
+    }
 
     public void deleteAccount(final Long accountId) throws SgAccountNotFoundException {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
@@ -514,7 +517,7 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private void deleteAccountImpl(Long accountId) throws SgAccountNotFoundException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
@@ -537,21 +540,65 @@ public class JpaServiceImpl implements SgService {
             }
         });
     }
-    
+
     private void resetPasswordImpl(Long accountId, ResetPasswordDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgAccountWithoutEmailException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);
         }
-        if (account.getEmail() == null)
-        {
+        if (account.getEmail() == null) {
             throw new SgAccountWithoutEmailException(accountId);
         }
-        if (account.getEmailVerified() == Boolean.FALSE)
-        {
+        if (account.getEmailVerified() == Boolean.FALSE) {
             throw new SgEmailNonVerifiedException((account.getEmail()));
         }
         mapper.map(dto, account);
         accountsRepository.save(account);
+    }
+
+    @Override
+    public Long getAccountId(final String email) throws SgDataValidationException, SgAccountNotFoundException {
+        return transactionTemplate.execute(new TransactionCallback<Long>() {
+            public Long doInTransaction(TransactionStatus status) {
+                try {
+                    return getAccountIdImpl(email);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+
+    private Long getAccountIdImpl(String email) {
+        Account account = accountsRepository.findByEmail(email);
+        if (account == null) {
+            throw new SgAccountNotFoundException(email);
+        }
+        return account.getId();
+    }
+
+    @Override
+    public AccountRolesDto getAccountRoles(final Long accountId) throws SgAccountNotFoundException {
+        return transactionTemplate.execute(new TransactionCallback<AccountRolesDto>() {
+            public AccountRolesDto doInTransaction(TransactionStatus status) {
+                try {
+                    return getAccountRolesImpl(accountId);
+                } catch (SgServiceLayerRuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new SgServiceLayerRuntimeException(e);
+                }
+            }
+        });
+    }
+
+    public AccountRolesDto getAccountRolesImpl(Long accountId) throws SgAccountNotFoundException {
+        Account account = accountsRepository.findOne(accountId);
+        if (account == null) {
+            throw new SgAccountNotFoundException(accountId);
+        }
+        return mapper.map(account, AccountRolesDto.class);
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.sg.rest.authtoken;
 
+import com.sg.rest.authtoken.jwt.JwtAuthTokenComponent;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.junit.Assert;
@@ -20,7 +21,7 @@ public class JwtAuthTokenServiceTest {
     private static final String UID = "tarasov.e.a@gmail.com";
     private static final long ACCEPTABLE_CLOCK_SKEW_MINUTES = 2;
 
-    private final AuthTokenService jwtComponent = new JwtAuthTokenService(SECURITY_KEY, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
+    private final AuthTokenComponent jwtComponent = new JwtAuthTokenComponent(SECURITY_KEY, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
 
     @Test
     public void testValidToken() throws BadTokenException, TokenExpiredException {
@@ -124,7 +125,7 @@ public class JwtAuthTokenServiceTest {
     @Test
     public void testInvlidJwtAuthTokenService() {
         try {
-            JwtAuthTokenService jwtAuthTokenService = new JwtAuthTokenService(null, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
+            JwtAuthTokenComponent jwtAuthTokenService = new JwtAuthTokenComponent(null, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
             Assert.fail("Expected " + RuntimeException.class.getSimpleName());
         } catch (RuntimeException e) {
         }

@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.authtoken;
+package com.sg.rest.authtoken.jwt;
 
 /**
  *
  * @author tarasev
  */
+import com.sg.rest.authtoken.AuthTokenComponent;
+import com.sg.rest.authtoken.BadTokenException;
+import com.sg.rest.authtoken.Token;
+import com.sg.rest.authtoken.TokenExpiredException;
 import java.security.InvalidKeyException;
 import java.security.SignatureException;
 import net.oauth.jsontoken.Clock;
@@ -25,7 +29,7 @@ import net.oauth.signatures.SignedTokenAudienceChecker;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 
-public class JwtAuthTokenService implements AuthTokenService {
+public class JwtAuthTokenComponent implements AuthTokenComponent {
 
     private final byte[] symmetricKey;
     private final Clock clock;
@@ -38,7 +42,7 @@ public class JwtAuthTokenService implements AuthTokenService {
     private static final String UID_PARAM = "uid";
     private static final String KEY_NAME = "symmetric_key";
 
-    public JwtAuthTokenService(String sSymmetricKey, Duration acceptableClockSkew) {
+    public JwtAuthTokenComponent(String sSymmetricKey, Duration acceptableClockSkew) {
         symmetricKey = sSymmetricKey.getBytes();
         clock = new SystemClock(acceptableClockSkew);
 

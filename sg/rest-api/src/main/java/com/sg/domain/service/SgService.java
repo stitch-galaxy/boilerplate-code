@@ -30,6 +30,7 @@ import com.sg.dto.response.AccountPrincipalDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
+import com.sg.dto.response.AccountRolesDto;
 import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
@@ -54,6 +55,10 @@ public interface SgService {
     
     public void signupUser(SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     public void signupAdmin(SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
+    
+    public Long getAccountId(String email) throws SgDataValidationException, SgAccountNotFoundException;
+    
+    public AccountRolesDto getAccountRoles(Long accountId) throws SgAccountNotFoundException;
     
     public AccountPrincipalDto getAccountPrincipal(String email) throws SgDataValidationException, SgAccountNotFoundException;
     

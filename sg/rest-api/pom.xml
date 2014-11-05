@@ -63,6 +63,10 @@
             <groupId>com.sg.rest</groupId>
             <artifactId>dto</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sg.rest</groupId>
+            <artifactId>authtoken</artifactId>
+        </dependency>
 
         <!-- Spring -->
         <dependency>

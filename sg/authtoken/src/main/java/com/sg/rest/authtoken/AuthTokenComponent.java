@@ -11,7 +11,7 @@ import org.joda.time.Instant;
  *
  * @author tarasev
  */
-public interface AuthTokenService {
+public interface AuthTokenComponent {
 
     public String signToken(Token token, Instant issuedAt, Instant expireAt);
 
