@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.sg_rest_api.security;
+package com.sg.rest.security.components;
 
 /**
  *
@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,11 +33,9 @@ import org.springframework.stereotype.Component;
  * authorized (anonymous) and secured resource is requested.
  */
 @Component
-public class UnauthorizedEntryPoint extends BasicAuthenticationEntryPoint {
+public class WebTokenAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    public final static String REALM_NAME = "realm";
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UnauthorizedEntryPoint.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebTokenAuthenticationEntryPoint.class);
     
     @Autowired
     private ObjectMapper jacksonObjectMapper;
@@ -52,11 +49,5 @@ public class UnauthorizedEntryPoint extends BasicAuthenticationEntryPoint {
         ErrorDto dto = Utils.logExceptionAndCreateErrorDto(LOGGER, authEx);
         
         jacksonObjectMapper.writeValue(response.getWriter(), dto);
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        setRealmName(REALM_NAME);
-        super.afterPropertiesSet();
     }
 }

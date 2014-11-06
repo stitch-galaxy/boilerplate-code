@@ -26,8 +26,8 @@ import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
-import com.sg.rest.service.websecurity.TokenExpirationStandardDurations;
-import com.sg.rest.service.websecurity.WebSecurityService;
+import com.sg.rest.webtoken.TokenExpirationStandardDurations;
+import com.sg.rest.webtoken.WebTokenService;
 import java.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,7 +74,7 @@ public class SigninSignupControllerTest {
     private SgMailService mailServiceMock;
 
     @Autowired
-    private WebSecurityService webSecurityServiceMock;
+    private WebTokenService webSecurityServiceMock;
 
     @Autowired
     private SgService serviceMock;

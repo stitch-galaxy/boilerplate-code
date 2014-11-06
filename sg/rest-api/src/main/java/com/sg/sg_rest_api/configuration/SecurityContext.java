@@ -10,51 +10,89 @@ package com.sg.sg_rest_api.configuration;
  * @author tarasev
  */
 import com.sg.constants.RequestPath;
-import com.sg.sg_rest_api.security.AuthenticationTokenProcessingFilter;
+import com.sg.rest.security.components.WebTokenProcessingFilter;
 import com.sg.constants.Roles;
-import com.sg.sg_rest_api.security.UnauthorizedEntryPoint;
+import com.sg.rest.security.components.NoOpClass;
+import com.sg.rest.security.components.WebTokenAuthenticationEntryPoint;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
-import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebMvcSecurity
+@ComponentScan(basePackageClasses = {NoOpClass.class})
 public class SecurityContext extends WebSecurityConfigurerAdapter {
-        
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .addFilterBefore(authenticationTokenProcessingFilter(), DefaultLoginPageGeneratingFilter.class)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling().defaultAuthenticationEntryPointFor(unauthorizedEntryPoint(), AnyRequestMatcher.INSTANCE)
-                .and()
-                .authorizeRequests()
-                .antMatchers(RequestPath.REST_SECURE_ADMIN_PATH + "/**").hasRole(Roles.ROLE_ADMIN)
-                .antMatchers(RequestPath.REST_SECURE_USER_PATH + "/**").hasRole(Roles.ROLE_USER)
-                .anyRequest().permitAll();
+
+    public static void ConfigureStatelessSecurityWithoutCsrfProtection(HttpSecurity http) throws Exception {
+        //Stateless
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        //No csrf
+        http.csrf().disable();
+    }
+
+    @Configuration
+    @Order(1)
+    public static class TokenBasedSecurityContextConfiguration extends WebSecurityConfigurerAdapter {
+
+        @Autowired
+        private WebTokenProcessingFilter tokenProcessingFilter;
+
+        @Autowired
+        private WebTokenAuthenticationEntryPoint authenticationFailedHandler;
+
+//        @Autowired
+//        private CustomTokenBasedAccessDeniedHandler authorizationFailedHandler;
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http = http.antMatcher(RequestPath.REST_SECURE_PATH + "/**");
+            ConfigureStatelessSecurityWithoutCsrfProtection(http);
+
+            http.addFilterBefore(tokenProcessingFilter, DefaultLoginPageGeneratingFilter.class);
+
+            http.exceptionHandling().authenticationEntryPoint(authenticationFailedHandler);
+            //http.exceptionHandling().accessDeniedHandler(authorizationFailedHandler);
+
+            //Authentication and authorization rules
+            http.authorizeRequests()
+                    .antMatchers(RequestPath.REST_SECURE_ADMIN_PATH + "/**").hasRole(Roles.ROLE_ADMIN)
+                    .antMatchers(RequestPath.REST_SECURE_USER_PATH + "/**").hasRole(Roles.ROLE_USER)
+                    .anyRequest().authenticated();
+        }
+    }
+
+    @Configuration
+    @Order(2)
+    public static class PublicSecurityContextConfiguration extends WebSecurityConfigurerAdapter {
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http = http.antMatcher(RequestPath.REST_USER_API_PATH + "/**");
+            
+            ConfigureStatelessSecurityWithoutCsrfProtection(http);
+            
+            http
+                    .authorizeRequests()
+                    .anyRequest().permitAll();
+        }
     }
     
-    @Bean
-    public UnauthorizedEntryPoint unauthorizedEntryPoint()
-    {
-        UnauthorizedEntryPoint ep = new UnauthorizedEntryPoint();
-        ep.setRealmName(UnauthorizedEntryPoint.REALM_NAME);
-        return ep;
-    }
-    
-    @Bean 
-    public AuthenticationTokenProcessingFilter authenticationTokenProcessingFilter()
-    {
-        return new AuthenticationTokenProcessingFilter();
-        
+    @Configuration
+    @Order(3)
+    public static class DenyAccessSecurityContextConfiguration extends WebSecurityConfigurerAdapter {
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                    .anyRequest().denyAll();
+        }
     }
 
 }

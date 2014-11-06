@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.rest.service.websecurity;
+package com.sg.rest.webtoken;
 
 import org.joda.time.Duration;
 

@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.service.websecurity.components;
+package com.sg.rest.webtoken.service;
 
 import com.sg.rest.authtoken.AuthTokenComponent;
 import com.sg.rest.authtoken.BadTokenException;
 import com.sg.rest.authtoken.Token;
 import com.sg.rest.authtoken.TokenExpiredException;
 import com.sg.rest.authtoken.jwt.JwtAuthTokenComponent;
-import com.sg.rest.service.websecurity.WebSecurityBadTokenException;
-import com.sg.rest.service.websecurity.WebSecurityTokenExpiredException;
-import com.sg.rest.service.websecurity.WebSecurityService;
+import com.sg.rest.webtoken.WebSecurityBadTokenException;
+import com.sg.rest.webtoken.WebSecurityTokenExpiredException;
+import com.sg.rest.webtoken.WebTokenService;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,12 @@ import org.springframework.stereotype.Service;
  * @author tarasev
  */
 @Service
-public class WebSecurityServiceImpl implements WebSecurityService {
+public class WebTokenServiceImpl implements WebTokenService {
 
     private final AuthTokenComponent authTokenComponent;
 
     @Autowired
-    public WebSecurityServiceImpl(@Value("${security.key}") String symmetricKey) {
+    public WebTokenServiceImpl(@Value("${security.key}") String symmetricKey) {
         this.authTokenComponent = new JwtAuthTokenComponent(symmetricKey, Duration.standardMinutes(2));
     }
 

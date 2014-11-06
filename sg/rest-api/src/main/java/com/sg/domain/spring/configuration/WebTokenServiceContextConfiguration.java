@@ -5,7 +5,7 @@
  */
 package com.sg.domain.spring.configuration;
 
-import com.sg.rest.service.websecurity.components.NoOpClass;
+import com.sg.rest.webtoken.service.NoOpClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  */
 @Configuration
 @ComponentScan(basePackageClasses = {NoOpClass.class})
-public class WebSecurityServiceContextConfiguration {
+public class WebTokenServiceContextConfiguration {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {

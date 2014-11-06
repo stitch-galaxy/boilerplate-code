@@ -13,8 +13,8 @@ import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
 import com.sg.constants.Roles;
 import com.sg.dto.response.AccountRolesDto;
-import com.sg.rest.service.websecurity.TokenExpirationStandardDurations;
-import com.sg.rest.service.websecurity.WebSecurityService;
+import com.sg.rest.webtoken.TokenExpirationStandardDurations;
+import com.sg.rest.webtoken.WebTokenService;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletResponse;
@@ -73,7 +73,7 @@ public class SpringSecurityTest {
     private SgService serviceMock;
 
     @Autowired
-    private WebSecurityService webSecurityService;
+    private WebTokenService webSecurityService;
 
     @Autowired
     private FilterChainProxy springSecurityFilterChain;

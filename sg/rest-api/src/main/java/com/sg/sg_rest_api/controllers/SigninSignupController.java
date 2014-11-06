@@ -30,8 +30,8 @@ import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
-import com.sg.rest.service.websecurity.WebSecurityService;
-import com.sg.rest.service.websecurity.TokenExpirationStandardDurations;
+import com.sg.rest.webtoken.WebTokenService;
+import com.sg.rest.webtoken.TokenExpirationStandardDurations;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -52,7 +52,7 @@ public class SigninSignupController {
     private SgService service;
 
     @Autowired
-    private WebSecurityService securityService;
+    private WebTokenService securityService;
 
     @RequestMapping(value = RequestPath.REQUEST_INSTALL, method = RequestMethod.GET)
     public @ResponseBody

@@ -1,6 +1,6 @@
 package com.sg.sg_rest_api.test.configuration;
 
-import com.sg.rest.service.websecurity.WebSecurityService;
+import com.sg.rest.webtoken.WebTokenService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WebSecurityServiceMockContextConfiguration {
     @Bean
-    public WebSecurityService sgCryptoService() {
-        return Mockito.mock(WebSecurityService.class);
+    public WebTokenService sgCryptoService() {
+        return Mockito.mock(WebTokenService.class);
     }
 }

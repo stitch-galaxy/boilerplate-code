@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.sg_rest_api.security;
+package com.sg.rest.security.components;
 
 /**
  *
@@ -13,9 +13,9 @@ import com.sg.constants.CustomHttpHeaders;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.dto.response.AccountRolesDto;
-import com.sg.rest.service.websecurity.SgRestUser;
-import com.sg.rest.service.websecurity.WebSecurityAccountNotFoundException;
-import com.sg.rest.service.websecurity.WebSecurityService;
+import com.sg.rest.security.SgRestUser;
+import com.sg.rest.webtoken.WebSecurityAccountNotFoundException;
+import com.sg.rest.webtoken.WebTokenService;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -32,10 +32,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 @Component
-public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
+public class WebTokenProcessingFilter extends GenericFilterBean {
 
     @Autowired
-    private WebSecurityService securityService;
+    private WebTokenService securityService;
 
     @Autowired
     SgService service;
