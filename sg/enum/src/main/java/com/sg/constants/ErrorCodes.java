@@ -19,7 +19,8 @@ public class ErrorCodes {
     public static final int TOKEN_AUTHENTICATION_BAD_TOKEN = 2;
     public static final int TOKEN_AUTHENTICATION_TOKEN_EXPIRED = 3;
     public static final int TOKEN_AUTHENTICATION_ACCOUNT_DO_NOT_EXISTS = 4;
-    public static final int TOKEN_AUTHORIZATION_UNATUHORIZED = 5;
+    
+    public static final int ACCESS_DENIED = 1;
     
  
 }

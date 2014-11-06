@@ -13,6 +13,7 @@ import com.sg.constants.RequestPath;
 import com.sg.rest.security.components.WebTokenProcessingFilter;
 import com.sg.constants.Roles;
 import com.sg.rest.security.components.NoOpClass;
+import com.sg.rest.security.components.SgAccessDeniedHandler;
 import com.sg.rest.security.components.WebTokenAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -47,8 +48,9 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
         @Autowired
         private WebTokenAuthenticationEntryPoint authenticationFailedHandler;
 
-//        @Autowired
-//        private CustomTokenBasedAccessDeniedHandler authorizationFailedHandler;
+        @Autowired
+        private SgAccessDeniedHandler authorizationFailedHandler;
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http = http.antMatcher(RequestPath.REST_SECURE_PATH + "/**");
@@ -61,7 +63,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
             http.addFilterAfter(tokenProcessingFilter, ExceptionTranslationFilter.class);
 
             http.exceptionHandling().authenticationEntryPoint(authenticationFailedHandler);
-            //http.exceptionHandling().accessDeniedHandler(authorizationFailedHandler);
+            http.exceptionHandling().accessDeniedHandler(authorizationFailedHandler);
 
             //Authentication and authorization rules
             http.authorizeRequests()

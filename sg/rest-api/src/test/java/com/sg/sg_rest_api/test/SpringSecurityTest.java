@@ -17,7 +17,9 @@ import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.dto.response.AccountRolesDto;
 import com.sg.rest.webtoken.TokenExpirationStandardDurations;
 import com.sg.rest.webtoken.WebTokenService;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletResponse;
 import static org.hamcrest.Matchers.is;
@@ -126,6 +128,24 @@ public class SpringSecurityTest {
                 .andExpect(content().bytes(new byte[0]));
 
         verify(serviceMock, times(1)).ping();
+        verify(serviceMock, times(1)).getAccountRoles(ACCOUNT_ID);
+        verifyNoMoreInteractions(serviceMock);
+    }
+    
+    @Test
+    public void testSecureResourceWithAuthTokenButNonSufficientRights() throws IOException, Exception {
+        String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
+        AccountRolesDto accountRolesDto = new AccountRolesDto();
+        accountRolesDto.setRoles(new ArrayList<String>());
+        when(serviceMock.getAccountRoles(ACCOUNT_ID)).thenReturn(accountRolesDto);
+
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
+                .andExpect(status().is(HttpServletResponse.SC_FORBIDDEN))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.errorCode", is(ErrorCodes.ACCESS_DENIED)));
+
         verify(serviceMock, times(1)).getAccountRoles(ACCOUNT_ID);
         verifyNoMoreInteractions(serviceMock);
     }
