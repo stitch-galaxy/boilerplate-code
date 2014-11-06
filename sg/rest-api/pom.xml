@@ -140,13 +140,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <!--Encryption-->
-        <dependency>
-            <groupId>org.jasypt</groupId>
-            <artifactId>jasypt</artifactId>
-            <version>${jasypt-version}</version>
-            <scope>compile</scope>
-        </dependency>
         <!--datetime-->
         <dependency>
             <groupId>joda-time</groupId>

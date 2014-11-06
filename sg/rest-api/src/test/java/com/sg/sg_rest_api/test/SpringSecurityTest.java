@@ -9,15 +9,18 @@ import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationIntegrationTestContext;
 import com.sg.domain.service.SgService;
 import com.sg.constants.CustomHttpHeaders;
+import com.sg.constants.ErrorCodes;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
 import com.sg.constants.Roles;
+import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.dto.response.AccountRolesDto;
 import com.sg.rest.webtoken.TokenExpirationStandardDurations;
 import com.sg.rest.webtoken.WebTokenService;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletResponse;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import org.joda.time.Duration;
@@ -26,6 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -56,9 +60,8 @@ public class SpringSecurityTest {
     private static final String BAD_TOKEN = "BAD_TOKEN";
 //    private static final AccountPrincipalDto accountDto;
     private static final AccountRolesDto accountRolesDto;
-    
-    static
-    {
+
+    static {
         accountRolesDto = new AccountRolesDto();
         accountRolesDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
 //        accountDto = new AccountPrincipalDto();
@@ -108,10 +111,11 @@ public class SpringSecurityTest {
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
-                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.errorCode", is(ErrorCodes.TOKEN_AUTHENTICATION_NO_TOKEN)));
         verifyNoMoreInteractions(serviceMock);
     }
-    
+
     @Test
     public void testSecureResourceWithAuthToken() throws IOException, Exception {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
@@ -120,8 +124,24 @@ public class SpringSecurityTest {
         mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(new byte[0]));
-        
+
         verify(serviceMock, times(1)).ping();
+        verify(serviceMock, times(1)).getAccountRoles(ACCOUNT_ID);
+        verifyNoMoreInteractions(serviceMock);
+    }
+
+    @Test
+    public void testSecureResourceWithAuthTokenButForNonExistentAccount() throws IOException, Exception {
+        String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
+        doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(serviceMock).getAccountRoles(ACCOUNT_ID);
+
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
+                .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.errorCode", is(ErrorCodes.TOKEN_AUTHENTICATION_ACCOUNT_DO_NOT_EXISTS)));
+
         verify(serviceMock, times(1)).getAccountRoles(ACCOUNT_ID);
         verifyNoMoreInteractions(serviceMock);
     }
@@ -134,7 +154,8 @@ public class SpringSecurityTest {
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
-                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.errorCode", is(ErrorCodes.TOKEN_AUTHENTICATION_TOKEN_EXPIRED)));
         verifyNoMoreInteractions(serviceMock);
     }
 
@@ -144,8 +165,9 @@ public class SpringSecurityTest {
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
-                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.errorCode", is(ErrorCodes.TOKEN_AUTHENTICATION_BAD_TOKEN)));
         verifyNoMoreInteractions(serviceMock);
     }
-    
+
 }
