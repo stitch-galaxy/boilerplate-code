@@ -16,6 +16,8 @@ public class ErrorDto {
     private String error;
 
     private String refNumber;
+    
+    private int errorCode;
 
     /**
      * @return the error
@@ -58,7 +60,23 @@ public class ErrorDto {
         return new EqualsBuilder().
                 append(this.error, other.error).
                 append(this.refNumber, other.refNumber).
+                append(this.errorCode, other.errorCode).
                 isEquals();
+                
+    }
+
+    /**
+     * @return the errorCode
+     */
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    /**
+     * @param errorCode the errorCode to set
+     */
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
 }

@@ -15,18 +15,13 @@ import org.slf4j.Logger;
  */
 public class Utils {
 
-    public static ErrorDto logExceptionAndCreateErrorDto(Logger LOGGER, Exception ex) {
+    public static String logException(Logger LOGGER, Exception ex)
+    {
         String refNumber = UUID.randomUUID().toString().toUpperCase();
         StringBuilder sb = new StringBuilder();
         sb.append("Exception refNumber: ");
         sb.append(refNumber);
         LOGGER.error(sb.toString(), ex);
-
-        ErrorDto dto = new ErrorDto();
-        dto.setError(ex.getMessage());
-        dto.setRefNumber(refNumber);
-
-        return dto;
+        return refNumber;
     }
-
 }

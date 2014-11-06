@@ -9,7 +9,11 @@ package com.sg.rest.security.components;
  *
  * @author tarasev
  */
+import com.sg.constants.ErrorCodes;
 import com.sg.dto.response.ErrorDto;
+import com.sg.rest.webtoken.WebSecurityAccountNotFoundException;
+import com.sg.rest.webtoken.WebSecurityBadTokenException;
+import com.sg.rest.webtoken.WebSecurityTokenExpiredException;
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.utils.Utils;
 import java.io.IOException;
@@ -21,6 +25,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -44,10 +49,30 @@ public class WebTokenAuthenticationEntryPoint implements AuthenticationEntryPoin
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx) throws IOException, ServletException {
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        
+        String refNumber = Utils.logException(LOGGER, authEx);
+        
+        ErrorDto dto = new ErrorDto();
+        dto.setRefNumber(refNumber);
+        dto.setError(authEx.getMessage());
+        dto.setErrorCode(ErrorCodes.UNKNOWN);
+        
+        if (authEx instanceof WebSecurityAccountNotFoundException) {
+            dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_ACCOUNT_DO_NOT_EXISTS);
+        }
+        if (authEx instanceof WebSecurityBadTokenException) {
+            dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_BAD_TOKEN);
+        }
+        if (authEx instanceof WebSecurityTokenExpiredException) {
+            dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_TOKEN_EXPIRED);
+        }
+        if (authEx instanceof InsufficientAuthenticationException)
+        {
+            dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_NO_TOKEN);
+        }
+        //TODO: ErrorCodes.TOKEN_AUTHORIZATION_UNATUHORIZED + test
+        
         response.setContentType(CustomMediaTypes.APPLICATION_JSON_UTF8.toString());
-        
-        ErrorDto dto = Utils.logExceptionAndCreateErrorDto(LOGGER, authEx);
-        
         jacksonObjectMapper.writeValue(response.getWriter(), dto);
     }
 }

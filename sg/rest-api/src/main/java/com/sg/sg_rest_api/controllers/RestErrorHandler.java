@@ -5,16 +5,14 @@
  */
 package com.sg.sg_rest_api.controllers;
 
+import com.sg.constants.ErrorCodes;
 import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.dto.response.ErrorDto;
 import com.sg.dto.response.ValidationErrorDto;
 import com.sg.sg_rest_api.utils.Utils;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -60,6 +58,11 @@ public class RestErrorHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ErrorDto processException(Exception ex) {
-        return Utils.logExceptionAndCreateErrorDto(LOGGER, ex);
+        String refNumber = Utils.logException(LOGGER, ex);
+        ErrorDto dto = new ErrorDto();
+        dto.setRefNumber(refNumber);
+        dto.setError(ex.getMessage());
+        dto.setErrorCode(ErrorCodes.EXCEPTION);
+        return dto;
     }
 }
