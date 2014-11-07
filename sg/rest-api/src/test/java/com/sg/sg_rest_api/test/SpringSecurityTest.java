@@ -60,6 +60,7 @@ public class SpringSecurityTest {
 
     private static final long ACCOUNT_ID = 1L;
     private static final String BAD_TOKEN = "BAD_TOKEN";
+    private static final String PATH_DO_NOT_EXIST = "PATH_DO_NOT_EXIST";
     private static final AccountRolesDto accountRolesDto;
 
     static {
@@ -101,6 +102,14 @@ public class SpringSecurityTest {
         verify(serviceMock, times(1)).ping();
         verifyNoMoreInteractions(serviceMock);
     }
+    
+    @Test
+    public void testNonExistentResource() throws Exception {
+        mockMvc.perform(get(PATH_DO_NOT_EXIST))
+                .andExpect(status().isOk())
+                .andExpect(content().bytes(new byte[0]));
+    }
+    
 
     @Test
     public void testSecureResourceWithoutAuthToken() throws IOException, Exception {

@@ -12,11 +12,9 @@ import com.sg.constants.RequestPath;
 import com.sg.domain.service.SgService;
 import com.sg.dto.request.SigninDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.sg.constants.SigninStatus;
 import com.sg.constants.SignupStatus;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
@@ -38,12 +36,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.joda.time.Instant;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author tarasev
  */
-@Controller
+@RestController
 public class SigninSignupController {
 
     @Autowired
@@ -56,8 +55,7 @@ public class SigninSignupController {
     private WebTokenService securityService;
 
     @RequestMapping(value = RequestPath.REQUEST_INSTALL, method = RequestMethod.GET)
-    public @ResponseBody
-    OperationStatusDto signupUser() {
+    public OperationStatusDto signupUser() {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(InstallStatus.STATUS_SUCCESS);
         try {
@@ -69,8 +67,7 @@ public class SigninSignupController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
-    public @ResponseBody
-    OperationStatusDto signupUser(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws SgDataValidationException {
+    public OperationStatusDto signupUser(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -88,8 +85,7 @@ public class SigninSignupController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_ADMIN_USER, method = RequestMethod.POST)
-    public @ResponseBody
-    OperationStatusDto signupAdmin(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws IOException, SgDataValidationException {
+    public OperationStatusDto signupAdmin(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws IOException, SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -107,8 +103,7 @@ public class SigninSignupController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.POST)
-    public @ResponseBody
-    OperationStatusDto completeSignup(@Valid @RequestBody CompleteSignupDto dto) throws SgDataValidationException {
+    public OperationStatusDto completeSignup(@Valid @RequestBody CompleteSignupDto dto) throws SgDataValidationException {
         //http://blog.awnry.com/post/16187851956/spring-mvc-get-the-logged-in-userdetails-from-your
         SgRestUser user = (SgRestUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -129,8 +124,7 @@ public class SigninSignupController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
-    public @ResponseBody
-    OperationStatusDto signin(@Valid @RequestBody SigninDto dto, HttpServletResponse response) throws IOException, SgDataValidationException {
+    public OperationStatusDto signin(@Valid @RequestBody SigninDto dto, HttpServletResponse response) throws IOException, SgDataValidationException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SigninStatus.STATUS_SUCCESS);
 
