@@ -1,6 +1,6 @@
-package com.sg.domain.spring.configuration;
+package com.sg.domain.service.jpa.spring;
 
-import com.sg.domain.service.JpaServiceImpl;
+import com.sg.domain.service.jpa.components.ServiceImpl;
 import com.sg.domain.service.SgService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +15,11 @@ import org.springframework.context.annotation.Configuration;
  * @author tarasev
  */
 @Configuration
-public class JpaServiceContext {
+public class ServiceContextConfig {
 
     @Bean
     public static SgService service() {
-        return new JpaServiceImpl();
+        return new ServiceImpl();
     }
 
 }

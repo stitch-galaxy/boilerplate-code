@@ -6,9 +6,7 @@
 
 package com.sg.domain.service.exception;
 
-import java.util.HashSet;
 import java.util.Set;
-import javax.validation.ConstraintViolation;
 
 /**
  *
@@ -17,15 +15,6 @@ import javax.validation.ConstraintViolation;
 public class SgDataValidationException extends Exception {
 
     private Set<String> fieldErrors;
-    
-    public SgDataValidationException(Set<ConstraintViolation<Object>> errors) {
-        super();
-        fieldErrors = new HashSet<String>();
-        for(ConstraintViolation<Object> error : errors)
-        {
-            this.fieldErrors.add(error.getMessageTemplate());
-        }
-    }
     
     public SgDataValidationException()
     {

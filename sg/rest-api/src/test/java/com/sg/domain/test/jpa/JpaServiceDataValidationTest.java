@@ -8,12 +8,12 @@ package com.sg.domain.test.jpa;
  */
 import com.sg.constants.DtoFieldCodes;
 import com.sg.domain.service.SgService;
-import com.sg.domain.service.ValidatorComponent;
+import com.sg.domain.service.jpa.components.ValidatorComponent;
 import com.sg.domain.service.exception.SgDataValidationException;
-import com.sg.domain.spring.configuration.JpaContext;
-import com.sg.domain.spring.configuration.JpaServiceContext;
-import com.sg.domain.spring.configuration.MapperContext;
-import com.sg.domain.spring.configuration.ValidatorContext;
+import com.sg.domain.service.jpa.spring.PersistenceContextConfig;
+import com.sg.domain.service.jpa.spring.ServiceContextConfig;
+import com.sg.domain.service.jpa.spring.DtoDomainObjectsMapperContextConfig;
+import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
 import com.sg.domain.test.spring.configuration.TestJpaServicePropertiesContextConfiguration;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
@@ -44,7 +44,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContextConfig.class, PersistenceContextConfig.class, DtoDomainObjectsMapperContextConfig.class, ServiceContextConfig.class})
 public class JpaServiceDataValidationTest {
 
     @Autowired

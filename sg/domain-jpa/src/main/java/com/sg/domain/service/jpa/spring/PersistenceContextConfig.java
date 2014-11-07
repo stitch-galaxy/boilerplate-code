@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.spring.configuration;
+package com.sg.domain.service.jpa.spring;
 
-import com.sg.domain.entities.jpa.CanvasesRepository;
-import com.sg.domain.entities.jpa.ProductRepository;
-import com.sg.domain.entities.jpa.ThreadsRepository;
+import com.sg.domain.repositories.NoOpClass;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -16,8 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -32,10 +28,10 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author tarasev
  */
 @Configuration
-@EnableJpaRepositories(basePackageClasses = {ThreadsRepository.class, CanvasesRepository.class, ProductRepository.class})
+@EnableJpaRepositories(basePackageClasses = {NoOpClass.class})
 //GAE do not support @Transactional annotation because where is a class on a call stack which is not in a white list
 //@EnableTransactionManagement
-public class JpaContext {
+public class PersistenceContextConfig {
 
     @Value("${jdbc.url}")
     private String jdbcUrl;

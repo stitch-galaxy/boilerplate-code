@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.spring.configuration;
+package com.sg.domain.service.jpa.spring;
 
-import com.sg.domain.service.ValidatorComponent;
+import com.sg.domain.service.jpa.components.ValidatorComponent;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * @author tarasev
  */
 @Configuration
-public class ValidatorContext {
+public class ValidatorContextConfig {
     
     @Bean
     public Validator validator() {

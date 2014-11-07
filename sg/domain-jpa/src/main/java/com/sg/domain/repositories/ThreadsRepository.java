@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.entities.jpa;
+package com.sg.domain.repositories;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.sg.domain.entities.jpa.Thread;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author tarasev
  */
 @Repository
-public interface CanvasesRepository extends CrudRepository<Canvas, Integer> {
-    Canvas findByCode(String code);
+public interface ThreadsRepository extends CrudRepository<Thread, Integer> {
+    Thread findByCode(String code);
 }

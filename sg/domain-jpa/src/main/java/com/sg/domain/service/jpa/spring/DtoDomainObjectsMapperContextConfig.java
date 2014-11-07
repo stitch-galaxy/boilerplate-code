@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.spring.configuration;
+package com.sg.domain.service.jpa.spring;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.converter.builtin.PassThroughConverter;
@@ -18,9 +18,9 @@ import org.springframework.context.annotation.Configuration;
  * @author tarasev
  */
 @Configuration
-public class MapperContext {
+public class DtoDomainObjectsMapperContextConfig {
 
-    @Bean(name = "mapper")
+    @Bean
     public MyCustomMapper mapper() {
         return new MyCustomMapper();
     }

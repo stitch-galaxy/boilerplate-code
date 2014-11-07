@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.entities.jpa;
+package com.sg.domain.repositories;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.sg.domain.entities.jpa.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

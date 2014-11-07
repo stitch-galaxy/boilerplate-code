@@ -8,10 +8,10 @@ package com.sg.domain.test.jpa;
  */
 
 import com.sg.domain.service.SgService;
-import com.sg.domain.spring.configuration.JpaContext;
-import com.sg.domain.spring.configuration.JpaServiceContext;
-import com.sg.domain.spring.configuration.MapperContext;
-import com.sg.domain.spring.configuration.ValidatorContext;
+import com.sg.domain.service.jpa.spring.PersistenceContextConfig;
+import com.sg.domain.service.jpa.spring.ServiceContextConfig;
+import com.sg.domain.service.jpa.spring.DtoDomainObjectsMapperContextConfig;
+import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
 import com.sg.domain.test.spring.configuration.TestJpaServicePropertiesContextConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContext.class, JpaContext.class, MapperContext.class, JpaServiceContext.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContextConfig.class, PersistenceContextConfig.class, DtoDomainObjectsMapperContextConfig.class, ServiceContextConfig.class})
 public class JpaContextTest {
     
     @Autowired
@@ -35,6 +35,6 @@ public class JpaContextTest {
     }
     
     @Test
-    public void emptyTest(){
+    public void contextTest(){
     }
 }

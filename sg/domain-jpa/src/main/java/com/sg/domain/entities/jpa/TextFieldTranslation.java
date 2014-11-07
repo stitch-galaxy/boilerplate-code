@@ -6,7 +6,6 @@
 
 package com.sg.domain.entities.jpa;
 
-import com.sg.domain.enumerations.TextFieldType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

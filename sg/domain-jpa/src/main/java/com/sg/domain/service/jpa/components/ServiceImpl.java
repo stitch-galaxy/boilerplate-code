@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.service;
+package com.sg.domain.service.jpa.components;
 
 import com.sg.constants.Roles;
 import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
@@ -14,16 +14,16 @@ import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.domain.entities.jpa.Canvas;
-import com.sg.domain.entities.jpa.CanvasesRepository;
-import com.sg.domain.entities.jpa.ProductRepository;
-import com.sg.domain.entities.jpa.ThreadsRepository;
+import com.sg.domain.repositories.CanvasesRepository;
+import com.sg.domain.repositories.ProductRepository;
+import com.sg.domain.repositories.ThreadsRepository;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
-import com.sg.domain.entities.jpa.AccountsRepository;
-import com.sg.domain.service.ValidatorComponent;
+import com.sg.domain.repositories.AccountsRepository;
+import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgAccountWithoutEmailException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
@@ -62,7 +62,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
  */
 //@Transactional annotation prevent spring context to be initialized on GAE
 @Service
-public class JpaServiceImpl implements SgService {
+public class ServiceImpl implements SgService {
 
     @Autowired
     private ProductRepository productRepository;
