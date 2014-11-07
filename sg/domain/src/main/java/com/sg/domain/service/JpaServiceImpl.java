@@ -23,6 +23,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
 import com.sg.domain.entities.jpa.AccountsRepository;
+import com.sg.domain.service.ValidatorComponent;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgAccountWithoutEmailException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;

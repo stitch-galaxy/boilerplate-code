@@ -61,6 +61,11 @@
             </dependency>
             <dependency>
                 <groupId>com.sg.rest</groupId>
+                <artifactId>domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sg.rest</groupId>
                 <artifactId>ear</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -94,6 +99,7 @@
         <module>configuration</module>
         <module>dto</module>
         <module>enum</module>
+        <module>domain</module>
         <module>ear</module>
         <module>rest-api</module>
         <module>rest-integ-test</module>
