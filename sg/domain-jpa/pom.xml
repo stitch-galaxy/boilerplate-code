@@ -72,6 +72,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
+        <!--Do not include these dependencies even if mvn dependencies:analyze log them as used, undeclared
+        because spring-orm alradey include them as transitive dependencies
+        and this transitive dependencies versions do not match spring.io project bom defined versions
+        or you should upgrade spring.io bom version and check that versions are consistent(but it do not protect you from future differencies)
+        -->
+        <!--
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -85,6 +91,7 @@
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>${hibernate-jpa-2.1-api-version}</version>
         </dependency>
+        -->
         <!--Allow hibernate to save Joda types-->
         <dependency>
             <groupId>org.jadira.usertype</groupId>
