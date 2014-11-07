@@ -10,6 +10,7 @@ package com.sg.sg_rest_api.configuration;
  * @author tarasev
  */
 import com.sg.constants.RequestPath;
+import static com.sg.constants.RequestPath.REST_PATH;
 import com.sg.rest.security.components.WebTokenProcessingFilter;
 import com.sg.constants.Roles;
 import com.sg.rest.security.components.NoOpClass;
@@ -53,7 +54,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http = http.antMatcher(RequestPath.REST_SECURE_PATH + "/**");
+            http = http.antMatcher(RequestPath.REST_PATH + "/**");
             ConfigureStatelessSecurityWithoutCsrfProtection(http);
 
             //TODO: configure filter chain
@@ -69,28 +70,12 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
             http.authorizeRequests()
                     .antMatchers(RequestPath.REST_SECURE_ADMIN_PATH + "/**").hasRole(Roles.ROLE_ADMIN)
                     .antMatchers(RequestPath.REST_SECURE_USER_PATH + "/**").hasRole(Roles.ROLE_USER)
-                    .anyRequest().authenticated();
+                    .antMatchers(RequestPath.REST_USER_API_PATH + "/**").permitAll();
         }
     }
 
     @Configuration
     @Order(2)
-    public static class PublicSecurityContextConfiguration extends WebSecurityConfigurerAdapter {
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http = http.antMatcher(RequestPath.REST_USER_API_PATH + "/**");
-
-            ConfigureStatelessSecurityWithoutCsrfProtection(http);
-
-            http
-                    .authorizeRequests()
-                    .anyRequest().permitAll();
-        }
-    }
-
-    @Configuration
-    @Order(3)
     public static class DenyAccessSecurityContextConfiguration extends WebSecurityConfigurerAdapter {
 
         @Override

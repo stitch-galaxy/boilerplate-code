@@ -30,6 +30,7 @@ import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
+import com.sg.rest.security.SgRestUser;
 import com.sg.rest.webtoken.WebTokenService;
 import com.sg.rest.webtoken.TokenExpirationStandardDurations;
 import java.io.IOException;
@@ -108,12 +109,13 @@ public class SigninSignupController {
     @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.POST)
     public @ResponseBody
     OperationStatusDto completeSignup(@Valid @RequestBody CompleteSignupDto dto) throws SgDataValidationException {
-        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //http://blog.awnry.com/post/16187851956/spring-mvc-get-the-logged-in-userdetails-from-your
+        SgRestUser user = (SgRestUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         OperationStatusDto attemptResult = new OperationStatusDto();
 
         try {
-            service.completeSignup(userId, dto);
+            service.completeSignup(user.getAccountId(), dto);
         } catch (SgAccountNotFoundException e) {
             attemptResult.setStatus(CompleteSignupStatus.STATUS_ACCOUNT_NOT_FOUND);
             return attemptResult;

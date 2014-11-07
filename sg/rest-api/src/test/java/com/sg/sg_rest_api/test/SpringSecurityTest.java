@@ -60,16 +60,11 @@ public class SpringSecurityTest {
 
     private static final long ACCOUNT_ID = 1L;
     private static final String BAD_TOKEN = "BAD_TOKEN";
-//    private static final AccountPrincipalDto accountDto;
     private static final AccountRolesDto accountRolesDto;
 
     static {
         accountRolesDto = new AccountRolesDto();
         accountRolesDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
-//        accountDto = new AccountPrincipalDto();
-//        accountDto.setEmailVerified(Boolean.FALSE);
-//        accountDto.setId(ACCOUNT_ID);
-//        accountDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
     }
 
     private MockMvc mockMvc;

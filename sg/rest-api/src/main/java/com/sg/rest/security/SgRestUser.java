@@ -19,7 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class SgRestUser implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
-    private Long accountId;
+    private final Long accountId;
 
     public SgRestUser(Long accountId) {
         this.accountId = accountId;
@@ -37,7 +37,7 @@ public class SgRestUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return accountId.toString();
+        return getAccountId().toString();
     }
 
     @Override
@@ -69,4 +69,11 @@ public class SgRestUser implements UserDetails {
         this.authorities = authorities;
     }
     private static final String SPRING_ROLE_ID_PREFIX = "ROLE_";
+
+    /**
+     * @return the accountId
+     */
+    public Long getAccountId() {
+        return accountId;
+    }
 }

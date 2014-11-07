@@ -26,6 +26,7 @@ import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
+import com.sg.rest.security.SgRestUser;
 import com.sg.rest.webtoken.TokenExpirationStandardDurations;
 import com.sg.rest.webtoken.WebTokenService;
 import java.util.Arrays;
@@ -303,10 +304,14 @@ public class SigninSignupControllerTest {
         verifyNoMoreInteractions(mailServiceMock);
     }
 
+    //TODO: move to base class for all unit tests
     @BeforeClass
     public static void setup() {
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(ACCOUNT_ID, null));
+        SgRestUser userPrincipal = new SgRestUser(ACCOUNT_ID);
+        userPrincipal.setRoles(Arrays.asList(Roles.ROLE_ADMIN, Roles.ROLE_USER));
+        UsernamePasswordAuthenticationToken authentication
+                = new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     @AfterClass
