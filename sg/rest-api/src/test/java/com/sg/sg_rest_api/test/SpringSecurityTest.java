@@ -60,7 +60,7 @@ public class SpringSecurityTest {
 
     private static final long ACCOUNT_ID = 1L;
     private static final String BAD_TOKEN = "BAD_TOKEN";
-    private static final String PATH_DO_NOT_EXIST = "PATH_DO_NOT_EXIST";
+    private static final String PATH_DO_NOT_EXIST = "/PATH_DO_NOT_EXIST";
     private static final AccountRolesDto accountRolesDto;
 
     static {
@@ -106,8 +106,27 @@ public class SpringSecurityTest {
     @Test
     public void testNonExistentResource() throws Exception {
         mockMvc.perform(get(PATH_DO_NOT_EXIST))
-                .andExpect(status().isOk())
+                .andExpect(status().is(HttpServletResponse.SC_NOT_FOUND))
                 .andExpect(content().bytes(new byte[0]));
+    }
+    
+    @Test 
+    public void testNonExistentResourceWhichStartsFromPublicPath() throws Exception
+    {
+        mockMvc.perform(get(RequestPath.REQUEST_PING + PATH_DO_NOT_EXIST))
+                .andExpect(status().is(HttpServletResponse.SC_NOT_FOUND))
+                .andExpect(content().bytes(new byte[0]));
+    }
+    
+    @Test 
+    public void testNonExistentResourceWhichStartsFromSecurePath() throws Exception
+    {
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING + PATH_DO_NOT_EXIST))
+                .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
+                .andExpect(jsonPath("$.errorCode", is(ErrorCodes.TOKEN_AUTHENTICATION_NO_TOKEN)));
     }
     
 
