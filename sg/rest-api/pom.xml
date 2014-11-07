@@ -71,6 +71,10 @@
             <groupId>com.sg.rest</groupId>
             <artifactId>domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sg.rest</groupId>
+            <artifactId>domain-jpa</artifactId>
+        </dependency>
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
