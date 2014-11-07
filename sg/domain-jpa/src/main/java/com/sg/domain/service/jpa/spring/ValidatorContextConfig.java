@@ -6,12 +6,12 @@
 
 package com.sg.domain.service.jpa.spring;
 
-import com.sg.domain.service.jpa.components.ValidatorComponent;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.sg.rest.dto.validator.components.NoOpClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 //import org.springframework.validation.Validator;
 import javax.validation.Validator;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
@@ -19,15 +19,11 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * @author tarasev
  */
 @Configuration
+@ComponentScan(basePackageClasses = {NoOpClass.class})
 public class ValidatorContextConfig {
     
     @Bean
     public Validator validator() {
         return new LocalValidatorFactoryBean();
-    }
-    
-    @Bean ValidatorComponent validatorComponent()
-    {
-        return new ValidatorComponent();
     }
 }

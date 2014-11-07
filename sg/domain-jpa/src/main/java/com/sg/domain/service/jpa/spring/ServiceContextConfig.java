@@ -1,8 +1,7 @@
 package com.sg.domain.service.jpa.spring;
 
-import com.sg.domain.service.jpa.components.ServiceImpl;
-import com.sg.domain.service.SgService;
-import org.springframework.context.annotation.Bean;
+import com.sg.domain.service.jpa.components.NoOpClass;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /*
@@ -15,11 +14,6 @@ import org.springframework.context.annotation.Configuration;
  * @author tarasev
  */
 @Configuration
+@ComponentScan(basePackageClasses = {NoOpClass.class})
 public class ServiceContextConfig {
-
-    @Bean
-    public static SgService service() {
-        return new ServiceImpl();
-    }
-
 }

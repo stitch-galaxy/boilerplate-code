@@ -28,7 +28,6 @@ import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.domain.service.jpa.spring.PersistenceContextConfig;
 import com.sg.domain.service.jpa.spring.ServiceContextConfig;
-import com.sg.domain.service.jpa.spring.DtoDomainObjectsMapperContextConfig;
 import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
 import com.sg.domain.test.spring.configuration.TestJpaServicePropertiesContextConfiguration;
 import com.sg.dto.request.CompleteSignupDto;
@@ -63,7 +62,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContextConfig.class, PersistenceContextConfig.class, DtoDomainObjectsMapperContextConfig.class, ServiceContextConfig.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContextConfig.class, PersistenceContextConfig.class, ServiceContextConfig.class})
 public class JpaServiceTest {
 
     @Value("${admin.email}")

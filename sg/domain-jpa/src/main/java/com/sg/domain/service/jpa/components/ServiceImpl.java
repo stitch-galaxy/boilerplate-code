@@ -5,6 +5,7 @@
  */
 package com.sg.domain.service.jpa.components;
 
+import com.sg.rest.dto.validator.components.ValidatorComponent;
 import com.sg.constants.Roles;
 import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.request.CanvasCreateDto;

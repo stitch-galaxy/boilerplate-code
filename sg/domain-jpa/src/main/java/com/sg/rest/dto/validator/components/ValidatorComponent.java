@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.service.jpa.components;
+package com.sg.rest.dto.validator.components;
 
 import com.sg.domain.service.exception.SgDataValidationException;
 import java.util.HashSet;
@@ -12,11 +12,13 @@ import javax.validation.ConstraintViolation;
 //import org.springframework.validation.Validator;
 import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author tarasev
  */
+@Component
 public class ValidatorComponent {
 
     @Autowired
