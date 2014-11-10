@@ -34,19 +34,12 @@ import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
  * @author tarasev
  */
 public interface SgService {
-    
-    
-    @NotNull(message="Null returns are not permitted") 
-	String convertToUpperCase(@NotEmpty(message="Input must not be null or empty.") 
-	                          String input);
     
     public void create(ThreadCreateDto dto) throws SgDataValidationException, SgThreadAlreadyExistsException;
     public void delete(@Valid ThreadDeleteDto dto) throws SgDataValidationException, SgThreadNotFoundException;

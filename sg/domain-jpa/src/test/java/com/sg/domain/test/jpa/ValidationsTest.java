@@ -7,7 +7,6 @@ package com.sg.domain.test.jpa;
 
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgDataValidationException;
-import com.sg.domain.service.jpa.components.BusinessService;
 import com.sg.domain.service.jpa.spring.PersistenceContextConfig;
 import com.sg.domain.service.jpa.spring.ServiceContextConfig;
 import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
@@ -31,21 +30,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ValidationsTest {
 
     @Autowired
-    private BusinessService service;
-
-    @Autowired
     private SgService sgService;
-    
-    @Test
-    public void testValidationsAsInExample() throws SgDataValidationException {
-        try {
-            sgService.convertToUpperCase("returnnull");
-        } catch (ConstraintViolationException ex) {
-            return;
-        }
-        
-        fail("Was expecting a ConstraintViolationException.");
-    }
 
     @Test
     public void testValidations() throws SgDataValidationException {        
@@ -57,22 +42,4 @@ public class ValidationsTest {
         }
         fail("Was expecting a ConstraintViolationException.");
     }
-
-    @Test
-    public void testConvertToUpperCase() throws Exception {
-        assertEquals("HELLO WORLD!", service.convertToUpperCase("hello world!"));
-    }
-
-    @Test
-    public void testConvertToUpperCaseWithNullReturn() throws Exception {
-
-        try {
-            service.convertToUpperCase("returnnull");
-        } catch (ConstraintViolationException ex) {
-            return;
-        }
-
-        fail("Was expecting a ConstraintViolationException.");
-    }
-
 }

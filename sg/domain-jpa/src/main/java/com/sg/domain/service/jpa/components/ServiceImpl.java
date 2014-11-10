@@ -19,7 +19,6 @@ import com.sg.domain.repositories.CanvasesRepository;
 import com.sg.domain.repositories.ProductRepository;
 import com.sg.domain.repositories.ThreadsRepository;
 import java.util.List;
-import javax.annotation.Resource;
 import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
@@ -48,9 +47,7 @@ import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javax.validation.Valid;
 import ma.glasnost.orika.MapperFacade;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -100,17 +97,7 @@ public class ServiceImpl implements SgService {
     private String USER_PASSWORD;
 
     @Override
-    public String convertToUpperCase(String input) {
-
-        if ("returnnull".equalsIgnoreCase(input)) {
-            return null;
-        }
-
-        return input.toUpperCase();
-    }
-
-    @Override
-    public void delete(@Valid final ThreadDeleteDto dto) throws SgDataValidationException {
+    public void delete(final ThreadDeleteDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
