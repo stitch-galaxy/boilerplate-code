@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sg.domain.service.jpa.spring;
 
 import com.sg.rest.dto.validator.components.NoOpClass;
@@ -13,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.validation.Validator;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 /**
  *
@@ -21,9 +21,14 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @Configuration
 @ComponentScan(basePackageClasses = {NoOpClass.class})
 public class ValidatorContextConfig {
-    
+
     @Bean
     public Validator validator() {
         return new LocalValidatorFactoryBean();
+    }
+
+    @Bean
+    public MethodValidationPostProcessor validationBeanPostProcessor() {
+        return new MethodValidationPostProcessor();
     }
 }
