@@ -5,11 +5,14 @@
  */
 package com.sg.domain.test.jpa;
 
+import com.sg.domain.service.SgService;
+import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.jpa.components.BusinessService;
 import com.sg.domain.service.jpa.spring.PersistenceContextConfig;
 import com.sg.domain.service.jpa.spring.ServiceContextConfig;
 import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
 import com.sg.domain.test.spring.configuration.TestJpaServicePropertiesContextConfiguration;
+import com.sg.dto.request.ThreadDeleteDto;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -26,9 +29,34 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestJpaServicePropertiesContextConfiguration.class, PersistenceContextConfig.class, ValidatorContextConfig.class, ServiceContextConfig.class})
 public class ValidationsTest {
-    
+
     @Autowired
     private BusinessService service;
+
+    @Autowired
+    private SgService sgService;
+    
+    @Test
+    public void testValidationsAsInExample() throws SgDataValidationException {
+        try {
+            sgService.convertToUpperCase("returnnull");
+        } catch (ConstraintViolationException ex) {
+            return;
+        }
+        
+        fail("Was expecting a ConstraintViolationException.");
+    }
+
+    @Test
+    public void testValidations() throws SgDataValidationException {        
+        ThreadDeleteDto dto = new ThreadDeleteDto();
+        try {
+            sgService.delete(dto);
+        } catch (ConstraintViolationException ex) {
+            return;
+        }
+        fail("Was expecting a ConstraintViolationException.");
+    }
 
     @Test
     public void testConvertToUpperCase() throws Exception {
@@ -46,5 +74,5 @@ public class ValidationsTest {
 
         fail("Was expecting a ConstraintViolationException.");
     }
-    
+
 }

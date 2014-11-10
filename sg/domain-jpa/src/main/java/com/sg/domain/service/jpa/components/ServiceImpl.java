@@ -48,7 +48,9 @@ import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.validation.Valid;
 import ma.glasnost.orika.MapperFacade;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,6 +58,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.validation.annotation.Validated;
 
 /**
  *
@@ -63,6 +66,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
  */
 //@Transactional annotation prevent spring context to be initialized on GAE
 @Service
+@Validated
 public class ServiceImpl implements SgService {
 
     @Autowired
@@ -95,7 +99,18 @@ public class ServiceImpl implements SgService {
     @Value("${user.password}")
     private String USER_PASSWORD;
 
-    public void delete(final ThreadDeleteDto dto) throws SgDataValidationException {
+    @Override
+    public String convertToUpperCase(String input) {
+
+        if ("returnnull".equalsIgnoreCase(input)) {
+            return null;
+        }
+
+        return input.toUpperCase();
+    }
+
+    @Override
+    public void delete(@Valid final ThreadDeleteDto dto) throws SgDataValidationException {
         validatorComponent.validate(dto);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
