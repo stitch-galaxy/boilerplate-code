@@ -18,6 +18,7 @@ package com.hillert.spring.validation.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.hillert.spring.validation.service.BusinessService;
+import org.springframework.validation.annotation.Validated;
 
 
 /**
@@ -28,6 +29,7 @@ import com.hillert.spring.validation.service.BusinessService;
  * 
  */
 @Service
+@Validated
 public class DefaultBusinessService implements BusinessService {
 	
 	/** {@inheritDoc} */

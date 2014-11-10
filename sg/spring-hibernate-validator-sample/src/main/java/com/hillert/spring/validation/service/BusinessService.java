@@ -27,7 +27,6 @@ import org.springframework.validation.annotation.Validated;
  * @since 1.0
  *
  */
-@Validated
 public interface BusinessService {
 	
 	/**

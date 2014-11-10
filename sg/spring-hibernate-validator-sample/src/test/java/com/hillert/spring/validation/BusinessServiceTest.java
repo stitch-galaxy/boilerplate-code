@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hillert.spring.validation.service.BusinessService;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * 
@@ -32,7 +33,8 @@ import com.hillert.spring.validation.service.BusinessService;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-public class BusinessServiceTest extends BaseIntegrationTest {
+@ContextConfiguration(locations={"classpath:META-INF/spring/application-context.xml"})
+public class BusinessServiceTest {
 
 	@Autowired
 	private BusinessService service;
@@ -54,31 +56,4 @@ public class BusinessServiceTest extends BaseIntegrationTest {
 		
 		fail("Was expecting a ConstraintViolationException.");
 	}
-	
-	@Test
-	public void testConvertToUpperCaseInputEmpty() throws Exception {
-		
-		try {
-		    service.convertToUpperCase("");
-		} catch (MethodConstraintViolationException e) {
-			assertEquals("Input must not be null or empty.", e.getConstraintViolations().iterator().next().getMessage());
-			return;
-		}
-		
-		fail("Was expecting a ConstraintViolationException.");
-	}
-
-	@Test
-	public void testConvertToUpperCaseInputNull() throws Exception {
-		
-		try {
-		    service.convertToUpperCase(null);
-		} catch (MethodConstraintViolationException e) {
-			assertEquals("Input must not be null or empty.", e.getConstraintViolations().iterator().next().getMessage());
-			return;
-		}
-		
-		fail("Was expecting a ConstraintViolationException.");
-	}
-	
 }
