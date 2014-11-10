@@ -15,10 +15,11 @@
  */
 package com.hillert.spring.validation;
 
+import com.hillert.spring.config.ValidatorContextConfig;
+import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.hibernate.validator.method.MethodConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,32 +29,32 @@ import com.hillert.spring.validation.service.BusinessService;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
- * 
+ *
  * @author Gunnar Hillert
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:META-INF/spring/application-context.xml"})
+@ContextConfiguration(classes = {ValidatorContextConfig.class})
+//@ContextConfiguration(locations = {"classpath:META-INF/spring/application-context.xml"})
 public class BusinessServiceTest {
 
-	@Autowired
-	private BusinessService service;
-	
-	@Test
-	public void testConvertToUpperCase() throws Exception {
-		assertEquals("HELLO WORLD!", service.convertToUpperCase("hello world!"));
-	}
+    @Autowired
+    private BusinessService service;
 
-	@Test
-	public void testConvertToUpperCaseWithNullReturn() throws Exception {
-		
-		try {
-		    service.convertToUpperCase("returnnull");
-		} catch (MethodConstraintViolationException e) {
-			assertEquals("Null returns are not permitted", e.getConstraintViolations().iterator().next().getMessage());
-			return;
-		}
-		
-		fail("Was expecting a ConstraintViolationException.");
-	}
+    @Test
+    public void testConvertToUpperCase() throws Exception {
+        assertEquals("HELLO WORLD!", service.convertToUpperCase("hello world!"));
+    }
+
+    @Test
+    public void testConvertToUpperCaseWithNullReturn() throws Exception {
+
+        try {
+            service.convertToUpperCase("returnnull");
+        } catch (ConstraintViolationException ex) {
+            return;
+        }
+
+        fail("Was expecting a ConstraintViolationException.");
+    }
 }
