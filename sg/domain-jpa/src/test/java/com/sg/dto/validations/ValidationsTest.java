@@ -5,14 +5,14 @@
  */
 package com.sg.dto.validations;
 
-import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
 import com.sg.dto.constraints.CanvasCode;
 import com.sg.dto.constraints.CanvasSize;
-import com.sg.dto.constraints.CanvasSizeValidator;
 import com.sg.dto.constraints.SgEmail;
 import com.sg.dto.constraints.SgPassword;
-import com.sg.dto.request.ThreadDeleteDto;
+import com.sg.dto.constraints.SgUserFirstname;
+import com.sg.dto.constraints.SgUserLastname;
+import com.sg.dto.constraints.ThreadCode;
 import java.math.BigDecimal;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.fail;
@@ -80,9 +80,9 @@ public class ValidationsTest {
         testInvalidObject(o);
         o.object = null;
         testInvalidObject(o);
-        o.object = CanvasSizeValidator.MAX_INCHES_PER_INCH.add(BigDecimal.ONE);
+        o.object = new BigDecimal(CanvasSize.MAX_STITCHES_PER_INCH).add(BigDecimal.ONE);
         testInvalidObject(o);
-        o.object = CanvasSizeValidator.MIN_STITCHES_PER_INCH.subtract(BigDecimal.ONE);
+        o.object = new BigDecimal(CanvasSize.MIN_STITCHES_PER_INCH).subtract(BigDecimal.ONE);
         testInvalidObject(o);
         o.object = VALID_CANVAS_STITCHES_PER_INCH;
         testValidObject(o);
@@ -144,5 +144,64 @@ public class ValidationsTest {
         o.object = VALID_PASSWORD_1;
         testValidObject(o);
     }
+    
+    private static class SgUserFirstNameWrapper {
+
+        @SgUserFirstname
+        public String object;
+    }
+
+    private static final String VALID_USER_FIRST_NAME_1 = "У";
+
+    @Test
+    public void testConstraintAnnotationSgUserFirstName() {
+        SgUserFirstNameWrapper o = new SgUserFirstNameWrapper();
+        o.object = null;
+        testInvalidObject(o);
+        o.object = EMPTY_STRING;
+        testInvalidObject(o);
+        o.object = VALID_USER_FIRST_NAME_1;
+        testValidObject(o);
+    }
+    
+    private static class SgUserLastNameWrapper {
+
+        @SgUserLastname
+        public String object;
+    }
+
+    private static final String VALID_USER_LAST_NAME_1 = "У";
+
+    @Test
+    public void testConstraintAnnotationSgUserLastName() {
+        SgUserLastNameWrapper o = new SgUserLastNameWrapper();
+        o.object = null;
+        testInvalidObject(o);
+        o.object = EMPTY_STRING;
+        testInvalidObject(o);
+        o.object = VALID_USER_LAST_NAME_1;
+        testValidObject(o);
+    }
+    
+    private static class ThreadCodeWrapper {
+
+        @ThreadCode
+        public String object;
+    }
+
+    private static final String VALID_THREAD_CODE = "DMC";
+
+    @Test
+    public void testConstraintAnnotationThreadCode() {
+        ThreadCodeWrapper o = new ThreadCodeWrapper();
+        o.object = null;
+        testInvalidObject(o);
+        o.object = EMPTY_STRING;
+        testInvalidObject(o);
+        o.object = VALID_THREAD_CODE;
+        testValidObject(o);
+    }
+    
+    
 
 }

@@ -63,11 +63,13 @@ public class DtoValidationsTest {
     private static final String VALID_EMAIL_1 = "tarasov.e.a@gmail.com";
     private static final String VALID_EMAIL_2 = "тарасов@почта.рф";
 
+    //DONE
     private static final String INVALID_USER_FIRST_NAME_NULL = null;
     private static final String INVALID_USER_FIRST_NAME_EMPTY = "";
     private static final String VALID_USER_FIRST_NAME_1 = "У";
     private static final String VALID_USER_FIRST_NAME_2 = "Evgeny";
 
+    //DONE
     private static final String INVALID_USER_LAST_NAME_NULL = null;
     private static final String INVALID_USER_LAST_NAME_EMPTY = "";
     private static final String VALID_USER_LAST_NAME_1 = "Н";
@@ -80,6 +82,7 @@ public class DtoValidationsTest {
     private static final String VALID_PASSWORD_1 = "taras";
     private static final String VALID_PASSWORD_2 = "тарас";
 
+    //DONE
     private static final String INVALID_THREAD_CODE_NULL = null;
     private static final String INVALID_THREAD_CODE_EMPTY = "";
     private static final String VALID_THREAD_CODE = "DMC";
