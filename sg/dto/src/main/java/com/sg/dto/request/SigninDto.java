@@ -5,10 +5,9 @@
  */
 package com.sg.dto.request;
 
-import com.sg.constants.DtoFieldCodes;
+import com.sg.dto.constraints.SgEmail;
+import com.sg.dto.constraints.SgPassword;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -16,12 +15,10 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class SigninDto {
 
-
-    @NotBlank(message = DtoFieldCodes.FIELD_SIGNIN_DTO_EMAIL)
-    @Email(message = DtoFieldCodes.FIELD_SIGNIN_DTO_EMAIL)
+    @SgEmail
     private String email;
 
-    @NotBlank(message = DtoFieldCodes.FIELD_SIGNIN_DTO_PASSWORD)
+    @SgPassword
     private String password;
 
     /**

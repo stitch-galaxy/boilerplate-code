@@ -6,19 +6,15 @@
 
 package com.sg.dto.request;
 
-import com.sg.constants.DtoFieldCodes;
-import com.sg.constants.PasswordRegexp;
-import javax.validation.constraints.Pattern;
+import com.sg.dto.constraints.SgPassword;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
  * @author tarasev
  */
 public class ResetPasswordDto {
-    @NotBlank(message = DtoFieldCodes.FIELD_RESET_PASSWORD_DTO_PASSWORD)
-    @Pattern(regexp = PasswordRegexp.PASSWORD_REGULAR_EXPRESSION, message = DtoFieldCodes.FIELD_RESET_PASSWORD_DTO_PASSWORD)
+    @SgPassword
     private String password;
     
     

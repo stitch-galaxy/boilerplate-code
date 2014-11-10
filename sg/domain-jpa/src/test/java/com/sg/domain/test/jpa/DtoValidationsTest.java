@@ -52,6 +52,7 @@ public class DtoValidationsTest {
     @Autowired
     private ValidatorComponent validatorComponent;
 
+    //DONE
     private static final String INVALID_EMAIL_NULL = null;
     private static final String INVALID_EMAIL_1 = "abc@gmail.com ";
     private static final String INVALID_EMAIL_2 = " abc@gmail.com";
@@ -72,6 +73,7 @@ public class DtoValidationsTest {
     private static final String VALID_USER_LAST_NAME_1 = "Н";
     private static final String VALID_USER_LAST_NAME_2 = "Tarasov";
 
+    //DONE
     private static final String INVALID_PASSWORD_NULL = null;
     private static final String INVALID_PASSWORD_1 = "У";
     private static final String INVALID_PASSWORD_2 = "tara";
@@ -82,10 +84,12 @@ public class DtoValidationsTest {
     private static final String INVALID_THREAD_CODE_EMPTY = "";
     private static final String VALID_THREAD_CODE = "DMC";
 
+    //DONE
     private static final String INVALID_CANVAS_CODE_NULL = null;
     private static final String INVALID_CANVAS_CODE_EMPTY = "";
     private static final String VALID_CANVAS_CODE = "Aida 14";
 
+    //DONE
     private static final BigDecimal INVALID_CANVAS_STITCHES_PER_INCH_NULL = null;
     private static final BigDecimal VALID_CANVAS_STITCHES_PER_INCH = new BigDecimal(14);
 

@@ -5,11 +5,10 @@
  */
 package com.sg.dto.request;
 
-import com.sg.constants.DtoFieldCodes;
+import com.sg.dto.constraints.SgEmail;
+import com.sg.dto.constraints.SgUserFirstname;
+import com.sg.dto.constraints.SgUserLastname;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.text.WordUtils;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -17,14 +16,13 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class SignupDto {
 
-    @NotBlank(message = DtoFieldCodes.FIELD_SIGNUP_DTO_USER_EMAIL)
-    @Email(message = DtoFieldCodes.FIELD_SIGNUP_DTO_USER_EMAIL)
+    @SgEmail
     private String email;
 
-    @NotBlank(message = DtoFieldCodes.FIELD_SIGNUP_DTO_USER_FIRST_NAME)
+    @SgUserFirstname
     private String userFirstName;
 
-    @NotBlank(message = DtoFieldCodes.FIELD_SIGNUP_DTO_USER_LAST_NAME)
+    @SgUserLastname
     private String userLastName;
 
     /**

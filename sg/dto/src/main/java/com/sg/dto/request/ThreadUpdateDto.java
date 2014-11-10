@@ -6,9 +6,8 @@
 
 package com.sg.dto.request;
 
-import com.sg.constants.DtoFieldCodes;
+import com.sg.dto.constraints.ThreadCode;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -16,10 +15,10 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class ThreadUpdateDto {
     
-    @NotBlank(message = DtoFieldCodes.FIELD_THREAD_UPDATE_DTO_CODE)
+    @ThreadCode
     private String code;
     
-    @NotBlank(message = DtoFieldCodes.FIELD_THREAD_UPDATE_DTO_REF_CODE)
+    @ThreadCode
     private String refCode;
 
 

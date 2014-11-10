@@ -42,5 +42,13 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
+        <!--El implementation for such constraints as @NotEmpty or @DecimalMin-->
+        <!--should be on a class path in the container at runtime-->
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>el-impl</artifactId>
+            <version>${el-impl-version}</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 </project>

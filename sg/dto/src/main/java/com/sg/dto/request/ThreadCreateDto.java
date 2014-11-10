@@ -5,9 +5,8 @@
  */
 package com.sg.dto.request;
 
-import com.sg.constants.DtoFieldCodes;
+import com.sg.dto.constraints.ThreadCode;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -15,7 +14,7 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class ThreadCreateDto {
 
-    @NotBlank(message = DtoFieldCodes.FIELD_THREAD_CREATE_DTO_CODE)
+    @ThreadCode
     private String code;
 
     /**

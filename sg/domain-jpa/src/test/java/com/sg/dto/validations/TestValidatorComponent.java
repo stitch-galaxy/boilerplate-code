@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.test.jpa;
+package com.sg.dto.validations;
 
+import com.sg.dto.constraints.CanvasCode;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
@@ -15,12 +16,16 @@ import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import javax.validation.Valid;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 /**
  *
  * @author tarasev
  */
-public class DtoValidator {
+@Component
+@Validated
+public class TestValidatorComponent {
 
     public void validate(@Valid SignupDto dto) {
     }
@@ -47,5 +52,9 @@ public class DtoValidator {
     }
 
     public void validate(@Valid CanvasUpdateDto dto) {
+    }
+    
+    public void validateObject(@Valid Object object)
+    {
     }
 }

@@ -23,6 +23,9 @@
         <rest-assured-version>2.3.2</rest-assured-version>
         <jsontoken-version>1.1</jsontoken-version>
         
+        <!--required by hibernate validations and shoul be on a classpath in a container-->
+        <el-impl-version>2.2</el-impl-version>
+        
         <!--???-->
         <hibernate-jpa-2.1-api-version>1.0.0.Final</hibernate-jpa-2.1-api-version>
         <!--Not included into SPRING.IO bom-->

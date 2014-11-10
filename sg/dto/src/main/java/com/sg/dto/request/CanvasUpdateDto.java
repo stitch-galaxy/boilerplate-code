@@ -5,11 +5,10 @@
  */
 package com.sg.dto.request;
 
-import com.sg.constants.DtoFieldCodes;
+import com.sg.dto.constraints.CanvasCode;
+import com.sg.dto.constraints.CanvasSize;
 import java.math.BigDecimal;
-import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -17,13 +16,13 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class CanvasUpdateDto {
 
-    @NotBlank(message = DtoFieldCodes.FIELD_UPDATE_CANVAS_DTO_REF_CODE)
+    @CanvasCode
     private String refCode;
 
-    @NotBlank(message = DtoFieldCodes.FIELD_UPDATE_CANVAS_DTO_CODE)
+    @CanvasCode
     private String code;
 
-    @NotNull(message = DtoFieldCodes.FIELD_UPDATE_CANVAS_DTO_STITCHES_PER_INCH)
+    @CanvasSize
     private BigDecimal stitchesPerInch;
 
     @Override

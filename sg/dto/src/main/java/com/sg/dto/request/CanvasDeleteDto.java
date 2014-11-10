@@ -5,9 +5,8 @@
  */
 package com.sg.dto.request;
 
-import com.sg.constants.DtoFieldCodes;
+import com.sg.dto.constraints.CanvasCode;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -15,7 +14,7 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class CanvasDeleteDto {
 
-    @NotBlank(message = DtoFieldCodes.FIELD_DELETE_CANVAS_DTO_CODE)
+    @CanvasCode
     private String code;
 
     /**
