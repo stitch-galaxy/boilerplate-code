@@ -20,7 +20,6 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
  * @author tarasev
  */
 @Configuration
-@ComponentScan(basePackageClasses = {NoOpClass.class})
 public class ValidatorContextConfig {
     
     @Bean

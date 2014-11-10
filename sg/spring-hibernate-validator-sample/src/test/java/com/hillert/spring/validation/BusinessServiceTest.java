@@ -15,6 +15,7 @@
  */
 package com.hillert.spring.validation;
 
+import com.hillert.spring.config.ServiceContextConfig;
 import com.hillert.spring.config.ValidatorContextConfig;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertEquals;
@@ -34,7 +35,7 @@ import org.springframework.test.context.ContextConfiguration;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ValidatorContextConfig.class})
+@ContextConfiguration(classes = {ValidatorContextConfig.class, ServiceContextConfig.class})
 //@ContextConfiguration(locations = {"classpath:META-INF/spring/application-context.xml"})
 public class BusinessServiceTest {
 
