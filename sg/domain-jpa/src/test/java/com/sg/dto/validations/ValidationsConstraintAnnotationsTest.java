@@ -28,7 +28,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ValidatorContextConfig.class, TestContextConfig.class})
-public class ValidationsTest {
+public class ValidationsConstraintAnnotationsTest {
 
     @Autowired
     private TestValidatorComponent validator;
@@ -201,7 +201,4 @@ public class ValidationsTest {
         o.object = VALID_THREAD_CODE;
         testValidObject(o);
     }
-    
-    
-
 }
