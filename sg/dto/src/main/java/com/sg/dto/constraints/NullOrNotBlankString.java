@@ -18,16 +18,14 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import org.hibernate.validator.constraints.NotBlank;
 
-@NotBlank
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
-@Constraint(validatedBy = {})
+@Constraint(validatedBy = {NullOrNotBlankStringValidator.class})
 @Documented
-public @interface CanvasCode {
+public @interface NullOrNotBlankString {
 
-    String message() default "canvas";
+    String message() default "blank string";
 
     Class<?>[] groups() default {};
 

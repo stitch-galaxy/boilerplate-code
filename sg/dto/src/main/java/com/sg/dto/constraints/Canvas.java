@@ -18,16 +18,15 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import org.hibernate.validator.constraints.NotBlank;
 
-@NotBlank
+@NullOrNotBlankString
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @Documented
-public @interface ThreadCode {
+public @interface Canvas {
 
-    String message() default "thread";
+    String message() default "canvas";
 
     Class<?>[] groups() default {};
 

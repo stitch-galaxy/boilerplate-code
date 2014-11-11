@@ -5,8 +5,8 @@
  */
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.CanvasCode;
-import com.sg.dto.constraints.CanvasSize;
+import com.sg.dto.constraints.Canvas;
+import com.sg.dto.constraints.CanvasSizeRequired;
 import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
@@ -16,10 +16,10 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class CanvasCreateDto {
 
-    @CanvasCode
+    @Canvas
     private String code;
 
-    @CanvasSize
+    @CanvasSizeRequired
     private BigDecimal stitchesPerInch;
 
     /**

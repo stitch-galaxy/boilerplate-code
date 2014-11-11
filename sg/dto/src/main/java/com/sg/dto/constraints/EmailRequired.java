@@ -18,16 +18,17 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-@NotBlank
+@NotNull
+@Email
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @Documented
-public @interface SgUserFirstname {
+public @interface EmailRequired {
 
-    String message() default "first name";
+    String message() default "email";
 
     Class<?>[] groups() default {};
 

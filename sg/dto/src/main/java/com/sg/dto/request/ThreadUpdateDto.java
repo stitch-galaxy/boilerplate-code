@@ -6,7 +6,7 @@
 
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.ThreadCode;
+import com.sg.dto.constraints.Thread;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -15,10 +15,10 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class ThreadUpdateDto {
     
-    @ThreadCode
+    @Thread
     private String code;
     
-    @ThreadCode
+    @Thread
     private String refCode;
 
 

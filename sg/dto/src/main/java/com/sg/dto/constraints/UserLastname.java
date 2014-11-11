@@ -9,8 +9,6 @@ package com.sg.dto.constraints;
  *
  * @author tarasev
  */
-import static com.sg.dto.constraints.CanvasSize.MAX_STITCHES_PER_INCH;
-import static com.sg.dto.constraints.CanvasSize.MIN_STITCHES_PER_INCH;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
@@ -20,25 +18,18 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 
-@NotNull
+@NullOrNotBlankString
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
-@DecimalMin(MIN_STITCHES_PER_INCH)
-@DecimalMax(MAX_STITCHES_PER_INCH)
 @Constraint(validatedBy = {})
 @Documented
-public @interface CanvasSize {
-    
-    public static final String MIN_STITCHES_PER_INCH = "1";
-    public static final String MAX_STITCHES_PER_INCH = "100";
-    
-    String message() default "canvas size";
+public @interface UserLastname {
+
+    String message() default "last name";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+
 }

@@ -5,7 +5,7 @@
  */
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.SgPassword;
+import com.sg.dto.constraints.PasswordRequired;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class CompleteSignupDto {
 
-    @SgPassword
+    @PasswordRequired
     private String password;
 
     @Override

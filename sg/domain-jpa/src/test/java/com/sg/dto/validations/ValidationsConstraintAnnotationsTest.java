@@ -6,13 +6,13 @@
 package com.sg.dto.validations;
 
 import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
-import com.sg.dto.constraints.CanvasCode;
-import com.sg.dto.constraints.CanvasSize;
-import com.sg.dto.constraints.SgEmail;
-import com.sg.dto.constraints.SgPassword;
-import com.sg.dto.constraints.SgUserFirstname;
-import com.sg.dto.constraints.SgUserLastname;
-import com.sg.dto.constraints.ThreadCode;
+import com.sg.dto.constraints.Canvas;
+import com.sg.dto.constraints.CanvasSizeRequired;
+import com.sg.dto.constraints.EmailRequired;
+import com.sg.dto.constraints.PasswordRequired;
+import com.sg.dto.constraints.UserFirstname;
+import com.sg.dto.constraints.UserLastname;
+import com.sg.dto.constraints.Thread;
 import java.math.BigDecimal;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.fail;
@@ -47,7 +47,7 @@ public class ValidationsConstraintAnnotationsTest {
 
     private static class CanvasCodeWrapper {
 
-        @CanvasCode
+        @Canvas
         public String object;
     }
 
@@ -67,7 +67,7 @@ public class ValidationsConstraintAnnotationsTest {
 
     private static class CanvasSizeWrapper {
 
-        @CanvasSize
+        @CanvasSizeRequired
         public BigDecimal object;
     }
 
@@ -80,9 +80,9 @@ public class ValidationsConstraintAnnotationsTest {
         testInvalidObject(o);
         o.object = null;
         testInvalidObject(o);
-        o.object = new BigDecimal(CanvasSize.MAX_STITCHES_PER_INCH).add(BigDecimal.ONE);
+        o.object = new BigDecimal(CanvasSizeRequired.MAX_STITCHES_PER_INCH).add(BigDecimal.ONE);
         testInvalidObject(o);
-        o.object = new BigDecimal(CanvasSize.MIN_STITCHES_PER_INCH).subtract(BigDecimal.ONE);
+        o.object = new BigDecimal(CanvasSizeRequired.MIN_STITCHES_PER_INCH).subtract(BigDecimal.ONE);
         testInvalidObject(o);
         o.object = VALID_CANVAS_STITCHES_PER_INCH;
         testValidObject(o);
@@ -90,7 +90,7 @@ public class ValidationsConstraintAnnotationsTest {
 
     private static class SgEmailWrapper {
 
-        @SgEmail
+        @EmailRequired
         public String object;
     }
 
@@ -128,7 +128,7 @@ public class ValidationsConstraintAnnotationsTest {
 
     private static class SgPasswordWrapper {
 
-        @SgPassword
+        @PasswordRequired
         public String object;
     }
 
@@ -147,7 +147,7 @@ public class ValidationsConstraintAnnotationsTest {
     
     private static class SgUserFirstNameWrapper {
 
-        @SgUserFirstname
+        @UserFirstname
         public String object;
     }
 
@@ -166,7 +166,7 @@ public class ValidationsConstraintAnnotationsTest {
     
     private static class SgUserLastNameWrapper {
 
-        @SgUserLastname
+        @UserLastname
         public String object;
     }
 
@@ -185,7 +185,7 @@ public class ValidationsConstraintAnnotationsTest {
     
     private static class ThreadCodeWrapper {
 
-        @ThreadCode
+        @Thread
         public String object;
     }
 

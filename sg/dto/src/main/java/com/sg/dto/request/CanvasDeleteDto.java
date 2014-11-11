@@ -5,7 +5,7 @@
  */
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.CanvasCode;
+import com.sg.dto.constraints.Canvas;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class CanvasDeleteDto {
 
-    @CanvasCode
+    @Canvas
     private String code;
 
     /**

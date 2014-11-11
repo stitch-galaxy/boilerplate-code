@@ -5,7 +5,7 @@
  */
 package com.sg.dto.validations;
 
-import com.sg.dto.constraints.CanvasCode;
+import com.sg.dto.constraints.Canvas;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
