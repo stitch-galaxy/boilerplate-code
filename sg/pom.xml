@@ -83,11 +83,11 @@
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
-            <dependency>
+<!--            <dependency>
                 <groupId>com.sg.rest</groupId>
                 <artifactId>rest-integ-test</artifactId>
                 <version>${project.version}</version>
-            </dependency>
+            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
@@ -111,7 +111,7 @@
         <module>domain-jpa</module>
         <module>ear</module>
         <module>rest-api</module>
-        <module>rest-integ-test</module>
+<!--        <module>rest-integ-test</module>-->
         <module>authtoken</module>
     </modules>
 </project>

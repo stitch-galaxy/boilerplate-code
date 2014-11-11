@@ -5,7 +5,7 @@
  */
 package com.sg.sg_rest_api.controllers;
 
-import com.sg.constants.RequestPath;
+import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.service.SgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

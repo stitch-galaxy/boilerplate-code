@@ -11,7 +11,7 @@ import com.jayway.restassured.response.Response;
 import com.sg.rest.operationstatus.CompleteSignupStatus;
 import com.sg.rest.http.CustomHeaders;
 import com.sg.constants.DtoFieldCodes;
-import com.sg.constants.RequestPath;
+import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.constants.Roles;
 import com.sg.rest.operationstatus.SigninStatus;
 import com.sg.rest.operationstatus.SignupStatus;

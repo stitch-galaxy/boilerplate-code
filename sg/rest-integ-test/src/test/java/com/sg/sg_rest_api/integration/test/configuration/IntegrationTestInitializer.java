@@ -13,7 +13,7 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import com.sg.rest.http.CustomHeaders;
 import com.sg.rest.operationstatus.InstallStatus;
-import com.sg.constants.RequestPath;
+import com.sg.rest.apipath.RequestPath;
 import com.sg.rest.operationstatus.SigninStatus;
 import com.sg.dto.request.SigninDto;
 import com.sg.sg_rest_api.integration.test.SigninFlowTest;

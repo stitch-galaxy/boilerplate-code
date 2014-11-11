@@ -8,7 +8,7 @@ package com.sg.sg_rest_api.controllers;
 import com.sg.rest.operationstatus.CompleteSignupStatus;
 import com.sg.rest.http.CustomHeaders;
 import com.sg.rest.operationstatus.InstallStatus;
-import com.sg.constants.RequestPath;
+import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.service.SgService;
 import com.sg.dto.request.SigninDto;
 import org.springframework.beans.factory.annotation.Autowired;

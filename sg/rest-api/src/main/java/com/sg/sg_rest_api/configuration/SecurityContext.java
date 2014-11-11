@@ -9,8 +9,8 @@ package com.sg.sg_rest_api.configuration;
  *
  * @author tarasev
  */
-import com.sg.constants.RequestPath;
-import static com.sg.constants.RequestPath.REST_PATH;
+import com.sg.rest.apipath.RequestPath;
+import static com.sg.rest.apipath.RequestPath.REST_PATH;
 import com.sg.rest.security.components.WebTokenProcessingFilter;
 import com.sg.domain.constants.Roles;
 import com.sg.rest.security.components.NoOpClass;

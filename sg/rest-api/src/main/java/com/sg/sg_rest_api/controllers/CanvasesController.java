@@ -5,7 +5,7 @@
  */
 package com.sg.sg_rest_api.controllers;
 
-import com.sg.constants.RequestPath;
+import com.sg.rest.apipath.RequestPath;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;

@@ -12,7 +12,7 @@ import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
 import com.sg.domain.service.SgService;
 import com.sg.sg_rest_api.configuration.ServletContext;
-import com.sg.constants.RequestPath;
+import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.constants.Roles;
 import com.sg.rest.operationstatus.SigninStatus;
 import com.sg.rest.operationstatus.SignupStatus;
