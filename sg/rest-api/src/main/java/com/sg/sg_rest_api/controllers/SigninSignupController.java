@@ -5,9 +5,9 @@
  */
 package com.sg.sg_rest_api.controllers;
 
-import com.sg.constants.CompleteSignupStatus;
-import com.sg.constants.CustomHttpHeaders;
-import com.sg.constants.InstallStatus;
+import com.sg.rest.operationstatus.CompleteSignupStatus;
+import com.sg.rest.http.CustomHeaders;
+import com.sg.rest.operationstatus.InstallStatus;
 import com.sg.constants.RequestPath;
 import com.sg.domain.service.SgService;
 import com.sg.dto.request.SigninDto;
@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.sg.constants.SigninStatus;
-import com.sg.constants.SignupStatus;
+import com.sg.rest.operationstatus.SigninStatus;
+import com.sg.rest.operationstatus.SignupStatus;
 import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.dto.response.OperationStatusDto;
 import com.sg.dto.request.CompleteSignupDto;
@@ -130,7 +130,7 @@ public class SigninSignupController {
         try {
             service.signIn(dto);
             String token = securityService.generateToken(service.getAccountId(dto.getEmail()), Instant.now(), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
-            response.setHeader(CustomHttpHeaders.X_AUTH_TOKEN, token);
+            response.setHeader(CustomHeaders.X_AUTH_TOKEN, token);
         } catch (SgAccountNotFoundException e) {
             result.setStatus(SigninStatus.STATUS_USER_NOT_FOUND);
         } catch (SgInvalidPasswordException e) {

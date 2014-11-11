@@ -4,14 +4,13 @@
  * and open the template in the editor.
  */
 
-package com.sg.constants;
+package com.sg.domain.constants;
 
 /**
  *
  * @author tarasev
  */
 public class Roles {
-    public static final String ROLE_AUTHORITY_PREFIX = "ROLE_";
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_USER = "USER";
 }

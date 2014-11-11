@@ -9,7 +9,7 @@ package com.sg.rest.security.components;
  *
  * @author tarasev
  */
-import com.sg.constants.CustomHttpHeaders;
+import com.sg.rest.http.CustomHeaders;
 import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.dto.response.AccountRolesDto;
@@ -75,6 +75,6 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
     }
 
     private String extractAuthTokenFromRequest(HttpServletRequest httpRequest) {
-        return httpRequest.getHeader(CustomHttpHeaders.X_AUTH_TOKEN);
+        return httpRequest.getHeader(CustomHeaders.X_AUTH_TOKEN);
     }
 }

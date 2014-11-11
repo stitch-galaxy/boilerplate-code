@@ -5,17 +5,17 @@
  */
 package com.sg.sg_rest_api.test;
 
-import com.sg.constants.CompleteSignupStatus;
-import com.sg.constants.CustomHttpHeaders;
-import com.sg.constants.InstallStatus;
+import com.sg.rest.operationstatus.CompleteSignupStatus;
+import com.sg.rest.http.CustomHeaders;
+import com.sg.rest.operationstatus.InstallStatus;
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
 import com.sg.domain.service.SgService;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
-import com.sg.constants.Roles;
-import com.sg.constants.SigninStatus;
-import com.sg.constants.SignupStatus;
+import com.sg.domain.constants.Roles;
+import com.sg.rest.operationstatus.SigninStatus;
+import com.sg.rest.operationstatus.SignupStatus;
 import com.sg.dto.request.SignupDto;
 import com.sg.domain.service.SgMailService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
@@ -441,7 +441,7 @@ public class SigninSignupControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status", is(SigninStatus.STATUS_SUCCESS)))
-                .andExpect(header().string(CustomHttpHeaders.X_AUTH_TOKEN, is(SECURE_TOKEN_STRING)));
+                .andExpect(header().string(CustomHeaders.X_AUTH_TOKEN, is(SECURE_TOKEN_STRING)));
 
         verify(serviceMock, times(1)).signIn(signinDto);
         verify(serviceMock, times(1)).getAccountId(signupDto.getEmail());

@@ -6,7 +6,7 @@
 package com.sg.sg_rest_api.controllers;
 
 import com.sg.constants.RequestPath;
-import com.sg.constants.ThreadOperationStatus;
+import com.sg.rest.operationstatus.ThreadOperationStatus;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;

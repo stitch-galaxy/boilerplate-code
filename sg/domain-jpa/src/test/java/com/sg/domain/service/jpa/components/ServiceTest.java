@@ -6,8 +6,8 @@ package com.sg.domain.service.jpa.components;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.sg.constants.Roles;
-import com.sg.constants.Sex;
+import com.sg.domain.constants.Roles;
+import com.sg.domain.enumerations.Sex;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;

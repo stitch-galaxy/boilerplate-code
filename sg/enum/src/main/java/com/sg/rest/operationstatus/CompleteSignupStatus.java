@@ -4,13 +4,14 @@
  * and open the template in the editor.
  */
 
-package com.sg.constants;
+package com.sg.rest.operationstatus;
 
 /**
  *
  * @author tarasev
  */
-public class InstallStatus {
+public class CompleteSignupStatus {
     public static final int STATUS_SUCCESS = 0;
-    public static final int STATUS_ALREADY_COMPLETED = 1;
+    public static final int STATUS_ACCOUNT_NOT_FOUND = 1;
+    public static final int STATUS_ALREADY_COMPLETED = 2;
 }

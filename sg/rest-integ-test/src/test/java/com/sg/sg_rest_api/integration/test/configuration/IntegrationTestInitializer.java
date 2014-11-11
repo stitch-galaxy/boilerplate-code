@@ -11,10 +11,10 @@ import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.config.SSLConfig.sslConfig;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
-import com.sg.constants.CustomHttpHeaders;
-import com.sg.constants.InstallStatus;
+import com.sg.rest.http.CustomHeaders;
+import com.sg.rest.operationstatus.InstallStatus;
 import com.sg.constants.RequestPath;
-import com.sg.constants.SigninStatus;
+import com.sg.rest.operationstatus.SigninStatus;
 import com.sg.dto.request.SigninDto;
 import com.sg.sg_rest_api.integration.test.SigninFlowTest;
 import java.nio.charset.StandardCharsets;
@@ -98,7 +98,7 @@ public class IntegrationTestInitializer {
                             .statusCode(HttpStatus.SC_OK)
                             .contentType(ContentType.JSON)
                             .body("status", equalTo(SigninStatus.STATUS_SUCCESS));
-                    this.adminAuthToken = r.getHeader(CustomHttpHeaders.X_AUTH_TOKEN);
+                    this.adminAuthToken = r.getHeader(CustomHeaders.X_AUTH_TOKEN);
 
                     adminAuthTokenRequested = true;
                 }
@@ -127,7 +127,7 @@ public class IntegrationTestInitializer {
                             .statusCode(HttpStatus.SC_OK)
                             .contentType(ContentType.JSON)
                             .body("status", equalTo(SigninStatus.STATUS_SUCCESS));
-                    this.adminAuthToken = r.getHeader(CustomHttpHeaders.X_AUTH_TOKEN);
+                    this.adminAuthToken = r.getHeader(CustomHeaders.X_AUTH_TOKEN);
 
                     userAuthTokenRequested = true;
                 }

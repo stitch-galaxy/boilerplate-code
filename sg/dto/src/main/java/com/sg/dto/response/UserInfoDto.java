@@ -6,7 +6,7 @@
 
 package com.sg.dto.response;
 
-import com.sg.constants.Sex;
+import com.sg.domain.enumerations.Sex;
 import com.sg.dto.serialization.JodaLocalDateJsonDeserializer;
 import com.sg.dto.serialization.JodaLocalDateJsonSerializer;
 import org.apache.commons.lang3.builder.EqualsBuilder;

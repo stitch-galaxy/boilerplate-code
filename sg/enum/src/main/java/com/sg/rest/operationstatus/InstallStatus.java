@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 
-package com.sg.constants;
+package com.sg.rest.operationstatus;
 
 /**
  *
  * @author tarasev
  */
-public class CustomHttpHeaders {
-    public static final String X_AUTH_TOKEN = "X-Auth-Token";
+public class InstallStatus {
+    public static final int STATUS_SUCCESS = 0;
+    public static final int STATUS_ALREADY_COMPLETED = 1;
 }

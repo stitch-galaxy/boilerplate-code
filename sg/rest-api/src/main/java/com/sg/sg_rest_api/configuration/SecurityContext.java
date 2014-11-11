@@ -12,7 +12,7 @@ package com.sg.sg_rest_api.configuration;
 import com.sg.constants.RequestPath;
 import static com.sg.constants.RequestPath.REST_PATH;
 import com.sg.rest.security.components.WebTokenProcessingFilter;
-import com.sg.constants.Roles;
+import com.sg.domain.constants.Roles;
 import com.sg.rest.security.components.NoOpClass;
 import com.sg.rest.security.components.SgAccessDeniedHandler;
 import com.sg.rest.security.components.WebTokenAuthenticationEntryPoint;

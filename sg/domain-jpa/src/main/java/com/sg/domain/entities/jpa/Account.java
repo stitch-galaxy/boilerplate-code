@@ -5,7 +5,7 @@
  */
 package com.sg.domain.entities.jpa;
 
-import com.sg.constants.Sex;
+import com.sg.domain.enumerations.Sex;
 import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;

@@ -8,9 +8,9 @@ package com.sg.sg_rest_api.integration.test;
 import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
-import com.sg.constants.CustomHttpHeaders;
+import com.sg.rest.http.CustomHeaders;
 import com.sg.constants.RequestPath;
-import com.sg.constants.SigninStatus;
+import com.sg.rest.operationstatus.SigninStatus;
 import com.sg.dto.request.SigninDto;
 import com.sg.sg_rest_api.integration.test.configuration.IntegrationTestContext;
 import com.sg.sg_rest_api.integration.test.configuration.IntegrationTestInitializer;
@@ -67,7 +67,7 @@ public class SigninFlowTest {
                 .statusCode(HttpStatus.SC_OK)
                 .contentType(ContentType.JSON)
                 .body("status", equalTo(SigninStatus.STATUS_SUCCESS))
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, any(String.class));
+                .header(CustomHeaders.X_AUTH_TOKEN, any(String.class));
     }
 
     @Test

@@ -8,13 +8,13 @@ package com.sg.sg_rest_api.integration.test;
 import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
-import com.sg.constants.CompleteSignupStatus;
-import com.sg.constants.CustomHttpHeaders;
+import com.sg.rest.operationstatus.CompleteSignupStatus;
+import com.sg.rest.http.CustomHeaders;
 import com.sg.constants.DtoFieldCodes;
 import com.sg.constants.RequestPath;
-import com.sg.constants.Roles;
-import com.sg.constants.SigninStatus;
-import com.sg.constants.SignupStatus;
+import com.sg.domain.constants.Roles;
+import com.sg.rest.operationstatus.SigninStatus;
+import com.sg.rest.operationstatus.SignupStatus;
 import com.sg.constants.TokenExpirationType;
 import com.sg.domain.service.AuthToken;
 import com.sg.domain.service.SgCryptoService;
@@ -86,7 +86,7 @@ public class SignupFlowTest {
         Response r = given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
                 .body(jacksonObjectMapper.writeValueAsString(dto))
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, integrationTestInitializer.getAdminAuthToken())
+                .header(CustomHeaders.X_AUTH_TOKEN, integrationTestInitializer.getAdminAuthToken())
                 .when()
                 .post(RequestPath.REQUEST_SIGNUP_ADMIN_USER);
 
@@ -94,16 +94,16 @@ public class SignupFlowTest {
                 .statusCode(HttpStatus.SC_OK)
                 .contentType(ContentType.JSON)
                 .body("status", equalTo(SignupStatus.STATUS_SUCCESS))
-                .header(CustomHttpHeaders.X_ACCOUNT_ID, any(String.class));
+                .header(CustomHeaders.X_ACCOUNT_ID, any(String.class));
 
-        String sAccountId = r.getHeader(CustomHttpHeaders.X_ACCOUNT_ID);
+        String sAccountId = r.getHeader(CustomHeaders.X_ACCOUNT_ID);
         Long accountId = Long.parseLong(sAccountId);
 
         //SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT
         given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
                 .body(jacksonObjectMapper.writeValueAsString(dto))
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, integrationTestInitializer.getAdminAuthToken())
+                .header(CustomHeaders.X_AUTH_TOKEN, integrationTestInitializer.getAdminAuthToken())
                 .when()
                 .post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .then().log().all()
@@ -140,7 +140,7 @@ public class SignupFlowTest {
         r = given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
                 .body(jacksonObjectMapper.writeValueAsString(completeSignupDto))
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, authToken)
+                .header(CustomHeaders.X_AUTH_TOKEN, authToken)
                 .when()
                 .post(RequestPath.REQUEST_COMPLETE_SIGNUP);
 
@@ -159,7 +159,7 @@ public class SignupFlowTest {
         r = given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
                 .body(jacksonObjectMapper.writeValueAsString(completeSignupDto))
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, authToken)
+                .header(CustomHeaders.X_AUTH_TOKEN, authToken)
                 .when()
                 .post(RequestPath.REQUEST_COMPLETE_SIGNUP);
 
@@ -172,7 +172,7 @@ public class SignupFlowTest {
         r = given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
                 .body(jacksonObjectMapper.writeValueAsString(completeSignupDto))
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, authToken)
+                .header(CustomHeaders.X_AUTH_TOKEN, authToken)
                 .when()
                 .post(RequestPath.REQUEST_COMPLETE_SIGNUP);
 
@@ -191,7 +191,7 @@ public class SignupFlowTest {
         r = given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
                 .body(jacksonObjectMapper.writeValueAsString(completeSignupDto))
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, authToken)
+                .header(CustomHeaders.X_AUTH_TOKEN, authToken)
                 .when()
                 .post(RequestPath.REQUEST_COMPLETE_SIGNUP);
 
@@ -214,7 +214,7 @@ public class SignupFlowTest {
                 .statusCode(HttpStatus.SC_OK)
                 .contentType(ContentType.JSON)
                 .body("status", equalTo(SigninStatus.STATUS_SUCCESS))
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, any(String.class));
+                .header(CustomHeaders.X_AUTH_TOKEN, any(String.class));
     }
 
     @Test
@@ -227,7 +227,7 @@ public class SignupFlowTest {
         given().log().all()
                 .contentType(ContentType.JSON.withCharset(StandardCharsets.UTF_8))
                 .body(jacksonObjectMapper.writeValueAsString(dto))
-                .header(CustomHttpHeaders.X_AUTH_TOKEN, integrationTestInitializer.getAdminAuthToken())
+                .header(CustomHeaders.X_AUTH_TOKEN, integrationTestInitializer.getAdminAuthToken())
                 .when()
                 .post(RequestPath.REQUEST_SIGNUP_ADMIN_USER)
                 .then().log().all()

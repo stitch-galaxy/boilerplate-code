@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.constants;
+package com.sg.rest.operationstatus;
 
 /**
  *

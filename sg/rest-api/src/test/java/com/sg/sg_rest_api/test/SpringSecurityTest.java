@@ -8,11 +8,11 @@ package com.sg.sg_rest_api.test;
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.sg_rest_api.test.configuration.WebApplicationIntegrationTestContext;
 import com.sg.domain.service.SgService;
-import com.sg.constants.CustomHttpHeaders;
+import com.sg.rest.http.CustomHeaders;
 import com.sg.constants.ErrorCodes;
 import com.sg.sg_rest_api.configuration.ServletContext;
 import com.sg.constants.RequestPath;
-import com.sg.constants.Roles;
+import com.sg.domain.constants.Roles;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.dto.response.AccountRolesDto;
 import com.sg.rest.webtoken.TokenExpirationStandardDurations;
@@ -146,7 +146,7 @@ public class SpringSecurityTest {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
         when(serviceMock.getAccountRoles(ACCOUNT_ID)).thenReturn(accountRolesDto);
 
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(new byte[0]));
 
@@ -162,7 +162,7 @@ public class SpringSecurityTest {
         accountRolesDto.setRoles(new ArrayList<String>());
         when(serviceMock.getAccountRoles(ACCOUNT_ID)).thenReturn(accountRolesDto);
 
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_FORBIDDEN))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -178,7 +178,7 @@ public class SpringSecurityTest {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
         doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(serviceMock).getAccountRoles(ACCOUNT_ID);
 
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -193,7 +193,7 @@ public class SpringSecurityTest {
     public void testExpiredAuthToken() throws IOException, Exception {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now().minus(TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION).minus(Duration.standardHours(1)), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
 
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, authToken))
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -204,7 +204,7 @@ public class SpringSecurityTest {
 
     @Test
     public void testSecureResourceWithBadAuthToken() throws IOException, Exception {
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHttpHeaders.X_AUTH_TOKEN, BAD_TOKEN))
+        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, BAD_TOKEN))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
