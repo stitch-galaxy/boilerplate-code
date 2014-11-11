@@ -5,7 +5,6 @@
  */
 package com.sg.domain.service.jpa.components;
 
-import com.sg.rest.dto.validator.components.ValidatorComponent;
 import com.sg.constants.Roles;
 import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.request.CanvasCreateDto;
@@ -28,7 +27,6 @@ import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgAccountWithoutEmailException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
-import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
@@ -84,9 +82,6 @@ public class ServiceImpl implements SgService {
     @Autowired
     private TransactionTemplate transactionTemplate;
 
-    @Autowired
-    private ValidatorComponent validatorComponent;
-
     @Value("${admin.email}")
     private String ADMIN_EMAIL;
     @Value("${admin.password}")
@@ -97,8 +92,7 @@ public class ServiceImpl implements SgService {
     private String USER_PASSWORD;
 
     @Override
-    public void delete(final ThreadDeleteDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void delete(final ThreadDeleteDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -120,8 +114,7 @@ public class ServiceImpl implements SgService {
         threadsRepository.delete(thread.getId());
     }
 
-    public void create(final ThreadCreateDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void create(final ThreadCreateDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -171,8 +164,7 @@ public class ServiceImpl implements SgService {
         return result;
     }
 
-    public void update(final ThreadUpdateDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void update(final ThreadUpdateDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -199,8 +191,7 @@ public class ServiceImpl implements SgService {
         threadsRepository.save(thread);
     }
 
-    public void create(final CanvasCreateDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void create(final CanvasCreateDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -222,8 +213,7 @@ public class ServiceImpl implements SgService {
         canvasesRepository.save(canvas);
     }
 
-    public void delete(final CanvasDeleteDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void delete(final CanvasDeleteDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -245,8 +235,7 @@ public class ServiceImpl implements SgService {
         canvasesRepository.delete(canvas);
     }
 
-    public void update(final CanvasUpdateDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void update(final CanvasUpdateDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -299,13 +288,11 @@ public class ServiceImpl implements SgService {
         return result;
     }
 
-    public void signupUser(final SignupDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void signupUser(final SignupDto dto) {
         signup(dto, Roles.ROLE_USER);
     }
 
-    public void signupAdmin(final SignupDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void signupAdmin(final SignupDto dto) {
         signup(dto, Roles.ROLE_ADMIN, Roles.ROLE_USER);
     }
 
@@ -338,8 +325,7 @@ public class ServiceImpl implements SgService {
         accountsRepository.save(account);
     }
 
-    public void completeSignup(final Long userId, final CompleteSignupDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void completeSignup(final Long userId, final CompleteSignupDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -366,8 +352,7 @@ public class ServiceImpl implements SgService {
         accountsRepository.save(account);
     }
 
-    public void signIn(final SigninDto dto) throws SgDataValidationException {
-        validatorComponent.validate(dto);
+    public void signIn(final SigninDto dto) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -439,8 +424,7 @@ public class ServiceImpl implements SgService {
         accountsRepository.save(account);
     }
 
-    public void setUserInfo(final Long accountId, final UserInfoUpdateDto dto) throws SgDataValidationException, SgAccountNotFoundException {
-        validatorComponent.validate(dto);
+    public void setUserInfo(final Long accountId, final UserInfoUpdateDto dto) throws SgAccountNotFoundException {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -454,7 +438,7 @@ public class ServiceImpl implements SgService {
         });
     }
 
-    private void setUserInfoImpl(Long accountId, UserInfoUpdateDto dto) throws SgDataValidationException, SgAccountNotFoundException {
+    private void setUserInfoImpl(Long accountId, UserInfoUpdateDto dto) throws SgAccountNotFoundException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);
@@ -507,8 +491,7 @@ public class ServiceImpl implements SgService {
         accountsRepository.delete(account);
     }
 
-    public void resetPassword(final Long accountId, final ResetPasswordDto dto) throws SgDataValidationException, SgAccountNotFoundException {
-        validatorComponent.validate(dto);
+    public void resetPassword(final Long accountId, final ResetPasswordDto dto) throws SgAccountNotFoundException {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
@@ -522,7 +505,7 @@ public class ServiceImpl implements SgService {
         });
     }
 
-    private void resetPasswordImpl(Long accountId, ResetPasswordDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgAccountWithoutEmailException {
+    private void resetPasswordImpl(Long accountId, ResetPasswordDto dto) throws SgAccountNotFoundException, SgAccountWithoutEmailException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);
@@ -538,7 +521,7 @@ public class ServiceImpl implements SgService {
     }
 
     @Override
-    public Long getAccountId(final String email) throws SgDataValidationException, SgAccountNotFoundException {
+    public Long getAccountId(final String email) throws SgAccountNotFoundException {
         return transactionTemplate.execute(new TransactionCallback<Long>() {
             public Long doInTransaction(TransactionStatus status) {
                 try {

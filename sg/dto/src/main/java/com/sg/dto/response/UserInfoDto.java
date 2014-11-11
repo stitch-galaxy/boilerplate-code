@@ -6,11 +6,9 @@
 
 package com.sg.dto.response;
 
-import com.sg.dto.request.*;
 import com.sg.constants.Sex;
 import com.sg.dto.serialization.JodaLocalDateJsonDeserializer;
 import com.sg.dto.serialization.JodaLocalDateJsonSerializer;
-import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;

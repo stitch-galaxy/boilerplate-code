@@ -11,7 +11,6 @@ import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
-import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.dto.response.OperationStatusDto;
@@ -30,7 +29,7 @@ public class ThreadsController {
     SgService service;
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_ADD, method = RequestMethod.POST)
-    public OperationStatusDto create(@Valid @RequestBody ThreadCreateDto dto) throws SgDataValidationException {
+    public OperationStatusDto create(@Valid @RequestBody ThreadCreateDto dto) {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
         try {
@@ -47,7 +46,7 @@ public class ThreadsController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_DELETE, method = RequestMethod.POST)
-    public OperationStatusDto delete(@Valid @RequestBody ThreadDeleteDto dto) throws SgDataValidationException {
+    public OperationStatusDto delete(@Valid @RequestBody ThreadDeleteDto dto) {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
         try {
@@ -59,7 +58,7 @@ public class ThreadsController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_THREAD_UPDATE, method = RequestMethod.POST)
-    public OperationStatusDto update(@Valid @RequestBody ThreadUpdateDto dto) throws SgDataValidationException {
+    public OperationStatusDto update(@Valid @RequestBody ThreadUpdateDto dto) {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(ThreadOperationStatus.STATUS_SUCCESS);
         try {

@@ -23,7 +23,6 @@ import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.domain.service.SgMailService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
-import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
@@ -67,7 +66,7 @@ public class SigninSignupController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
-    public OperationStatusDto signupUser(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws SgDataValidationException {
+    public OperationStatusDto signupUser(@Valid @RequestBody SignupDto dto, HttpServletResponse response) {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -85,7 +84,7 @@ public class SigninSignupController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_ADMIN_USER, method = RequestMethod.POST)
-    public OperationStatusDto signupAdmin(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws IOException, SgDataValidationException {
+    public OperationStatusDto signupAdmin(@Valid @RequestBody SignupDto dto, HttpServletResponse response) throws IOException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SignupStatus.STATUS_SUCCESS);
         try {
@@ -103,7 +102,7 @@ public class SigninSignupController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.POST)
-    public OperationStatusDto completeSignup(@Valid @RequestBody CompleteSignupDto dto) throws SgDataValidationException {
+    public OperationStatusDto completeSignup(@Valid @RequestBody CompleteSignupDto dto) {
         //http://blog.awnry.com/post/16187851956/spring-mvc-get-the-logged-in-userdetails-from-your
         SgRestUser user = (SgRestUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -124,7 +123,7 @@ public class SigninSignupController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
-    public OperationStatusDto signin(@Valid @RequestBody SigninDto dto, HttpServletResponse response) throws IOException, SgDataValidationException {
+    public OperationStatusDto signin(@Valid @RequestBody SigninDto dto, HttpServletResponse response) throws IOException {
         OperationStatusDto result = new OperationStatusDto();
         result.setStatus(SigninStatus.STATUS_SUCCESS);
 

@@ -10,7 +10,6 @@ import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgAccountWithoutEmailException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
-import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
@@ -18,6 +17,7 @@ import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
+import com.sg.dto.constraints.EmailRequired;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
@@ -43,34 +43,34 @@ import org.hibernate.validator.constraints.Email;
  */
 public interface SgService {
     
-    public void create(@Valid ThreadCreateDto dto) throws SgDataValidationException, SgThreadAlreadyExistsException;
-    public void delete(@Valid ThreadDeleteDto dto) throws SgDataValidationException, SgThreadNotFoundException;
-    public void update(@Valid ThreadUpdateDto dto) throws SgDataValidationException, SgThreadNotFoundException, SgThreadAlreadyExistsException;
-    public @Valid ThreadsListDto listThreads();   
+    public void create(@Valid @NotNull ThreadCreateDto dto) throws SgThreadAlreadyExistsException;
+    public void delete(@Valid @NotNull ThreadDeleteDto dto) throws SgThreadNotFoundException;
+    public void update(@Valid @NotNull ThreadUpdateDto dto) throws SgThreadNotFoundException, SgThreadAlreadyExistsException;
+    public @Valid @NotNull ThreadsListDto listThreads();   
     
-    public void create(@Valid CanvasCreateDto dto) throws SgDataValidationException, SgCanvasAlreadyExistsException;
-    public void delete(@Valid CanvasDeleteDto dto) throws SgDataValidationException, SgCanvasNotFoundException;
-    public void update(@Valid CanvasUpdateDto dto) throws SgDataValidationException, SgCanvasNotFoundException, SgCanvasAlreadyExistsException;
-    public @Valid CanvasesListDto listCanvases();   
+    public void create(@Valid @NotNull CanvasCreateDto dto) throws SgCanvasAlreadyExistsException;
+    public void delete(@Valid @NotNull CanvasDeleteDto dto) throws SgCanvasNotFoundException;
+    public void update(@Valid @NotNull CanvasUpdateDto dto) throws SgCanvasNotFoundException, SgCanvasAlreadyExistsException;
+    public @Valid @NotNull CanvasesListDto listCanvases();   
    
     public void install() throws SgInstallationAlreadyCompletedException;
     
-    public void signupUser(@Valid SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
-    public void signupAdmin(@Valid SignupDto dto) throws SgDataValidationException, SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
+    public void signupUser(@Valid @NotNull SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
+    public void signupAdmin(@Valid @NotNull SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     
-    public @NotNull Long getAccountId(@Email String email) throws SgDataValidationException, SgAccountNotFoundException;
+    public @NotNull Long getAccountId(@Email @NotNull String email) throws SgAccountNotFoundException;
     
-    public @Valid AccountRolesDto getAccountRoles(@NotNull Long accountId) throws SgAccountNotFoundException;
+    public @Valid @NotNull AccountRolesDto getAccountRoles(@NotNull Long accountId) throws SgAccountNotFoundException;
     
-    public void completeSignup(@NotNull Long accountId, @Valid CompleteSignupDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgSignupAlreadyCompletedException;
+    public void completeSignup(@NotNull Long accountId, @Valid @NotNull CompleteSignupDto dto) throws SgAccountNotFoundException, SgSignupAlreadyCompletedException;
     
-    public void signIn(@Valid SigninDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;
+    public void signIn(@Valid @NotNull SigninDto dto) throws SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;
     
     public void ping() throws Exception;
     
-    public void setUserInfo(@NotNull Long accountId, @Valid UserInfoUpdateDto dto)  throws SgDataValidationException, SgAccountNotFoundException;
-    public @Valid UserInfoDto getUserInfo(@NotNull Long accountId)  throws SgAccountNotFoundException;
+    public void setUserInfo(@NotNull Long accountId, @Valid @NotNull UserInfoUpdateDto dto)  throws SgAccountNotFoundException;
+    public @Valid @NotNull UserInfoDto getUserInfo(@NotNull Long accountId)  throws SgAccountNotFoundException;
     
     public void deleteAccount(@NotNull Long accountId)  throws SgAccountNotFoundException;
-    public void resetPassword(@NotNull Long accountId, @Valid ResetPasswordDto dto) throws SgDataValidationException, SgAccountNotFoundException, SgAccountWithoutEmailException, SgEmailNonVerifiedException;
+    public void resetPassword(@NotNull Long accountId, @Valid @NotNull ResetPasswordDto dto) throws SgAccountNotFoundException, SgAccountWithoutEmailException, SgEmailNonVerifiedException;
 }

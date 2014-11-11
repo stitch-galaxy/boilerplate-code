@@ -10,7 +10,6 @@ import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.domain.service.SgService;
-import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.dto.response.CanvasesListDto;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class CanvasesController {
     SgService service;
 
     @RequestMapping(value = RequestPath.REQUEST_CANVAS_ADD, method = RequestMethod.POST)
-    public void create(@Valid @RequestBody CanvasCreateDto dto) throws SgDataValidationException {
+    public void create(@Valid @RequestBody CanvasCreateDto dto) {
         service.create(dto);
     }
 
@@ -36,12 +35,12 @@ public class CanvasesController {
     }
 
     @RequestMapping(value = RequestPath.REQUEST_CANVAS_DELETE, method = RequestMethod.POST)
-    public void delete(@Valid @RequestBody CanvasDeleteDto dto) throws SgDataValidationException {
+    public void delete(@Valid @RequestBody CanvasDeleteDto dto) {
         service.delete(dto);
     }
 
     @RequestMapping(value = RequestPath.REQUEST_CANVAS_UPDATE, method = RequestMethod.POST)
-    public void update(@Valid @RequestBody CanvasUpdateDto dto) throws SgDataValidationException {
+    public void update(@Valid @RequestBody CanvasUpdateDto dto) {
         service.update(dto);
     }
 }

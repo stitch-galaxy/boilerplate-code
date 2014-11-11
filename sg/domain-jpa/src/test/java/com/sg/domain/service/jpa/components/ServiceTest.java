@@ -1,4 +1,4 @@
-package com.sg.domain.test.jpa;
+package com.sg.domain.service.jpa.components;
 
 
 /*
@@ -18,7 +18,6 @@ import com.sg.domain.service.SgService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.service.exception.SgCanvasNotFoundException;
-import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.service.exception.SgInvalidPasswordException;
@@ -46,6 +45,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
+import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.joda.time.LocalDate;
 import org.junit.After;
@@ -63,7 +63,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContextConfig.class, PersistenceContextConfig.class, ServiceContextConfig.class})
-public class JpaServiceTest {
+public class ServiceTest {
 
     @Value("${admin.email}")
     private String adminEmail;
@@ -80,7 +80,7 @@ public class JpaServiceTest {
     @Autowired
     private DataSource dataSource;
 
-    public JpaServiceTest() {
+    public ServiceTest() {
     }
 
     private static final String AIDA_14 = "Aida 14";
@@ -185,7 +185,17 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testCanvasCreate() throws SgDataValidationException {
+    public void testServiceValidated() {
+        ThreadCreateDto dto = null;
+        try {
+            service.create(dto);
+            Assert.fail("Expected " + ConstraintViolationException.class.getName());
+        } catch (ConstraintViolationException ex) {
+        }
+    }
+
+    @Test
+    public void testCanvasCreate() {
         service.create(aida14CanvasDto);
         try {
             service.create(aida14CanvasDto);
@@ -195,7 +205,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testCanvasesList() throws SgDataValidationException {
+    public void testCanvasesList() {
         service.create(aida14CanvasDto);
         service.create(aida18CanvasDto);
 
@@ -209,7 +219,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testCanvasUpdate() throws SgDataValidationException {
+    public void testCanvasUpdate() {
         service.create(aida14CanvasDto);
 
         CanvasUpdateDto updateDto = new CanvasUpdateDto();
@@ -246,7 +256,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testCanvasDelete() throws SgDataValidationException {
+    public void testCanvasDelete() {
         service.create(aida14CanvasDto);
 
         CanvasDeleteDto ref = new CanvasDeleteDto();
@@ -267,7 +277,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testThreadCreate() throws SgDataValidationException {
+    public void testThreadCreate() {
         service.create(dmcThreadDto);
         try {
             service.create(dmcThreadDto);
@@ -277,7 +287,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testThreadsList() throws SgDataValidationException {
+    public void testThreadsList() {
         service.create(dmcThreadDto);
         service.create(anchorThreadDto);
 
@@ -290,7 +300,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testThreadUpdate() throws SgDataValidationException {
+    public void testThreadUpdate() {
         service.create(dmcThreadDto);
 
         ThreadUpdateDto updateDto = new ThreadUpdateDto();
@@ -324,7 +334,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testThreadDelete() throws SgDataValidationException {
+    public void testThreadDelete() {
         service.create(dmcThreadDto);
 
         ThreadDeleteDto ref = new ThreadDeleteDto();
@@ -343,9 +353,9 @@ public class JpaServiceTest {
 
         Assert.assertEquals(0, service.listThreads().getThreads().size());
     }
-    
+
     @Test
-    public void testGetAccountIdThrowsExceptionIfAccountNotFound() throws SgDataValidationException {
+    public void testGetAccountIdThrowsExceptionIfAccountNotFound() {
         try {
             service.getAccountId(signupDto.getEmail());
             Assert.fail("Expected  " + SgAccountNotFoundException.class.getName());
@@ -354,25 +364,23 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testInstallation() throws SgDataValidationException {
+    public void testInstallation() {
         service.install();
 
         Long accountId = service.getAccountId(adminEmail);
         AccountRolesDto rolesDto = service.getAccountRoles(accountId);
-        
+
         //TODO: think how to test it properly
         //Assert.assertEquals(Boolean.TRUE, accountPrincipalDto.getEmailVerified());
-
         Assert.assertTrue(rolesDto.getRoles().size() == 2);
         Assert.assertTrue(rolesDto.getRoles().contains(Roles.ROLE_USER));
         Assert.assertTrue(rolesDto.getRoles().contains(Roles.ROLE_ADMIN));
 
         accountId = service.getAccountId(userEmail);
         rolesDto = service.getAccountRoles(accountId);
-        
+
         //TODO: think how to test it properly
         //Assert.assertEquals(Boolean.TRUE, accountPrincipalDto.getEmailVerified());
-
         Assert.assertTrue(rolesDto.getRoles().size() == 1);
         Assert.assertTrue(rolesDto.getRoles().contains(Roles.ROLE_USER));
 
@@ -384,7 +392,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testSignupAdmin() throws SgDataValidationException {
+    public void testSignupAdmin() {
         service.signupAdmin(signupDto);
 
         Long accountId = service.getAccountId(signupDto.getEmail());
@@ -412,7 +420,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testSignupUser() throws SgDataValidationException {
+    public void testSignupUser() {
         service.signupUser(signupDto);
 
         Long accountId = service.getAccountId(signupDto.getEmail());
@@ -439,7 +447,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testCompleteSignup() throws SgDataValidationException {
+    public void testCompleteSignup() {
         try {
             service.completeSignup(1L, completeSignupDto);
             Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
@@ -460,7 +468,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testSignin() throws SgDataValidationException {
+    public void testSignin() {
         try {
             service.signIn(signinDto);
             Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
@@ -519,7 +527,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testSetGetUserInformation() throws SgDataValidationException {
+    public void testSetGetUserInformation() {
         service.signupUser(signupDto);
         Long accountId = service.getAccountId(signupDto.getEmail());
         service.completeSignup(accountId, completeSignupDto);
@@ -543,7 +551,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testResetPassword() throws SgDataValidationException {
+    public void testResetPassword() {
         //TODO: when signin with FB will be completed cover with test: SgAccountWithoutEmailException
 
         service.signupUser(signupDto);
@@ -570,7 +578,7 @@ public class JpaServiceTest {
     }
 
     @Test
-    public void testDeleteAccount() throws SgDataValidationException {
+    public void testDeleteAccount() {
         service.signupUser(signupDto);
         Long accountId = service.getAccountId(signupDto.getEmail());
         service.completeSignup(accountId, completeSignupDto);
@@ -580,7 +588,7 @@ public class JpaServiceTest {
             Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
         } catch (SgAccountNotFoundException e) {
         }
-        
+
         service.deleteAccount(accountId);
 
         try {

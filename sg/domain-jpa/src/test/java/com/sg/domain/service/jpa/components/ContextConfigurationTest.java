@@ -1,4 +1,4 @@
-package com.sg.domain.test.jpa;
+package com.sg.domain.service.jpa.components;
 
 
 /*
@@ -12,6 +12,7 @@ import com.sg.domain.service.jpa.spring.PersistenceContextConfig;
 import com.sg.domain.service.jpa.spring.ServiceContextConfig;
 import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
 import com.sg.domain.test.spring.configuration.TestJpaServicePropertiesContextConfiguration;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,16 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContextConfig.class, PersistenceContextConfig.class, ServiceContextConfig.class})
-public class JpaContextTest {
+public class ContextConfigurationTest {
     
     @Autowired
     SgService service;
     
-    public JpaContextTest() {
+    public ContextConfigurationTest() {
     }
     
     @Test
     public void contextTest(){
+        Assert.assertNotNull(service);
     }
 }

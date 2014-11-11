@@ -12,6 +12,7 @@ package com.sg.constants;
 public class ErrorCodes {
 
     public static final int EXCEPTION = 0;
+    public static final int EXCEPTION_CONSTRAINT_VIOLATION = 0;
     
     public static final int UNKNOWN = 0;
     

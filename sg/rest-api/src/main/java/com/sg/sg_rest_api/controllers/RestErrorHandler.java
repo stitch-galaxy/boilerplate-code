@@ -6,13 +6,14 @@
 package com.sg.sg_rest_api.controllers;
 
 import com.sg.constants.ErrorCodes;
-import com.sg.domain.service.exception.SgDataValidationException;
 import com.sg.dto.response.ErrorDto;
 import com.sg.dto.response.ValidationErrorDto;
 import com.sg.sg_rest_api.utils.Utils;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -35,13 +36,14 @@ public class RestErrorHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestErrorHandler.class);
 
-    @ExceptionHandler(SgDataValidationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public ValidationErrorDto processServiceValidationError(SgDataValidationException ex) {
-        return new ValidationErrorDto(ex.getFieldErrors());
-    }
-
+//    @ExceptionHandler(ConstraintViolationException.class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ResponseBody
+//    public ValidationErrorDto processServiceValidationError(SgDataValidationException ex) {
+//        
+//        
+//        
+//    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -54,11 +56,37 @@ public class RestErrorHandler {
         }
         return new ValidationErrorDto(fieldErrors);
     }
-    
+
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public void processServiceValidationError(HttpRequestMethodNotSupportedException ex) {
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorDto processException(ConstraintViolationException ex) throws Exception {
+        String refNumber = Utils.logException(LOGGER, ex);
+        ErrorDto dto = new ErrorDto();
+        dto.setRefNumber(refNumber);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(ex.getMessage());
+        sb.append(": ");
+
+        boolean first = true;
+        for (ConstraintViolation violation : ex.getConstraintViolations()) {
+            if (first) {
+                first = false;
+            } else {
+                sb.append(", ");
+            }
+            sb.append(violation.getMessage());
+        }
+        dto.setError(sb.toString());
+        dto.setErrorCode(ErrorCodes.EXCEPTION_CONSTRAINT_VIOLATION);
+        return dto;
     }
 
     @ExceptionHandler(Exception.class)

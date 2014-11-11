@@ -5,12 +5,10 @@
  */
 package com.sg.domain.service.jpa.spring;
 
-import com.sg.rest.dto.validator.components.NoOpClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 //import org.springframework.validation.Validator;
 import javax.validation.Validator;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
@@ -19,7 +17,6 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
  * @author tarasev
  */
 @Configuration
-@ComponentScan(basePackageClasses = {NoOpClass.class})
 public class ValidatorContextConfig {
 
     @Bean
