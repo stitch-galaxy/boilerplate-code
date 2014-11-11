@@ -13,15 +13,15 @@ import org.junit.Test;
  *
  * @author tarasev
  */
-public class CanvasCreateDtoTest extends BaseDtoConstraintsTest {
-    
+public class SigninDtoTest extends BaseDtoConstraintsTest {
+
     @Test
     public void testDto()
     {
-        CanvasCreateDto dto = new CanvasCreateDto();
+        SigninDto dto = new SigninDto();
         Set<String> constraintMessages = new HashSet<String>();
-        constraintMessages.add(CanvasCreateDto.CODE_FIELD);
-        constraintMessages.add(CanvasCreateDto.SIZE_FIELD);
+        constraintMessages.add(SigninDto.PASSWORD_FIELD);
+        constraintMessages.add(SigninDto.EMAIL_FIELD);
         testConstraintViolations(dto, constraintMessages);
     }
 }

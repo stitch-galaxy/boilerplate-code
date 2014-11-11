@@ -15,10 +15,13 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class SigninDto {
 
-    @EmailRequired
+    public static final String EMAIL_FIELD = "SigninDto.Email";
+    public static final String PASSWORD_FIELD = "SigninDto.Password";
+    
+    @EmailRequired(message = EMAIL_FIELD)
     private String email;
 
-    @PasswordRequired
+    @PasswordRequired(message = PASSWORD_FIELD)
     private String password;
 
     /**

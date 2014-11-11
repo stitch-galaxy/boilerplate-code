@@ -13,15 +13,18 @@ import org.junit.Test;
  *
  * @author tarasev
  */
-public class CanvasCreateDtoTest extends BaseDtoConstraintsTest {
-    
+public class SignupDtoTest extends BaseDtoConstraintsTest {
+
     @Test
     public void testDto()
     {
-        CanvasCreateDto dto = new CanvasCreateDto();
+        SignupDto dto = new SignupDto();
+        dto.setUserFirstName(EMPTY_STRING);
+        dto.setUserLastName(EMPTY_STRING);
         Set<String> constraintMessages = new HashSet<String>();
-        constraintMessages.add(CanvasCreateDto.CODE_FIELD);
-        constraintMessages.add(CanvasCreateDto.SIZE_FIELD);
+        constraintMessages.add(SignupDto.EMAIL_FIELD);
+        constraintMessages.add(SignupDto.USER_FIRSTNAME_FIELD);
+        constraintMessages.add(SignupDto.USER_LASTNAME_FIELD);
         testConstraintViolations(dto, constraintMessages);
     }
 }

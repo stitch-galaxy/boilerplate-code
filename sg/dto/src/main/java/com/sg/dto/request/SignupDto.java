@@ -16,13 +16,17 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class SignupDto {
 
-    @EmailRequired
+    public static final String EMAIL_FIELD = "SignupDto.Email";
+    public static final String USER_FIRSTNAME_FIELD = "SignupDto.UserFirstName";
+    public static final String USER_LASTNAME_FIELD = "SignupDto.UserLastName";
+    
+    @EmailRequired(message = EMAIL_FIELD)
     private String email;
 
-    @UserFirstname
+    @UserFirstname(message = USER_FIRSTNAME_FIELD)
     private String userFirstName;
 
-    @UserLastname
+    @UserLastname(message = USER_LASTNAME_FIELD)
     private String userLastName;
 
     /**

@@ -14,7 +14,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class CompleteSignupDto {
 
-    @PasswordRequired
+    public static final String PASSWORD_FIELD = "CompleteSignupDto.Password";
+    
+    @PasswordRequired(message = PASSWORD_FIELD)
     private String password;
 
     @Override

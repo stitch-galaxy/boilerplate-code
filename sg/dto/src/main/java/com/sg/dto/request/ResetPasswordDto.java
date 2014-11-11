@@ -14,7 +14,10 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  * @author tarasev
  */
 public class ResetPasswordDto {
-    @PasswordRequired
+    
+    public static final String PASSWORD_FIELD = "ResetPasswordDto.Password";
+    
+    @PasswordRequired(message = PASSWORD_FIELD)
     private String password;
     
     

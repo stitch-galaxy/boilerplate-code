@@ -7,8 +7,6 @@ package com.sg.dto.request;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.validation.ConstraintViolation;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -20,10 +18,9 @@ public class CanvasDeleteDtoTest extends BaseDtoConstraintsTest {
     @Test
     public void testDto()
     {
-        CanvasCreateDto dto = new CanvasCreateDto();
+        CanvasDeleteDto dto = new CanvasDeleteDto();
         Set<String> constraintMessages = new HashSet<String>();
-        constraintMessages.add(CanvasCreateDto.CODE_FIELD);
-        constraintMessages.add(CanvasCreateDto.SIZE_FIELD);
+        constraintMessages.add(CanvasDeleteDto.CODE_FIELD);
         testConstraintViolations(dto, constraintMessages);
     }
 }
