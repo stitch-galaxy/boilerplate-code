@@ -20,15 +20,17 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 @NotNull
-@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
-@Retention(RUNTIME)
 @DecimalMin(MIN_STITCHES_PER_INCH)
 @DecimalMax(MAX_STITCHES_PER_INCH)
+@ReportAsSingleViolation
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
+@Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @Documented
 public @interface CanvasSizeRequired {
