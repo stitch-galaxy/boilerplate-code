@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.service.jpa.components;
+package com.sg.domain.service.mapping.components;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.converter.builtin.PassThroughConverter;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @author tarasev
  */
 @Component
-public class DtoToDomainObjectMapperComponent extends ConfigurableMapper {
+public class MapperComponent extends ConfigurableMapper {
 
     @Override
     public void configure(MapperFactory mapperFactory) {

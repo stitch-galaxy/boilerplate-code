@@ -6,8 +6,8 @@
 package com.sg.dto.request;
 
 import com.sg.dto.constraints.EmailRequired;
-import com.sg.dto.constraints.UserFirstname;
-import com.sg.dto.constraints.UserLastname;
+import com.sg.dto.constraints.UserFirstName;
+import com.sg.dto.constraints.UserLastName;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -23,10 +23,10 @@ public class SignupDto {
     @EmailRequired(message = EMAIL_FIELD)
     private String email;
 
-    @UserFirstname(message = USER_FIRSTNAME_FIELD)
+    @UserFirstName(message = USER_FIRSTNAME_FIELD)
     private String userFirstName;
 
-    @UserLastname(message = USER_LASTNAME_FIELD)
+    @UserLastName(message = USER_LASTNAME_FIELD)
     private String userLastName;
 
     /**

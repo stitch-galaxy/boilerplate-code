@@ -6,7 +6,6 @@
 
 package com.sg.dto.response;
 
-import com.sg.domain.enumerations.Sex;
 import com.sg.dto.serialization.JodaLocalDateJsonDeserializer;
 import com.sg.dto.serialization.JodaLocalDateJsonSerializer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -28,7 +27,7 @@ public class UserInfoDto {
     
     private String userLastName;
  
-    private Sex sex;
+    private String sex;
     
     private String nickname;
     
@@ -96,14 +95,14 @@ public class UserInfoDto {
     /**
      * @return the sex
      */
-    public Sex getSex() {
+    public String getSex() {
         return sex;
     }
 
     /**
      * @param sex the sex to set
      */
-    public void setSex(Sex sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

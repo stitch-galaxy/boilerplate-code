@@ -5,7 +5,7 @@
  */
 package com.sg.domain.entities.jpa;
 
-import com.sg.domain.enumerations.Sex;
+import com.sg.domain.constants.Sex;
 import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -46,8 +47,7 @@ public class Account {
     private LocalDate userBirthDate;
     
     @Column(name = "sex")
-    @Enumerated(EnumType.ORDINAL)
-    private Sex sex;
+    private Integer sexPersistentId;
     
     @Column(name = "email", unique = true)
     private String email;
@@ -182,14 +182,14 @@ public class Account {
      * @return the sex
      */
     public Sex getSex() {
-        return sex;
+        return Sex.getSexFromPersistenId(sexPersistentId);
     }
 
     /**
      * @param sex the sex to set
      */
     public void setSex(Sex sex) {
-        this.sex = sex;
+        this.sexPersistentId = sex.getPersistentId();
     }
 
     /**

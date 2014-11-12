@@ -65,7 +65,7 @@ public class SpringSecurityTest {
 
     static {
         accountRolesDto = new AccountRolesDto();
-        accountRolesDto.setRoles(Arrays.asList(new String[]{Roles.ROLE_USER, Roles.ROLE_ADMIN}));
+        accountRolesDto.setRoles(Arrays.asList(new String[]{Roles.USER, Roles.ADMIN}));
     }
 
     private MockMvc mockMvc;

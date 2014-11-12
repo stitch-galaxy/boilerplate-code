@@ -68,8 +68,8 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 
             //Authentication and authorization rules
             http.authorizeRequests()
-                    .antMatchers(RequestPath.REST_SECURE_ADMIN_PATH + "/**").hasRole(Roles.ROLE_ADMIN)
-                    .antMatchers(RequestPath.REST_SECURE_USER_PATH + "/**").hasRole(Roles.ROLE_USER)
+                    .antMatchers(RequestPath.REST_SECURE_ADMIN_PATH + "/**").hasRole(Roles.ADMIN)
+                    .antMatchers(RequestPath.REST_SECURE_USER_PATH + "/**").hasRole(Roles.USER)
                     .antMatchers(RequestPath.REST_USER_API_PATH + "/**").permitAll();
         }
     }

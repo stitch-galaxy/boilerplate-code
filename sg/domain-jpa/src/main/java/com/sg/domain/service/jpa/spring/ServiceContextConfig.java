@@ -1,6 +1,7 @@
 package com.sg.domain.service.jpa.spring;
 
-import com.sg.domain.service.jpa.components.NoOpClass;
+import com.sg.domain.service.jpa.components.SgServiceImpl;
+import com.sg.domain.service.mapping.components.MapperComponent;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +15,6 @@ import org.springframework.context.annotation.Configuration;
  * @author tarasev
  */
 @Configuration
-@ComponentScan(basePackageClasses = {NoOpClass.class})
+@ComponentScan(basePackageClasses = {SgServiceImpl.class, MapperComponent.class})
 public class ServiceContextConfig {
 }

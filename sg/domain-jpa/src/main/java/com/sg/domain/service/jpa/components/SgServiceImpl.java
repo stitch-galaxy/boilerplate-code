@@ -62,7 +62,7 @@ import org.springframework.validation.annotation.Validated;
 //@Transactional annotation prevent spring context to be initialized on GAE
 @Service
 @Validated
-public class ServiceImpl implements SgService {
+public class SgServiceImpl implements SgService {
 
     @Autowired
     private ProductRepository productRepository;
@@ -289,11 +289,11 @@ public class ServiceImpl implements SgService {
     }
 
     public void signupUser(final SignupDto dto) {
-        signup(dto, Roles.ROLE_USER);
+        signup(dto, Roles.USER);
     }
 
     public void signupAdmin(final SignupDto dto) {
-        signup(dto, Roles.ROLE_ADMIN, Roles.ROLE_USER);
+        signup(dto, Roles.ADMIN, Roles.USER);
     }
 
     private void signup(final SignupDto dto, final String... roles) {
@@ -410,7 +410,7 @@ public class ServiceImpl implements SgService {
         account.setUserFirstName("admin");
         account.setUserLastName("admin");
         account.setUserBirthDate(BIRTH_DATE);
-        account.setRoles(Arrays.asList(Roles.ROLE_ADMIN, Roles.ROLE_USER));
+        account.setRoles(Arrays.asList(Roles.ADMIN, Roles.USER));
         accountsRepository.save(account);
 
         account = new Account();
@@ -420,7 +420,7 @@ public class ServiceImpl implements SgService {
         account.setUserFirstName("user");
         account.setUserLastName("user");
         account.setUserBirthDate(BIRTH_DATE);
-        account.setRoles(Arrays.asList(Roles.ROLE_USER));
+        account.setRoles(Arrays.asList(Roles.USER));
         accountsRepository.save(account);
     }
 

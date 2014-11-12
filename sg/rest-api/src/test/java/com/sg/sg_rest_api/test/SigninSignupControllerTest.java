@@ -308,7 +308,7 @@ public class SigninSignupControllerTest {
     @BeforeClass
     public static void setup() {
         SgRestUser userPrincipal = new SgRestUser(ACCOUNT_ID);
-        userPrincipal.setRoles(Arrays.asList(Roles.ROLE_ADMIN, Roles.ROLE_USER));
+        userPrincipal.setRoles(Arrays.asList(Roles.ADMIN, Roles.USER));
         UsernamePasswordAuthenticationToken authentication
                 = new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);

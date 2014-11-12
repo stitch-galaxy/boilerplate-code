@@ -7,7 +7,7 @@ package com.sg.domain.service.jpa.components;
  * and open the template in the editor.
  */
 import com.sg.domain.constants.Roles;
-import com.sg.domain.enumerations.Sex;
+import com.sg.domain.constants.Sex;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
@@ -63,7 +63,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContextConfig.class, PersistenceContextConfig.class, ServiceContextConfig.class})
-public class ServiceTest {
+public class SgServiceTest {
 
     @Value("${admin.email}")
     private String adminEmail;
@@ -80,7 +80,7 @@ public class ServiceTest {
     @Autowired
     private DataSource dataSource;
 
-    public ServiceTest() {
+    public SgServiceTest() {
     }
 
     private static final String AIDA_14 = "Aida 14";
@@ -168,14 +168,14 @@ public class ServiceTest {
 
         userInfoUpdateDto = new UserInfoUpdateDto();
         userInfoUpdateDto.setNickname(USER_NICK_NAME);
-        userInfoUpdateDto.setSex(Sex.MALE);
+        userInfoUpdateDto.setSex(Sex.MALE.name());
         userInfoUpdateDto.setUserBirthDate(USER_BIRTH_DATE);
         userInfoUpdateDto.setUserFirstName(NEW_USER_FIRST_NAME);
         userInfoUpdateDto.setUserLastName(NEW_USER_LAST_NAME);
 
         userInfoDto = new UserInfoDto();
         userInfoDto.setNickname(USER_NICK_NAME);
-        userInfoDto.setSex(Sex.MALE);
+        userInfoDto.setSex(Sex.MALE.name());
         userInfoDto.setUserBirthDate(USER_BIRTH_DATE);
         userInfoDto.setUserFirstName(NEW_USER_FIRST_NAME);
         userInfoDto.setUserLastName(NEW_USER_LAST_NAME);
@@ -373,8 +373,8 @@ public class ServiceTest {
         //TODO: think how to test it properly
         //Assert.assertEquals(Boolean.TRUE, accountPrincipalDto.getEmailVerified());
         Assert.assertTrue(rolesDto.getRoles().size() == 2);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ROLE_USER));
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ROLE_ADMIN));
+        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
+        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ADMIN));
 
         accountId = service.getAccountId(userEmail);
         rolesDto = service.getAccountRoles(accountId);
@@ -382,7 +382,7 @@ public class ServiceTest {
         //TODO: think how to test it properly
         //Assert.assertEquals(Boolean.TRUE, accountPrincipalDto.getEmailVerified());
         Assert.assertTrue(rolesDto.getRoles().size() == 1);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ROLE_USER));
+        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
 
         try {
             service.install();
@@ -401,8 +401,8 @@ public class ServiceTest {
         //Assert.assertEquals(Boolean.FALSE, accountPrincipalDto.getEmailVerified());
 
         Assert.assertTrue(rolesDto.getRoles().size() == 2);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ROLE_USER));
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ROLE_ADMIN));
+        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
+        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ADMIN));
 
         try {
             service.signupUser(signupDto);
@@ -429,7 +429,7 @@ public class ServiceTest {
         //Assert.assertEquals(Boolean.FALSE, accountPrincipalDto.getEmailVerified());
 
         Assert.assertTrue(rolesDto.getRoles().size() == 1);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ROLE_USER));
+        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
 
         try {
             service.signupUser(signupDto);
