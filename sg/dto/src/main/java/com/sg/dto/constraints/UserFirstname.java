@@ -26,7 +26,7 @@ import javax.validation.ReportAsSingleViolation;
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @Documented
-public @interface UserFirstname {
+public @interface UserFirstName {
 
     String message() default "first name";
 

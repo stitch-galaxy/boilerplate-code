@@ -22,13 +22,13 @@ import javax.validation.ReportAsSingleViolation;
 import javax.validation.constraints.NotNull;
 
 @NotNull
-@UserLastname
+@UserLastName
 @ReportAsSingleViolation
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @Documented
-public @interface UserLastnameRequired {
+public @interface UserLastNameRequired {
 
     String message() default "last name";
 

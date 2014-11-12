@@ -11,11 +11,11 @@ import org.junit.Test;
  *
  * @author tarasev
  */
-public class UserFirstnameAnnotationsTest extends BaseConstraintAnnotationsTest {
+public class UserFirstNameAnnotationsTest extends BaseConstraintAnnotationsTest {
 
     private static class UserFirstnameWrapper implements ObjectHolder {
 
-        @UserFirstname
+        @UserFirstName
         private String object;
 
         @Override
@@ -31,7 +31,7 @@ public class UserFirstnameAnnotationsTest extends BaseConstraintAnnotationsTest 
 
     private static class UserFirstnameRequiredWrapper implements ObjectHolder {
 
-        @UserFirstnameRequired
+        @UserFirstNameRequired
         private String object;
 
         @Override
