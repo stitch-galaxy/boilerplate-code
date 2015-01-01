@@ -15,7 +15,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * @author tarasev
  */
 @Configuration
-@PropertySource("classpath:/com/sg/conf/rest.${com.sg.environment.provider}.${com.sg.environment.circle}.properties")
+@PropertySource("classpath:/config/application.properties")
 public class PropertiesContextConfiguration {
 
     @Bean

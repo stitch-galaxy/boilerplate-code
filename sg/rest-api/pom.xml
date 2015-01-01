@@ -40,10 +40,6 @@
         <!--internal dependencies-->
         <dependency>
             <groupId>com.sg.rest</groupId>
-            <artifactId>configuration</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sg.rest</groupId>
             <artifactId>dto</artifactId>
         </dependency>
         <dependency>
