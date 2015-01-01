@@ -12,7 +12,7 @@
     
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>com.sg.sg_rest_api.configuration.WebApplicationContext</param-value>
+        <param-value>com.sg.rest.spring.WebApplicationContext</param-value>
     </context-param>
     <!-- Root web application context -->
     <listener>
@@ -31,7 +31,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.sg.sg_rest_api.configuration.ServletContext</param-value>
+            <param-value>com.sg.rest.spring.ServletContext</param-value>
         </init-param>
     </servlet>
 

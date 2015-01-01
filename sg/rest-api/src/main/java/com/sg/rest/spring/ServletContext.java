@@ -18,6 +18,5 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackageClasses = {NoOp.class})
-//@ComponentScan("com.sg.sg_rest_api.controllers")
 public class ServletContext extends WebMvcConfigurerAdapter {
 }
