@@ -8,7 +8,7 @@ package com.sg.rest;
 import com.sg.rest.utils.CustomMediaTypes;
 import com.sg.domain.service.SgService;
 import com.sg.dto.request.ThreadCreateDto;
-import com.sg.rest.spring.ServletContext;
+import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.rest.spring.WebApplicationUnitTestContext;
@@ -50,7 +50,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebApplicationUnitTestContext.class, ServletContext.class})
+@ContextConfiguration(classes = {WebApplicationUnitTestContext.class, SpringServletContextConfiguration.class})
 public class ExceptionHandlingTest {
 
     private MockMvc mockMvc;

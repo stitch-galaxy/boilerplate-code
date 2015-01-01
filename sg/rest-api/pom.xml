@@ -18,18 +18,19 @@
     </properties>
 
     <dependencies>
+        <!--servlet api-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <!--<version>3.1.0</version>-->
+            <scope>provided</scope>
+        </dependency>
         <!--used for logging filter-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io-version}</version>
             <type>jar</type>
-        </dependency>
-        <!--internal-->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>test</scope>
         </dependency>
         <!--mail-->
         <dependency>

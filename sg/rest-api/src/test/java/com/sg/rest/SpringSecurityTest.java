@@ -10,7 +10,7 @@ import com.sg.rest.spring.WebApplicationIntegrationTestContext;
 import com.sg.domain.service.SgService;
 import com.sg.rest.http.CustomHeaders;
 import com.sg.rest.errorcodes.ErrorCodes;
-import com.sg.rest.spring.ServletContext;
+import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.constants.Roles;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
@@ -55,7 +55,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebApplicationIntegrationTestContext.class, ServletContext.class})
+@ContextConfiguration(classes = {WebApplicationIntegrationTestContext.class, SpringServletContextConfiguration.class})
 public class SpringSecurityTest {
 
     private static final long ACCOUNT_ID = 1L;

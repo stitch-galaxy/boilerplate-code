@@ -11,7 +11,7 @@ import com.sg.rest.operationstatus.InstallStatus;
 import com.sg.rest.utils.CustomMediaTypes;
 import com.sg.rest.spring.WebApplicationUnitTestContext;
 import com.sg.domain.service.SgService;
-import com.sg.rest.spring.ServletContext;
+import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.constants.Roles;
 import com.sg.rest.operationstatus.SigninStatus;
@@ -63,7 +63,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebApplicationUnitTestContext.class, ServletContext.class})
+@ContextConfiguration(classes = {WebApplicationUnitTestContext.class, SpringServletContextConfiguration.class})
 public class SigninSignupControllerTest {
 
     private MockMvc mockMvc;
