@@ -21,7 +21,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  *
@@ -29,8 +29,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  */
 @Configuration
 @EnableJpaRepositories(basePackageClasses = {NoOpClass.class})
-//GAE do not support @Transactional annotation because where is a class on a call stack which is not in a white list
-//@EnableTransactionManagement
+@EnableTransactionManagement
 public class PersistenceContextConfig {
 
     @Value("${jdbc.url}")
@@ -85,19 +84,11 @@ public class PersistenceContextConfig {
         ds.setPassword(password);
         return ds;
     }
-
+    
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-        JpaTransactionManager txManager = new JpaTransactionManager();
-        txManager.setEntityManagerFactory(emf);
-        return txManager;
-    }
-
-    @Bean
-    public TransactionTemplate transactionTemplate(PlatformTransactionManager transactionManager) {
-        TransactionTemplate template = new TransactionTemplate(transactionManager);
-        template.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-        return template;
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf)
+    {
+        return new JpaTransactionManager(emf);
     }
 
     @Bean

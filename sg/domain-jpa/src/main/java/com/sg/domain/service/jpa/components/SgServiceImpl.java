@@ -18,7 +18,6 @@ import com.sg.domain.repositories.CanvasesRepository;
 import com.sg.domain.repositories.ProductRepository;
 import com.sg.domain.repositories.ThreadsRepository;
 import java.util.List;
-import org.springframework.transaction.support.TransactionTemplate;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
 import com.sg.domain.repositories.AccountsRepository;
@@ -51,6 +50,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.validation.annotation.Validated;
@@ -59,7 +59,7 @@ import org.springframework.validation.annotation.Validated;
  *
  * @author tarasev
  */
-//@Transactional annotation prevent spring context to be initialized on GAE
+@Transactional
 @Service
 @Validated
 public class SgServiceImpl implements SgService {
@@ -79,9 +79,6 @@ public class SgServiceImpl implements SgService {
     @Autowired
     private MapperFacade mapper;
 
-    @Autowired
-    private TransactionTemplate transactionTemplate;
-
     @Value("${admin.email}")
     private String ADMIN_EMAIL;
     @Value("${admin.password}")
@@ -90,23 +87,10 @@ public class SgServiceImpl implements SgService {
     private String USER_EMAIL;
     @Value("${user.password}")
     private String USER_PASSWORD;
+    
 
     @Override
-    public void delete(final ThreadDeleteDto dto) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    deleteThreadImpl(dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void deleteThreadImpl(ThreadDeleteDto dto) {
+    public void delete(ThreadDeleteDto dto) {
         Thread thread = threadsRepository.findByCode(dto.getCode());
         if (thread == null) {
             throw new SgThreadNotFoundException(dto.getCode());
@@ -114,21 +98,8 @@ public class SgServiceImpl implements SgService {
         threadsRepository.delete(thread.getId());
     }
 
-    public void create(final ThreadCreateDto dto) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    createThreadImpl(dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void createThreadImpl(ThreadCreateDto dto) {
+    @Override
+    public void create(ThreadCreateDto dto) {
         if (threadsRepository.findByCode(dto.getCode()) != null) {
             throw new SgThreadAlreadyExistsException(dto.getCode());
         }
@@ -137,21 +108,8 @@ public class SgServiceImpl implements SgService {
         threadsRepository.save(thread);
     }
 
+    @Override
     public ThreadsListDto listThreads() {
-        return transactionTemplate.execute(new TransactionCallback<ThreadsListDto>() {
-            public ThreadsListDto doInTransaction(TransactionStatus status) {
-                try {
-                    return listThreadsImpl();
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private ThreadsListDto listThreadsImpl() {
         ThreadsListDto result = new ThreadsListDto();
         Iterable<Thread> threads = threadsRepository.findAll();
 
@@ -164,21 +122,8 @@ public class SgServiceImpl implements SgService {
         return result;
     }
 
-    public void update(final ThreadUpdateDto dto) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    updateThreadImpl(dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void updateThreadImpl(ThreadUpdateDto dto) {
+    @Override
+    public void update(ThreadUpdateDto dto) {
         Thread thread = threadsRepository.findByCode(dto.getRefCode());
         if (thread == null) {
             throw new SgThreadNotFoundException(dto.getRefCode());
@@ -191,21 +136,8 @@ public class SgServiceImpl implements SgService {
         threadsRepository.save(thread);
     }
 
-    public void create(final CanvasCreateDto dto) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    createCanvasImpl(dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void createCanvasImpl(CanvasCreateDto dto) {
+    @Override
+    public void create(CanvasCreateDto dto) {
         if (canvasesRepository.findByCode(dto.getCode()) != null) {
             throw new SgCanvasAlreadyExistsException(dto.getCode());
         }
@@ -213,21 +145,8 @@ public class SgServiceImpl implements SgService {
         canvasesRepository.save(canvas);
     }
 
-    public void delete(final CanvasDeleteDto dto) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    deleteCanvasImpl(dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void deleteCanvasImpl(CanvasDeleteDto dto) {
+    @Override
+    public void delete(CanvasDeleteDto dto) {
         Canvas canvas = canvasesRepository.findByCode(dto.getCode());
         if (canvas == null) {
             throw new SgCanvasNotFoundException(dto.getCode());
@@ -235,21 +154,8 @@ public class SgServiceImpl implements SgService {
         canvasesRepository.delete(canvas);
     }
 
-    public void update(final CanvasUpdateDto dto) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    updateCanvasImpl(dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void updateCanvasImpl(CanvasUpdateDto dto) {
+    @Override
+    public void update(CanvasUpdateDto dto) {
         Canvas canvas = canvasesRepository.findByCode(dto.getRefCode());
         if (canvas == null) {
             throw new SgCanvasNotFoundException(dto.getRefCode());
@@ -261,21 +167,8 @@ public class SgServiceImpl implements SgService {
         canvasesRepository.save(canvas);
     }
 
+    @Override
     public CanvasesListDto listCanvases() {
-        return transactionTemplate.execute(new TransactionCallback<CanvasesListDto>() {
-            public CanvasesListDto doInTransaction(TransactionStatus status) {
-                try {
-                    return listCanvasesImpl();
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private CanvasesListDto listCanvasesImpl() {
         CanvasesListDto result = new CanvasesListDto();
         Iterable<Canvas> canvases = canvasesRepository.findAll();
 
@@ -288,29 +181,17 @@ public class SgServiceImpl implements SgService {
         return result;
     }
 
+    @Override
     public void signupUser(final SignupDto dto) {
         signup(dto, Roles.USER);
     }
 
+    @Override
     public void signupAdmin(final SignupDto dto) {
         signup(dto, Roles.ADMIN, Roles.USER);
     }
 
-    private void signup(final SignupDto dto, final String... roles) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    signupImpl(dto, roles);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    public void signupImpl(SignupDto dto, String... roles) {
+    private void signup(SignupDto dto, String... roles) {
         Account account = accountsRepository.findByEmail(dto.getEmail());
         if (account != null) {
             if (account.getEmailVerified() == Boolean.FALSE) {
@@ -325,21 +206,8 @@ public class SgServiceImpl implements SgService {
         accountsRepository.save(account);
     }
 
-    public void completeSignup(final Long userId, final CompleteSignupDto dto) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    completeSignupImpl(userId, dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    public void completeSignupImpl(Long accountId, CompleteSignupDto dto) {
+    @Override
+    public void completeSignup(Long accountId, CompleteSignupDto dto) {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);
@@ -352,21 +220,8 @@ public class SgServiceImpl implements SgService {
         accountsRepository.save(account);
     }
 
-    public void signIn(final SigninDto dto) {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    signInImpl(dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    public void signInImpl(SigninDto dto) {
+    @Override
+    public void signIn(SigninDto dto) {
         Account account = accountsRepository.findByEmail(dto.getEmail());
         if (account == null) {
             throw new SgAccountNotFoundException(dto.getEmail());
@@ -379,26 +234,14 @@ public class SgServiceImpl implements SgService {
         }
     }
 
+    @Override
     public void ping() {
-    }
-
-    public void install() throws SgInstallationAlreadyCompletedException {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    installImpl();
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
     }
 
     private static final LocalDate BIRTH_DATE = LocalDate.parse("1984-07-10");
 
-    private void installImpl() {
+    @Override
+    public void install() {
         Account account = accountsRepository.findByEmail(ADMIN_EMAIL);
         if (account != null) {
             throw new SgInstallationAlreadyCompletedException();
@@ -424,21 +267,8 @@ public class SgServiceImpl implements SgService {
         accountsRepository.save(account);
     }
 
-    public void setUserInfo(final Long accountId, final UserInfoUpdateDto dto) throws SgAccountNotFoundException {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    setUserInfoImpl(accountId, dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void setUserInfoImpl(Long accountId, UserInfoUpdateDto dto) throws SgAccountNotFoundException {
+    @Override
+    public void setUserInfo(Long accountId, UserInfoUpdateDto dto) throws SgAccountNotFoundException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);
@@ -447,21 +277,8 @@ public class SgServiceImpl implements SgService {
         accountsRepository.save(account);
     }
 
+    @Override
     public UserInfoDto getUserInfo(final Long accountId) throws SgAccountNotFoundException {
-        return transactionTemplate.execute(new TransactionCallback<UserInfoDto>() {
-            public UserInfoDto doInTransaction(TransactionStatus status) {
-                try {
-                    return getUserInfoImpl(accountId);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private UserInfoDto getUserInfoImpl(final Long accountId) throws SgAccountNotFoundException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);
@@ -469,21 +286,8 @@ public class SgServiceImpl implements SgService {
         return mapper.map(account, UserInfoDto.class);
     }
 
-    public void deleteAccount(final Long accountId) throws SgAccountNotFoundException {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    deleteAccountImpl(accountId);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void deleteAccountImpl(Long accountId) throws SgAccountNotFoundException {
+    @Override
+    public void deleteAccount(Long accountId) throws SgAccountNotFoundException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);
@@ -491,21 +295,8 @@ public class SgServiceImpl implements SgService {
         accountsRepository.delete(account);
     }
 
-    public void resetPassword(final Long accountId, final ResetPasswordDto dto) throws SgAccountNotFoundException {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    resetPasswordImpl(accountId, dto);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void resetPasswordImpl(Long accountId, ResetPasswordDto dto) throws SgAccountNotFoundException, SgAccountWithoutEmailException {
+    @Override
+    public void resetPassword(Long accountId, ResetPasswordDto dto) throws SgAccountNotFoundException, SgAccountWithoutEmailException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);
@@ -521,21 +312,7 @@ public class SgServiceImpl implements SgService {
     }
 
     @Override
-    public Long getAccountId(final String email) throws SgAccountNotFoundException {
-        return transactionTemplate.execute(new TransactionCallback<Long>() {
-            public Long doInTransaction(TransactionStatus status) {
-                try {
-                    return getAccountIdImpl(email);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private Long getAccountIdImpl(String email) {
+    public Long getAccountId(String email) {
         Account account = accountsRepository.findByEmail(email);
         if (account == null) {
             throw new SgAccountNotFoundException(email);
@@ -544,21 +321,7 @@ public class SgServiceImpl implements SgService {
     }
 
     @Override
-    public AccountRolesDto getAccountRoles(final Long accountId) throws SgAccountNotFoundException {
-        return transactionTemplate.execute(new TransactionCallback<AccountRolesDto>() {
-            public AccountRolesDto doInTransaction(TransactionStatus status) {
-                try {
-                    return getAccountRolesImpl(accountId);
-                } catch (SgServiceLayerRuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
-                    throw new SgServiceLayerRuntimeException(e);
-                }
-            }
-        });
-    }
-
-    public AccountRolesDto getAccountRolesImpl(Long accountId) throws SgAccountNotFoundException {
+    public AccountRolesDto getAccountRoles(Long accountId) throws SgAccountNotFoundException {
         Account account = accountsRepository.findOne(accountId);
         if (account == null) {
             throw new SgAccountNotFoundException(accountId);

@@ -9,15 +9,13 @@
     <parent>
         <groupId>io.spring.platform</groupId>
         <artifactId>platform-bom</artifactId>
-        <version>1.0.2.RELEASE</version>
+        <version>1.0.3.RELEASE</version>
         <relativePath/>
     </parent>
   
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <appengine.target.version>1.9.7</appengine.target.version>
-
-        <sg.rest.api.version>1.0.0-SNAPSHOT</sg.rest.api.version>
         
         <orika-core-version>1.4.5</orika-core-version>
         <rest-assured-version>2.3.2</rest-assured-version>
@@ -55,11 +53,6 @@
             <dependency>
                 <groupId>com.sg.rest</groupId>
                 <artifactId>dto</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sg.rest</groupId>
-                <artifactId>enum</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -106,7 +99,6 @@
     <modules>
         <module>configuration</module>
         <module>dto</module>
-        <module>enum</module>
         <module>domain</module>
         <module>domain-jpa</module>
         <module>ear</module>
