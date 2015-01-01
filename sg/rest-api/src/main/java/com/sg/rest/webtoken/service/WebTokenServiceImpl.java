@@ -29,7 +29,7 @@ public class WebTokenServiceImpl implements WebTokenService {
     private final AuthTokenComponent authTokenComponent;
 
     @Autowired
-    public WebTokenServiceImpl(@Value("${security.key}") String symmetricKey) {
+    public WebTokenServiceImpl(@Value("${com.sg.security.key}") String symmetricKey) {
         this.authTokenComponent = new JwtAuthTokenComponent(symmetricKey, Duration.standardMinutes(2));
     }
 
