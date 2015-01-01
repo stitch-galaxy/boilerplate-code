@@ -5,11 +5,11 @@
  */
 package com.sg.rest;
 
-import com.sg.sg_rest_api.utils.CustomMediaTypes;
-import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
+import com.sg.rest.utils.CustomMediaTypes;
+import com.sg.rest.spring.WebApplicationUnitTestContext;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.domain.service.SgService;
-import com.sg.sg_rest_api.configuration.ServletContext;
+import com.sg.rest.spring.ServletContext;
 import com.sg.rest.apipath.RequestPath;
 import com.sg.rest.operationstatus.SigninStatus;
 import com.sg.rest.operationstatus.ThreadOperationStatus;

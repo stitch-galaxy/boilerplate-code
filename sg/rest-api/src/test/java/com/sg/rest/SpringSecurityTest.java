@@ -5,12 +5,12 @@
  */
 package com.sg.rest;
 
-import com.sg.sg_rest_api.utils.CustomMediaTypes;
-import com.sg.sg_rest_api.test.configuration.WebApplicationIntegrationTestContext;
+import com.sg.rest.utils.CustomMediaTypes;
+import com.sg.rest.spring.WebApplicationIntegrationTestContext;
 import com.sg.domain.service.SgService;
 import com.sg.rest.http.CustomHeaders;
 import com.sg.rest.errorcodes.ErrorCodes;
-import com.sg.sg_rest_api.configuration.ServletContext;
+import com.sg.rest.spring.ServletContext;
 import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.constants.Roles;
 import com.sg.domain.service.exception.SgAccountNotFoundException;

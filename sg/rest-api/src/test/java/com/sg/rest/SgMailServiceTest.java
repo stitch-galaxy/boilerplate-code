@@ -7,8 +7,8 @@ package com.sg.rest;
  * and open the template in the editor.
  */
 import com.sg.rest.mail.service.SgMailService;
-import com.sg.domain.spring.configuration.JacksonMapperContext;
-import com.sg.domain.spring.configuration.SgMailServiceContext;
+import com.sg.rest.spring.JacksonMapperContext;
+import com.sg.rest.spring.SgMailServiceContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

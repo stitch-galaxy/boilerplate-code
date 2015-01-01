@@ -6,7 +6,7 @@
 
 package com.sg.rest;
 
-import com.sg.domain.spring.configuration.JacksonMapperContext;
+import com.sg.rest.spring.JacksonMapperContext;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.serialization.DateTimeFormatStrings;

@@ -7,8 +7,8 @@ package com.sg.rest.security.components;
 
 import com.sg.rest.errorcodes.ErrorCodes;
 import com.sg.dto.response.ErrorDto;
-import com.sg.sg_rest_api.utils.CustomMediaTypes;
-import com.sg.sg_rest_api.utils.Utils;
+import com.sg.rest.utils.CustomMediaTypes;
+import com.sg.rest.utils.Utils;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

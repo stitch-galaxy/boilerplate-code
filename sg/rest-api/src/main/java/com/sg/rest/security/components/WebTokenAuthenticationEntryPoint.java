@@ -14,8 +14,8 @@ import com.sg.dto.response.ErrorDto;
 import com.sg.rest.webtoken.WebSecurityAccountNotFoundException;
 import com.sg.rest.webtoken.WebSecurityBadTokenException;
 import com.sg.rest.webtoken.WebSecurityTokenExpiredException;
-import com.sg.sg_rest_api.utils.CustomMediaTypes;
-import com.sg.sg_rest_api.utils.Utils;
+import com.sg.rest.utils.CustomMediaTypes;
+import com.sg.rest.utils.Utils;
 import java.io.IOException;
 import javax.servlet.ServletException;
 

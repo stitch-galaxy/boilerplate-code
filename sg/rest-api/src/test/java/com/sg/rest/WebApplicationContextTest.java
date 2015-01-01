@@ -5,8 +5,8 @@
  */
 package com.sg.rest;
 
-import com.sg.sg_rest_api.configuration.ServletContext;
-import com.sg.sg_rest_api.configuration.WebApplicationContext;
+import com.sg.rest.spring.ServletContext;
+import com.sg.rest.spring.WebApplicationContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

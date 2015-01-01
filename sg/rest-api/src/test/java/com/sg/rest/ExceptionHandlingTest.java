@@ -5,13 +5,13 @@
  */
 package com.sg.rest;
 
-import com.sg.sg_rest_api.utils.CustomMediaTypes;
+import com.sg.rest.utils.CustomMediaTypes;
 import com.sg.domain.service.SgService;
 import com.sg.dto.request.ThreadCreateDto;
-import com.sg.sg_rest_api.configuration.ServletContext;
+import com.sg.rest.spring.ServletContext;
 import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
-import com.sg.sg_rest_api.test.configuration.WebApplicationUnitTestContext;
+import com.sg.rest.spring.WebApplicationUnitTestContext;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
