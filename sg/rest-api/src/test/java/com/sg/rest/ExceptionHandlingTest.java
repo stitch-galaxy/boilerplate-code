@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.sg_rest_api.test;
+package com.sg.rest;
 
 import com.sg.sg_rest_api.utils.CustomMediaTypes;
 import com.sg.domain.service.SgService;

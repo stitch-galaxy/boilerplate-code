@@ -1,4 +1,4 @@
-package com.sg.domain.test.jpa;
+package com.sg.rest;
 
 
 /*
@@ -6,7 +6,7 @@ package com.sg.domain.test.jpa;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.sg.domain.service.SgMailService;
+import com.sg.rest.mail.service.SgMailService;
 import com.sg.domain.spring.configuration.JacksonMapperContext;
 import com.sg.domain.spring.configuration.SgMailServiceContext;
 import org.junit.Test;

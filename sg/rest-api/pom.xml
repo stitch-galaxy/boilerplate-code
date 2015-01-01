@@ -18,18 +18,6 @@
     </properties>
 
     <dependencies>
-        <!--GAE-->
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-1.0-sdk</artifactId>
-            <version>${appengine.target.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>
         <!--used for logging filter-->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -48,8 +36,6 @@
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
         </dependency>
-        <!--cf-->
-        <!--TODO: specify specific servlet version-->
         <!--internal dependencies-->
         <dependency>
             <groupId>com.sg.rest</groupId>
@@ -179,10 +165,6 @@
         </dependency> 
     </dependencies>
     <build>
-        <finalName>rest-api</finalName>
-
-        <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory> 
-                                   
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -190,15 +172,6 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <archiveClasses>true</archiveClasses>
-                    <webResources>
-                        <!-- in order to interpolate version from pom into appengine-web.xml -->
-                        <resource>
-                            <directory>${basedir}/src/main/webapp/WEB-INF</directory>
-                            <filtering>true</filtering>
-                            <targetPath>WEB-INF</targetPath>
-                        </resource>
-                    </webResources>
                 </configuration>
             </plugin>
         </plugins>

@@ -15,7 +15,6 @@
   
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <appengine.target.version>1.9.7</appengine.target.version>
         
         <orika-core-version>1.4.5</orika-core-version>
         <rest-assured-version>2.3.2</rest-assured-version>
@@ -67,11 +66,6 @@
             </dependency>
             <dependency>
                 <groupId>com.sg.rest</groupId>
-                <artifactId>ear</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sg.rest</groupId>
                 <artifactId>rest-api</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
@@ -84,24 +78,11 @@
         </dependencies>
     </dependencyManagement>
 
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>com.google.appengine</groupId>
-                    <artifactId>appengine-maven-plugin</artifactId>
-                    <version>${appengine.target.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
     <modules>
         <module>configuration</module>
         <module>dto</module>
         <module>domain</module>
         <module>domain-jpa</module>
-        <module>ear</module>
         <module>rest-api</module>
 <!--        <module>rest-integ-test</module>-->
         <module>authtoken</module>

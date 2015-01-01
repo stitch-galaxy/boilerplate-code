@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.sg_rest_api.test;
+package com.sg.rest;
 
 import com.sg.rest.operationstatus.CompleteSignupStatus;
 import com.sg.rest.http.CustomHeaders;
@@ -17,7 +17,7 @@ import com.sg.domain.constants.Roles;
 import com.sg.rest.operationstatus.SigninStatus;
 import com.sg.rest.operationstatus.SignupStatus;
 import com.sg.dto.request.SignupDto;
-import com.sg.domain.service.SgMailService;
+import com.sg.rest.mail.service.SgMailService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;

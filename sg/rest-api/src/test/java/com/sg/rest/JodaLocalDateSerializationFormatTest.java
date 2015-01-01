@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.test.jpa;
+package com.sg.rest;
 
 import com.sg.domain.spring.configuration.JacksonMapperContext;
 import com.sg.dto.request.SignupDto;

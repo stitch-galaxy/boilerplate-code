@@ -1,6 +1,6 @@
 package com.sg.sg_rest_api.test.configuration;
 
-import com.sg.domain.service.SgMailService;
+import com.sg.rest.mail.service.SgMailService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

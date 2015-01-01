@@ -6,7 +6,6 @@
 package com.sg.domain.service.jpa.components;
 
 import com.sg.domain.constants.Roles;
-import com.sg.domain.service.exception.SgServiceLayerRuntimeException;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
@@ -49,10 +48,7 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.validation.annotation.Validated;
 
 /**

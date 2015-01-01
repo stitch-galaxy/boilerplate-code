@@ -6,8 +6,8 @@
 
 package com.sg.domain.spring.configuration;
 
-import com.sg.domain.service.GaeMailServiceImpl;
-import com.sg.domain.service.SgMailService;
+import com.sg.rest.mail.service.SgMailServiceImpl;
+import com.sg.rest.mail.service.SgMailService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +20,6 @@ import org.springframework.context.annotation.Configuration;
 public class SgMailServiceContext {
     @Bean
     public SgMailService sgMailService() {
-        return new GaeMailServiceImpl();
+        return new SgMailServiceImpl();
     }
 }

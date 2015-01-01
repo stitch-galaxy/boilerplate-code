@@ -21,7 +21,7 @@ import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
 import com.sg.dto.response.OperationStatusDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SignupDto;
-import com.sg.domain.service.SgMailService;
+import com.sg.rest.mail.service.SgMailService;
 import com.sg.domain.service.exception.SgAccountNotFoundException;
 import com.sg.domain.service.exception.SgEmailNonVerifiedException;
 import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
