@@ -21,7 +21,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //http://www.luckyryan.com/2013/02/07/migrate-spring-mvc-servlet-xml-to-java-config/
 //http://www.robinhowlett.com/blog/2013/02/13/spring-app-migration-from-xml-to-java-based-config/
 @Configuration
-@EnableWebMvc
 @Import({PropertiesContextConfiguration.class, ValidatorContextConfig.class, PersistenceContextConfig.class, ServiceContextConfig.class, WebTokenServiceContextConfiguration.class, JacksonMapperContext.class, SecurityContext.class, SgMailServiceContext.class})
 public class WebApplicationContext extends WebMvcConfigurerAdapter {
 
