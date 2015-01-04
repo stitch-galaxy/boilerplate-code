@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.service.exception;
+package com.sg.domain.exception;
 
 /**
  *

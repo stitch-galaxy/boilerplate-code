@@ -11,7 +11,7 @@ package com.sg.rest.security.components;
  */
 import com.sg.rest.http.CustomHeaders;
 import com.sg.domain.service.SgService;
-import com.sg.domain.service.exception.SgAccountNotFoundException;
+import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.dto.response.AccountRolesDto;
 import com.sg.rest.security.SgRestUser;
 import com.sg.rest.webtoken.WebSecurityAccountNotFoundException;

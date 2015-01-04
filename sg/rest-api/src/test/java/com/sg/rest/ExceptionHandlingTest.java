@@ -10,7 +10,7 @@ import com.sg.domain.service.SgService;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.apipath.RequestPath;
-import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
+import com.sg.domain.exception.SgThreadAlreadyExistsException;
 import com.sg.rest.spring.WebApplicationUnitTestContext;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletResponse;

@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.service.exception;
+package com.sg.domain.exception;
 
 /**
  *
  * @author tarasev
  */
-public class SgEmailNonVerifiedException extends SgServiceLayerRuntimeException {
-    public SgEmailNonVerifiedException(String email)
+public class SgCanvasNotFoundException extends SgServiceLayerRuntimeException {
+    public SgCanvasNotFoundException(String code)
     {
-        super("Email " + email + " non verified.");
+        super("Canvas " + code + " not found.");
     }
     
 }

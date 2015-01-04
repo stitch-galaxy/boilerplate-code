@@ -6,17 +6,17 @@
 
 package com.sg.domain.service;
 
-import com.sg.domain.service.exception.SgAccountNotFoundException;
-import com.sg.domain.service.exception.SgAccountWithoutEmailException;
-import com.sg.domain.service.exception.SgCanvasAlreadyExistsException;
-import com.sg.domain.service.exception.SgCanvasNotFoundException;
-import com.sg.domain.service.exception.SgEmailNonVerifiedException;
-import com.sg.domain.service.exception.SgInstallationAlreadyCompletedException;
-import com.sg.domain.service.exception.SgInvalidPasswordException;
-import com.sg.domain.service.exception.SgSignupAlreadyCompletedException;
-import com.sg.domain.service.exception.SgSignupForRegisteredButNonVerifiedEmailException;
-import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
-import com.sg.domain.service.exception.SgThreadNotFoundException;
+import com.sg.domain.exception.SgAccountNotFoundException;
+import com.sg.domain.exception.SgAccountWithoutEmailException;
+import com.sg.domain.exception.SgCanvasAlreadyExistsException;
+import com.sg.domain.exception.SgCanvasNotFoundException;
+import com.sg.domain.exception.SgEmailNonVerifiedException;
+import com.sg.domain.exception.SgInstallationAlreadyCompletedException;
+import com.sg.domain.exception.SgInvalidPasswordException;
+import com.sg.domain.exception.SgSignupAlreadyCompletedException;
+import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
+import com.sg.domain.exception.SgThreadAlreadyExistsException;
+import com.sg.domain.exception.SgThreadNotFoundException;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
 import com.sg.dto.request.CanvasUpdateDto;
