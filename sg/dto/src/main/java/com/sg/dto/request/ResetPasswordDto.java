@@ -6,7 +6,6 @@
 
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.PasswordRequired;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -15,11 +14,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class ResetPasswordDto {
     
-    public static final String PASSWORD_FIELD = "ResetPasswordDto.Password";
-    
-    @PasswordRequired(message = PASSWORD_FIELD)
     private String password;
-    
     
     @Override
     public boolean equals(Object obj) {

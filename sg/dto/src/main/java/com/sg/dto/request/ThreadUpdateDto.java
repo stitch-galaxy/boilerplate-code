@@ -6,7 +6,6 @@
 
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.ThreadRequired;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -15,13 +14,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class ThreadUpdateDto {
     
-    public static final String CODE_FIELD = "ThreadUpdateDto.Code";
-    public static final String REF_CODE_FIELD = "ThreadUpdateDto.RefCode";
-    
-    @ThreadRequired(message = CODE_FIELD)
     private String code;
-    
-    @ThreadRequired(message = REF_CODE_FIELD)
     private String refCode;
 
 

@@ -5,9 +5,6 @@
  */
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.EmailRequired;
-import com.sg.dto.constraints.UserFirstName;
-import com.sg.dto.constraints.UserLastName;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -16,17 +13,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class SignupDto {
 
-    public static final String EMAIL_FIELD = "SignupDto.Email";
-    public static final String USER_FIRSTNAME_FIELD = "SignupDto.UserFirstName";
-    public static final String USER_LASTNAME_FIELD = "SignupDto.UserLastName";
-    
-    @EmailRequired(message = EMAIL_FIELD)
     private String email;
-
-    @UserFirstName(message = USER_FIRSTNAME_FIELD)
     private String userFirstName;
-
-    @UserLastName(message = USER_LASTNAME_FIELD)
     private String userLastName;
 
     /**

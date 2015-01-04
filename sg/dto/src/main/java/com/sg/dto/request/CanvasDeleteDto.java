@@ -5,7 +5,6 @@
  */
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.CanvasRequired;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -14,9 +13,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class CanvasDeleteDto {
 
-    public static final String CODE_FIELD = "CanvasDeleteDto.Code";
-    
-    @CanvasRequired(message = CODE_FIELD)
     private String code;
 
     /**

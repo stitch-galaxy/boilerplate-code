@@ -7,7 +7,6 @@
 package com.sg.rest.spring;
 
 import com.sg.rest.spring.JacksonMapperContext;
-import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
 import com.sg.rest.spring.WebTokenServiceContextConfiguration;
 import com.sg.rest.spring.SecurityContext;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 @EnableWebMvc
-@Import({TestRestPropertiesContextConfiguration.class, ValidatorContextConfig.class, ServiceMockContext.class, WebTokenServiceContextConfiguration.class, JacksonMapperContext.class, SecurityContext.class, MailMockContext.class})
+@Import({TestRestPropertiesContextConfiguration.class, ServiceMockContext.class, WebTokenServiceContextConfiguration.class, JacksonMapperContext.class, SecurityContext.class, MailMockContext.class})
 public class WebApplicationIntegrationTestContext extends WebMvcConfigurerAdapter {
     
 }

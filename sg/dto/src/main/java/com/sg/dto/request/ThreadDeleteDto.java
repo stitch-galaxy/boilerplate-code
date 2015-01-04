@@ -5,8 +5,6 @@
  */
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.Thread;
-import com.sg.dto.constraints.ThreadRequired;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -15,9 +13,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class ThreadDeleteDto {
 
-    public static final String CODE_FIELD = "ThreadDeleteDto.Code";
-    
-    @ThreadRequired(message = CODE_FIELD)
     private String code;
 
     /**

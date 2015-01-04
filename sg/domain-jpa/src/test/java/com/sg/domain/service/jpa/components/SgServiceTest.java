@@ -27,7 +27,6 @@ import com.sg.domain.service.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.service.exception.SgThreadNotFoundException;
 import com.sg.domain.service.jpa.spring.PersistenceContextConfig;
 import com.sg.domain.service.jpa.spring.ServiceContextConfig;
-import com.sg.domain.service.jpa.spring.ValidatorContextConfig;
 import com.sg.domain.test.spring.configuration.TestJpaServicePropertiesContextConfiguration;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.ResetPasswordDto;
@@ -62,7 +61,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, ValidatorContextConfig.class, PersistenceContextConfig.class, ServiceContextConfig.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, PersistenceContextConfig.class, ServiceContextConfig.class})
 public class SgServiceTest {
 
     @Value("${admin.email}")
@@ -182,16 +181,6 @@ public class SgServiceTest {
 
         resetPasswordDto = new ResetPasswordDto();
         resetPasswordDto.setPassword(NEW_USER_PASSWORD);
-    }
-
-    @Test
-    public void testServiceValidated() {
-        ThreadCreateDto dto = null;
-        try {
-            service.create(dto);
-            Assert.fail("Expected " + ConstraintViolationException.class.getName());
-        } catch (ConstraintViolationException ex) {
-        }
     }
 
     @Test

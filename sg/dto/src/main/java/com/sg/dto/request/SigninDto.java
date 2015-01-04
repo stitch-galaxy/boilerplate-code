@@ -5,8 +5,6 @@
  */
 package com.sg.dto.request;
 
-import com.sg.dto.constraints.EmailRequired;
-import com.sg.dto.constraints.PasswordRequired;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -15,13 +13,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  */
 public class SigninDto {
 
-    public static final String EMAIL_FIELD = "SigninDto.Email";
-    public static final String PASSWORD_FIELD = "SigninDto.Password";
-    
-    @EmailRequired(message = EMAIL_FIELD)
     private String email;
-
-    @PasswordRequired(message = PASSWORD_FIELD)
     private String password;
 
     /**

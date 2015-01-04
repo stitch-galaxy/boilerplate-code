@@ -8,7 +8,6 @@ package com.sg.dto.request;
 
 import com.sg.dto.serialization.JodaLocalDateJsonDeserializer;
 import com.sg.dto.serialization.JodaLocalDateJsonSerializer;
-import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.text.WordUtils;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
@@ -21,7 +20,6 @@ import org.joda.time.LocalDate;
  */
 public class UserInfoUpdateDto {
  
-    @Past
     @JsonSerialize(using = JodaLocalDateJsonSerializer.class)
     @JsonDeserialize(using = JodaLocalDateJsonDeserializer.class)
     private LocalDate userBirthDate;
