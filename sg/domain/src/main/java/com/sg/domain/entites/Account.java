@@ -20,7 +20,7 @@ public class Account {
     private String userLastName;
     private String nickname;
     private LocalDate userBirthDate;
-    private Integer sexPersistentId;
+    private Sex sex;
     private String email;
     private String password;
     private Boolean emailVerified;
@@ -142,14 +142,14 @@ public class Account {
      * @return the sex
      */
     public Sex getSex() {
-        return Sex.getSexFromPersistenId(sexPersistentId);
+        return sex;
     }
 
     /**
      * @param sex the sex to set
      */
     public void setSex(Sex sex) {
-        this.sexPersistentId = sex.getPersistentId();
+        this.sex = sex;
     }
 
     /**
