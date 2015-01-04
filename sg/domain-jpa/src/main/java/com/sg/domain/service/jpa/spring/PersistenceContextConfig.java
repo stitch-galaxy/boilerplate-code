@@ -5,7 +5,7 @@
  */
 package com.sg.domain.service.jpa.spring;
 
-import com.sg.domain.repositories.NoOpClass;
+import com.sg.domain.jpa.repository.NoOpClass;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;

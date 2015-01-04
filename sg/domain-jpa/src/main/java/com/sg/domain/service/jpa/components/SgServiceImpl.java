@@ -13,13 +13,13 @@ import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.domain.entities.jpa.Canvas;
-import com.sg.domain.repositories.CanvasesRepository;
-import com.sg.domain.repositories.ProductRepository;
-import com.sg.domain.repositories.ThreadsRepository;
+import com.sg.domain.jpa.repository.CanvasRepository;
+import com.sg.domain.jpa.repository.ProductRepository;
+import com.sg.domain.jpa.repository.ThreadRepository;
 import java.util.List;
 import com.sg.domain.entities.jpa.Thread;
 import com.sg.domain.entities.jpa.Account;
-import com.sg.domain.repositories.AccountsRepository;
+import com.sg.domain.jpa.repository.AccountRepository;
 import com.sg.domain.service.SgService;
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.exception.SgAccountWithoutEmailException;
@@ -64,13 +64,13 @@ public class SgServiceImpl implements SgService {
     private ProductRepository productRepository;
 
     @Autowired
-    private ThreadsRepository threadsRepository;
+    private ThreadRepository threadsRepository;
 
     @Autowired
-    private CanvasesRepository canvasesRepository;
+    private CanvasRepository canvasesRepository;
 
     @Autowired
-    private AccountsRepository accountsRepository;
+    private AccountRepository accountsRepository;
 
     @Autowired
     private MapperFacade mapper;

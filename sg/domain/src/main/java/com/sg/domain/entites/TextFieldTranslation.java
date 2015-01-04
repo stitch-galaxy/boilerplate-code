@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.repositories;
+
+package com.sg.domain.entites;
 
 /**
  *
  * @author tarasev
  */
-public class NoOpClass {
-    
+public class TextFieldTranslation {
+    private Long id;
+    private Locale locale;
+    private String value;
 }

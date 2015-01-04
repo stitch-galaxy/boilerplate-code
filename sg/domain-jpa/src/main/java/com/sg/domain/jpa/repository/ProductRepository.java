@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.repositories;
+package com.sg.domain.jpa.repository;
 
 import com.sg.domain.entities.jpa.Product;
 import org.springframework.data.repository.CrudRepository;

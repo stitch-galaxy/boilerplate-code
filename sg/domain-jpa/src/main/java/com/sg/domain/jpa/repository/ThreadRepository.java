@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.repositories;
+package com.sg.domain.jpa.repository;
 
 import com.sg.domain.entities.jpa.Thread;
 import org.springframework.data.repository.CrudRepository;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author tarasev
  */
 @Repository
-public interface ThreadsRepository extends CrudRepository<Thread, Integer> {
+public interface ThreadRepository extends CrudRepository<Thread, Integer> {
     Thread findByCode(String code);
 }

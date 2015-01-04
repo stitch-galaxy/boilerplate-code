@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.sg.domain.repositories;
+package com.sg.domain.jpa.repository;
 
-import com.sg.domain.entities.jpa.Account;
+import com.sg.domain.entities.jpa.Canvas;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author tarasev
  */
 @Repository
-public interface AccountsRepository extends CrudRepository<Account, Long> {
-    Account findByEmail(String email);
+public interface CanvasRepository extends CrudRepository<Canvas, Integer> {
+    Canvas findByCode(String code);
 }
