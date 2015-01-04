@@ -11,5 +11,8 @@ package com.sg.domain.repository;
  * @author Администратор
  */
 public interface ThreadRepository {
-    
+    public Thread findByCode(String code);
+    public Iterable<Thread> findAll();
+    public void delete(Thread thread);
+    public void save(Thread thread);
 }

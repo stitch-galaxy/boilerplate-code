@@ -11,7 +11,6 @@ import com.sg.domain.exception.SgAccountWithoutEmailException;
 import com.sg.domain.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.exception.SgCanvasNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
-import com.sg.domain.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
@@ -48,8 +47,6 @@ public interface SgService {
     public void delete(CanvasDeleteDto dto) throws SgCanvasNotFoundException;
     public void update(CanvasUpdateDto dto) throws SgCanvasNotFoundException, SgCanvasAlreadyExistsException;
     public CanvasesListDto listCanvases();   
-   
-    public void install() throws SgInstallationAlreadyCompletedException;
     
     public void signupUser(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     public void signupAdmin(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
@@ -61,8 +58,6 @@ public interface SgService {
     public void completeSignup(Long accountId, CompleteSignupDto dto) throws SgAccountNotFoundException, SgSignupAlreadyCompletedException;
     
     public void signIn(SigninDto dto) throws SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;
-    
-    public void ping() throws Exception;
     
     public void setUserInfo(Long accountId, UserInfoUpdateDto dto)  throws SgAccountNotFoundException;
     public UserInfoDto getUserInfo(Long accountId)  throws SgAccountNotFoundException;

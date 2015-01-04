@@ -6,10 +6,15 @@
 
 package com.sg.domain.repository;
 
+import com.sg.domain.entites.Canvas;
+
 /**
  *
  * @author Администратор
  */
 public interface CanvasRepository {
-    
+    public Canvas findByCode(String code);
+    public Iterable<Canvas> findAll();
+    public void save(Canvas canvas);
+    public void delete(Canvas canvas);
 }

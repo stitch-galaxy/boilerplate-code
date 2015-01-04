@@ -26,7 +26,6 @@ import com.sg.domain.exception.SgAccountWithoutEmailException;
 import com.sg.domain.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.exception.SgCanvasNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
-import com.sg.domain.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
@@ -228,39 +227,6 @@ public class SgServiceImpl implements SgService {
         if (!dto.getPassword().equals(account.getPassword())) {
             throw new SgInvalidPasswordException();
         }
-    }
-
-    @Override
-    public void ping() {
-    }
-
-    private static final LocalDate BIRTH_DATE = LocalDate.parse("1984-07-10");
-
-    @Override
-    public void install() {
-        Account account = accountsRepository.findByEmail(ADMIN_EMAIL);
-        if (account != null) {
-            throw new SgInstallationAlreadyCompletedException();
-        }
-        account = new Account();
-        account.setEmail(ADMIN_EMAIL);
-        account.setEmailVerified(Boolean.TRUE);
-        account.setPassword(ADMIN_PASSWORD);
-        account.setUserFirstName("admin");
-        account.setUserLastName("admin");
-        account.setUserBirthDate(BIRTH_DATE);
-        account.setRoles(Arrays.asList(Roles.ADMIN, Roles.USER));
-        accountsRepository.save(account);
-
-        account = new Account();
-        account.setEmail(USER_EMAIL);
-        account.setEmailVerified(Boolean.TRUE);
-        account.setPassword(USER_PASSWORD);
-        account.setUserFirstName("user");
-        account.setUserLastName("user");
-        account.setUserBirthDate(BIRTH_DATE);
-        account.setRoles(Arrays.asList(Roles.USER));
-        accountsRepository.save(account);
     }
 
     @Override

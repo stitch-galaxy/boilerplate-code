@@ -18,5 +18,10 @@
             <groupId>com.sg.rest</groupId>
             <artifactId>dto</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>${orika-core-version}</version>
+        </dependency>
     </dependencies>
 </project>

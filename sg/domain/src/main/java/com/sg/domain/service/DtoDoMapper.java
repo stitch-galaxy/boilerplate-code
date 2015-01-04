@@ -11,5 +11,6 @@ package com.sg.domain.service;
  * @author Администратор
  */
 public interface DtoDoMapper {
-    
+    public <S extends Object, D extends Object> D map(S s, Class<D> type);
+    public <S extends Object, D extends Object> void map(S s, D d);
 }

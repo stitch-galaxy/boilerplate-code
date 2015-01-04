@@ -19,7 +19,6 @@ import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.exception.SgCanvasAlreadyExistsException;
 import com.sg.domain.exception.SgCanvasNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
-import com.sg.domain.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
@@ -349,34 +348,6 @@ public class SgServiceTest {
             service.getAccountId(signupDto.getEmail());
             Assert.fail("Expected  " + SgAccountNotFoundException.class.getName());
         } catch (SgAccountNotFoundException e) {
-        }
-    }
-
-    @Test
-    public void testInstallation() {
-        service.install();
-
-        Long accountId = service.getAccountId(adminEmail);
-        AccountRolesDto rolesDto = service.getAccountRoles(accountId);
-
-        //TODO: think how to test it properly
-        //Assert.assertEquals(Boolean.TRUE, accountPrincipalDto.getEmailVerified());
-        Assert.assertTrue(rolesDto.getRoles().size() == 2);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ADMIN));
-
-        accountId = service.getAccountId(userEmail);
-        rolesDto = service.getAccountRoles(accountId);
-
-        //TODO: think how to test it properly
-        //Assert.assertEquals(Boolean.TRUE, accountPrincipalDto.getEmailVerified());
-        Assert.assertTrue(rolesDto.getRoles().size() == 1);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
-
-        try {
-            service.install();
-            Assert.fail("Expected " + SgSignupForRegisteredButNonVerifiedEmailException.class.getName());
-        } catch (SgInstallationAlreadyCompletedException e) {
         }
     }
 

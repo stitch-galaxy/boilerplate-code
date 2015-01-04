@@ -6,10 +6,15 @@
 
 package com.sg.domain.repository;
 
+import com.sg.domain.entites.Account;
+
 /**
  *
  * @author Администратор
  */
 public interface AccountRepository {
-    
+    public Account findByEmail(String email);
+    public Account findOne(Long accountId);
+    public void save(Account account);
+    public void delete(Account account);
 }
