@@ -56,12 +56,11 @@ public class SgServiceImpl implements SgService {
     private final AccountRepository accountRepository;
 
     private final DtoDoMapper mapper;
-    
+
     public SgServiceImpl(ProductRepository productRepository,
             ThreadRepository threadRepository,
             CanvasRepository canvasRepository,
-            AccountRepository accountRepository)
-    {
+            AccountRepository accountRepository) {
         this.productRepository = productRepository;
         this.threadRepository = threadRepository;
         this.canvasRepository = canvasRepository;
@@ -274,5 +273,9 @@ public class SgServiceImpl implements SgService {
             throw new SgAccountNotFoundException(accountId);
         }
         return mapper.map(account, AccountRolesDto.class);
+    }
+
+    @Override
+    public void ping() {
     }
 }

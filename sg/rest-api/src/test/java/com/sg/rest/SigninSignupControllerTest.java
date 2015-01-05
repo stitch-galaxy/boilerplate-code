@@ -20,7 +20,6 @@ import com.sg.dto.request.SignupDto;
 import com.sg.rest.mail.service.SgMailService;
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
-import com.sg.domain.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
@@ -121,31 +120,6 @@ public class SigninSignupControllerTest {
         signinDto = new SigninDto();
         signinDto.setEmail(USER_EMAIL);
         signinDto.setPassword(USER_PASSWORD);
-    }
-
-    @Test
-    public void testInstallAlreadyCompleted() throws Exception {
-        doThrow(new SgInstallationAlreadyCompletedException()).when(serviceMock).install();
-
-        mockMvc.perform(get(RequestPath.REQUEST_INSTALL))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(InstallStatus.STATUS_ALREADY_COMPLETED)));
-
-        verify(serviceMock, times(1)).install();
-        verifyNoMoreInteractions(serviceMock);
-
-    }
-
-    @Test
-    public void testInstall() throws Exception {
-        mockMvc.perform(get(RequestPath.REQUEST_INSTALL))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status", is(InstallStatus.STATUS_SUCCESS)));
-
-        verify(serviceMock, times(1)).install();
-        verifyNoMoreInteractions(serviceMock);
     }
 
     @Test

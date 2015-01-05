@@ -24,7 +24,6 @@ import com.sg.dto.request.SignupDto;
 import com.sg.rest.mail.service.SgMailService;
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
-import com.sg.domain.exception.SgInstallationAlreadyCompletedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.rest.security.SgRestUser;
@@ -52,18 +51,6 @@ public class SigninSignupController {
 
     @Autowired
     private WebTokenService securityService;
-
-    @RequestMapping(value = RequestPath.REQUEST_INSTALL, method = RequestMethod.GET)
-    public OperationStatusDto signupUser() {
-        OperationStatusDto result = new OperationStatusDto();
-        result.setStatus(InstallStatus.STATUS_SUCCESS);
-        try {
-            service.install();
-        } catch (SgInstallationAlreadyCompletedException e) {
-            result.setStatus(InstallStatus.STATUS_ALREADY_COMPLETED);
-        }
-        return result;
-    }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
     public OperationStatusDto signupUser(@Valid @RequestBody SignupDto dto, HttpServletResponse response) {

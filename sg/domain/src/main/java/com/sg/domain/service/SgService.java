@@ -64,4 +64,6 @@ public interface SgService {
     
     public void deleteAccount(Long accountId)  throws SgAccountNotFoundException;
     public void resetPassword(Long accountId, ResetPasswordDto dto) throws SgAccountNotFoundException, SgAccountWithoutEmailException, SgEmailNonVerifiedException;
+    
+    public void ping() throws Exception;
 }
