@@ -6,6 +6,7 @@
 
 package com.sg.domain.repository;
 
+import com.sg.domain.entites.Thread;
 /**
  *
  * @author Администратор

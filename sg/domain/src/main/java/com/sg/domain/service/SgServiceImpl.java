@@ -7,6 +7,7 @@ package com.sg.domain.service;
 
 import com.sg.domain.entites.Account;
 import com.sg.domain.entites.Canvas;
+import com.sg.domain.entites.Thread;
 import com.sg.domain.enumerations.Roles;
 import com.sg.dto.request.CanvasCreateDto;
 import com.sg.dto.request.CanvasDeleteDto;
