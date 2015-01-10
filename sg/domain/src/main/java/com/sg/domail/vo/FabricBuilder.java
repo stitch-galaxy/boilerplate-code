@@ -7,28 +7,25 @@ package com.sg.domail.vo;
 
 import java.math.BigDecimal;
 
-/**
- *
- * @author tarasev
- */
-//http://www.123stitch.com/cgi-perl/fabric.pl
-public class Fabric {
+public class FabricBuilder {
 
-    private final String fabricStyle;
-    private final BigDecimal count;
-    private final String dmcColor;
+    private String fabricStyle;
+    private BigDecimal count;
+    private String dmcColor;
 
-    public Fabric(FabricBuilder builder) {
-
-        this.fabricStyle = builder.getFabricStyle();
-        this.count = builder.getCount();
-        this.dmcColor = builder.getDmcColor();
-        if (fabricStyle.isEmpty()
-                || dmcColor.isEmpty()
-                || count.compareTo(BigDecimal.ZERO) <= 0) {
+    public FabricBuilder(String fabricStyle,
+            BigDecimal count,
+            String dmcColor) {
+        if (fabricStyle == null || count == null || dmcColor == null) {
             throw new IllegalArgumentException();
         }
+        this.fabricStyle = fabricStyle;
+        this.count = count;
+        this.dmcColor = dmcColor;
+    }
 
+    public Fabric createFabric() {
+        return new Fabric(this);
     }
 
     /**
@@ -51,4 +48,5 @@ public class Fabric {
     public String getDmcColor() {
         return dmcColor;
     }
+
 }

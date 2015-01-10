@@ -11,24 +11,16 @@ package com.sg.domail.vo;
  */
 public class AccountId {
 
-    private final Long id;
+    private final long id;
 
-    public AccountId(Long id) {
+    public AccountId(long id) {
         this.id = id;
-        verifyData();
-    }
-    
-    private void verifyData()
-    {
-        if (id == null) {
-            throw new IllegalArgumentException();
-        }
     }
 
     /**
      * @return the id
      */
-    public Long getId() {
+    public long getId() {
         return id;
     }
 }

@@ -16,14 +16,10 @@ public class Permissions {
     private final List<String> roles;
 
     public Permissions(List<String> roles) {
-        this.roles = roles;
-        verifyData();
-    }
-
-    private void verifyData() {
         if (roles == null || roles.size() <= 0) {
             throw new IllegalArgumentException();
         }
+        this.roles = roles;
     }
 
     /**

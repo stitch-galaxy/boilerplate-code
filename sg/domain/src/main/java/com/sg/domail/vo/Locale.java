@@ -5,6 +5,9 @@
  */
 package com.sg.domail.vo;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  *
  * @author tarasev
@@ -14,14 +17,29 @@ public class Locale {
     private final String code;
 
     public Locale(String code) {
-        this.code = code;
-        verifyData();
-    }
-    
-    private void verifyData() {
-        if (code == null
-                || code.isEmpty()) {
+        if (code == null || code.isEmpty()) {
             throw new IllegalArgumentException();
         }
+        this.code = code;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Locale other = (Locale) obj;
+        return new EqualsBuilder().
+                append(this.code, other.code).
+                isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(code).build();
     }
 }

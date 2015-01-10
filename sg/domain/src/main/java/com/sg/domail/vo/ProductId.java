@@ -11,23 +11,16 @@ package com.sg.domail.vo;
  */
 public class ProductId {
 
-    private final Long id;
+    private final long id;
 
-    public ProductId(Long id) {
+    public ProductId(long id) {
         this.id = id;
-        verifyData();
-    }
-
-    private void verifyData() {
-        if (id == null) {
-            throw new IllegalArgumentException();
-        }
     }
 
     /**
      * @return the id
      */
-    public Long getId() {
+    public long getId() {
         return id;
     }
 }

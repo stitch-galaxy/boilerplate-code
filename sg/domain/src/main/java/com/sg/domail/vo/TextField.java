@@ -5,26 +5,26 @@
  */
 package com.sg.domail.vo;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author tarasev
  */
 public class TextField {
-    private final Set<TextFieldTranslation> translations;
-    public TextField(Set<TextFieldTranslation> translations)
+    private final Map<Locale, String> translations;
+    public TextField(Map<Locale, String> translations)
     {
         this.translations = translations;
         verifyData();
     }
     
-    public TextField setTranslation(TextFieldTranslation translation)
+    public TextField setTranslation(Locale locale, String text)
     {
-        Set<TextFieldTranslation> newTranslations = new HashSet<TextFieldTranslation>();
-        newTranslations.addAll(translations);
-        newTranslations.add(translation);
+        Map<Locale, String> newTranslations = new HashMap<Locale, String>();
+        newTranslations.putAll(translations);
+        newTranslations.put(locale, text);
         return new TextField(newTranslations);
     }
     

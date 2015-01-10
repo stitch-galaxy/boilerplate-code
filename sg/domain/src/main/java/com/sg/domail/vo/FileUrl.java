@@ -13,15 +13,18 @@ import java.net.URL;
  * @author tarasev
  */
 public class FileUrl {
+
     private final URL url;
-    
-    public FileUrl(String url) throws MalformedURLException
-    {
-        this.url = new URL(url);
+
+    public FileUrl(String url) {
+        try {
+            this.url = new URL(url);
+        } catch (MalformedURLException ex) {
+            throw new IllegalArgumentException(ex);
+        }
     }
-    
-    public String getUrl()
-    {
+
+    public String getUrl() {
         return url.toString();
     }
 }

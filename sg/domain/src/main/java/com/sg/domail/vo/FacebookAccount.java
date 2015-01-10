@@ -10,6 +10,4 @@ package com.sg.domail.vo;
  * @author tarasev
  */
 public class FacebookAccount {
-    private void verifyData() {
-    }
 }
