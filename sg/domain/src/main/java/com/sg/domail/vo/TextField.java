@@ -16,21 +16,18 @@ public class TextField {
     private final Map<Locale, String> translations;
     public TextField(Map<Locale, String> translations)
     {
+        if (translations == null)
+            throw new IllegalArgumentException();
         this.translations = translations;
-        verifyData();
     }
     
     public TextField setTranslation(Locale locale, String text)
     {
+        if (locale == null || text == null)
+            throw new IllegalArgumentException();
         Map<Locale, String> newTranslations = new HashMap<Locale, String>();
         newTranslations.putAll(translations);
         newTranslations.put(locale, text);
         return new TextField(newTranslations);
-    }
-    
-    private void verifyData()
-    {
-        if (translations == null)
-            throw new IllegalArgumentException();
     }
 }

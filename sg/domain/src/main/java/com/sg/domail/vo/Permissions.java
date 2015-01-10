@@ -5,6 +5,7 @@
  */
 package com.sg.domail.vo;
 
+import com.sg.domain.enumerations.Role;
 import java.util.List;
 
 /**
@@ -13,9 +14,9 @@ import java.util.List;
  */
 public class Permissions {
 
-    private final List<String> roles;
+    private final List<Role> roles;
 
-    public Permissions(List<String> roles) {
+    public Permissions(List<Role> roles) {
         if (roles == null || roles.size() <= 0) {
             throw new IllegalArgumentException();
         }
@@ -25,7 +26,7 @@ public class Permissions {
     /**
      * @return the roles
      */
-    public List<String> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 }
