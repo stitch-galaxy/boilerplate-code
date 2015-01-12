@@ -36,49 +36,10 @@ public class RestErrorHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestErrorHandler.class);
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public ValidationErrorDto processValidationError(MethodArgumentNotValidException ex) {
-        BindingResult result = ex.getBindingResult();
-        List<FieldError> errors = result.getFieldErrors();
-        Set<String> fieldErrors = new HashSet<String>();
-        for (FieldError error : errors) {
-            fieldErrors.add(error.getDefaultMessage());
-        }
-        return new ValidationErrorDto(fieldErrors);
-    }
-
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public void processServiceValidationError(HttpRequestMethodNotSupportedException ex) {
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public ErrorDto processException(ConstraintViolationException ex) throws Exception {
-        String refNumber = Utils.logException(LOGGER, ex);
-        ErrorDto dto = new ErrorDto();
-        dto.setRefNumber(refNumber);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(ex.getMessage());
-        sb.append(": ");
-
-        boolean first = true;
-        for (ConstraintViolation violation : ex.getConstraintViolations()) {
-            if (first) {
-                first = false;
-            } else {
-                sb.append(", ");
-            }
-            sb.append(violation.getMessage());
-        }
-        dto.setError(sb.toString());
-        dto.setErrorCode(ErrorCodes.EXCEPTION_CONSTRAINT_VIOLATION);
-        return dto;
     }
 
     @ExceptionHandler(Exception.class)
