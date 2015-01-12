@@ -12,18 +12,12 @@ import com.sg.domain.exception.SgEmailNonVerifiedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
-import com.sg.domain.exception.SgThreadAlreadyExistsException;
-import com.sg.domain.exception.SgThreadNotFoundException;
-import com.sg.dto.request.ThreadCreateDto;
-import com.sg.dto.request.ThreadDeleteDto;
-import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.ResetPasswordDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.response.AccountRolesDto;
-import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 
 /**
@@ -31,12 +25,6 @@ import com.sg.dto.response.UserInfoDto;
  * @author tarasev
  */
 public interface SgService {
-    
-    public void create(ThreadCreateDto dto) throws SgThreadAlreadyExistsException;
-    public void delete(ThreadDeleteDto dto) throws SgThreadNotFoundException;
-    public void update(ThreadUpdateDto dto) throws SgThreadNotFoundException, SgThreadAlreadyExistsException;
-    public ThreadsListDto listThreads();   
-    
     public void signupUser(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     public void signupAdmin(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     

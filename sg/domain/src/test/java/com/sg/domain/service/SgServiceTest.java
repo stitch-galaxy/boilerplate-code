@@ -7,11 +7,6 @@ package com.sg.domain.service;
  * and open the template in the editor.
  */
 import com.sg.domain.enumerations.Sex;
-import com.sg.dto.request.ThreadCreateDto;
-import com.sg.dto.request.ThreadDeleteDto;
-import com.sg.dto.request.ThreadUpdateDto;
-import com.sg.domain.exception.SgThreadAlreadyExistsException;
-import com.sg.domain.exception.SgThreadNotFoundException;
 import com.sg.domain.repository.AccountRepository;
 import com.sg.domain.repository.CanvasRepository;
 import com.sg.domain.repository.ProductRepository;
@@ -21,21 +16,12 @@ import com.sg.dto.request.ResetPasswordDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
-import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
-import com.sg.domain.entites.Thread;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.Assert;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  *
@@ -92,12 +78,6 @@ public class SgServiceTest {
 
     private static final CompleteSignupDto completeSignupDto;
 
-    private static final ThreadCreateDto dmcThreadDto;
-    private static final ThreadCreateDto anchorThreadDto;
-
-    private static final ThreadsListDto.ThreadInfo dmcThreadInfoDto;
-    private static final ThreadsListDto.ThreadInfo anchorThreadInfoDto;
-
 
     private static final BigDecimal STITCHES_14 = new BigDecimal(14);
     private static final BigDecimal STITCHES_18 = new BigDecimal(18);
@@ -109,18 +89,6 @@ public class SgServiceTest {
     private static final ResetPasswordDto resetPasswordDto;
 
     static {
-        dmcThreadDto = new ThreadCreateDto();
-        dmcThreadDto.setCode(DMC);
-
-        dmcThreadInfoDto = new ThreadsListDto.ThreadInfo();
-        dmcThreadInfoDto.setCode(DMC);
-
-        anchorThreadDto = new ThreadCreateDto();
-        anchorThreadDto.setCode(ANCHOR);
-
-        anchorThreadInfoDto = new ThreadsListDto.ThreadInfo();
-        anchorThreadInfoDto.setCode(ANCHOR);
-
         signupDto = new SignupDto();
         signupDto.setEmail(USER_EMAIL);
         signupDto.setUserFirstName(USER_FIRST_NAME);
@@ -149,103 +117,5 @@ public class SgServiceTest {
 
         resetPasswordDto = new ResetPasswordDto();
         resetPasswordDto.setPassword(NEW_USER_PASSWORD);
-    }
-
-    @Test
-    public void testThreadCreate() {
-        ThreadCreateDto dto = new ThreadCreateDto();
-        dto.setCode(DMC);
-        when(threadRepository.findByCode(DMC)).thenReturn(null);
-        service.create(dto);
-
-        verify(threadRepository).findByCode(DMC);
-        ArgumentCaptor<Thread> threadCaptor = ArgumentCaptor.forClass(Thread.class);
-        verify(threadRepository).save(threadCaptor.capture());
-        Assert.assertEquals(DMC, threadCaptor.getValue().getCode());
-        Assert.assertNull(threadCaptor.getValue().getId());
-
-    }
-
-    @Test(expected = SgThreadAlreadyExistsException.class)
-    public void testThreadCreateThrowSgThreadAlreadyExistsException() {
-        ThreadCreateDto dto = new ThreadCreateDto();
-        dto.setCode(DMC);
-        Thread thread = new Thread();
-        thread.setCode(DMC);
-        thread.setId(1);
-        when(threadRepository.findByCode(DMC)).thenReturn(thread);
-        service.create(dmcThreadDto);
-    }
-
-    @Test
-    public void testThreadsList() {
-        Thread dmcThread = new Thread();
-        dmcThread.setCode(DMC);
-        dmcThread.setId(1);
-        Thread anchorThread = new Thread();
-        anchorThread.setCode(ANCHOR);
-        anchorThread.setId(2);
-        List<Thread> allThreads = new ArrayList<Thread>();
-        allThreads.add(dmcThread);
-        allThreads.add(anchorThread);
-        
-        when(threadRepository.findAll()).thenReturn(allThreads);
-        ThreadsListDto dto = service.listThreads();
-        verify(threadRepository).findAll();
-        
-        Assert.assertEquals(DMC, dto.getThreads().get(0).getCode());
-        Assert.assertEquals(ANCHOR, dto.getThreads().get(1).getCode());
-    }
-    
-    @Test(expected = SgThreadNotFoundException.class)
-    public void testThreadUpdateThrowsSgThreadNotFoundException() {
-        ThreadUpdateDto updateDto = new ThreadUpdateDto();
-        updateDto.setRefCode(ANCHOR);
-        updateDto.setCode(DMC);
-        when(threadRepository.findByCode(ANCHOR)).thenReturn(null);
-        service.update(updateDto);
-    }
-    
-    @Test
-    public void testThreadUpdate() {
-        ThreadUpdateDto updateDto = new ThreadUpdateDto();
-        updateDto.setRefCode(ANCHOR);
-        updateDto.setCode(DMC);
-        
-        Thread thread = new Thread();
-        thread.setCode(ANCHOR);
-        thread.setId(1);
-        
-        when(threadRepository.findByCode(ANCHOR)).thenReturn(thread);
-        service.update(updateDto);
-        verify(threadRepository).findByCode(ANCHOR);
-        ArgumentCaptor<Thread> threadCaptor = ArgumentCaptor.forClass(Thread.class);
-        verify(threadRepository).save(threadCaptor.capture());
-        Assert.assertEquals(DMC, threadCaptor.getValue().getCode());
-        Assert.assertEquals(1, threadCaptor.getValue().getId().intValue());
-    }
-
-    @Test(expected = SgThreadNotFoundException.class)
-    public void testThreadDeleteThrowsSgThreadNotFoundException() {
-        ThreadDeleteDto ref = new ThreadDeleteDto();
-        ref.setCode(ANCHOR);
-        when(threadRepository.findByCode(ANCHOR)).thenReturn(null);
-        service.delete(ref);
-    }
-    
-    @Test
-    public void testThreadDelete() {
-        ThreadDeleteDto ref = new ThreadDeleteDto();
-        ref.setCode(ANCHOR);
-        Thread thread = new Thread();
-        thread.setCode(ANCHOR);
-        thread.setId(1);
-        when(threadRepository.findByCode(ANCHOR)).thenReturn(thread);
-        service.delete(ref);
-        verify(threadRepository).findByCode(ANCHOR);
-        ArgumentCaptor<Thread> threadCaptor = ArgumentCaptor.forClass(Thread.class);
-        verify(threadRepository).delete(threadCaptor.capture());
-        Assert.assertEquals(ANCHOR, threadCaptor.getValue().getCode());
-        Assert.assertEquals(1, threadCaptor.getValue().getId().intValue());
     }
 }

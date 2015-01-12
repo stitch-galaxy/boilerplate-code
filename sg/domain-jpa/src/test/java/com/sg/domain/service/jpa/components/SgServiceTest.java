@@ -8,17 +8,12 @@ package com.sg.domain.service.jpa.components;
  */
 import com.sg.domain.enumerations.Roles;
 import com.sg.domain.enumerations.Sex;
-import com.sg.dto.request.ThreadCreateDto;
-import com.sg.dto.request.ThreadDeleteDto;
-import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
-import com.sg.domain.exception.SgThreadAlreadyExistsException;
-import com.sg.domain.exception.SgThreadNotFoundException;
 import com.sg.domain.service.jpa.spring.PersistenceContextConfig;
 import com.sg.domain.service.jpa.spring.ServiceContextConfig;
 import com.sg.domain.test.spring.configuration.TestJpaServicePropertiesContextConfiguration;
@@ -28,14 +23,11 @@ import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.response.AccountRolesDto;
-import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import javax.sql.DataSource;
 import org.junit.Assert;
 import org.joda.time.LocalDate;
@@ -96,13 +88,6 @@ public class SgServiceTest {
 
     private static final CompleteSignupDto completeSignupDto;
 
-    private static final ThreadCreateDto dmcThreadDto;
-    private static final ThreadCreateDto anchorThreadDto;
-
-    private static final ThreadsListDto.ThreadInfo dmcThreadInfoDto;
-    private static final ThreadsListDto.ThreadInfo anchorThreadInfoDto;
-
-
     private static final BigDecimal STITCHES_14 = new BigDecimal(14);
     private static final BigDecimal STITCHES_18 = new BigDecimal(18);
 
@@ -113,18 +98,6 @@ public class SgServiceTest {
     private static final ResetPasswordDto resetPasswordDto;
 
     static {
-        dmcThreadDto = new ThreadCreateDto();
-        dmcThreadDto.setCode(DMC);
-
-        dmcThreadInfoDto = new ThreadsListDto.ThreadInfo();
-        dmcThreadInfoDto.setCode(DMC);
-
-        anchorThreadDto = new ThreadCreateDto();
-        anchorThreadDto.setCode(ANCHOR);
-
-        anchorThreadInfoDto = new ThreadsListDto.ThreadInfo();
-        anchorThreadInfoDto.setCode(ANCHOR);
-        
         signupDto = new SignupDto();
         signupDto.setEmail(USER_EMAIL);
         signupDto.setUserFirstName(USER_FIRST_NAME);
@@ -153,84 +126,6 @@ public class SgServiceTest {
 
         resetPasswordDto = new ResetPasswordDto();
         resetPasswordDto.setPassword(NEW_USER_PASSWORD);
-    }
-
-    @Test
-    public void testThreadCreate() {
-        service.create(dmcThreadDto);
-        try {
-            service.create(dmcThreadDto);
-            Assert.fail("Expected " + SgThreadAlreadyExistsException.class.getName());
-        } catch (SgThreadAlreadyExistsException e) {
-        }
-    }
-
-    @Test
-    public void testThreadsList() {
-        service.create(dmcThreadDto);
-        service.create(anchorThreadDto);
-
-        ThreadsListDto threadsList = new ThreadsListDto();
-        List<ThreadsListDto.ThreadInfo> list = new ArrayList<ThreadsListDto.ThreadInfo>();
-        list.add(dmcThreadInfoDto);
-        list.add(anchorThreadInfoDto);
-        threadsList.setThreads(list);
-        Assert.assertEquals(threadsList, service.listThreads());
-    }
-
-    @Test
-    public void testThreadUpdate() {
-        service.create(dmcThreadDto);
-
-        ThreadUpdateDto updateDto = new ThreadUpdateDto();
-        updateDto.setRefCode(ANCHOR);
-        updateDto.setCode(DMC);
-
-        try {
-            service.update(updateDto);
-            Assert.fail("Expected " + SgThreadNotFoundException.class.getName());
-        } catch (SgThreadNotFoundException e) {
-        }
-
-        updateDto = new ThreadUpdateDto();
-        updateDto.setRefCode(DMC);
-        updateDto.setCode(ANCHOR);
-        service.update(updateDto);
-        ThreadsListDto threadsList = new ThreadsListDto();
-        List<ThreadsListDto.ThreadInfo> list = new ArrayList<ThreadsListDto.ThreadInfo>();
-        list.add(anchorThreadInfoDto);
-        threadsList.setThreads(list);
-
-        Assert.assertEquals(threadsList, service.listThreads());
-
-        service.create(dmcThreadDto);
-
-        try {
-            service.update(updateDto);
-            Assert.fail("Expected " + SgThreadAlreadyExistsException.class.getName());
-        } catch (SgThreadAlreadyExistsException e) {
-        }
-    }
-
-    @Test
-    public void testThreadDelete() {
-        service.create(dmcThreadDto);
-
-        ThreadDeleteDto ref = new ThreadDeleteDto();
-        ref.setCode(ANCHOR);
-
-        try {
-            service.delete(ref);
-            Assert.fail("Expected " + SgThreadNotFoundException.class.getName());
-        } catch (SgThreadNotFoundException e) {
-        }
-
-        ref = new ThreadDeleteDto();
-        ref.setCode(DMC);
-
-        service.delete(ref);
-
-        Assert.assertEquals(0, service.listThreads().getThreads().size());
     }
 
     @Test

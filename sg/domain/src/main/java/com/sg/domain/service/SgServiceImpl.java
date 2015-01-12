@@ -6,18 +6,13 @@
 package com.sg.domain.service;
 
 import com.sg.domain.entites.Account;
-import com.sg.domain.entites.Thread;
 import com.sg.domain.enumerations.Roles;
-import com.sg.dto.request.ThreadCreateDto;
-import com.sg.dto.request.ThreadDeleteDto;
-import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.ResetPasswordDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.response.AccountRolesDto;
-import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 
 import com.sg.domain.repository.CanvasRepository;
@@ -31,11 +26,6 @@ import com.sg.domain.exception.SgEmailNonVerifiedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
-import com.sg.domain.exception.SgThreadAlreadyExistsException;
-import com.sg.domain.exception.SgThreadNotFoundException;
-
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -60,53 +50,6 @@ public class SgServiceImpl implements SgService {
         this.canvasRepository = canvasRepository;
         this.accountRepository = accountRepository;
         this.mapper = new DtoToDoOrikaMapper();
-    }
-
-    @Override
-    public void delete(ThreadDeleteDto dto) {
-        Thread thread = threadRepository.findByCode(dto.getCode());
-        if (thread == null) {
-            throw new SgThreadNotFoundException(dto.getCode());
-        }
-        threadRepository.delete(thread);
-    }
-
-    @Override
-    public void create(ThreadCreateDto dto) {
-        if (threadRepository.findByCode(dto.getCode()) != null) {
-            throw new SgThreadAlreadyExistsException(dto.getCode());
-        }
-
-        Thread thread = mapper.map(dto, Thread.class);
-        threadRepository.save(thread);
-    }
-
-    @Override
-    public ThreadsListDto listThreads() {
-        ThreadsListDto result = new ThreadsListDto();
-        Iterable<Thread> threads = threadRepository.findAll();
-
-        List<ThreadsListDto.ThreadInfo> list = new ArrayList<ThreadsListDto.ThreadInfo>();
-        for (Thread t : threads) {
-            list.add(mapper.map(t, ThreadsListDto.ThreadInfo.class));
-        }
-
-        result.setThreads(list);
-        return result;
-    }
-
-    @Override
-    public void update(ThreadUpdateDto dto) {
-        Thread thread = threadRepository.findByCode(dto.getRefCode());
-        if (thread == null) {
-            throw new SgThreadNotFoundException(dto.getRefCode());
-        }
-        if (threadRepository.findByCode(dto.getCode()) != null) {
-            throw new SgThreadAlreadyExistsException(dto.getCode());
-        }
-
-        mapper.map(dto, thread);
-        threadRepository.save(thread);
     }
 
     @Override
