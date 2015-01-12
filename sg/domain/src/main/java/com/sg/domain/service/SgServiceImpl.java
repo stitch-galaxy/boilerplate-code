@@ -6,12 +6,8 @@
 package com.sg.domain.service;
 
 import com.sg.domain.entites.Account;
-import com.sg.domain.entites.Canvas;
 import com.sg.domain.entites.Thread;
 import com.sg.domain.enumerations.Roles;
-import com.sg.dto.request.CanvasCreateDto;
-import com.sg.dto.request.CanvasDeleteDto;
-import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
@@ -21,7 +17,6 @@ import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.response.AccountRolesDto;
-import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 
@@ -32,8 +27,6 @@ import com.sg.domain.repository.AccountRepository;
 
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.exception.SgAccountWithoutEmailException;
-import com.sg.domain.exception.SgCanvasAlreadyExistsException;
-import com.sg.domain.exception.SgCanvasNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
@@ -114,51 +107,6 @@ public class SgServiceImpl implements SgService {
 
         mapper.map(dto, thread);
         threadRepository.save(thread);
-    }
-
-    @Override
-    public void create(CanvasCreateDto dto) {
-        if (canvasRepository.findByCode(dto.getCode()) != null) {
-            throw new SgCanvasAlreadyExistsException(dto.getCode());
-        }
-        Canvas canvas = mapper.map(dto, Canvas.class);
-        canvasRepository.save(canvas);
-    }
-
-    @Override
-    public void delete(CanvasDeleteDto dto) {
-        Canvas canvas = canvasRepository.findByCode(dto.getCode());
-        if (canvas == null) {
-            throw new SgCanvasNotFoundException(dto.getCode());
-        }
-        canvasRepository.delete(canvas);
-    }
-
-    @Override
-    public void update(CanvasUpdateDto dto) {
-        Canvas canvas = canvasRepository.findByCode(dto.getRefCode());
-        if (canvas == null) {
-            throw new SgCanvasNotFoundException(dto.getRefCode());
-        }
-        if (canvasRepository.findByCode(dto.getCode()) != null) {
-            throw new SgCanvasAlreadyExistsException(dto.getCode());
-        }
-        mapper.map(dto, canvas);
-        canvasRepository.save(canvas);
-    }
-
-    @Override
-    public CanvasesListDto listCanvases() {
-        CanvasesListDto result = new CanvasesListDto();
-        Iterable<Canvas> canvases = canvasRepository.findAll();
-
-        List<CanvasesListDto.CanvasInfo> list = new ArrayList<CanvasesListDto.CanvasInfo>();
-        for (Canvas c : canvases) {
-            list.add(mapper.map(c, CanvasesListDto.CanvasInfo.class));
-        }
-
-        result.setCanvases(list);
-        return result;
     }
 
     @Override

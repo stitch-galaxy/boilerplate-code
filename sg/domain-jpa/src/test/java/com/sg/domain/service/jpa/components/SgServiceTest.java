@@ -8,16 +8,11 @@ package com.sg.domain.service.jpa.components;
  */
 import com.sg.domain.enumerations.Roles;
 import com.sg.domain.enumerations.Sex;
-import com.sg.dto.request.CanvasCreateDto;
-import com.sg.dto.request.CanvasDeleteDto;
-import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
 import com.sg.domain.service.SgService;
 import com.sg.domain.exception.SgAccountNotFoundException;
-import com.sg.domain.exception.SgCanvasAlreadyExistsException;
-import com.sg.domain.exception.SgCanvasNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
@@ -33,7 +28,6 @@ import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.response.AccountRolesDto;
-import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 import java.math.BigDecimal;
@@ -43,7 +37,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.joda.time.LocalDate;
 import org.junit.After;
@@ -109,11 +102,7 @@ public class SgServiceTest {
     private static final ThreadsListDto.ThreadInfo dmcThreadInfoDto;
     private static final ThreadsListDto.ThreadInfo anchorThreadInfoDto;
 
-    private static final CanvasCreateDto aida14CanvasDto;
-    private static final CanvasCreateDto aida18CanvasDto;
 
-    private static final CanvasesListDto.CanvasInfo aida14CanvasInfoDto;
-    private static final CanvasesListDto.CanvasInfo aida18CanvasInfoDto;
     private static final BigDecimal STITCHES_14 = new BigDecimal(14);
     private static final BigDecimal STITCHES_18 = new BigDecimal(18);
 
@@ -135,23 +124,7 @@ public class SgServiceTest {
 
         anchorThreadInfoDto = new ThreadsListDto.ThreadInfo();
         anchorThreadInfoDto.setCode(ANCHOR);
-
-        aida14CanvasDto = new CanvasCreateDto();
-        aida14CanvasDto.setCode(AIDA_14);
-        aida14CanvasDto.setStitchesPerInch(STITCHES_14);
-
-        aida18CanvasDto = new CanvasCreateDto();
-        aida18CanvasDto.setCode(AIDA_18);
-        aida18CanvasDto.setStitchesPerInch(STITCHES_18);
-
-        aida14CanvasInfoDto = new CanvasesListDto.CanvasInfo();
-        aida14CanvasInfoDto.setCode(AIDA_14);
-        aida14CanvasInfoDto.setStitchesPerInch(STITCHES_14);
-
-        aida18CanvasInfoDto = new CanvasesListDto.CanvasInfo();
-        aida18CanvasInfoDto.setCode(AIDA_18);
-        aida18CanvasInfoDto.setStitchesPerInch(STITCHES_18);
-
+        
         signupDto = new SignupDto();
         signupDto.setEmail(USER_EMAIL);
         signupDto.setUserFirstName(USER_FIRST_NAME);
@@ -180,88 +153,6 @@ public class SgServiceTest {
 
         resetPasswordDto = new ResetPasswordDto();
         resetPasswordDto.setPassword(NEW_USER_PASSWORD);
-    }
-
-    @Test
-    public void testCanvasCreate() {
-        service.create(aida14CanvasDto);
-        try {
-            service.create(aida14CanvasDto);
-            Assert.fail("Expected " + SgCanvasAlreadyExistsException.class.getName());
-        } catch (SgCanvasAlreadyExistsException e) {
-        }
-    }
-
-    @Test
-    public void testCanvasesList() {
-        service.create(aida14CanvasDto);
-        service.create(aida18CanvasDto);
-
-        CanvasesListDto canvasesList = new CanvasesListDto();
-        List<CanvasesListDto.CanvasInfo> list = new ArrayList<CanvasesListDto.CanvasInfo>();
-        list.add(aida14CanvasInfoDto);
-        list.add(aida18CanvasInfoDto);
-        canvasesList.setCanvases(list);
-
-        Assert.assertEquals(canvasesList, service.listCanvases());
-    }
-
-    @Test
-    public void testCanvasUpdate() {
-        service.create(aida14CanvasDto);
-
-        CanvasUpdateDto updateDto = new CanvasUpdateDto();
-        updateDto.setRefCode(AIDA_18);
-        updateDto.setCode(AIDA_14);
-        updateDto.setStitchesPerInch(STITCHES_14);
-
-        try {
-            service.update(updateDto);
-            Assert.fail("Expected " + SgCanvasNotFoundException.class.getName());
-        } catch (SgCanvasNotFoundException e) {
-        }
-
-        updateDto = new CanvasUpdateDto();
-        updateDto.setRefCode(AIDA_14);
-        updateDto.setCode(AIDA_18);
-        updateDto.setStitchesPerInch(STITCHES_18);
-
-        service.update(updateDto);
-
-        CanvasesListDto canvasesList = new CanvasesListDto();
-        List<CanvasesListDto.CanvasInfo> list = new ArrayList<CanvasesListDto.CanvasInfo>();
-        list.add(aida18CanvasInfoDto);
-        canvasesList.setCanvases(list);
-
-        Assert.assertEquals(canvasesList, service.listCanvases());
-        service.create(aida14CanvasDto);
-
-        try {
-            service.update(updateDto);
-            Assert.fail("Expected " + SgCanvasAlreadyExistsException.class.getName());
-        } catch (SgCanvasAlreadyExistsException e) {
-        }
-    }
-
-    @Test
-    public void testCanvasDelete() {
-        service.create(aida14CanvasDto);
-
-        CanvasDeleteDto ref = new CanvasDeleteDto();
-        ref.setCode(AIDA_18);
-
-        try {
-            service.delete(ref);
-            Assert.fail("Expected " + SgCanvasNotFoundException.class.getName());
-        } catch (SgCanvasNotFoundException e) {
-        }
-
-        ref = new CanvasDeleteDto();
-        ref.setCode(AIDA_14);
-
-        service.delete(ref);
-
-        Assert.assertEquals(0, service.listCanvases().getCanvases().size());
     }
 
     @Test

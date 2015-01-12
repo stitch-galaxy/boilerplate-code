@@ -6,23 +6,10 @@ package com.sg.domain.service;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.sg.domain.entites.Canvas;
-import com.sg.domain.enumerations.Roles;
 import com.sg.domain.enumerations.Sex;
-import com.sg.dto.request.CanvasCreateDto;
-import com.sg.dto.request.CanvasDeleteDto;
-import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
-import com.sg.domain.service.SgService;
-import com.sg.domain.exception.SgAccountNotFoundException;
-import com.sg.domain.exception.SgCanvasAlreadyExistsException;
-import com.sg.domain.exception.SgCanvasNotFoundException;
-import com.sg.domain.exception.SgEmailNonVerifiedException;
-import com.sg.domain.exception.SgInvalidPasswordException;
-import com.sg.domain.exception.SgSignupAlreadyCompletedException;
-import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.domain.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.exception.SgThreadNotFoundException;
 import com.sg.domain.repository.AccountRepository;
@@ -34,8 +21,6 @@ import com.sg.dto.request.ResetPasswordDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
-import com.sg.dto.response.AccountRolesDto;
-import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 import com.sg.domain.entites.Thread;
@@ -49,7 +34,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -114,11 +98,7 @@ public class SgServiceTest {
     private static final ThreadsListDto.ThreadInfo dmcThreadInfoDto;
     private static final ThreadsListDto.ThreadInfo anchorThreadInfoDto;
 
-    private static final CanvasCreateDto aida14CanvasDto;
-    private static final CanvasCreateDto aida18CanvasDto;
 
-    private static final CanvasesListDto.CanvasInfo aida14CanvasInfoDto;
-    private static final CanvasesListDto.CanvasInfo aida18CanvasInfoDto;
     private static final BigDecimal STITCHES_14 = new BigDecimal(14);
     private static final BigDecimal STITCHES_18 = new BigDecimal(18);
 
@@ -140,22 +120,6 @@ public class SgServiceTest {
 
         anchorThreadInfoDto = new ThreadsListDto.ThreadInfo();
         anchorThreadInfoDto.setCode(ANCHOR);
-
-        aida14CanvasDto = new CanvasCreateDto();
-        aida14CanvasDto.setCode(AIDA_14);
-        aida14CanvasDto.setStitchesPerInch(STITCHES_14);
-
-        aida18CanvasDto = new CanvasCreateDto();
-        aida18CanvasDto.setCode(AIDA_18);
-        aida18CanvasDto.setStitchesPerInch(STITCHES_18);
-
-        aida14CanvasInfoDto = new CanvasesListDto.CanvasInfo();
-        aida14CanvasInfoDto.setCode(AIDA_14);
-        aida14CanvasInfoDto.setStitchesPerInch(STITCHES_14);
-
-        aida18CanvasInfoDto = new CanvasesListDto.CanvasInfo();
-        aida18CanvasInfoDto.setCode(AIDA_18);
-        aida18CanvasInfoDto.setStitchesPerInch(STITCHES_18);
 
         signupDto = new SignupDto();
         signupDto.setEmail(USER_EMAIL);
@@ -283,301 +247,5 @@ public class SgServiceTest {
         verify(threadRepository).delete(threadCaptor.capture());
         Assert.assertEquals(ANCHOR, threadCaptor.getValue().getCode());
         Assert.assertEquals(1, threadCaptor.getValue().getId().intValue());
-    }
-    
-    @Test(expected = SgCanvasAlreadyExistsException.class)
-    public void testCanvasCreateThrowSgCanvasAlreadyExistsException() {
-        CanvasCreateDto dto = new CanvasCreateDto();
-        dto.setCode(AIDA_14);
-        dto.setStitchesPerInch(STITCHES_14);
-        
-        Canvas canvas = new Canvas();
-        canvas.setCode(AIDA_14);
-        canvas.setStitchesPerInch(STITCHES_14);
-        canvas.setId(1);
-        
-        when(canvasRepository.findByCode(AIDA_14)).thenReturn(canvas);
-        service.create(dto);
-    }
-    
-    @Test
-    public void testCanvasCreate() {
-        CanvasCreateDto dto = new CanvasCreateDto();
-        dto.setCode(AIDA_14);
-        dto.setStitchesPerInch(STITCHES_14);
-        
-        when(canvasRepository.findByCode(DMC)).thenReturn(null);
-        service.create(dto);
-        
-        
-        verify(canvasRepository).findByCode(AIDA_14);
-        ArgumentCaptor<Canvas> canvasCaptor = ArgumentCaptor.forClass(Canvas.class);
-        verify(canvasRepository).save(canvasCaptor.capture());
-        Assert.assertEquals(AIDA_14, canvasCaptor.getValue().getCode());
-        Assert.assertEquals(STITCHES_14, canvasCaptor.getValue().getStitchesPerInch());
-        Assert.assertNull(canvasCaptor.getValue().getId());
-    }
-
-    @Test
-    public void testCanvasesList() {
-        service.create(aida14CanvasDto);
-        service.create(aida18CanvasDto);
-
-        CanvasesListDto canvasesList = new CanvasesListDto();
-        List<CanvasesListDto.CanvasInfo> list = new ArrayList<CanvasesListDto.CanvasInfo>();
-        list.add(aida14CanvasInfoDto);
-        list.add(aida18CanvasInfoDto);
-        canvasesList.setCanvases(list);
-
-        Assert.assertEquals(canvasesList, service.listCanvases());
-    }
-
-    @Test
-    public void testCanvasUpdate() {
-        service.create(aida14CanvasDto);
-
-        CanvasUpdateDto updateDto = new CanvasUpdateDto();
-        updateDto.setRefCode(AIDA_18);
-        updateDto.setCode(AIDA_14);
-        updateDto.setStitchesPerInch(STITCHES_14);
-
-        try {
-            service.update(updateDto);
-            Assert.fail("Expected " + SgCanvasNotFoundException.class.getName());
-        } catch (SgCanvasNotFoundException e) {
-        }
-
-        updateDto = new CanvasUpdateDto();
-        updateDto.setRefCode(AIDA_14);
-        updateDto.setCode(AIDA_18);
-        updateDto.setStitchesPerInch(STITCHES_18);
-
-        service.update(updateDto);
-
-        CanvasesListDto canvasesList = new CanvasesListDto();
-        List<CanvasesListDto.CanvasInfo> list = new ArrayList<CanvasesListDto.CanvasInfo>();
-        list.add(aida18CanvasInfoDto);
-        canvasesList.setCanvases(list);
-
-        Assert.assertEquals(canvasesList, service.listCanvases());
-        service.create(aida14CanvasDto);
-
-        try {
-            service.update(updateDto);
-            Assert.fail("Expected " + SgCanvasAlreadyExistsException.class.getName());
-        } catch (SgCanvasAlreadyExistsException e) {
-        }
-    }
-
-    @Test
-    public void testCanvasDelete() {
-        service.create(aida14CanvasDto);
-
-        CanvasDeleteDto ref = new CanvasDeleteDto();
-        ref.setCode(AIDA_18);
-
-        try {
-            service.delete(ref);
-            Assert.fail("Expected " + SgCanvasNotFoundException.class.getName());
-        } catch (SgCanvasNotFoundException e) {
-        }
-
-        ref = new CanvasDeleteDto();
-        ref.setCode(AIDA_14);
-
-        service.delete(ref);
-
-        Assert.assertEquals(0, service.listCanvases().getCanvases().size());
-    }
-
-    @Test
-    public void testGetAccountIdThrowsExceptionIfAccountNotFound() {
-        try {
-            service.getAccountId(signupDto.getEmail());
-            Assert.fail("Expected  " + SgAccountNotFoundException.class.getName());
-        } catch (SgAccountNotFoundException e) {
-        }
-    }
-
-    @Test
-    public void testSignupAdmin() {
-        service.signupAdmin(signupDto);
-
-        Long accountId = service.getAccountId(signupDto.getEmail());
-        AccountRolesDto rolesDto = service.getAccountRoles(accountId);
-        //TODO: think how to test it properly
-        //Assert.assertEquals(Boolean.FALSE, accountPrincipalDto.getEmailVerified());
-
-        Assert.assertTrue(rolesDto.getRoles().size() == 2);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ADMIN));
-
-        try {
-            service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupForRegisteredButNonVerifiedEmailException.class.getName());
-        } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
-        }
-
-        service.completeSignup(accountId, completeSignupDto);
-
-        try {
-            service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupAlreadyCompletedException.class.getName());
-        } catch (SgSignupAlreadyCompletedException e) {
-        }
-    }
-
-    @Test
-    public void testSignupUser() {
-        service.signupUser(signupDto);
-
-        Long accountId = service.getAccountId(signupDto.getEmail());
-        AccountRolesDto rolesDto = service.getAccountRoles(accountId);
-        //TODO: think how to test it properly
-        //Assert.assertEquals(Boolean.FALSE, accountPrincipalDto.getEmailVerified());
-
-        Assert.assertTrue(rolesDto.getRoles().size() == 1);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
-
-        try {
-            service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupForRegisteredButNonVerifiedEmailException.class.getName());
-        } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
-        }
-
-        service.completeSignup(accountId, completeSignupDto);
-
-        try {
-            service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupAlreadyCompletedException.class.getName());
-        } catch (SgSignupAlreadyCompletedException e) {
-        }
-    }
-
-    @Test
-    public void testCompleteSignup() {
-        try {
-            service.completeSignup(1L, completeSignupDto);
-            Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
-        } catch (SgAccountNotFoundException e) {
-        }
-
-        service.signupUser(signupDto);
-
-        Long accountId = service.getAccountId(signupDto.getEmail());
-
-        service.completeSignup(accountId, completeSignupDto);
-
-        try {
-            service.completeSignup(accountId, completeSignupDto);
-            Assert.fail("Expected " + SgSignupAlreadyCompletedException.class.getName());
-        } catch (SgSignupAlreadyCompletedException e) {
-        }
-    }
-
-    @Test
-    public void testSignin() {
-        try {
-            service.signIn(signinDto);
-            Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
-        } catch (SgAccountNotFoundException e) {
-        }
-
-        service.signupUser(signupDto);
-
-        try {
-            service.signIn(signinDto);
-            Assert.fail("Expected " + SgEmailNonVerifiedException.class.getName());
-        } catch (SgEmailNonVerifiedException e) {
-        }
-
-        Long accountId = service.getAccountId(signupDto.getEmail());
-
-        service.completeSignup(accountId, completeSignupDto);
-
-        service.signIn(signinDto);
-
-        SigninDto invalidSignInDto = new SigninDto();
-        invalidSignInDto.setEmail(signinDto.getEmail());
-        invalidSignInDto.setPassword(USER_INCORRECT_PASSWORD);
-
-        try {
-            service.signIn(invalidSignInDto);
-            Assert.fail("Expected " + SgInvalidPasswordException.class.getName());
-        } catch (SgInvalidPasswordException e) {
-        }
-    }
-
-    @Test
-    public void testSetGetUserInformation() {
-        service.signupUser(signupDto);
-        Long accountId = service.getAccountId(signupDto.getEmail());
-        service.completeSignup(accountId, completeSignupDto);
-
-        try {
-            service.getUserInfo(Long.MAX_VALUE);
-            Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
-        } catch (SgAccountNotFoundException e) {
-        }
-
-        UserInfoDto userInfo = service.getUserInfo(accountId);
-        Assert.assertEquals(USER_FIRST_NAME, userInfo.getUserFirstName());
-        Assert.assertEquals(USER_LAST_NAME, userInfo.getUserLastName());
-        Assert.assertEquals(null, userInfo.getUserBirthDate());
-        Assert.assertEquals(null, userInfo.getNickname());
-
-        service.setUserInfo(accountId, userInfoUpdateDto);
-        userInfo = service.getUserInfo(accountId);
-        Assert.assertEquals(userInfoDto, userInfo);
-
-    }
-
-    @Test
-    public void testResetPassword() {
-        //TODO: when signin with FB will be completed cover with test: SgAccountWithoutEmailException
-
-        service.signupUser(signupDto);
-        Long accountId = service.getAccountId(signupDto.getEmail());
-        try {
-            service.resetPassword(accountId, resetPasswordDto);
-            Assert.fail("Expected " + SgEmailNonVerifiedException.class.getName());
-        } catch (SgEmailNonVerifiedException e) {
-        }
-
-        service.completeSignup(accountId, completeSignupDto);
-
-        try {
-            service.resetPassword(Long.MIN_VALUE, resetPasswordDto);
-            Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
-        } catch (SgAccountNotFoundException e) {
-        }
-
-        service.resetPassword(accountId, resetPasswordDto);
-        SigninDto signInWithNewPassword = new SigninDto();
-        signInWithNewPassword.setPassword(NEW_USER_PASSWORD);
-        signInWithNewPassword.setEmail(USER_EMAIL);
-        service.signIn(signInWithNewPassword);
-    }
-
-    @Test
-    public void testDeleteAccount() {
-        service.signupUser(signupDto);
-        Long accountId = service.getAccountId(signupDto.getEmail());
-        service.completeSignup(accountId, completeSignupDto);
-
-        try {
-            service.deleteAccount(Long.MAX_VALUE);
-            Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
-        } catch (SgAccountNotFoundException e) {
-        }
-
-        service.deleteAccount(accountId);
-
-        try {
-            service.signIn(signinDto);
-            Assert.fail("Expected " + SgAccountNotFoundException.class.getName());
-        } catch (SgAccountNotFoundException e) {
-        }
-
     }
 }

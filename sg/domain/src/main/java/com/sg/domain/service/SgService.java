@@ -8,17 +8,12 @@ package com.sg.domain.service;
 
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.exception.SgAccountWithoutEmailException;
-import com.sg.domain.exception.SgCanvasAlreadyExistsException;
-import com.sg.domain.exception.SgCanvasNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupAlreadyCompletedException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.domain.exception.SgThreadAlreadyExistsException;
 import com.sg.domain.exception.SgThreadNotFoundException;
-import com.sg.dto.request.CanvasCreateDto;
-import com.sg.dto.request.CanvasDeleteDto;
-import com.sg.dto.request.CanvasUpdateDto;
 import com.sg.dto.request.ThreadCreateDto;
 import com.sg.dto.request.ThreadDeleteDto;
 import com.sg.dto.request.ThreadUpdateDto;
@@ -28,7 +23,6 @@ import com.sg.dto.request.SigninDto;
 import com.sg.dto.request.SignupDto;
 import com.sg.dto.request.UserInfoUpdateDto;
 import com.sg.dto.response.AccountRolesDto;
-import com.sg.dto.response.CanvasesListDto;
 import com.sg.dto.response.ThreadsListDto;
 import com.sg.dto.response.UserInfoDto;
 
@@ -42,11 +36,6 @@ public interface SgService {
     public void delete(ThreadDeleteDto dto) throws SgThreadNotFoundException;
     public void update(ThreadUpdateDto dto) throws SgThreadNotFoundException, SgThreadAlreadyExistsException;
     public ThreadsListDto listThreads();   
-    
-    public void create(CanvasCreateDto dto) throws SgCanvasAlreadyExistsException;
-    public void delete(CanvasDeleteDto dto) throws SgCanvasNotFoundException;
-    public void update(CanvasUpdateDto dto) throws SgCanvasNotFoundException, SgCanvasAlreadyExistsException;
-    public CanvasesListDto listCanvases();   
     
     public void signupUser(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
     public void signupAdmin(SignupDto dto) throws SgSignupForRegisteredButNonVerifiedEmailException, SgSignupAlreadyCompletedException;
