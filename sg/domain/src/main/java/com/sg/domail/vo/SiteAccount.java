@@ -15,27 +15,21 @@ public class SiteAccount {
 
     private final String email;
     private final String password;
-    private final Boolean emailVerified;
-    
+    private final boolean emailVerified;
+
     private final static Random rnd = new Random();
     private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    public SiteAccount(String email, String password, Boolean emailVerified) {
-        this.email = email;
-        this.password = password;
-        this.emailVerified = emailVerified;
-        verifyData();
-    }
-    
-    private void verifyData()
-    {
+    public SiteAccount(String email, String password, boolean emailVerified) {
         if (email == null
                 || password == null
-                || emailVerified == null
                 || email.isEmpty()
                 || password.isEmpty()) {
             throw new IllegalArgumentException();
         }
+        this.email = email;
+        this.password = password;
+        this.emailVerified = emailVerified;
     }
 
     public SiteAccount changePassword(String newPassword) {

@@ -13,8 +13,43 @@ import org.joda.time.LocalDate;
  * @author tarasev
  */
 public class UserInfo {
-    private String firstName;
-    private String lastName;
-    private LocalDate userBirthDate;
-    private Sex sex;
+    private final String firstName;
+    private final String lastName;
+    private final LocalDate userBirthDate;
+    private final Sex sex;
+    public UserInfo(String firstName, String lastName, LocalDate userBirthDate, Sex sex)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userBirthDate = userBirthDate;
+        this.sex = sex;
+    }
+
+    /**
+     * @return the firstName
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * @return the lastName
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * @return the userBirthDate
+     */
+    public LocalDate getUserBirthDate() {
+        return userBirthDate;
+    }
+
+    /**
+     * @return the sex
+     */
+    public Sex getSex() {
+        return sex;
+    }
 }

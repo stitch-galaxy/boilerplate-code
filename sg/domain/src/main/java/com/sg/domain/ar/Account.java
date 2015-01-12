@@ -7,9 +7,12 @@ package com.sg.domain.ar;
 
 import com.sg.domail.vo.AccountId;
 import com.sg.domail.vo.FacebookAccount;
+import com.sg.domail.vo.PdfPurchase;
 import com.sg.domail.vo.Permissions;
 import com.sg.domail.vo.SiteAccount;
 import com.sg.domail.vo.UserInfo;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -21,46 +24,41 @@ public class Account {
     private SiteAccount siteAccount;
     private FacebookAccount facebookAccount;
     private UserInfo userInfo;
-    private Permissions permissions;
+    private final Permissions permissions;
+    private final Set<PdfPurchase> pdfPurchases;
 
-    public Account(String email, String password) {
-        SiteAccount siteAccount = new SiteAccount(email, password, Boolean.FALSE);
-        this.siteAccount = siteAccount;
+    public Account(String email, String password, Permissions permissions) {
+        this.pdfPurchases = new HashSet<PdfPurchase>();
+        this.siteAccount = new SiteAccount(email, password, false);
+        this.permissions = permissions;
     }
 
-    public Account(FacebookAccount facebookAccount) {
+    public Account(FacebookAccount facebookAccount, Permissions permissions) {
         if (facebookAccount == null) {
             throw new IllegalArgumentException();
         }
+        this.pdfPurchases = new HashSet<PdfPurchase>();
         this.facebookAccount = facebookAccount;
+        this.permissions = permissions;
+    }
+    
+    public void addPdfPurchase(PdfPurchase purchase)
+    {
+        getPdfPurchases().add(purchase);
     }
 
     /**
-     * @return the siteAccount
+     * @return the id
      */
-    public SiteAccount getSiteAccount() {
-        return siteAccount;
+    public AccountId getId() {
+        return id;
     }
 
     /**
-     * @param siteAccount the siteAccount to set
+     * @param id the id to set
      */
-    public void setSiteAccount(SiteAccount siteAccount) {
-        this.siteAccount = siteAccount;
-    }
-
-    /**
-     * @return the facebookAccount
-     */
-    public FacebookAccount getFacebookAccount() {
-        return facebookAccount;
-    }
-
-    /**
-     * @param facebookAccount the facebookAccount to set
-     */
-    public void setFacebookAccount(FacebookAccount facebookAccount) {
-        this.facebookAccount = facebookAccount;
+    public void setId(AccountId id) {
+        this.id = id;
     }
 
     /**
@@ -85,23 +83,35 @@ public class Account {
     }
 
     /**
-     * @param permissions the permissions to set
+     * @return the pdfPurchases
      */
-    public void setPermissions(Permissions permissions) {
-        this.permissions = permissions;
+    public Set<PdfPurchase> getPdfPurchases() {
+        return pdfPurchases;
     }
 
     /**
-     * @return the id
+     * @return the siteAccount
      */
-    public AccountId getAccountId() {
-        return id;
+    public SiteAccount getSiteAccount() {
+        return siteAccount;
+    }
+    
+    public void linkSiteAccount(String email, String password)
+    {
+        this.siteAccount = new SiteAccount(email, password, false);
     }
 
     /**
-     * @param accountId the id to set
+     * @return the facebookAccount
      */
-    public void setAccountId(AccountId accountId) {
-        this.id = accountId;
+    public FacebookAccount getFacebookAccount() {
+        return facebookAccount;
+    }
+
+    public void linkFacebookAccount(FacebookAccount facebookAccount)
+    {
+        if (facebookAccount == null)
+            throw new IllegalArgumentException();
+        this.facebookAccount = facebookAccount;
     }
 }

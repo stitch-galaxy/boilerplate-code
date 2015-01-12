@@ -9,11 +9,11 @@ package com.sg.domail.vo;
  *
  * @author tarasev
  */
-public class ProductId {
+public class CatalogItemId {
 
     private final long id;
 
-    public ProductId(long id) {
+    public CatalogItemId(long id) {
         this.id = id;
     }
 
