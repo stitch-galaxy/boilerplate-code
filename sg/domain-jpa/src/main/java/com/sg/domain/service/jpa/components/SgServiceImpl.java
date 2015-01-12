@@ -180,9 +180,4 @@ public class SgServiceImpl implements SgService {
         }
         return mapper.map(account, AccountRolesDto.class);
     }
-    
-    @Override
-    public void ping()
-    {
-    }
 }

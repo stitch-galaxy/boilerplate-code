@@ -96,11 +96,9 @@ public class SpringSecurityTest {
 
     @Test
     public void testUnsecureResource() throws Exception {
-        mockMvc.perform(get(RequestPath.REQUEST_PING))
+        mockMvc.perform(get(RequestPath.TEST_REQUEST))
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(new byte[0]));
-        verify(serviceMock, times(1)).ping();
-        verifyNoMoreInteractions(serviceMock);
     }
     
     @Test
@@ -113,7 +111,7 @@ public class SpringSecurityTest {
     @Test 
     public void testNonExistentResourceWhichStartsFromPublicPath() throws Exception
     {
-        mockMvc.perform(get(RequestPath.REQUEST_PING + PATH_DO_NOT_EXIST))
+        mockMvc.perform(get(RequestPath.TEST_REQUEST + PATH_DO_NOT_EXIST))
                 .andExpect(status().is(HttpServletResponse.SC_NOT_FOUND))
                 .andExpect(content().bytes(new byte[0]));
     }
@@ -121,7 +119,7 @@ public class SpringSecurityTest {
     @Test 
     public void testNonExistentResourceWhichStartsFromSecurePath() throws Exception
     {
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING + PATH_DO_NOT_EXIST))
+        mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST + PATH_DO_NOT_EXIST))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -132,7 +130,7 @@ public class SpringSecurityTest {
 
     @Test
     public void testSecureResourceWithoutAuthToken() throws IOException, Exception {
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING))
+        mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -146,11 +144,10 @@ public class SpringSecurityTest {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
         when(serviceMock.getAccountRoles(ACCOUNT_ID)).thenReturn(accountRolesDto);
 
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, authToken))
+        mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(new byte[0]));
 
-        verify(serviceMock, times(1)).ping();
         verify(serviceMock, times(1)).getAccountRoles(ACCOUNT_ID);
         verifyNoMoreInteractions(serviceMock);
     }
@@ -162,7 +159,7 @@ public class SpringSecurityTest {
         accountRolesDto.setRoles(new ArrayList<String>());
         when(serviceMock.getAccountRoles(ACCOUNT_ID)).thenReturn(accountRolesDto);
 
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, authToken))
+        mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_FORBIDDEN))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -178,7 +175,7 @@ public class SpringSecurityTest {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
         doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(serviceMock).getAccountRoles(ACCOUNT_ID);
 
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, authToken))
+        mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -193,7 +190,7 @@ public class SpringSecurityTest {
     public void testExpiredAuthToken() throws IOException, Exception {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now().minus(TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION).minus(Duration.standardHours(1)), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
 
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, authToken))
+        mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
@@ -204,7 +201,7 @@ public class SpringSecurityTest {
 
     @Test
     public void testSecureResourceWithBadAuthToken() throws IOException, Exception {
-        mockMvc.perform(get(RequestPath.REQUEST_SECURE_PING).header(CustomHeaders.X_AUTH_TOKEN, BAD_TOKEN))
+        mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, BAD_TOKEN))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))

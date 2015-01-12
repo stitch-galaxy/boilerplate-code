@@ -6,7 +6,6 @@
 package com.sg.rest;
 
 import com.sg.rest.utils.CustomMediaTypes;
-import com.sg.domain.service.SgService;
 import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.apipath.RequestPath;
 import com.sg.rest.spring.WebApplicationUnitTestContext;
@@ -16,11 +15,6 @@ import static org.hamcrest.Matchers.not;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -45,33 +39,20 @@ public class ExceptionHandlingTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private SgService serviceMock;
-
-    @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Before
     public void setUp() {
-        //We have to reset our mock between tests because the mock objects
-        //are managed by the Spring container. If we would not reset them,
-        //stubbing and verified behavior would "leak" from one test to another.
-        Mockito.reset(serviceMock);
-
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .build();
     }
 
     @Test
     public void testExceptionDuringServiceCall() throws Exception {
-        doThrow(new Exception("Error")).when(serviceMock).ping();
-
-        mockMvc.perform(get(RequestPath.REQUEST_PING))
+        mockMvc.perform(get(RequestPath.TEST_REQUEST_THROW_EXCEPTION))
                 .andExpect(status().is(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
-
-        verify(serviceMock, times(1)).ping();
-        verifyNoMoreInteractions(serviceMock);
     }
 }

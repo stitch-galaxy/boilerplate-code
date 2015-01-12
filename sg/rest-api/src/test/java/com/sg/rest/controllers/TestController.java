@@ -6,25 +6,23 @@
 package com.sg.rest.controllers;
 
 import com.sg.rest.apipath.RequestPath;
-import com.sg.domain.service.SgService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PingController {
+public class TestController {
 
-    @Autowired
-    SgService service;
-
-    @RequestMapping(value = RequestPath.REQUEST_PING, method = RequestMethod.GET)
+    @RequestMapping(value = RequestPath.TEST_REQUEST, method = RequestMethod.GET)
     public void ping() throws Exception {
-        service.ping();
+    }
+    
+    @RequestMapping(value = RequestPath.TEST_REQUEST_THROW_EXCEPTION, method = RequestMethod.GET)
+    public void pingException() throws Exception {
+        throw new Exception("Error");
     }
 
-    @RequestMapping(value = RequestPath.REQUEST_SECURE_PING, method = RequestMethod.GET)
+    @RequestMapping(value = RequestPath.TEST_SECURE_REQUEST, method = RequestMethod.GET)
     public void securePing() throws Exception {
-        service.ping();
     }
 }
