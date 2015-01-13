@@ -5,9 +5,28 @@
  */
 package com.sg.dto.request.response.cqrs;
 
+import com.sg.domain.enumerations.Role;
+import java.util.Set;
+
 /**
  *
  * @author tarasev
  */
 public class GetAccountRolesResponse {
+
+    private final Set<Role> roles;
+
+    public GetAccountRolesResponse(Set<Role> roles) {
+        if (roles == null) {
+            throw new IllegalArgumentException();
+        }
+        this.roles = roles;
+    }
+
+    /**
+     * @return the roles
+     */
+    public Set<Role> getRoles() {
+        return roles;
+    }
 }

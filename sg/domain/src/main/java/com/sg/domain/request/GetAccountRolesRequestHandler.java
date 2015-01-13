@@ -10,7 +10,6 @@ import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.repository.cqrs.AccountRepository;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
 import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
-import com.sg.dto.response.AccountRolesDto;
 
 /**
  *
@@ -31,7 +30,7 @@ public class GetAccountRolesRequestHandler {
         if (account == null) {
             throw new SgAccountNotFoundException(dto.getAccountId());
         }
-        GetAccountRolesResponse response = new GetAccountRolesResponse();
+        GetAccountRolesResponse response = new GetAccountRolesResponse(account.getPermissions().getAllRoles());
         return response;
     }
 }
