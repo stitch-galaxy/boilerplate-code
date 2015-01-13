@@ -46,11 +46,6 @@
             </dependency>
             <dependency>
                 <groupId>com.sg.rest</groupId>
-                <artifactId>dto</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sg.rest</groupId>
                 <artifactId>domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -74,7 +69,6 @@
     </dependencyManagement>
 
     <modules>
-        <module>dto</module>
         <module>domain</module>
         <module>domain-jpa</module>
         <module>rest-api</module>

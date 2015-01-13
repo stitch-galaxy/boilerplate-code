@@ -21,10 +21,6 @@
         </dependency>
         <dependency>
             <groupId>com.sg.rest</groupId>
-            <artifactId>dto</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sg.rest</groupId>
             <artifactId>domain</artifactId>
         </dependency>
         <!--dto to domain object mapper-->

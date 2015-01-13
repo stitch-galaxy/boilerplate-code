@@ -10,5 +10,4 @@ package com.sg.dto.request.response.cqrs;
  * @author tarasev
  */
 public class GetAccountRolesResponse {
-    
 }

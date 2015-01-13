@@ -32,5 +32,6 @@ public class GetAccountRolesRequestHandler {
             throw new SgAccountNotFoundException(dto.getAccountId());
         }
         GetAccountRolesResponse response = new GetAccountRolesResponse();
+        return response;
     }
 }
