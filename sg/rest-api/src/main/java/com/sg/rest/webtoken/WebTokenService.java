@@ -6,7 +6,7 @@
 
 package com.sg.rest.webtoken;
 
-import org.joda.time.Duration;
+import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
 import org.joda.time.Instant;
 
 /**
@@ -15,7 +15,7 @@ import org.joda.time.Instant;
  */
 public interface WebTokenService {
     
-    public String generateToken(long accountId, Instant issuedAt, Duration validDuration);
+    public String generateToken(long accountId, Instant issuedAt, TokenExpirationStandardDurations validDuration);
     public long getAccountIdAndVerifyToken(String sToken)  throws WebSecurityAccountNotFoundException, WebSecurityBadTokenException, WebSecurityTokenExpiredException;
     
 }

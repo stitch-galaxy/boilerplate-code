@@ -13,6 +13,7 @@ import com.sg.rest.authtoken.AuthTokenComponent;
 import com.sg.rest.authtoken.BadTokenException;
 import com.sg.rest.authtoken.Token;
 import com.sg.rest.authtoken.TokenExpiredException;
+import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
 import java.security.InvalidKeyException;
 import java.security.SignatureException;
 import net.oauth.jsontoken.Clock;
@@ -59,7 +60,7 @@ public class JwtAuthTokenComponent implements AuthTokenComponent {
 
         tokenParser = new JsonTokenParser(verifierProviders, new SignedTokenAudienceChecker(DOMAIN_URI));
     }
-
+    
     @Override
     public String signToken(Token token, Instant issuedAt, Instant expireAt) {
         JsonToken jsonWebToken = new JsonToken(signer, clock);
@@ -73,6 +74,12 @@ public class JwtAuthTokenComponent implements AuthTokenComponent {
         } catch (SignatureException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public String signToken(Token token, Instant issuedAt, TokenExpirationStandardDurations validDuration) {
+        Instant expireAt = issuedAt.plus(validDuration.getDuration());
+        return signToken(token, issuedAt, expireAt);
     }
 
     @Override

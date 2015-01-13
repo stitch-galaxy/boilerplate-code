@@ -16,7 +16,7 @@ import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.request.GetAccountRolesRequestHandler;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
 import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
-import com.sg.rest.webtoken.TokenExpirationStandardDurations;
+import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
 import com.sg.rest.webtoken.WebTokenService;
 import java.io.IOException;
 import java.util.EnumSet;
@@ -172,7 +172,7 @@ public class SpringSecurityTest {
 
     @Test
     public void testExpiredAuthToken() throws IOException, Exception {
-        String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now().minus(TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION).minus(Duration.standardHours(1)), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
+        String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now().minus(TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION.getDuration()).minus(Duration.standardHours(1)), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))

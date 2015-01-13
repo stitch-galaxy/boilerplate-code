@@ -171,13 +171,4 @@ public class SgServiceImpl implements SgService {
         }
         return account.getId();
     }
-
-    @Override
-    public AccountRolesDto getAccountRoles(Long accountId) throws SgAccountNotFoundException {
-        Account account = accountsRepository.findOne(accountId);
-        if (account == null) {
-            throw new SgAccountNotFoundException(accountId);
-        }
-        return mapper.map(account, AccountRolesDto.class);
-    }
 }

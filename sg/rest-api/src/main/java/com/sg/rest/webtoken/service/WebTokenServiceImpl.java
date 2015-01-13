@@ -5,6 +5,7 @@
  */
 package com.sg.rest.webtoken.service;
 
+import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
 import com.sg.rest.authtoken.AuthTokenComponent;
 import com.sg.rest.authtoken.BadTokenException;
 import com.sg.rest.authtoken.Token;
@@ -34,11 +35,11 @@ public class WebTokenServiceImpl implements WebTokenService {
     }
 
     @Override
-    public String generateToken(long accountId, Instant issuedAt, Duration validDuration) {
+    public String generateToken(long accountId, Instant issuedAt, TokenExpirationStandardDurations validDuration) {
         Token token = new Token();
         token.setUid(String.valueOf(accountId));
 
-        return authTokenComponent.signToken(token, issuedAt, issuedAt.plus(validDuration));
+        return authTokenComponent.signToken(token, issuedAt, validDuration);
     }
 
     @Override

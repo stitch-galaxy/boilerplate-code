@@ -5,6 +5,7 @@
  */
 package com.sg.rest.authtoken;
 
+import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
 import org.joda.time.Instant;
 
 /**
@@ -13,8 +14,8 @@ import org.joda.time.Instant;
  */
 public interface AuthTokenComponent {
 
+    public String signToken(Token token, Instant issuedAt, TokenExpirationStandardDurations validDuration);
     public String signToken(Token token, Instant issuedAt, Instant expireAt);
-
     public Token verifySignatureAndExtractToken(String signedToken) throws BadTokenException, TokenExpiredException;
 
 }

@@ -7,7 +7,6 @@ package com.sg.rest.controllers;
 
 import com.sg.rest.operationstatus.CompleteSignupStatus;
 import com.sg.rest.http.CustomHeaders;
-import com.sg.rest.operationstatus.InstallStatus;
 import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.service.SgService;
 import com.sg.dto.request.SigninDto;
@@ -28,7 +27,7 @@ import com.sg.domain.exception.SgInvalidPasswordException;
 import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException;
 import com.sg.rest.security.SgRestUser;
 import com.sg.rest.webtoken.WebTokenService;
-import com.sg.rest.webtoken.TokenExpirationStandardDurations;
+import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;

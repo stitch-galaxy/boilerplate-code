@@ -30,8 +30,6 @@ public interface SgService {
     
     public Long getAccountId(String email) throws SgAccountNotFoundException;
     
-    public AccountRolesDto getAccountRoles(Long accountId) throws SgAccountNotFoundException;
-    
     public void completeSignup(Long accountId, CompleteSignupDto dto) throws SgAccountNotFoundException, SgSignupAlreadyCompletedException;
     
     public void signIn(SigninDto dto) throws SgAccountNotFoundException, SgInvalidPasswordException, SgEmailNonVerifiedException;

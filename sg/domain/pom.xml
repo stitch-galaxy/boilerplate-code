@@ -15,6 +15,10 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.sg.rest</groupId>
+            <artifactId>authtoken</artifactId>
+        </dependency>
+        <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
         </dependency>

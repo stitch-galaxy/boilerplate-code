@@ -50,10 +50,9 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
         if (sToken != null) {
 
             long accountId = securityService.getAccountIdAndVerifyToken(sToken);
-            GetAccountRolesRequest dto = new GetAccountRolesRequest(accountId);
 
             try {
-                
+                GetAccountRolesRequest dto = new GetAccountRolesRequest(accountId);
                 GetAccountRolesResponse rolesDto = requestHandler.handle(dto);
                 SgRestUser userPrincipal = new SgRestUser(accountId);
                 userPrincipal.setRoles(rolesDto.getRoles());

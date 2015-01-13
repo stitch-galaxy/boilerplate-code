@@ -138,61 +138,6 @@ public class SgServiceTest {
     }
 
     @Test
-    public void testSignupAdmin() {
-        service.signupAdmin(signupDto);
-
-        Long accountId = service.getAccountId(signupDto.getEmail());
-        AccountRolesDto rolesDto = service.getAccountRoles(accountId);
-        //TODO: think how to test it properly
-        //Assert.assertEquals(Boolean.FALSE, accountPrincipalDto.getEmailVerified());
-
-        Assert.assertTrue(rolesDto.getRoles().size() == 2);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.ADMIN));
-
-        try {
-            service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupForRegisteredButNonVerifiedEmailException.class.getName());
-        } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
-        }
-
-        service.completeSignup(accountId, completeSignupDto);
-
-        try {
-            service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupAlreadyCompletedException.class.getName());
-        } catch (SgSignupAlreadyCompletedException e) {
-        }
-    }
-
-    @Test
-    public void testSignupUser() {
-        service.signupUser(signupDto);
-
-        Long accountId = service.getAccountId(signupDto.getEmail());
-        AccountRolesDto rolesDto = service.getAccountRoles(accountId);
-        //TODO: think how to test it properly
-        //Assert.assertEquals(Boolean.FALSE, accountPrincipalDto.getEmailVerified());
-
-        Assert.assertTrue(rolesDto.getRoles().size() == 1);
-        Assert.assertTrue(rolesDto.getRoles().contains(Roles.USER));
-
-        try {
-            service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupForRegisteredButNonVerifiedEmailException.class.getName());
-        } catch (SgSignupForRegisteredButNonVerifiedEmailException e) {
-        }
-
-        service.completeSignup(accountId, completeSignupDto);
-
-        try {
-            service.signupUser(signupDto);
-            Assert.fail("Expected " + SgSignupAlreadyCompletedException.class.getName());
-        } catch (SgSignupAlreadyCompletedException e) {
-        }
-    }
-
-    @Test
     public void testCompleteSignup() {
         try {
             service.completeSignup(1L, completeSignupDto);

@@ -27,7 +27,7 @@ import com.sg.domain.exception.SgSignupForRegisteredButNonVerifiedEmailException
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SigninDto;
 import com.sg.rest.security.SgRestUser;
-import com.sg.rest.webtoken.TokenExpirationStandardDurations;
+import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
 import com.sg.rest.webtoken.WebTokenService;
 import java.util.Arrays;
 import java.util.EnumSet;

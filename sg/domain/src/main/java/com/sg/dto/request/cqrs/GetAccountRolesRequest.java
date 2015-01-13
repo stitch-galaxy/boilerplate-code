@@ -5,7 +5,6 @@
  */
 package com.sg.dto.request.cqrs;
 
-import com.sg.domail.vo.Locale;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
