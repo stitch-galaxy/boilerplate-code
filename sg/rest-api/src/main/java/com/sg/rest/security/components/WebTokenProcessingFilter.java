@@ -10,8 +10,10 @@ package com.sg.rest.security.components;
  * @author tarasev
  */
 import com.sg.rest.http.CustomHeaders;
-import com.sg.domain.service.SgService;
 import com.sg.domain.exception.SgAccountNotFoundException;
+import com.sg.domain.request.GetAccountRolesRequestHandler;
+import com.sg.dto.request.cqrs.GetAccountRolesRequest;
+import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
 import com.sg.dto.response.AccountRolesDto;
 import com.sg.rest.security.SgRestUser;
 import com.sg.rest.webtoken.WebSecurityAccountNotFoundException;
@@ -38,7 +40,7 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
     private WebTokenService securityService;
 
     @Autowired
-    SgService service;
+    GetAccountRolesRequestHandler requestHandler;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -47,10 +49,12 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
         String sToken = this.extractAuthTokenFromRequest(httpRequest);
         if (sToken != null) {
 
-            Long accountId = securityService.getAccountIdAndVerifyToken(sToken);
+            long accountId = securityService.getAccountIdAndVerifyToken(sToken);
+            GetAccountRolesRequest dto = new GetAccountRolesRequest(accountId);
 
             try {
-                AccountRolesDto rolesDto = service.getAccountRoles(accountId);
+                
+                GetAccountRolesResponse rolesDto = requestHandler.handle(dto);
                 SgRestUser userPrincipal = new SgRestUser(accountId);
                 userPrincipal.setRoles(rolesDto.getRoles());
 

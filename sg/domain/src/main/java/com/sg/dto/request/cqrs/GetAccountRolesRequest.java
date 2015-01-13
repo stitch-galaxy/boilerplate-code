@@ -5,16 +5,22 @@
  */
 package com.sg.dto.request.cqrs;
 
+import com.sg.domail.vo.Locale;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  *
  * @author tarasev
  */
 public class GetAccountRolesRequest {
 
-    private Long accountId;
+    private final long accountId;
     
-    public GetAccountRolesRequest()
-    {}
+    public GetAccountRolesRequest(long accountId)
+    {
+        this.accountId = accountId;
+    }
 
     /**
      * @return the accountId
@@ -22,11 +28,24 @@ public class GetAccountRolesRequest {
     public Long getAccountId() {
         return accountId;
     }
+    
+        @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
 
-    /**
-     * @param accountId the accountId to set
-     */
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+        GetAccountRolesRequest other = (GetAccountRolesRequest) obj;
+        return new EqualsBuilder().
+                append(this.accountId, other.accountId).
+                isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(accountId).build();
     }
 }

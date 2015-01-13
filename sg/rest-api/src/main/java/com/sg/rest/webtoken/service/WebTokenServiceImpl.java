@@ -34,15 +34,15 @@ public class WebTokenServiceImpl implements WebTokenService {
     }
 
     @Override
-    public String generateToken(Long accountId, Instant issuedAt, Duration validDuration) {
+    public String generateToken(long accountId, Instant issuedAt, Duration validDuration) {
         Token token = new Token();
-        token.setUid(accountId.toString());
+        token.setUid(String.valueOf(accountId));
 
         return authTokenComponent.signToken(token, issuedAt, issuedAt.plus(validDuration));
     }
 
     @Override
-    public Long getAccountIdAndVerifyToken(String sToken) throws WebSecurityBadTokenException, WebSecurityTokenExpiredException {
+    public long getAccountIdAndVerifyToken(String sToken) throws WebSecurityBadTokenException, WebSecurityTokenExpiredException {
         try {
             Token token = authTokenComponent.verifySignatureAndExtractToken(sToken);
             return Long.parseLong(token.getUid());

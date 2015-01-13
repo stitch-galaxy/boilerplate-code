@@ -5,6 +5,7 @@
  */
 package com.sg.rest;
 
+import com.sg.domain.enumerations.Role;
 import com.sg.rest.operationstatus.CompleteSignupStatus;
 import com.sg.rest.http.CustomHeaders;
 import com.sg.rest.operationstatus.InstallStatus;
@@ -29,6 +30,8 @@ import com.sg.rest.security.SgRestUser;
 import com.sg.rest.webtoken.TokenExpirationStandardDurations;
 import com.sg.rest.webtoken.WebTokenService;
 import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Set;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -282,7 +285,9 @@ public class SigninSignupControllerTest {
     @BeforeClass
     public static void setup() {
         SgRestUser userPrincipal = new SgRestUser(ACCOUNT_ID);
-        userPrincipal.setRoles(Arrays.asList(Roles.ADMIN, Roles.USER));
+        Set<Role> roles = EnumSet.noneOf(Role.class);
+        roles.add(Role.USER);
+        roles.add(Role.ADMIN);
         UsernamePasswordAuthenticationToken authentication
                 = new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);

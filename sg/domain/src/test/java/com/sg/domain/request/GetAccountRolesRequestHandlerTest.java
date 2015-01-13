@@ -46,8 +46,7 @@ public class GetAccountRolesRequestHandlerTest {
     {
         when(accountRepository.findOne(1l)).thenReturn(null);
         
-        GetAccountRolesRequest dto = new GetAccountRolesRequest();
-        dto.setAccountId(1l);
+        GetAccountRolesRequest dto = new GetAccountRolesRequest(1l);
         handler.handle(dto);
     }
     
@@ -58,8 +57,7 @@ public class GetAccountRolesRequestHandlerTest {
         Account account = new Account("user@gmail.com", "password", permissions);
         when(accountRepository.findOne(1l)).thenReturn(account);
         
-        GetAccountRolesRequest dto = new GetAccountRolesRequest();
-        dto.setAccountId(1l);
+        GetAccountRolesRequest dto = new GetAccountRolesRequest(1l);
         GetAccountRolesResponse response = handler.handle(dto);
         assertThat(response.getRoles(), hasSize(2));
         assertThat(response.getRoles(), Matchers.containsInAnyOrder(Role.USER, Role.ADMIN));

@@ -5,22 +5,22 @@
  */
 package com.sg.rest;
 
+import com.sg.domain.enumerations.Role;
 import com.sg.rest.utils.CustomMediaTypes;
 import com.sg.rest.spring.WebApplicationIntegrationTestContext;
-import com.sg.domain.service.SgService;
 import com.sg.rest.http.CustomHeaders;
 import com.sg.rest.errorcodes.ErrorCodes;
 import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.apipath.RequestPath;
-import com.sg.domain.enumerations.Roles;
 import com.sg.domain.exception.SgAccountNotFoundException;
-import com.sg.dto.response.AccountRolesDto;
+import com.sg.domain.request.GetAccountRolesRequestHandler;
+import com.sg.dto.request.cqrs.GetAccountRolesRequest;
+import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
 import com.sg.rest.webtoken.TokenExpirationStandardDurations;
 import com.sg.rest.webtoken.WebTokenService;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
@@ -32,9 +32,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.FilterChainProxy;
@@ -61,17 +58,11 @@ public class SpringSecurityTest {
     private static final long ACCOUNT_ID = 1L;
     private static final String BAD_TOKEN = "BAD_TOKEN";
     private static final String PATH_DO_NOT_EXIST = "/PATH_DO_NOT_EXIST";
-    private static final AccountRolesDto accountRolesDto;
-
-    static {
-        accountRolesDto = new AccountRolesDto();
-        accountRolesDto.setRoles(Arrays.asList(new String[]{Roles.USER, Roles.ADMIN}));
-    }
 
     private MockMvc mockMvc;
-
+    
     @Autowired
-    private SgService serviceMock;
+    private GetAccountRolesRequestHandler requestHandler;
 
     @Autowired
     private WebTokenService webSecurityService;
@@ -87,7 +78,7 @@ public class SpringSecurityTest {
         //We have to reset our mock between tests because the mock objects
         //are managed by the Spring container. If we would not reset them,
         //stubbing and verified behavior would "leak" from one test to another.
-        Mockito.reset(serviceMock);
+        Mockito.reset(requestHandler);
 
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilter(springSecurityFilterChain)
@@ -136,28 +127,26 @@ public class SpringSecurityTest {
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.errorCode", is(ErrorCodes.TOKEN_AUTHENTICATION_NO_TOKEN)));
-        verifyNoMoreInteractions(serviceMock);
     }
 
     @Test
     public void testSecureResourceWithAuthToken() throws IOException, Exception {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
-        when(serviceMock.getAccountRoles(ACCOUNT_ID)).thenReturn(accountRolesDto);
+        Set<Role> roles = EnumSet.noneOf(Role.class);
+        roles.add(Role.USER);
+        roles.add(Role.ADMIN);
+        when(requestHandler.handle(new GetAccountRolesRequest(ACCOUNT_ID))).thenReturn(new GetAccountRolesResponse(roles));
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(new byte[0]));
-
-        verify(serviceMock, times(1)).getAccountRoles(ACCOUNT_ID);
-        verifyNoMoreInteractions(serviceMock);
     }
     
     @Test
     public void testSecureResourceWithAuthTokenButNonSufficientRights() throws IOException, Exception {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
-        AccountRolesDto accountRolesDto = new AccountRolesDto();
-        accountRolesDto.setRoles(new ArrayList<String>());
-        when(serviceMock.getAccountRoles(ACCOUNT_ID)).thenReturn(accountRolesDto);
+        Set<Role> roles = EnumSet.noneOf(Role.class);
+        when(requestHandler.handle(new GetAccountRolesRequest(ACCOUNT_ID))).thenReturn(new GetAccountRolesResponse(roles));
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_FORBIDDEN))
@@ -165,15 +154,13 @@ public class SpringSecurityTest {
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.errorCode", is(ErrorCodes.ACCESS_DENIED)));
-
-        verify(serviceMock, times(1)).getAccountRoles(ACCOUNT_ID);
-        verifyNoMoreInteractions(serviceMock);
     }
 
     @Test
     public void testSecureResourceWithAuthTokenButForNonExistentAccount() throws IOException, Exception {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
-        doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(serviceMock).getAccountRoles(ACCOUNT_ID);
+        GetAccountRolesRequest request = new GetAccountRolesRequest(ACCOUNT_ID);
+        doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(requestHandler).handle(request);
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
@@ -181,9 +168,6 @@ public class SpringSecurityTest {
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.errorCode", is(ErrorCodes.TOKEN_AUTHENTICATION_ACCOUNT_DO_NOT_EXISTS)));
-
-        verify(serviceMock, times(1)).getAccountRoles(ACCOUNT_ID);
-        verifyNoMoreInteractions(serviceMock);
     }
 
     @Test
@@ -196,7 +180,6 @@ public class SpringSecurityTest {
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.errorCode", is(ErrorCodes.TOKEN_AUTHENTICATION_TOKEN_EXPIRED)));
-        verifyNoMoreInteractions(serviceMock);
     }
 
     @Test
@@ -207,7 +190,6 @@ public class SpringSecurityTest {
                 .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.errorCode", is(ErrorCodes.TOKEN_AUTHENTICATION_BAD_TOKEN)));
-        verifyNoMoreInteractions(serviceMock);
     }
 
 }

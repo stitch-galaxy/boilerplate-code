@@ -5,9 +5,11 @@
  */
 package com.sg.rest.security;
 
+import com.sg.domain.enumerations.Role;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,13 +62,13 @@ public class SgRestUser implements UserDetails {
         return true;
     }
     
-    public void setRoles(Collection<String> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for(String role : roles)
+    public void setRoles(Set<Role> roles) {
+        List<GrantedAuthority> newAuthorities = new ArrayList<GrantedAuthority>();
+        for(Role role : roles)
         {
-            authorities.add(new SimpleGrantedAuthority(SPRING_ROLE_ID_PREFIX + role));
+            newAuthorities.add(new SimpleGrantedAuthority(SPRING_ROLE_ID_PREFIX + role.toString()));
         }
-        this.authorities = authorities;
+        this.authorities = newAuthorities;
     }
     private static final String SPRING_ROLE_ID_PREFIX = "ROLE_";
 

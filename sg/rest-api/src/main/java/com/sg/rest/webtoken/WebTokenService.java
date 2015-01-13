@@ -15,7 +15,7 @@ import org.joda.time.Instant;
  */
 public interface WebTokenService {
     
-    public String generateToken(Long accountId, Instant issuedAt, Duration validDuration);
-    public Long getAccountIdAndVerifyToken(String sToken)  throws WebSecurityAccountNotFoundException, WebSecurityBadTokenException, WebSecurityTokenExpiredException;
+    public String generateToken(long accountId, Instant issuedAt, Duration validDuration);
+    public long getAccountIdAndVerifyToken(String sToken)  throws WebSecurityAccountNotFoundException, WebSecurityBadTokenException, WebSecurityTokenExpiredException;
     
 }
