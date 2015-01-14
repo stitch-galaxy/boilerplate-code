@@ -13,4 +13,6 @@ import com.sg.domain.ar.Account;
  */
 public interface AccountRepository {
     public Account findOne(long accountId);
+    public Account findByEmail(String email);
+    public void save(Account account);
 }

@@ -14,7 +14,6 @@ import com.sg.dto.request.cqrs.GetAccountRolesRequest;
 import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -53,7 +52,9 @@ public class GetAccountRolesRequestHandlerTest {
     @Test
     public void testRequest()
     {
-        Permissions permissions = new Permissions().addRole(Role.USER).addRole(Role.ADMIN);
+        Permissions permissions = new Permissions();
+        permissions.addRole(Role.USER);
+        permissions.addRole(Role.ADMIN);
         Account account = new Account("user@gmail.com", "password", permissions);
         when(accountRepository.findOne(1l)).thenReturn(account);
         

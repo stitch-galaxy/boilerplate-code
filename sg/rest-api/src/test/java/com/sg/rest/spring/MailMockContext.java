@@ -1,6 +1,6 @@
 package com.sg.rest.spring;
 
-import com.sg.rest.mail.service.SgMailService;
+import com.sg.mail.service.EmailService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 public class MailMockContext {
     
     @Bean
-    public SgMailService sgMailService() {
-        return Mockito.mock(SgMailService.class);
+    public EmailService sgMailService() {
+        return Mockito.mock(EmailService.class);
     }
 }

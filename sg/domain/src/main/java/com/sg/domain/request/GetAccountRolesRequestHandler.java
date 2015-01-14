@@ -9,13 +9,15 @@ import com.sg.domain.ar.Account;
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.repository.cqrs.AccountRepository;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
+import com.sg.dto.request.cqrs.Request;
 import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
+import com.sg.dto.request.response.cqrs.RequestResponse;
 
 /**
  *
  * @author tarasev
  */
-public class GetAccountRolesRequestHandler {
+public class GetAccountRolesRequestHandler implements RequestHandler {
     
     private final AccountRepository accountRepository;
     
@@ -30,7 +32,12 @@ public class GetAccountRolesRequestHandler {
         if (account == null) {
             throw new SgAccountNotFoundException(dto.getAccountId());
         }
-        GetAccountRolesResponse response = new GetAccountRolesResponse(account.getPermissions().getAllRoles());
+        GetAccountRolesResponse response = new GetAccountRolesResponse(account.getPermissions().getRoles());
         return response;
+    }
+
+    @Override
+    public RequestResponse handle(Request request) {
+        return handle((GetAccountRolesRequest) request);
     }
 }

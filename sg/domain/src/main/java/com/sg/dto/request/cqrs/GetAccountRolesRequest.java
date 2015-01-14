@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  *
  * @author tarasev
  */
-public class GetAccountRolesRequest {
+public class GetAccountRolesRequest implements Request {
 
     private final long accountId;
     

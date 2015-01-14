@@ -5,17 +5,17 @@
  */
 package com.sg.dto.command.response.cqrs;
 
-import com.sg.dto.enumerations.SignupStatus;
+import com.sg.dto.enumerations.ResendVerificationEmailStatus;
 
 /**
  *
  * @author tarasev
  */
-public class SignupCommandStatus implements CommandResponse {
+public class ResendVerificationEmailCommandStatus implements CommandResponse {
 
-    private final SignupStatus status;
+    private final ResendVerificationEmailStatus status;
 
-    public SignupCommandStatus(SignupStatus status) {
+    public ResendVerificationEmailCommandStatus(ResendVerificationEmailStatus status) {
         if (status == null) {
             throw new IllegalArgumentException();
         }
@@ -25,7 +25,7 @@ public class SignupCommandStatus implements CommandResponse {
     /**
      * @return the status
      */
-    public SignupStatus getStatus() {
+    public ResendVerificationEmailStatus getStatus() {
         return status;
     }
 }

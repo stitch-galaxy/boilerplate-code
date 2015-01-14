@@ -7,7 +7,7 @@
 package com.sg.rest.spring;
 
 import com.sg.rest.mail.service.SgMailServiceImpl;
-import com.sg.rest.mail.service.SgMailService;
+import com.sg.mail.service.EmailService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SgMailServiceContext {
     @Bean
-    public SgMailService sgMailService() {
+    public EmailService sgMailService() {
         return new SgMailServiceImpl();
     }
 }

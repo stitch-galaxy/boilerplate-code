@@ -6,7 +6,9 @@
 package com.sg.domail.vo;
 
 import com.sg.domain.enumerations.Role;
+import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,9 +19,10 @@ public class Permissions {
 
     private final Set<Role> roles;
 
-    private Permissions(Set<Role> roles)
+    private Permissions(Collection<Role> roles)
     {
-        this.roles = roles;
+        this.roles = EnumSet.noneOf(Role.class);
+        this.roles.addAll(roles);
     }
     
     public Permissions()
@@ -27,23 +30,22 @@ public class Permissions {
         this.roles = EnumSet.noneOf(Role.class);
     }
     
-    public Permissions addRole(Role role)
+    public void addRole(Role role)
     {
-        Set<Role> newRoles = EnumSet.noneOf(Role.class);
-        newRoles.addAll(this.roles);
-        newRoles.add(role);
-        return new Permissions(newRoles);
+        roles.add(role);
     }
     
-    public Permissions revokeRole(Role role)
+    public void addRoles(Collection<Role> roles)
     {
-        Set<Role> newRoles = EnumSet.noneOf(Role.class);
-        newRoles.addAll(this.roles);
-        newRoles.remove(role);
-        return new Permissions(newRoles);
+        roles.addAll(roles);
     }
     
-    public Set<Role> getAllRoles()
+    public void revokeRole(Role role)
+    {
+        roles.remove(role);
+    }
+    
+    public Set<Role> getRoles()
     {
         Set<Role> allRoles = EnumSet.noneOf(Role.class);
         allRoles.addAll(this.roles);

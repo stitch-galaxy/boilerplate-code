@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.dto.enumerations;
+package com.sg.domain.command;
+
+import com.sg.dto.command.cqrs.Command;
+import com.sg.dto.command.response.cqrs.CommandResponse;
 
 /**
  *
  * @author tarasev
  */
-public enum SignupStatus {
-    STATUS_SUCCESS,
-    STATUS_EMAIL_ALREADY_REGISTERED;
+public interface CommandHandler {
+    public CommandResponse handle(Command command);
 }

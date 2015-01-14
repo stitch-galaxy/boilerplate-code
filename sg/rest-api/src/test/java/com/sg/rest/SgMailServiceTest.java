@@ -6,7 +6,7 @@ package com.sg.rest;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.sg.rest.mail.service.SgMailService;
+import com.sg.mail.service.EmailService;
 import com.sg.rest.spring.JacksonMapperContext;
 import com.sg.rest.spring.SgMailServiceContext;
 import org.junit.Test;
@@ -25,12 +25,12 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 public class SgMailServiceTest {
 
     @Autowired
-    SgMailService mailService;
+    EmailService mailService;
 
     @Test
     public void testEmail() {
         //TODO: write good test
-        mailService.sendEmailVerificationEmail("token", "тарасов@вышивка.рф");
+        mailService.sendVerificationEmail("token", "тарасов@вышивка.рф");
     }
     
 }

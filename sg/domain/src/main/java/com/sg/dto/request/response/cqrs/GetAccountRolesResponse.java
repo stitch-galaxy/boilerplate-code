@@ -12,8 +12,8 @@ import java.util.Set;
  *
  * @author tarasev
  */
-public class GetAccountRolesResponse {
-
+public class GetAccountRolesResponse implements RequestResponse {
+ 
     private final Set<Role> roles;
 
     public GetAccountRolesResponse(Set<Role> roles) {

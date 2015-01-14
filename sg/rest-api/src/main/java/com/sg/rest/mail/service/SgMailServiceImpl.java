@@ -5,6 +5,7 @@
  */
 package com.sg.rest.mail.service;
 
+import com.sg.mail.service.EmailService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,9 +13,9 @@ import org.springframework.stereotype.Service;
  * @author tarasev
  */
 @Service
-public class SgMailServiceImpl implements SgMailService {
+public class SgMailServiceImpl implements EmailService {
 
-    public void sendEmailVerificationEmail(String token, String email) {
+    public void sendVerificationEmail(String token, String email) {
     }
 
 }

@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.mail.service;
+package com.sg.dto.command.cqrs;
 
 /**
  *
  * @author tarasev
  */
-public interface SgMailService {
+public class SignupUserCommand extends SignupCommand implements Command {
 
-    public void sendEmailVerificationEmail(String token, String email);
 }

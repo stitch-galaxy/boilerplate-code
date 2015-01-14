@@ -9,7 +9,7 @@ package com.sg.dto.command.cqrs;
  *
  * @author tarasev
  */
-public abstract class SignupCommand {
+public abstract class SigninCommand {
     
     private String email;
     private String password;

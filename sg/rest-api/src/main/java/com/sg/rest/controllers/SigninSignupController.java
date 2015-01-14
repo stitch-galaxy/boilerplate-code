@@ -20,7 +20,7 @@ import com.sg.domain.exception.SgSignupAlreadyCompletedException;
 import com.sg.dto.response.OperationStatusDto;
 import com.sg.dto.request.CompleteSignupDto;
 import com.sg.dto.request.SignupDto;
-import com.sg.rest.mail.service.SgMailService;
+import com.sg.mail.service.EmailService;
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SigninSignupController {
 
     @Autowired
-    private SgMailService mailService;
+    private EmailService mailService;
 
     @Autowired
     private SgService service;
@@ -65,7 +65,7 @@ public class SigninSignupController {
             result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
         String token = securityService.generateToken(service.getAccountId(dto.getEmail()), Instant.now(), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
-        mailService.sendEmailVerificationEmail(token, dto.getEmail());
+        mailService.sendVerificationEmail(token, dto.getEmail());
         return result;
     }
 
@@ -83,7 +83,7 @@ public class SigninSignupController {
             result.setStatus(SignupStatus.STATUS_CONFIRMATION_EMAIL_RESENT);
         }
         String token = securityService.generateToken(service.getAccountId(dto.getEmail()), Instant.now(), TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION);
-        mailService.sendEmailVerificationEmail(token, dto.getEmail());
+        mailService.sendVerificationEmail(token, dto.getEmail());
         return result;
     }
 

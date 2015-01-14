@@ -9,7 +9,8 @@ package com.sg.dto.enumerations;
  *
  * @author tarasev
  */
-public enum SignupStatus {
-    STATUS_SUCCESS,
-    STATUS_EMAIL_ALREADY_REGISTERED;
+public enum ResendVerificationEmailStatus {
+    STATUS_EMAIL_NOT_REGISTERED,
+    STATUS_EMAIL_ALREADY_VERIFIED,
+    STATUS_SUCCESS;
 }

@@ -18,7 +18,7 @@ import com.sg.domain.enumerations.Roles;
 import com.sg.rest.operationstatus.SigninStatus;
 import com.sg.rest.operationstatus.SignupStatus;
 import com.sg.dto.request.SignupDto;
-import com.sg.rest.mail.service.SgMailService;
+import com.sg.mail.service.EmailService;
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.exception.SgEmailNonVerifiedException;
 import com.sg.domain.exception.SgInvalidPasswordException;
@@ -74,7 +74,7 @@ public class SigninSignupControllerTest {
     private ObjectMapper jacksonObjectMapper;
 
     @Autowired
-    private SgMailService mailServiceMock;
+    private EmailService mailServiceMock;
 
     @Autowired
     private WebTokenService webSecurityServiceMock;
@@ -150,7 +150,7 @@ public class SigninSignupControllerTest {
                 org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
         );
 
-        verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
+        verify(mailServiceMock, times(1)).sendVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
         verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
@@ -181,7 +181,7 @@ public class SigninSignupControllerTest {
                 org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
         );
 
-        verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
+        verify(mailServiceMock, times(1)).sendVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
         verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
@@ -245,7 +245,7 @@ public class SigninSignupControllerTest {
                 org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
         );
 
-        verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
+        verify(mailServiceMock, times(1)).sendVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
         verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);
@@ -275,7 +275,7 @@ public class SigninSignupControllerTest {
                 org.mockito.Matchers.eq(TokenExpirationStandardDurations.EMAIL_TOKEN_EXPIRATION_DURATION)
         );
 
-        verify(mailServiceMock, times(1)).sendEmailVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
+        verify(mailServiceMock, times(1)).sendVerificationEmail(eq(SECURE_TOKEN_STRING), eq(USER_EMAIL));
         verifyNoMoreInteractions(serviceMock);
         verifyNoMoreInteractions(webSecurityServiceMock);
         verifyNoMoreInteractions(mailServiceMock);

@@ -9,7 +9,10 @@ package com.sg.dto.enumerations;
  *
  * @author tarasev
  */
-public enum SignupStatus {
-    STATUS_SUCCESS,
-    STATUS_EMAIL_ALREADY_REGISTERED;
+public enum SigninStatus {
+    STATUS_ACCOUNT_NOT_FOUND,
+    STATUS_ACCOUNT_NOT_LINKED_TO_EMAIL,
+    STATUS_WRONG_PASSWORD,
+    STATUS_EMAIL_NOT_VERIFIED,
+    STATUS_SUCCESS;
 }
