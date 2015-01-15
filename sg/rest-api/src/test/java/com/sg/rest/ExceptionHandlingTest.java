@@ -7,8 +7,8 @@ package com.sg.rest;
 
 import com.sg.rest.utils.CustomMediaTypes;
 import com.sg.rest.spring.SpringServletContextConfiguration;
-import com.sg.rest.apipath.RequestPath;
-import com.sg.rest.spring.WebApplicationUnitTestContext;
+import com.sg.rest.path.RequestPath;
+import com.sg.rest.spring.test.WebApplicationUnitTestContext;
 import javax.servlet.http.HttpServletResponse;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;

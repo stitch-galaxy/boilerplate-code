@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.spring;
+package com.sg.rest.spring.test;
 
 import com.sg.domain.handler.command.CompleteSignupCommandHandler;
 import com.sg.domain.handler.command.ResendVerificationEmailCommandHandler;
@@ -13,6 +13,7 @@ import com.sg.domain.handler.command.SignupUserCommandHandler;
 import com.sg.domain.handler.command.TokenComponent;
 import com.sg.domain.handler.command.TokenEmailPublisher;
 import com.sg.domain.handler.request.GetAccountRolesRequestHandler;
+import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,45 +22,45 @@ import org.springframework.context.annotation.Configuration;
  * @author tarasev
  */
 @Configuration
-public class DomainComponentsContext {
+public class DomainComponentsMockContext {
 
     @Bean
     public GetAccountRolesRequestHandler getAccountRolesRequestHandler() {
-        return new GetAccountRolesRequestHandler(null);
+        return Mockito.mock(GetAccountRolesRequestHandler.class);
     }
 
     @Bean
     public CompleteSignupCommandHandler completeSignupCommandHandler() {
-        return new CompleteSignupCommandHandler(null, null);
+        return Mockito.mock(CompleteSignupCommandHandler.class);
     }
 
     @Bean
     public ResendVerificationEmailCommandHandler resendVerificationEmailCommandHandler() {
-        return new ResendVerificationEmailCommandHandler(null, null);
+        return Mockito.mock(ResendVerificationEmailCommandHandler.class);
     }
 
     @Bean
     public SignupAdminCommandHandler signupAdminCommandHandler() {
-        return new SignupAdminCommandHandler(null, null);
+        return Mockito.mock(SignupAdminCommandHandler.class);
     }
 
     @Bean
     public SignupUserCommandHandler signupUserCommandHandler() {
-        return new SignupUserCommandHandler(null, null);
+        return Mockito.mock(SignupUserCommandHandler.class);
     }
-
+    
     @Bean
     public SigninCommandHandler signinCommandHandler() {
-        return new SigninCommandHandler(null, null);
+        return Mockito.mock(SigninCommandHandler.class);
     }
 
     @Bean
     public TokenComponent tokenComponent() {
-        return new TokenComponent(null);
+        return Mockito.mock(TokenComponent.class);
     }
 
     @Bean
     public TokenEmailPublisher tokenEmailPublisher() {
-        return new TokenEmailPublisher(null, null);
+        return Mockito.mock(TokenEmailPublisher.class);
     }
 }

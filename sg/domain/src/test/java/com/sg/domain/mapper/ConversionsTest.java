@@ -3,31 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.dtotodoconversions;
+package com.sg.domain.mapper;
 
-import com.sg.domain.jpa.spring.components.mapper.MapperComponent;
+import com.sg.domain.service.DtoDoMapper;
+import com.sg.domain.service.DtoToDoOrikaMapper;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
  * @author tarasev
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
 public class ConversionsTest {
-
-    @Configuration
-    @ComponentScan(basePackageClasses = {MapperComponent.class})
-    public static class ConversionTestContext {
-    }
 
     public enum TestEnum {
 
@@ -74,12 +62,9 @@ public class ConversionsTest {
 
     }
 
-    @Autowired
-    private MapperFacade mapper;
-
     @Test
     public void testEnumConversions() {
-        Assert.assertNotNull(mapper);
+        DtoDoMapper mapper = new DtoToDoOrikaMapper();
 
         DomainObjectWrapper domainObject = new DomainObjectWrapper();
         domainObject.setTestEnum(ConversionsTest.TestEnum.ONE);

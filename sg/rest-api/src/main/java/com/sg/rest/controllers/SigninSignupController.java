@@ -5,8 +5,8 @@
  */
 package com.sg.rest.controllers;
 
-import com.sg.domain.command.CommandHandler;
-import com.sg.rest.apipath.RequestPath;
+import com.sg.domain.handler.command.CommandHandler;
+import com.sg.rest.path.RequestPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +16,9 @@ import com.sg.dto.command.cqrs.CompleteSignupUserCommand;
 import com.sg.dto.command.cqrs.SigninCommand;
 import com.sg.dto.command.cqrs.SignupAdminCommand;
 import com.sg.dto.command.cqrs.SignupUserCommand;
-import com.sg.dto.command.response.cqrs.CompleteSignupCommandResponse;
-import com.sg.dto.command.response.cqrs.SigninCommandResponse;
-import com.sg.dto.command.response.cqrs.SignupCommandStatus;
+import com.sg.dto.command.response.CompleteSignupCommandResponse;
+import com.sg.dto.command.response.SigninCommandResponse;
+import com.sg.dto.command.response.SignupCommandStatus;
 import com.sg.rest.security.SgRestUser;
 import java.io.IOException;
 import javax.validation.Valid;

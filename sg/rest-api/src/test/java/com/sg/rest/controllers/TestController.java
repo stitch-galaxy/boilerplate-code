@@ -5,7 +5,7 @@
  */
 package com.sg.rest.controllers;
 
-import com.sg.rest.apipath.RequestPath;
+import com.sg.rest.path.RequestPath;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

@@ -5,13 +5,14 @@
  */
 package com.sg.domain.request;
 
+import com.sg.domain.handler.request.GetAccountRolesRequestHandler;
 import com.sg.domail.vo.Permissions;
 import com.sg.domain.ar.Account;
 import com.sg.domain.enumerations.Role;
 import com.sg.domain.exception.SgAccountNotFoundException;
-import com.sg.domain.repository.cqrs.AccountRepository;
+import com.sg.domain.repository.AccountRepository;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
-import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
+import com.sg.dto.request.response.GetAccountRolesResponse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.hasSize;

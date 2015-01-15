@@ -10,7 +10,7 @@ package com.sg.rest.spring;
  * @author tarasev
  */
 import com.sg.domain.enumerations.Role;
-import com.sg.rest.apipath.RequestPath;
+import com.sg.rest.path.RequestPath;
 import com.sg.rest.security.components.WebTokenProcessingFilter;
 import com.sg.rest.security.components.NoOpClass;
 import com.sg.rest.security.components.SgAccessDeniedHandler;
