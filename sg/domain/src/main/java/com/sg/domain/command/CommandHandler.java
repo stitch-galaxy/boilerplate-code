@@ -7,13 +7,7 @@ package com.sg.domain.command;
 
 import com.sg.dto.command.cqrs.Command;
 import com.sg.dto.command.response.cqrs.CommandResponse;
-import java.lang.reflect.Type;
 
-/**
- *
- * @author tarasev
- */
-public interface CommandHandler {
-    public CommandResponse handle(Command command);
-    public Type getCommandType();
+public interface CommandHandler<TCommandResponse extends CommandResponse, TCommandType extends Command> {
+    public TCommandResponse handle(TCommandType command);
 }

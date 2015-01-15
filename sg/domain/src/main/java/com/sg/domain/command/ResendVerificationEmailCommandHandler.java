@@ -18,7 +18,7 @@ import java.lang.reflect.Type;
  *
  * @author tarasev
  */
-public class ResendVerificationEmailCommandHandler implements CommandHandler {
+public class ResendVerificationEmailCommandHandler implements CommandHandler<ResendVerificationEmailCommandStatus, ResendVerificationEmailCommand> {
 
     private final TokenEmailPublisher tokenEmailPublisher;
     private final AccountRepository accountRepository;
@@ -28,6 +28,7 @@ public class ResendVerificationEmailCommandHandler implements CommandHandler {
         this.accountRepository = accountRepository;
     }
 
+    @Override
     public ResendVerificationEmailCommandStatus handle(ResendVerificationEmailCommand command) {
         if (command.getEmail() == null || command.getEmail().isEmpty()) {
             throw new IllegalArgumentException();
@@ -42,15 +43,4 @@ public class ResendVerificationEmailCommandHandler implements CommandHandler {
         tokenEmailPublisher.sendVerificationEmail(account.getId().getId(), command.getEmail());
         return new ResendVerificationEmailCommandStatus(ResendVerificationEmailStatus.STATUS_SUCCESS);
     }
-    
-    @Override
-    public CommandResponse handle(Command command) {
-        return handle((ResendVerificationEmailCommand) command);
-    }
-
-    @Override
-    public Type getCommandType() {
-        return ResendVerificationEmailCommand.class;
-    }
-
 }

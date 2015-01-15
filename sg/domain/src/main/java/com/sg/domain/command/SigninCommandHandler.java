@@ -7,18 +7,15 @@ package com.sg.domain.command;
 
 import com.sg.domain.ar.Account;
 import com.sg.domain.repository.cqrs.AccountRepository;
-import com.sg.dto.command.cqrs.Command;
 import com.sg.dto.command.cqrs.SigninCommand;
-import com.sg.dto.command.response.cqrs.CommandResponse;
 import com.sg.dto.command.response.cqrs.SigninCommandResponse;
 import com.sg.dto.enumerations.SigninStatus;
-import java.lang.reflect.Type;
 
 /**
  *
  * @author tarasev
  */
-public class SigninCommandHandler implements CommandHandler {
+public class SigninCommandHandler implements CommandHandler<SigninCommandResponse, SigninCommand> {
 
     private final AccountRepository accountRepository;
     private final TokenComponent securityComponent;
@@ -28,6 +25,7 @@ public class SigninCommandHandler implements CommandHandler {
         this.securityComponent = securityComponent;
     }
 
+    @Override
     public SigninCommandResponse handle(SigninCommand command) {
         if (command.getEmail() == null || command.getEmail().isEmpty() || command.getPassword() == null || command.getPassword().isEmpty())
             throw new IllegalArgumentException();
@@ -45,16 +43,6 @@ public class SigninCommandHandler implements CommandHandler {
             return new SigninCommandResponse(SigninStatus.STATUS_WRONG_PASSWORD);
             
         return new SigninCommandResponse(securityComponent.generateSessionToken(account.getId().getId()));
-    }
-    
-    @Override
-    public CommandResponse handle(Command command) {
-        return handle((SigninCommand) command);
-    }
-
-    @Override
-    public Type getCommandType() {
-        return SigninCommand.class;
     }
 
 }

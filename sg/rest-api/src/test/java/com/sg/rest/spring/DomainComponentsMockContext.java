@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 public class DomainComponentsMockContext {
 
     @Bean
-    public GetAccountRolesRequestHandler getAccountRolesRequestHandler() {
+    public GetAccountRolesRequestHandler comandRequestDispatcher() {
         return Mockito.mock(GetAccountRolesRequestHandler.class);
     }
 }

@@ -7,18 +7,15 @@ package com.sg.domain.command;
 
 import com.sg.domain.ar.Account;
 import com.sg.domain.repository.cqrs.AccountRepository;
-import com.sg.dto.command.cqrs.Command;
 import com.sg.dto.command.cqrs.CompleteSignupCommand;
-import com.sg.dto.command.response.cqrs.CommandResponse;
 import com.sg.dto.command.response.cqrs.CompleteSignupCommandResponse;
 import com.sg.dto.enumerations.CompleteSignupCommandStatus;
-import java.lang.reflect.Type;
 
 /**
  *
  * @author tarasev
  */
-public class CompleteSignupCommandHandler implements CommandHandler {
+public class CompleteSignupCommandHandler implements CommandHandler<CompleteSignupCommandResponse, CompleteSignupCommand> {
 
     private final AccountRepository accountRepository;
     private final TokenComponent securityComponent;
@@ -28,6 +25,7 @@ public class CompleteSignupCommandHandler implements CommandHandler {
         this.securityComponent = securityComponent;
     }
 
+    @Override
     public CompleteSignupCommandResponse handle(CompleteSignupCommand command) {
         Account account = accountRepository.findOne(command.getAccountId());
         if (account == null) {
@@ -43,15 +41,4 @@ public class CompleteSignupCommandHandler implements CommandHandler {
         accountRepository.save(account);
         return new CompleteSignupCommandResponse(securityComponent.generateEmailToken(account.getId().getId()));
     }
-    
-    @Override
-    public CommandResponse handle(Command command) {
-        return handle((CompleteSignupCommand) command);
-    }
-
-    @Override
-    public Type getCommandType() {
-        return CompleteSignupCommand.class;
-    }
-
 }

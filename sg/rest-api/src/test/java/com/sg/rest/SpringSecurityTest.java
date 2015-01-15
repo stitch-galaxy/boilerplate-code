@@ -14,6 +14,7 @@ import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.apipath.RequestPath;
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.request.GetAccountRolesRequestHandler;
+import com.sg.domain.request.RequestHandler;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
 import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
 import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
@@ -62,7 +63,7 @@ public class SpringSecurityTest {
     private MockMvc mockMvc;
     
     @Autowired
-    private GetAccountRolesRequestHandler requestHandler;
+    private RequestHandler<GetAccountRolesResponse, GetAccountRolesRequest> handler;
 
     @Autowired
     private WebTokenService webSecurityService;
@@ -78,7 +79,7 @@ public class SpringSecurityTest {
         //We have to reset our mock between tests because the mock objects
         //are managed by the Spring container. If we would not reset them,
         //stubbing and verified behavior would "leak" from one test to another.
-        Mockito.reset(requestHandler);
+        Mockito.reset(handler);
 
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilter(springSecurityFilterChain)
@@ -135,7 +136,7 @@ public class SpringSecurityTest {
         Set<Role> roles = EnumSet.noneOf(Role.class);
         roles.add(Role.USER);
         roles.add(Role.ADMIN);
-        when(requestHandler.handle(new GetAccountRolesRequest(ACCOUNT_ID))).thenReturn(new GetAccountRolesResponse(roles));
+        when(handler.handle(new GetAccountRolesRequest(ACCOUNT_ID))).thenReturn(new GetAccountRolesResponse(roles));
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().isOk())
@@ -146,7 +147,7 @@ public class SpringSecurityTest {
     public void testSecureResourceWithAuthTokenButNonSufficientRights() throws IOException, Exception {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
         Set<Role> roles = EnumSet.noneOf(Role.class);
-        when(requestHandler.handle(new GetAccountRolesRequest(ACCOUNT_ID))).thenReturn(new GetAccountRolesResponse(roles));
+        when(handler.handle(new GetAccountRolesRequest(ACCOUNT_ID))).thenReturn(new GetAccountRolesResponse(roles));
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_FORBIDDEN))
@@ -160,7 +161,7 @@ public class SpringSecurityTest {
     public void testSecureResourceWithAuthTokenButForNonExistentAccount() throws IOException, Exception {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
         GetAccountRolesRequest request = new GetAccountRolesRequest(ACCOUNT_ID);
-        doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(requestHandler).handle(request);
+        doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(handler).handle(request);
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))

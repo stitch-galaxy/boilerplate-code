@@ -1,6 +1,5 @@
 package com.sg.rest.spring;
 
-import com.sg.domain.request.GetAccountRolesRequestHandler;
 import com.sg.domain.service.SgService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;

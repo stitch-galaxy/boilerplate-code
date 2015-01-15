@@ -9,16 +9,13 @@ import com.sg.domain.ar.Account;
 import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.repository.cqrs.AccountRepository;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
-import com.sg.dto.request.cqrs.Request;
 import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
-import com.sg.dto.request.response.cqrs.RequestResponse;
-import java.lang.reflect.Type;
 
 /**
  *
  * @author tarasev
  */
-public class GetAccountRolesRequestHandler implements RequestHandler {
+public class GetAccountRolesRequestHandler implements RequestHandler<GetAccountRolesResponse, GetAccountRolesRequest> {
     
     private final AccountRepository accountRepository;
     
@@ -27,6 +24,7 @@ public class GetAccountRolesRequestHandler implements RequestHandler {
         this.accountRepository = accountRepository;
     }
     
+    @Override
     public GetAccountRolesResponse handle(GetAccountRolesRequest dto) throws SgAccountNotFoundException
     {
         Account account = accountRepository.findOne(dto.getAccountId());
@@ -35,15 +33,5 @@ public class GetAccountRolesRequestHandler implements RequestHandler {
         }
         GetAccountRolesResponse response = new GetAccountRolesResponse(account.getPermissions().getRoles());
         return response;
-    }
-
-    @Override
-    public RequestResponse handle(Request request) {
-        return handle((GetAccountRolesRequest) request);
-    }
-
-    @Override
-    public Type getRequestType() {
-        return GetAccountRolesRequest.class;
     }
 }
