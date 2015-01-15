@@ -8,7 +8,6 @@ package com.sg.domail.vo;
 import com.sg.domain.enumerations.Role;
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Set;
 
 /**

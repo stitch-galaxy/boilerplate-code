@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SgMailServiceImpl implements EmailService {
 
+    @Override
     public void sendVerificationEmail(String token, String email) {
     }
 

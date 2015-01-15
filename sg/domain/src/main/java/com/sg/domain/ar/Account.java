@@ -29,7 +29,7 @@ public class Account {
 
     public Account(String email, String password, Permissions permissions) {
         this.pdfPurchases = new HashSet<PdfPurchase>();
-        this.siteAccount = new SiteAccount(email, password, false);
+        this.siteAccount = new SiteAccount(email, password);
         this.permissions = permissions;
     }
 
@@ -44,9 +44,9 @@ public class Account {
     
     public void addPdfPurchase(PdfPurchase purchase)
     {
-        getPdfPurchases().add(purchase);
+        this.pdfPurchases.add(purchase);
     }
-
+    
     /**
      * @return the id
      */
@@ -81,11 +81,12 @@ public class Account {
     public Permissions getPermissions() {
         return permissions;
     }
-
     /**
      * @return the pdfPurchases
      */
     public Set<PdfPurchase> getPdfPurchases() {
+        Set<PdfPurchase> purchases = new HashSet<PdfPurchase>();
+        purchases.addAll(this.pdfPurchases);
         return pdfPurchases;
     }
 
@@ -94,11 +95,6 @@ public class Account {
      */
     public SiteAccount getSiteAccount() {
         return siteAccount;
-    }
-    
-    public void linkSiteAccount(String email, String password)
-    {
-        this.siteAccount = new SiteAccount(email, password, false);
     }
 
     /**

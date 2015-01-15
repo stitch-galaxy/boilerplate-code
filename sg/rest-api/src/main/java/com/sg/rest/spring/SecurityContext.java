@@ -9,10 +9,9 @@ package com.sg.rest.spring;
  *
  * @author tarasev
  */
+import com.sg.domain.enumerations.Role;
 import com.sg.rest.apipath.RequestPath;
-import static com.sg.rest.apipath.RequestPath.REST_PATH;
 import com.sg.rest.security.components.WebTokenProcessingFilter;
-import com.sg.domain.enumerations.Roles;
 import com.sg.rest.security.components.NoOpClass;
 import com.sg.rest.security.components.SgAccessDeniedHandler;
 import com.sg.rest.security.components.WebTokenAuthenticationEntryPoint;
@@ -68,8 +67,8 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 
             //Authentication and authorization rules
             http.authorizeRequests()
-                    .antMatchers(RequestPath.REST_SECURE_ADMIN_PATH + "/**").hasRole(Roles.ADMIN)
-                    .antMatchers(RequestPath.REST_SECURE_USER_PATH + "/**").hasRole(Roles.USER)
+                    .antMatchers(RequestPath.REST_SECURE_ADMIN_PATH + "/**").hasRole(Role.ADMIN.name())
+                    .antMatchers(RequestPath.REST_SECURE_USER_PATH + "/**").hasRole(Role.USER.name())
                     .antMatchers(RequestPath.REST_USER_API_PATH + "/**").permitAll();
         }
     }

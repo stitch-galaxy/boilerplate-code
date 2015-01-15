@@ -7,9 +7,7 @@ package com.sg.domain.service.jpa.components;
  * and open the template in the editor.
  */
 
-import com.sg.domain.service.SgService;
 import com.sg.domain.service.jpa.spring.PersistenceContextConfig;
-import com.sg.domain.service.jpa.spring.ServiceContextConfig;
 import com.sg.domain.test.spring.configuration.TestJpaServicePropertiesContextConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,17 +22,13 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  * @author tarasev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, PersistenceContextConfig.class, ServiceContextConfig.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestJpaServicePropertiesContextConfiguration.class, PersistenceContextConfig.class})
 public class ContextConfigurationTest {
-    
-    @Autowired
-    SgService service;
-    
+        
     public ContextConfigurationTest() {
     }
     
     @Test
     public void contextTest(){
-        Assert.assertNotNull(service);
     }
 }

@@ -44,28 +44,28 @@ public class SigninSignupController {
     @Autowired
     CommandHandler<SigninCommandResponse, SigninCommand> singinCommandHandler;
 
-//    @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
-//    public SignupCommandStatus signupUser(@Valid @RequestBody SignupUserCommand dto) {
-//        return signupUserCommandHandler.handle(dto);
-//    }
-//
-//    @RequestMapping(value = RequestPath.REQUEST_SIGNUP_ADMIN_USER, method = RequestMethod.POST)
-//    public SignupCommandStatus signupAdmin(@Valid @RequestBody SignupAdminCommand dto) {
-//        return signupAdminCommandHandler.handle(dto);
-//    }
-//
-//    @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.POST)
-//    public CompleteSignupCommandResponse completeSignup(@Valid @RequestBody CompleteSignupUserCommand dto) {
-//        //http://blog.awnry.com/post/16187851956/spring-mvc-get-the-logged-in-userdetails-from-your
-//        SgRestUser user = (SgRestUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//        CompleteSignupCommand command = new CompleteSignupCommand(user.getAccountId(), dto);
-//        return completeSignupHandler.handle(command);
-//    }
-//
-//    @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
-//    public SigninCommandResponse signin(@Valid @RequestBody SigninCommand dto) throws IOException {
-//        return singinCommandHandler.handle(dto);
-//    }
+    @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
+    public SignupCommandStatus signupUser(@Valid @RequestBody SignupUserCommand dto) {
+        return signupUserCommandHandler.handle(dto);
+    }
+
+    @RequestMapping(value = RequestPath.REQUEST_SIGNUP_ADMIN_USER, method = RequestMethod.POST)
+    public SignupCommandStatus signupAdmin(@Valid @RequestBody SignupAdminCommand dto) {
+        return signupAdminCommandHandler.handle(dto);
+    }
+
+    @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.POST)
+    public CompleteSignupCommandResponse completeSignup(@Valid @RequestBody CompleteSignupUserCommand dto) {
+        //http://blog.awnry.com/post/16187851956/spring-mvc-get-the-logged-in-userdetails-from-your
+        SgRestUser user = (SgRestUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        CompleteSignupCommand command = new CompleteSignupCommand(user.getAccountId(), dto);
+        return completeSignupHandler.handle(command);
+    }
+
+    @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
+    public SigninCommandResponse signin(@Valid @RequestBody SigninCommand dto) throws IOException {
+        return singinCommandHandler.handle(dto);
+    }
 
 }

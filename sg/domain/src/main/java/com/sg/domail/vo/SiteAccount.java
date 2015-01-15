@@ -21,7 +21,7 @@ public class SiteAccount {
     private boolean emailVerified;
     private final MessageDigest md;
 
-    public SiteAccount(String email, String password, boolean emailVerified) {
+    public SiteAccount(String email, String password) {
         try {
             this.md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ex) {
@@ -35,7 +35,7 @@ public class SiteAccount {
         }
         this.email = email;
         this.passwordHash = getPasswordHash(password);
-        this.emailVerified = emailVerified;
+        this.emailVerified = false;
     }
 
     private byte[] getPasswordHash(String password) {

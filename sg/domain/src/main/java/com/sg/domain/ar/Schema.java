@@ -125,7 +125,9 @@ public class Schema {
      * @return the pdfSchemas
      */
     public Map<Locale, FileUrl> getPdfSchemas() {
-        return pdfSchemas;
+        Map<Locale, FileUrl> retValue = new HashMap<Locale, FileUrl>();
+        retValue.putAll(this.pdfSchemas);
+        return retValue;
     }
 
     public void setPdfSchema(Locale locale, FileUrl pdf)

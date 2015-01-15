@@ -6,6 +6,7 @@
 package com.sg.domain.service.jpa.spring;
 
 import com.sg.domain.jpa.repository.NoOpClass;
+import com.sg.domain.service.mapping.components.MapperComponent;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -27,7 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author tarasev
  */
 @Configuration
-@EnableJpaRepositories(basePackageClasses = {NoOpClass.class})
+@EnableJpaRepositories(basePackageClasses = {NoOpClass.class, MapperComponent.class})
 @EnableTransactionManagement
 public class PersistenceContextConfig {
 
