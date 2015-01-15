@@ -36,4 +36,11 @@ public class CompleteSignupCommandResponse implements CommandResponse {
         return token;
     }
 
+    /**
+     * @return the status
+     */
+    public CompleteSignupCommandStatus getStatus() {
+        return status;
+    }
+
 }

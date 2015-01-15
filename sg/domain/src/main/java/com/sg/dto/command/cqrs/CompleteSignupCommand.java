@@ -12,6 +12,7 @@ package com.sg.dto.command.cqrs;
 public class CompleteSignupCommand implements Command {
 
     private final long accountId;
+    private final CompleteSignupUserCommand userCommand;
 
     /**
      * @return the accountId
@@ -20,7 +21,17 @@ public class CompleteSignupCommand implements Command {
         return accountId;
     }
 
-    public CompleteSignupCommand(long accountId) {
+    public CompleteSignupCommand(long accountId, CompleteSignupUserCommand userCommand) {
+        if (userCommand == null)
+            throw new IllegalArgumentException();
         this.accountId = accountId;
+        this.userCommand = userCommand;
+    }
+
+    /**
+     * @return the userCommand
+     */
+    public CompleteSignupUserCommand getUserCommand() {
+        return userCommand;
     }
 }

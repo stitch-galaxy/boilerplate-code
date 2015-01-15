@@ -7,12 +7,9 @@ package com.sg.domain.command;
 
 import com.sg.domain.ar.Account;
 import com.sg.domain.repository.cqrs.AccountRepository;
-import com.sg.dto.command.cqrs.Command;
 import com.sg.dto.command.cqrs.ResendVerificationEmailCommand;
-import com.sg.dto.command.response.cqrs.CommandResponse;
 import com.sg.dto.command.response.cqrs.ResendVerificationEmailCommandStatus;
 import com.sg.dto.enumerations.ResendVerificationEmailStatus;
-import java.lang.reflect.Type;
 
 /**
  *

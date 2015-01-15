@@ -5,6 +5,13 @@
  */
 package com.sg.rest.spring;
 
+import com.sg.domain.command.CompleteSignupCommandHandler;
+import com.sg.domain.command.ResendVerificationEmailCommandHandler;
+import com.sg.domain.command.SigninCommandHandler;
+import com.sg.domain.command.SignupAdminCommandHandler;
+import com.sg.domain.command.SignupUserCommandHandler;
+import com.sg.domain.command.TokenComponent;
+import com.sg.domain.command.TokenEmailPublisher;
 import com.sg.domain.request.GetAccountRolesRequestHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,5 +26,40 @@ public class DomainComponentsContext {
     @Bean
     public GetAccountRolesRequestHandler getAccountRolesRequestHandler() {
         return new GetAccountRolesRequestHandler(null);
+    }
+
+    @Bean
+    public CompleteSignupCommandHandler completeSignupCommandHandler() {
+        return new CompleteSignupCommandHandler(null, null);
+    }
+
+    @Bean
+    public ResendVerificationEmailCommandHandler resendVerificationEmailCommandHandler() {
+        return new ResendVerificationEmailCommandHandler(null, null);
+    }
+
+    @Bean
+    public SignupAdminCommandHandler signupAdminCommandHandler() {
+        return new SignupAdminCommandHandler(null, null);
+    }
+
+    @Bean
+    public SignupUserCommandHandler signupUserCommandHandler() {
+        return new SignupUserCommandHandler(null, null);
+    }
+
+    @Bean
+    public SigninCommandHandler signinCommandHandler() {
+        return new SigninCommandHandler(null, null);
+    }
+
+    @Bean
+    public TokenComponent tokenComponent() {
+        return new TokenComponent(null);
+    }
+
+    @Bean
+    public TokenEmailPublisher tokenEmailPublisher() {
+        return new TokenEmailPublisher(null, null);
     }
 }

@@ -39,6 +39,6 @@ public class CompleteSignupCommandHandler implements CommandHandler<CompleteSign
         }
         account.getSiteAccount().verifyEmail();
         accountRepository.save(account);
-        return new CompleteSignupCommandResponse(securityComponent.generateEmailToken(account.getId().getId()));
+        return new CompleteSignupCommandResponse(securityComponent.generateSessionToken(account.getId().getId()));
     }
 }
