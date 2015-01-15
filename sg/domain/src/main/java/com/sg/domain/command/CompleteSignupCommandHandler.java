@@ -12,6 +12,7 @@ import com.sg.dto.command.cqrs.CompleteSignupCommand;
 import com.sg.dto.command.response.cqrs.CommandResponse;
 import com.sg.dto.command.response.cqrs.CompleteSignupCommandResponse;
 import com.sg.dto.enumerations.CompleteSignupCommandStatus;
+import java.lang.reflect.Type;
 
 /**
  *
@@ -46,6 +47,11 @@ public class CompleteSignupCommandHandler implements CommandHandler {
     @Override
     public CommandResponse handle(Command command) {
         return handle((CompleteSignupCommand) command);
+    }
+
+    @Override
+    public Type getCommandType() {
+        return CompleteSignupCommand.class;
     }
 
 }

@@ -12,6 +12,7 @@ import com.sg.dto.command.cqrs.ResendVerificationEmailCommand;
 import com.sg.dto.command.response.cqrs.CommandResponse;
 import com.sg.dto.command.response.cqrs.ResendVerificationEmailCommandStatus;
 import com.sg.dto.enumerations.ResendVerificationEmailStatus;
+import java.lang.reflect.Type;
 
 /**
  *
@@ -45,6 +46,11 @@ public class ResendVerificationEmailCommandHandler implements CommandHandler {
     @Override
     public CommandResponse handle(Command command) {
         return handle((ResendVerificationEmailCommand) command);
+    }
+
+    @Override
+    public Type getCommandType() {
+        return ResendVerificationEmailCommand.class;
     }
 
 }

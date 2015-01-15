@@ -8,13 +8,11 @@ package com.sg.domain.command;
 import com.sg.domain.ar.Account;
 import com.sg.domain.repository.cqrs.AccountRepository;
 import com.sg.dto.command.cqrs.Command;
-import com.sg.dto.command.cqrs.CompleteSignupCommand;
 import com.sg.dto.command.cqrs.SigninCommand;
 import com.sg.dto.command.response.cqrs.CommandResponse;
-import com.sg.dto.command.response.cqrs.CompleteSignupCommandResponse;
 import com.sg.dto.command.response.cqrs.SigninCommandResponse;
-import com.sg.dto.enumerations.CompleteSignupCommandStatus;
 import com.sg.dto.enumerations.SigninStatus;
+import java.lang.reflect.Type;
 
 /**
  *
@@ -52,6 +50,11 @@ public class SigninCommandHandler implements CommandHandler {
     @Override
     public CommandResponse handle(Command command) {
         return handle((SigninCommand) command);
+    }
+
+    @Override
+    public Type getCommandType() {
+        return SigninCommand.class;
     }
 
 }

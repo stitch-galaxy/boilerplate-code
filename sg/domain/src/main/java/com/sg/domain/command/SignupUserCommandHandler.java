@@ -11,6 +11,7 @@ import com.sg.dto.command.cqrs.Command;
 import com.sg.dto.command.cqrs.SignupUserCommand;
 import com.sg.dto.command.response.cqrs.CommandResponse;
 import com.sg.dto.command.response.cqrs.SignupCommandStatus;
+import java.lang.reflect.Type;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -33,6 +34,11 @@ public class SignupUserCommandHandler extends SignupBaseCommandHandler implement
     @Override
     public CommandResponse handle(Command command) {
         return handle((SignupUserCommand) command);
+    }
+
+    @Override
+    public Type getCommandType() {
+        return SignupUserCommand.class;
     }
 
 }

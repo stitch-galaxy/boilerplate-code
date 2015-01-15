@@ -7,6 +7,7 @@ package com.sg.domain.request;
 
 import com.sg.dto.request.cqrs.Request;
 import com.sg.dto.request.response.cqrs.RequestResponse;
+import java.lang.reflect.Type;
 
 /**
  *
@@ -14,4 +15,5 @@ import com.sg.dto.request.response.cqrs.RequestResponse;
  */
 public interface RequestHandler {
     public RequestResponse handle(Request request);
+    public Type getRequestType();
 }

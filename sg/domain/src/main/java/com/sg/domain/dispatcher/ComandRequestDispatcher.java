@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.command;
+package com.sg.domain.dispatcher;
 
 import com.sg.dto.command.cqrs.Command;
 import com.sg.dto.command.response.cqrs.CommandResponse;
-import java.lang.reflect.Type;
+import com.sg.dto.request.cqrs.Request;
+import com.sg.dto.request.response.cqrs.RequestResponse;
 
 /**
  *
  * @author tarasev
  */
-public interface CommandHandler {
+public interface ComandRequestDispatcher {
     public CommandResponse handle(Command command);
-    public Type getCommandType();
+    public RequestResponse handle(Request request);
 }

@@ -12,6 +12,7 @@ import com.sg.dto.request.cqrs.GetAccountRolesRequest;
 import com.sg.dto.request.cqrs.Request;
 import com.sg.dto.request.response.cqrs.GetAccountRolesResponse;
 import com.sg.dto.request.response.cqrs.RequestResponse;
+import java.lang.reflect.Type;
 
 /**
  *
@@ -39,5 +40,10 @@ public class GetAccountRolesRequestHandler implements RequestHandler {
     @Override
     public RequestResponse handle(Request request) {
         return handle((GetAccountRolesRequest) request);
+    }
+
+    @Override
+    public Type getRequestType() {
+        return GetAccountRolesRequest.class;
     }
 }
