@@ -9,7 +9,7 @@ package com.sg.rest.security.components;
  *
  * @author tarasev
  */
-import com.sg.rest.http.CustomHeaders;
+import com.sg.rest.enumerations.HttpCustomHeaders;
 import com.sg.domain.operation.OperationExecutor;
 import com.sg.dto.operation.status.GetAccountRolesStatus;
 import com.sg.dto.operation.GetAccountRolesOperation;
@@ -77,6 +77,6 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
     }
 
     private String extractAuthTokenFromRequest(HttpServletRequest httpRequest) {
-        return httpRequest.getHeader(CustomHeaders.X_AUTH_TOKEN);
+        return httpRequest.getHeader(HttpCustomHeaders.AUTH_TOKEN_HEADER.getHeader());
     }
 }
