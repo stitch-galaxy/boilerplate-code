@@ -5,7 +5,7 @@
  */
 package com.sg.domain.operation;
 
-import com.sg.domail.vo.Permissions;
+import com.sg.domail.entity.Permissions;
 import com.sg.domain.ar.Account;
 import com.sg.domain.enumerations.Role;
 import com.sg.domain.repository.AccountRepository;

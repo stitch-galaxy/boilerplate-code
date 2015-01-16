@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domail.vo;
+package com.sg.domail.entity;
 
+import com.sg.domail.vo.Locale;
 import java.util.HashMap;
 import java.util.Map;
 

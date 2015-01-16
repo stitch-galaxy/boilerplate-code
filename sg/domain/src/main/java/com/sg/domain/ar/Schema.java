@@ -9,7 +9,7 @@ import com.sg.domail.vo.FileUrl;
 import com.sg.domail.vo.Locale;
 import com.sg.domail.vo.SchemaId;
 import com.sg.domail.vo.SchemaParameters;
-import com.sg.domail.vo.TextField;
+import com.sg.domail.entity.TextField;
 import java.util.HashMap;
 import java.util.Map;
 

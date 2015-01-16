@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domail.vo;
+package com.sg.domail.entity;
 
 import com.sg.domain.enumerations.Role;
 import java.util.Collection;
