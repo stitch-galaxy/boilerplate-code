@@ -8,7 +8,7 @@ package com.sg.domail.entity;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *
@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class SiteAccount {
 
     private final String email;
-    private byte[] passwordHash;
+    private String passwordHash;
     private boolean emailVerified;
     private final MessageDigest md;
 
@@ -38,10 +38,11 @@ public class SiteAccount {
         this.emailVerified = false;
     }
 
-    private byte[] getPasswordHash(String password) {
+    private String getPasswordHash(String password) {
         try {
             byte[] passwordBytes = password.getBytes("UTF-8");
-            return md.digest(passwordBytes);
+            byte[] digestBytes = md.digest(passwordBytes);
+            return Base64.encodeBase64String(digestBytes);
         } catch (UnsupportedEncodingException ex) {
             throw new PlatformDoNotSupportUtf8AlgorithmException(ex);
         }
@@ -55,8 +56,10 @@ public class SiteAccount {
     }
 
     public boolean isPasswordCorrect(String passwordToVerify) {
-        byte[] passwordToVerifyHash = getPasswordHash(passwordToVerify);
-        return Arrays.equals(passwordHash, passwordToVerifyHash);
+        if (passwordToVerify == null)
+            throw new IllegalArgumentException();
+        String passwordToVerifyHash = getPasswordHash(passwordToVerify);
+        return this.passwordHash.equals(passwordToVerifyHash);
     }
 
     /**

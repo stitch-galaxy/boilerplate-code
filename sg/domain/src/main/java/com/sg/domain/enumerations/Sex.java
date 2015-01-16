@@ -11,33 +11,6 @@ package com.sg.domain.enumerations;
  */
 public enum Sex {
 
-    MALE(1),
-    FEMALE(2);
-
-    private final Integer persistentId;
-
-    private Sex(Integer persistentId) {
-        this.persistentId = persistentId;
-    }
-
-    /**
-     * @return the persistentId
-     */
-    public Integer getPersistentId() {
-        return persistentId;
-    }
-
-    public static Sex getSexFromPersistenId(Integer persistentId) {
-        if (persistentId == null) {
-            return null;
-        }
-        switch (persistentId) {
-            case 1:
-                return MALE;
-            case 2:
-                return FEMALE;
-        }
-        return null;
-    }
-
+    MALE,
+    FEMALE;
 }
