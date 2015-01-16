@@ -5,10 +5,8 @@
  */
 package com.sg.rest.security.components;
 
-import com.sg.rest.enumerations.ErrorCodes;
-import com.sg.dto.response.ErrorDto;
+import com.sg.rest.dto.AccessDenied;
 import com.sg.rest.utils.CustomMediaTypes;
-import com.sg.rest.utils.Utils;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,12 +36,8 @@ public class SgAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         
-        String refNumber = Utils.logException(LOGGER, e);
-        
-        ErrorDto dto = new ErrorDto();
-        dto.setRefNumber(refNumber);
-        dto.setError(e.getMessage());
-        dto.setErrorCode(ErrorCodes.ACCESS_DENIED);
+        AccessDenied dto = new AccessDenied();
+        LOGGER.error("Authorization failed " + dto.getEventRef().getId() + ": ", e);
         
         response.setContentType(CustomMediaTypes.APPLICATION_JSON_UTF8.toString());
         jacksonObjectMapper.writeValue(response.getWriter(), dto);

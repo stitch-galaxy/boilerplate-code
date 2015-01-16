@@ -9,13 +9,12 @@ package com.sg.rest.security.components;
  *
  * @author tarasev
  */
-import com.sg.rest.enumerations.ErrorCodes;
-import com.sg.dto.response.ErrorDto;
+import com.sg.rest.dto.AuthenficationFailed;
+import com.sg.rest.dto.AuthentificationFailureStatus;
 import com.sg.rest.webtoken.WebSecurityAccountNotFoundException;
 import com.sg.rest.webtoken.WebSecurityBadTokenException;
 import com.sg.rest.webtoken.WebSecurityTokenExpiredException;
 import com.sg.rest.utils.CustomMediaTypes;
-import com.sg.rest.utils.Utils;
 import java.io.IOException;
 import javax.servlet.ServletException;
 
@@ -50,27 +49,30 @@ public class WebTokenAuthenticationEntryPoint implements AuthenticationEntryPoin
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         
-        String refNumber = Utils.logException(LOGGER, authEx);
-        
-        ErrorDto dto = new ErrorDto();
-        dto.setRefNumber(refNumber);
-        dto.setError(authEx.getMessage());
-        dto.setErrorCode(ErrorCodes.UNKNOWN);
-        
+        AuthenficationFailed dto;
         if (authEx instanceof WebSecurityAccountNotFoundException) {
-            dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_ACCOUNT_DO_NOT_EXISTS);
+            dto = new AuthenficationFailed(AuthentificationFailureStatus.TOKEN_AUTHENTICATION_ACCOUNT_DO_NOT_EXISTS);
+            //dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_ACCOUNT_DO_NOT_EXISTS);
         }
-        if (authEx instanceof WebSecurityBadTokenException) {
-            dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_BAD_TOKEN);
+        else if (authEx instanceof WebSecurityBadTokenException) {
+            dto = new AuthenficationFailed(AuthentificationFailureStatus.TOKEN_AUTHENTICATION_BAD_TOKEN);
+            //dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_BAD_TOKEN);
         }
-        if (authEx instanceof WebSecurityTokenExpiredException) {
-            dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_TOKEN_EXPIRED);
+        else if (authEx instanceof WebSecurityTokenExpiredException) {
+            dto = new AuthenficationFailed(AuthentificationFailureStatus.TOKEN_AUTHENTICATION_TOKEN_EXPIRED);
+            //dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_TOKEN_EXPIRED);
         }
-        if (authEx instanceof InsufficientAuthenticationException)
+        else if (authEx instanceof InsufficientAuthenticationException)
         {
-            dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_NO_TOKEN);
+            dto = new AuthenficationFailed(AuthentificationFailureStatus.TOKEN_AUTHENTICATION_NO_TOKEN);
+            //dto.setErrorCode(ErrorCodes.TOKEN_AUTHENTICATION_NO_TOKEN);
         }
-        //TODO: ErrorCodes.TOKEN_AUTHORIZATION_UNATUHORIZED + test
+        else
+        {
+            dto = new AuthenficationFailed(AuthentificationFailureStatus.UNKNOWN);
+        }
+        
+        LOGGER.error("Authentication failed " + dto.getEventRef().getId() + ": ", authEx);
         
         response.setContentType(CustomMediaTypes.APPLICATION_JSON_UTF8.toString());
         jacksonObjectMapper.writeValue(response.getWriter(), dto);

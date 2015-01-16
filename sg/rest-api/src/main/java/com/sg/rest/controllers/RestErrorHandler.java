@@ -5,9 +5,7 @@
  */
 package com.sg.rest.controllers;
 
-import com.sg.rest.enumerations.ErrorCodes;
-import com.sg.dto.response.ErrorDto;
-import com.sg.rest.utils.Utils;
+import com.sg.rest.dto.ServerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -30,23 +28,21 @@ public class RestErrorHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public void processServiceValidationError(HttpRequestMethodNotSupportedException ex) {
+    public void processResourceNotFoundError(HttpRequestMethodNotSupportedException ex) {
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public ErrorDto processException(Exception ex) throws Exception {
-        String refNumber = Utils.logException(LOGGER, ex);
+    public ServerException processException(Exception ex) throws Exception {
 
+        ServerException dto = new ServerException();
+        LOGGER.error("Rest exception occured " + dto.getEventRef().getId() + ": ", ex);
+        
         if (AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class) != null) {
             throw ex;
         }
-
-        ErrorDto dto = new ErrorDto();
-        dto.setRefNumber(refNumber);
-        dto.setError(ex.getMessage());
-        dto.setErrorCode(ErrorCodes.EXCEPTION);
+        
         return dto;
     }
 }

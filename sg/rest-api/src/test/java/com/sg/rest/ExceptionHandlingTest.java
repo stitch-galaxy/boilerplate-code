@@ -20,6 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -52,7 +53,6 @@ public class ExceptionHandlingTest {
         mockMvc.perform(get(RequestPath.TEST_REQUEST_THROW_EXCEPTION))
                 .andExpect(status().is(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
                 .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.error", not(isEmptyOrNullString())))
-                .andExpect(jsonPath("$.refNumber", not(isEmptyOrNullString())));
+                .andExpect(jsonPath("$.eventRef.id", not(isEmptyOrNullString())));
     }
 }
