@@ -7,7 +7,7 @@ package com.sg.domain.handler.command;
 
 import com.sg.domain.ar.Account;
 import com.sg.domain.repository.AccountRepository;
-import com.sg.dto.command.cqrs.ResendVerificationEmailCommand;
+import com.sg.dto.command.ResendVerificationEmailCommand;
 import com.sg.dto.command.response.ResendVerificationEmailCommandStatus;
 import com.sg.dto.enumerations.ResendVerificationEmailStatus;
 

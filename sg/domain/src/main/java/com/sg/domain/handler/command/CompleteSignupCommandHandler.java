@@ -7,7 +7,7 @@ package com.sg.domain.handler.command;
 
 import com.sg.domain.ar.Account;
 import com.sg.domain.repository.AccountRepository;
-import com.sg.dto.command.cqrs.CompleteSignupCommand;
+import com.sg.dto.command.CompleteSignupCommand;
 import com.sg.dto.command.response.CompleteSignupCommandResponse;
 import com.sg.dto.enumerations.CompleteSignupCommandStatus;
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.dto.request.response;
+package com.sg.dto.command.response;
 
 import com.sg.domain.enumerations.Role;
 import com.sg.dto.enumerations.GetAccountRolesStatus;
@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author tarasev
  */
-public class GetAccountRolesResponse implements RequestResponse {
+public class GetAccountRolesResponse implements CommandResponse {
  
     private final Set<Role> roles;
     private final GetAccountRolesStatus status;

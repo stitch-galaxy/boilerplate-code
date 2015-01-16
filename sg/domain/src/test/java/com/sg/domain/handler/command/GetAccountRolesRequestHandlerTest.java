@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.request;
+package com.sg.domain.handler.command;
 
-import com.sg.domain.handler.request.GetAccountRolesRequestHandler;
+import com.sg.domain.handler.command.GetAccountRolesRequestHandler;
 import com.sg.domail.vo.Permissions;
 import com.sg.domain.ar.Account;
 import com.sg.domain.enumerations.Role;
 import com.sg.domain.repository.AccountRepository;
 import com.sg.dto.enumerations.GetAccountRolesStatus;
-import com.sg.dto.request.cqrs.GetAccountRolesRequest;
-import com.sg.dto.request.response.GetAccountRolesResponse;
+import com.sg.dto.command.GetAccountRolesRequest;
+import com.sg.dto.command.response.GetAccountRolesResponse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.hasSize;

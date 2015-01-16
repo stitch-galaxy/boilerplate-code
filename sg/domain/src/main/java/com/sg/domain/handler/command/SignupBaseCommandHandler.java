@@ -9,7 +9,7 @@ import com.sg.domail.vo.Permissions;
 import com.sg.domain.ar.Account;
 import com.sg.domain.enumerations.Role;
 import com.sg.domain.repository.AccountRepository;
-import com.sg.dto.command.cqrs.SignupCommand;
+import com.sg.dto.command.SignupCommand;
 import com.sg.dto.command.response.SignupCommandStatus;
 import com.sg.dto.enumerations.SignupStatus;
 import java.util.Set;

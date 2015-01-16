@@ -10,10 +10,10 @@ package com.sg.rest.security.components;
  * @author tarasev
  */
 import com.sg.rest.http.CustomHeaders;
-import com.sg.domain.handler.request.RequestHandler;
+import com.sg.domain.handler.command.CommandHandler;
 import com.sg.dto.enumerations.GetAccountRolesStatus;
-import com.sg.dto.request.cqrs.GetAccountRolesRequest;
-import com.sg.dto.request.response.GetAccountRolesResponse;
+import com.sg.dto.command.GetAccountRolesRequest;
+import com.sg.dto.command.response.GetAccountRolesResponse;
 import com.sg.rest.security.SgRestUser;
 import com.sg.rest.webtoken.WebSecurityAccountNotFoundException;
 import com.sg.rest.webtoken.WebTokenService;
@@ -39,7 +39,7 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
     private WebTokenService securityService;
 
     @Autowired
-    RequestHandler<GetAccountRolesResponse, GetAccountRolesRequest> handler;
+    CommandHandler<GetAccountRolesResponse, GetAccountRolesRequest> handler;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {

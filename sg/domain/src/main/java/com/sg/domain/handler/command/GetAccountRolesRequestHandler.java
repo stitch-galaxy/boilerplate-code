@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.handler.request;
+package com.sg.domain.handler.command;
 
 import com.sg.domain.ar.Account;
 import com.sg.domain.repository.AccountRepository;
 import com.sg.dto.enumerations.GetAccountRolesStatus;
-import com.sg.dto.request.cqrs.GetAccountRolesRequest;
-import com.sg.dto.request.response.GetAccountRolesResponse;
+import com.sg.dto.command.GetAccountRolesRequest;
+import com.sg.dto.command.response.GetAccountRolesResponse;
 
 /**
  *
  * @author tarasev
  */
-public class GetAccountRolesRequestHandler implements RequestHandler<GetAccountRolesResponse, GetAccountRolesRequest> {
+public class GetAccountRolesRequestHandler implements CommandHandler<GetAccountRolesResponse, GetAccountRolesRequest> {
 
     private final AccountRepository accountRepository;
 

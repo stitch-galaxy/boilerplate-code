@@ -9,13 +9,13 @@ import com.sg.domain.enumerations.Role;
 import com.sg.rest.utils.CustomMediaTypes;
 import com.sg.rest.spring.test.WebApplicationIntegrationTestContext;
 import com.sg.rest.http.CustomHeaders;
-import com.sg.rest.errorcodes.ErrorCodes;
+import com.sg.rest.enumerations.ErrorCodes;
 import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.path.RequestPath;
-import com.sg.domain.handler.request.RequestHandler;
+import com.sg.domain.handler.command.CommandHandler;
 import com.sg.dto.enumerations.GetAccountRolesStatus;
-import com.sg.dto.request.cqrs.GetAccountRolesRequest;
-import com.sg.dto.request.response.GetAccountRolesResponse;
+import com.sg.dto.command.GetAccountRolesRequest;
+import com.sg.dto.command.response.GetAccountRolesResponse;
 import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
 import com.sg.rest.webtoken.WebTokenService;
 import java.io.IOException;
@@ -61,7 +61,7 @@ public class SpringSecurityTest {
     private MockMvc mockMvc;
     
     @Autowired
-    private RequestHandler<GetAccountRolesResponse, GetAccountRolesRequest> handler;
+    private CommandHandler<GetAccountRolesResponse, GetAccountRolesRequest> handler;
 
     @Autowired
     private WebTokenService webSecurityService;

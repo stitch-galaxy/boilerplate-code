@@ -5,7 +5,7 @@
  */
 package com.sg.domain.handler.command;
 
-import com.sg.dto.command.cqrs.Command;
+import com.sg.dto.command.Command;
 import com.sg.dto.command.response.CommandResponse;
 
 public interface CommandHandler<TCommandResponse extends CommandResponse, TCommandType extends Command> {

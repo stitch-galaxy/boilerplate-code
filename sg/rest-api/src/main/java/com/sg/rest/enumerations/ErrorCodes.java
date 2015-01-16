@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.errorcodes;
+package com.sg.rest.enumerations;
 
 /**
  *
@@ -12,7 +12,6 @@ package com.sg.rest.errorcodes;
 public class ErrorCodes {
 
     public static final int EXCEPTION = 0;
-    public static final int EXCEPTION_CONSTRAINT_VIOLATION = 0;
     
     public static final int UNKNOWN = 0;
     

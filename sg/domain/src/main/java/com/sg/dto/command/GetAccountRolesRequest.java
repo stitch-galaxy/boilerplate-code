@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.dto.request.cqrs;
+package com.sg.dto.command;
 
+import com.sg.dto.command.Command;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -12,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  *
  * @author tarasev
  */
-public class GetAccountRolesRequest implements Request {
+public class GetAccountRolesRequest implements Command {
 
     private final long accountId;
     

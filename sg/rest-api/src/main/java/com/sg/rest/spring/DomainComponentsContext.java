@@ -12,7 +12,7 @@ import com.sg.domain.handler.command.SignupAdminCommandHandler;
 import com.sg.domain.handler.command.SignupUserCommandHandler;
 import com.sg.domain.handler.command.TokenComponent;
 import com.sg.domain.handler.command.TokenEmailPublisher;
-import com.sg.domain.handler.request.GetAccountRolesRequestHandler;
+import com.sg.domain.handler.command.GetAccountRolesRequestHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

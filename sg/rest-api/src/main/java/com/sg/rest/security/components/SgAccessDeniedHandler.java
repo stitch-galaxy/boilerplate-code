@@ -5,7 +5,7 @@
  */
 package com.sg.rest.security.components;
 
-import com.sg.rest.errorcodes.ErrorCodes;
+import com.sg.rest.enumerations.ErrorCodes;
 import com.sg.dto.response.ErrorDto;
 import com.sg.rest.utils.CustomMediaTypes;
 import com.sg.rest.utils.Utils;

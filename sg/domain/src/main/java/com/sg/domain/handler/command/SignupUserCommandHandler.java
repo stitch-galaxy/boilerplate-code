@@ -7,7 +7,7 @@ package com.sg.domain.handler.command;
 
 import com.sg.domain.enumerations.Role;
 import com.sg.domain.repository.AccountRepository;
-import com.sg.dto.command.cqrs.SignupUserCommand;
+import com.sg.dto.command.SignupUserCommand;
 import com.sg.dto.command.response.SignupCommandStatus;
 import java.util.EnumSet;
 import java.util.Set;
