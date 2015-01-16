@@ -10,10 +10,10 @@ package com.sg.rest.security.components;
  * @author tarasev
  */
 import com.sg.rest.http.CustomHeaders;
-import com.sg.domain.handler.command.CommandHandler;
-import com.sg.dto.enumerations.GetAccountRolesStatus;
-import com.sg.dto.command.GetAccountRolesRequest;
-import com.sg.dto.command.response.GetAccountRolesResponse;
+import com.sg.domain.operation.OperationExecutor;
+import com.sg.dto.operation.status.GetAccountRolesStatus;
+import com.sg.dto.operation.GetAccountRolesOperation;
+import com.sg.dto.operation.response.GetAccountRolesResponse;
 import com.sg.rest.security.SgRestUser;
 import com.sg.rest.webtoken.WebSecurityAccountNotFoundException;
 import com.sg.rest.webtoken.WebTokenService;
@@ -39,7 +39,7 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
     private WebTokenService securityService;
 
     @Autowired
-    CommandHandler<GetAccountRolesResponse, GetAccountRolesRequest> handler;
+    OperationExecutor<GetAccountRolesResponse, GetAccountRolesOperation> handler;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -49,7 +49,7 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
         if (sToken != null) {
 
             long accountId = securityService.getAccountIdAndVerifyToken(sToken);
-            GetAccountRolesRequest dto = new GetAccountRolesRequest(accountId);
+            GetAccountRolesOperation dto = new GetAccountRolesOperation(accountId);
                 GetAccountRolesResponse rolesDto = handler.handle(dto);
                 if (rolesDto.getStatus() == GetAccountRolesStatus.STATUS_ACCOUNT_NOT_FOUND)
                 {

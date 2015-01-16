@@ -5,20 +5,20 @@
  */
 package com.sg.rest.controllers;
 
-import com.sg.domain.handler.command.CommandHandler;
+import com.sg.domain.operation.OperationExecutor;
 import com.sg.rest.path.RequestPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.sg.dto.command.CompleteSignupCommand;
-import com.sg.dto.command.CompleteSignupUserCommand;
-import com.sg.dto.command.SigninCommand;
-import com.sg.dto.command.SignupAdminCommand;
-import com.sg.dto.command.SignupUserCommand;
-import com.sg.dto.command.response.CompleteSignupCommandResponse;
-import com.sg.dto.command.response.SigninCommandResponse;
-import com.sg.dto.command.response.SignupCommandStatus;
+import com.sg.dto.operation.CompleteSignupOperation;
+import com.sg.dto.operation.CompleteSignupParameters;
+import com.sg.dto.operation.SigninOperation;
+import com.sg.dto.operation.SignupAdminOperation;
+import com.sg.dto.operation.SignupUserOperation;
+import com.sg.dto.operation.response.CompleteSignupResponse;
+import com.sg.dto.operation.response.SigninCommandResponse;
+import com.sg.dto.operation.response.SignupCommandResponse;
 import com.sg.rest.security.SgRestUser;
 import java.io.IOException;
 import javax.validation.Valid;
@@ -33,38 +33,38 @@ import org.springframework.web.bind.annotation.RestController;
 public class SigninSignupController {
 
     @Autowired
-    private CommandHandler<SignupCommandStatus, SignupUserCommand> signupUserCommandHandler;
+    private OperationExecutor<SignupCommandResponse, SignupUserOperation> signupUserCommandHandler;
 
     @Autowired
-    private CommandHandler<SignupCommandStatus, SignupAdminCommand> signupAdminCommandHandler;
+    private OperationExecutor<SignupCommandResponse, SignupAdminOperation> signupAdminCommandHandler;
 
     @Autowired
-    CommandHandler<CompleteSignupCommandResponse, CompleteSignupCommand> completeSignupHandler;
+    OperationExecutor<CompleteSignupResponse, CompleteSignupOperation> completeSignupHandler;
 
     @Autowired
-    CommandHandler<SigninCommandResponse, SigninCommand> singinCommandHandler;
+    OperationExecutor<SigninCommandResponse, SigninOperation> singinCommandHandler;
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_USER, method = RequestMethod.POST)
-    public SignupCommandStatus signupUser(@Valid @RequestBody SignupUserCommand dto) {
+    public SignupCommandResponse signupUser(@Valid @RequestBody SignupUserOperation dto) {
         return signupUserCommandHandler.handle(dto);
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNUP_ADMIN_USER, method = RequestMethod.POST)
-    public SignupCommandStatus signupAdmin(@Valid @RequestBody SignupAdminCommand dto) {
+    public SignupCommandResponse signupAdmin(@Valid @RequestBody SignupAdminOperation dto) {
         return signupAdminCommandHandler.handle(dto);
     }
 
     @RequestMapping(value = RequestPath.REQUEST_COMPLETE_SIGNUP, method = RequestMethod.POST)
-    public CompleteSignupCommandResponse completeSignup(@Valid @RequestBody CompleteSignupUserCommand dto) {
+    public CompleteSignupResponse completeSignup(@Valid @RequestBody CompleteSignupParameters dto) {
         //http://blog.awnry.com/post/16187851956/spring-mvc-get-the-logged-in-userdetails-from-your
         SgRestUser user = (SgRestUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        CompleteSignupCommand command = new CompleteSignupCommand(user.getAccountId(), dto);
+        CompleteSignupOperation command = new CompleteSignupOperation(user.getAccountId(), dto);
         return completeSignupHandler.handle(command);
     }
 
     @RequestMapping(value = RequestPath.REQUEST_SIGNIN, method = RequestMethod.POST)
-    public SigninCommandResponse signin(@Valid @RequestBody SigninCommand dto) throws IOException {
+    public SigninCommandResponse signin(@Valid @RequestBody SigninOperation dto) throws IOException {
         return singinCommandHandler.handle(dto);
     }
 

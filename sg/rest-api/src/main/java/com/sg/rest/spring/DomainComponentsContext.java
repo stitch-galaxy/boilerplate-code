@@ -5,14 +5,14 @@
  */
 package com.sg.rest.spring;
 
-import com.sg.domain.handler.command.CompleteSignupCommandHandler;
-import com.sg.domain.handler.command.ResendVerificationEmailCommandHandler;
-import com.sg.domain.handler.command.SigninCommandHandler;
-import com.sg.domain.handler.command.SignupAdminCommandHandler;
-import com.sg.domain.handler.command.SignupUserCommandHandler;
-import com.sg.domain.handler.command.TokenComponent;
-import com.sg.domain.handler.command.TokenEmailPublisher;
-import com.sg.domain.handler.command.GetAccountRolesRequestHandler;
+import com.sg.domain.operation.CompleteSignup;
+import com.sg.domain.operation.ResendVerificationEmail;
+import com.sg.domain.operation.Signin;
+import com.sg.domain.operation.SignupAdmin;
+import com.sg.domain.operation.SignupUser;
+import com.sg.domain.operation.TokenComponent;
+import com.sg.domain.operation.TokenEmailPublisher;
+import com.sg.domain.operation.GetAccountRoles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,33 +24,33 @@ import org.springframework.context.annotation.Configuration;
 public class DomainComponentsContext {
 
     @Bean
-    public GetAccountRolesRequestHandler getAccountRolesRequestHandler() {
-        return new GetAccountRolesRequestHandler(null);
+    public GetAccountRoles getAccountRolesRequestHandler() {
+        return new GetAccountRoles(null);
     }
 
     @Bean
-    public CompleteSignupCommandHandler completeSignupCommandHandler() {
-        return new CompleteSignupCommandHandler(null, null);
+    public CompleteSignup completeSignupCommandHandler() {
+        return new CompleteSignup(null, null);
     }
 
     @Bean
-    public ResendVerificationEmailCommandHandler resendVerificationEmailCommandHandler() {
-        return new ResendVerificationEmailCommandHandler(null, null);
+    public ResendVerificationEmail resendVerificationEmailCommandHandler() {
+        return new ResendVerificationEmail(null, null);
     }
 
     @Bean
-    public SignupAdminCommandHandler signupAdminCommandHandler() {
-        return new SignupAdminCommandHandler(null, null);
+    public SignupAdmin signupAdminCommandHandler() {
+        return new SignupAdmin(null, null);
     }
 
     @Bean
-    public SignupUserCommandHandler signupUserCommandHandler() {
-        return new SignupUserCommandHandler(null, null);
+    public SignupUser signupUserCommandHandler() {
+        return new SignupUser(null, null);
     }
 
     @Bean
-    public SigninCommandHandler signinCommandHandler() {
-        return new SigninCommandHandler(null, null);
+    public Signin signinCommandHandler() {
+        return new Signin(null, null);
     }
 
     @Bean

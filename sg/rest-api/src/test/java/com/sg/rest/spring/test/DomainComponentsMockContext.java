@@ -5,14 +5,14 @@
  */
 package com.sg.rest.spring.test;
 
-import com.sg.domain.handler.command.CompleteSignupCommandHandler;
-import com.sg.domain.handler.command.ResendVerificationEmailCommandHandler;
-import com.sg.domain.handler.command.SigninCommandHandler;
-import com.sg.domain.handler.command.SignupAdminCommandHandler;
-import com.sg.domain.handler.command.SignupUserCommandHandler;
-import com.sg.domain.handler.command.TokenComponent;
-import com.sg.domain.handler.command.TokenEmailPublisher;
-import com.sg.domain.handler.command.GetAccountRolesRequestHandler;
+import com.sg.domain.operation.CompleteSignup;
+import com.sg.domain.operation.ResendVerificationEmail;
+import com.sg.domain.operation.Signin;
+import com.sg.domain.operation.SignupAdmin;
+import com.sg.domain.operation.SignupUser;
+import com.sg.domain.operation.TokenComponent;
+import com.sg.domain.operation.TokenEmailPublisher;
+import com.sg.domain.operation.GetAccountRoles;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,33 +25,33 @@ import org.springframework.context.annotation.Configuration;
 public class DomainComponentsMockContext {
 
     @Bean
-    public GetAccountRolesRequestHandler getAccountRolesRequestHandler() {
-        return Mockito.mock(GetAccountRolesRequestHandler.class);
+    public GetAccountRoles getAccountRolesRequestHandler() {
+        return Mockito.mock(GetAccountRoles.class);
     }
 
     @Bean
-    public CompleteSignupCommandHandler completeSignupCommandHandler() {
-        return Mockito.mock(CompleteSignupCommandHandler.class);
+    public CompleteSignup completeSignupCommandHandler() {
+        return Mockito.mock(CompleteSignup.class);
     }
 
     @Bean
-    public ResendVerificationEmailCommandHandler resendVerificationEmailCommandHandler() {
-        return Mockito.mock(ResendVerificationEmailCommandHandler.class);
+    public ResendVerificationEmail resendVerificationEmailCommandHandler() {
+        return Mockito.mock(ResendVerificationEmail.class);
     }
 
     @Bean
-    public SignupAdminCommandHandler signupAdminCommandHandler() {
-        return Mockito.mock(SignupAdminCommandHandler.class);
+    public SignupAdmin signupAdminCommandHandler() {
+        return Mockito.mock(SignupAdmin.class);
     }
 
     @Bean
-    public SignupUserCommandHandler signupUserCommandHandler() {
-        return Mockito.mock(SignupUserCommandHandler.class);
+    public SignupUser signupUserCommandHandler() {
+        return Mockito.mock(SignupUser.class);
     }
     
     @Bean
-    public SigninCommandHandler signinCommandHandler() {
-        return Mockito.mock(SigninCommandHandler.class);
+    public Signin signinCommandHandler() {
+        return Mockito.mock(Signin.class);
     }
 
     @Bean
