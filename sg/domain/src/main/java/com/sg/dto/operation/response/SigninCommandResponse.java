@@ -13,24 +13,52 @@ import com.sg.dto.operation.status.SigninStatus;
  */
 public class SigninCommandResponse implements Response {
 
+    /**
+     * @return the data
+     */
+    public Data getData() {
+        return data;
+    }
+
+    public static class Data {
+
+        private final String token;
+
+        public Data(String token) {
+            if (token == null) {
+                throw new IllegalArgumentException();
+            }
+            this.token = token;
+        }
+
+        /**
+         * @return the token
+         */
+        public String getToken() {
+            return token;
+        }
+
+    }
+
     private final SigninStatus status;
-    private final String token;
+    private final Data data;
 
     public SigninCommandResponse(SigninStatus status) {
         if (status == null || status == SigninStatus.STATUS_SUCCESS) {
             throw new IllegalArgumentException();
         }
         this.status = status;
-        this.token = null;
+        this.data = null;
     }
 
     public SigninCommandResponse(String token) {
-        if (token == null)
+        if (token == null) {
             throw new IllegalArgumentException();
+        }
         this.status = SigninStatus.STATUS_SUCCESS;
-        this.token = token;
+        this.data = new Data(token);
     }
-    
+
     /**
      * @return the status
      */
@@ -38,10 +66,4 @@ public class SigninCommandResponse implements Response {
         return status;
     }
 
-    /**
-     * @return the token
-     */
-    public String getToken() {
-        return token;
-    }
 }

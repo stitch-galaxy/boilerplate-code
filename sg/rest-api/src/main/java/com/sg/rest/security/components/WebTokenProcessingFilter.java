@@ -57,7 +57,7 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
                 }
                 
                 SgRestUser userPrincipal = new SgRestUser(accountId);
-                userPrincipal.setRoles(rolesDto.getRoles());
+                userPrincipal.setRoles(rolesDto.getData().getRoles());
 
                 UsernamePasswordAuthenticationToken authentication
                         = new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());

@@ -49,7 +49,7 @@ public class GetAccountRolesRequestHandlerTest {
         GetAccountRolesOperation dto = new GetAccountRolesOperation(1l);
         GetAccountRolesResponse response = handler.handle(dto);
         assertEquals(GetAccountRolesStatus.STATUS_ACCOUNT_NOT_FOUND, response.getStatus());
-        assertEquals(null, response.getRoles());
+        assertEquals(null, response.getData());
     }
     
     @Test
@@ -64,8 +64,8 @@ public class GetAccountRolesRequestHandlerTest {
         GetAccountRolesOperation dto = new GetAccountRolesOperation(1l);
         GetAccountRolesResponse response = handler.handle(dto);
         assertEquals(GetAccountRolesStatus.STATUS_SUCCESS, response.getStatus());
-        assertThat(response.getRoles(), hasSize(2));
-        assertThat(response.getRoles(), Matchers.containsInAnyOrder(Role.USER, Role.ADMIN));
+        assertThat(response.getData().getRoles(), hasSize(2));
+        assertThat(response.getData().getRoles(), Matchers.containsInAnyOrder(Role.USER, Role.ADMIN));
     }
     
 }

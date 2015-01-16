@@ -14,33 +14,48 @@ import java.util.Set;
  * @author tarasev
  */
 public class GetAccountRolesResponse implements Response {
- 
-    private final Set<Role> roles;
+
+    /**
+     * @return the data
+     */
+    public Data getData() {
+        return data;
+    }
+
+    public static class Data {
+
+        private final Set<Role> roles;
+
+        public Data(Set<Role> roles) {
+            if (roles == null) {
+                throw new IllegalArgumentException();
+            }
+            this.roles = roles;
+        }
+
+        /**
+         * @return the token
+         */
+        public Set<Role> getRoles() {
+            return roles;
+        }
+
+    }
+
     private final GetAccountRolesStatus status;
+    private final Data data;
 
     public GetAccountRolesResponse(Set<Role> roles) {
-        if (roles == null) {
-            throw new IllegalArgumentException();
-        }
-        this.roles = roles;
         this.status = GetAccountRolesStatus.STATUS_SUCCESS;
+        this.data = new Data(roles);
     }
-    
-    public GetAccountRolesResponse(GetAccountRolesStatus status)
-    {
-        if (status != GetAccountRolesStatus.STATUS_ACCOUNT_NOT_FOUND)
-        {
+
+    public GetAccountRolesResponse(GetAccountRolesStatus status) {
+        if (status != GetAccountRolesStatus.STATUS_ACCOUNT_NOT_FOUND) {
             throw new IllegalArgumentException();
         }
         this.status = status;
-        this.roles = null;
-    }
-
-    /**
-     * @return the roles
-     */
-    public Set<Role> getRoles() {
-        return roles;
+        this.data = null;
     }
 
     /**
