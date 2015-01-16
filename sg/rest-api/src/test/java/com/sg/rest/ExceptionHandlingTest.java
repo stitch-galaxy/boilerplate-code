@@ -5,7 +5,7 @@
  */
 package com.sg.rest;
 
-import com.sg.rest.utils.CustomMediaTypes;
+import com.sg.rest.enumerations.CustomMediaTypes;
 import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.path.RequestPath;
 import com.sg.rest.spring.test.WebApplicationUnitTestContext;
@@ -52,7 +52,7 @@ public class ExceptionHandlingTest {
     public void testExceptionDuringServiceCall() throws Exception {
         mockMvc.perform(get(RequestPath.TEST_REQUEST_THROW_EXCEPTION))
                 .andExpect(status().is(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8.getMediatype()))
                 .andExpect(jsonPath("$.eventRef.id", not(isEmptyOrNullString())));
     }
 }

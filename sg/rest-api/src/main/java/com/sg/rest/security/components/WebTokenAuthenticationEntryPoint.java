@@ -10,11 +10,11 @@ package com.sg.rest.security.components;
  * @author tarasev
  */
 import com.sg.rest.dto.AuthenficationFailed;
-import com.sg.rest.dto.AuthentificationFailureStatus;
+import com.sg.rest.enumerations.AuthentificationFailureStatus;
 import com.sg.rest.webtoken.WebSecurityAccountNotFoundException;
 import com.sg.rest.webtoken.WebSecurityBadTokenException;
 import com.sg.rest.webtoken.WebSecurityTokenExpiredException;
-import com.sg.rest.utils.CustomMediaTypes;
+import com.sg.rest.enumerations.CustomMediaTypes;
 import java.io.IOException;
 import javax.servlet.ServletException;
 
@@ -74,7 +74,7 @@ public class WebTokenAuthenticationEntryPoint implements AuthenticationEntryPoin
         
         LOGGER.error("Authentication failed " + dto.getEventRef().getId() + ": ", authEx);
         
-        response.setContentType(CustomMediaTypes.APPLICATION_JSON_UTF8.toString());
+        response.setContentType(CustomMediaTypes.APPLICATION_JSON_UTF8.getMediatype().toString());
         jacksonObjectMapper.writeValue(response.getWriter(), dto);
     }
 }

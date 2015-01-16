@@ -5,6 +5,8 @@
  */
 package com.sg.rest.dto;
 
+import com.sg.rest.enumerations.AuthentificationFailureStatus;
+
 /**
  *
  * @author tarasev

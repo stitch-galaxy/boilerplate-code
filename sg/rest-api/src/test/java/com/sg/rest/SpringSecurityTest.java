@@ -6,7 +6,7 @@
 package com.sg.rest;
 
 import com.sg.domain.enumerations.Role;
-import com.sg.rest.utils.CustomMediaTypes;
+import com.sg.rest.enumerations.CustomMediaTypes;
 import com.sg.rest.spring.test.WebApplicationIntegrationTestContext;
 import com.sg.rest.http.CustomHeaders;
 import com.sg.rest.spring.SpringServletContextConfiguration;
@@ -16,7 +16,7 @@ import com.sg.dto.operation.status.GetAccountRolesStatus;
 import com.sg.dto.operation.GetAccountRolesOperation;
 import com.sg.dto.operation.response.GetAccountRolesResponse;
 import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
-import com.sg.rest.dto.AuthentificationFailureStatus;
+import com.sg.rest.enumerations.AuthentificationFailureStatus;
 import com.sg.rest.webtoken.WebTokenService;
 import java.io.IOException;
 import java.util.EnumSet;
@@ -111,7 +111,7 @@ public class SpringSecurityTest {
     {
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST + PATH_DO_NOT_EXIST))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8.getMediatype()))
                 .andExpect(jsonPath("$.eventRef.id", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.status", is(AuthentificationFailureStatus.TOKEN_AUTHENTICATION_NO_TOKEN.name())));
     }
@@ -121,7 +121,7 @@ public class SpringSecurityTest {
     public void testSecureResourceWithoutAuthToken() throws IOException, Exception {
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8.getMediatype()))
                 .andExpect(jsonPath("$.eventRef.id", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.status", is(AuthentificationFailureStatus.TOKEN_AUTHENTICATION_NO_TOKEN.name())));
     }
@@ -147,7 +147,7 @@ public class SpringSecurityTest {
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_FORBIDDEN))
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8.getMediatype()))
                 .andExpect(jsonPath("$.eventRef.id", not(isEmptyOrNullString())));
     }
 
@@ -160,7 +160,7 @@ public class SpringSecurityTest {
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8.getMediatype()))
                 .andExpect(jsonPath("$.eventRef.id", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.status", is(AuthentificationFailureStatus.TOKEN_AUTHENTICATION_ACCOUNT_DO_NOT_EXISTS.name())));
     }
@@ -171,7 +171,7 @@ public class SpringSecurityTest {
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8.getMediatype()))
                 .andExpect(jsonPath("$.eventRef.id", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.status", is(AuthentificationFailureStatus.TOKEN_AUTHENTICATION_TOKEN_EXPIRED.name())));
     }
@@ -180,7 +180,7 @@ public class SpringSecurityTest {
     public void testSecureResourceWithBadAuthToken() throws IOException, Exception {
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, BAD_TOKEN))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))
-                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(CustomMediaTypes.APPLICATION_JSON_UTF8.getMediatype()))
                 .andExpect(jsonPath("$.eventRef.id", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.status", is(AuthentificationFailureStatus.TOKEN_AUTHENTICATION_BAD_TOKEN.name())));
     }
