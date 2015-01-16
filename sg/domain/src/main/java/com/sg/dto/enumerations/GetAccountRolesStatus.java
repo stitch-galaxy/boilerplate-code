@@ -3,18 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package com.sg.domain.exception;
+package com.sg.dto.enumerations;
 
 /**
  *
  * @author tarasev
  */
-public class SgInvalidPasswordException extends SgServiceLayerRuntimeException {
-    
-    public SgInvalidPasswordException()
-    {
-        super("Invalid password");
-    }
-    
+public enum GetAccountRolesStatus {
+    STATUS_SUCCESS,
+    STATUS_ACCOUNT_NOT_FOUND;
 }

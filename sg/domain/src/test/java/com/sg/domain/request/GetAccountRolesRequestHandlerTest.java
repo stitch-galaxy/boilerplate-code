@@ -9,13 +9,14 @@ import com.sg.domain.handler.request.GetAccountRolesRequestHandler;
 import com.sg.domail.vo.Permissions;
 import com.sg.domain.ar.Account;
 import com.sg.domain.enumerations.Role;
-import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.repository.AccountRepository;
+import com.sg.dto.enumerations.GetAccountRolesStatus;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
 import com.sg.dto.request.response.GetAccountRolesResponse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,13 +42,15 @@ public class GetAccountRolesRequestHandlerTest {
         Mockito.reset(accountRepository);
     }
     
-    @Test(expected = SgAccountNotFoundException.class)
+    @Test
     public void testException()
     {
         when(accountRepository.findOne(1l)).thenReturn(null);
         
         GetAccountRolesRequest dto = new GetAccountRolesRequest(1l);
-        handler.handle(dto);
+        GetAccountRolesResponse response = handler.handle(dto);
+        assertEquals(GetAccountRolesStatus.STATUS_ACCOUNT_NOT_FOUND, response.getStatus());
+        assertEquals(null, response.getRoles());
     }
     
     @Test
@@ -61,6 +64,7 @@ public class GetAccountRolesRequestHandlerTest {
         
         GetAccountRolesRequest dto = new GetAccountRolesRequest(1l);
         GetAccountRolesResponse response = handler.handle(dto);
+        assertEquals(GetAccountRolesStatus.STATUS_SUCCESS, response.getStatus());
         assertThat(response.getRoles(), hasSize(2));
         assertThat(response.getRoles(), Matchers.containsInAnyOrder(Role.USER, Role.ADMIN));
     }

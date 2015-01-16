@@ -10,8 +10,8 @@ package com.sg.rest.security.components;
  * @author tarasev
  */
 import com.sg.rest.http.CustomHeaders;
-import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.handler.request.RequestHandler;
+import com.sg.dto.enumerations.GetAccountRolesStatus;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
 import com.sg.dto.request.response.GetAccountRolesResponse;
 import com.sg.rest.security.SgRestUser;
@@ -49,10 +49,13 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
         if (sToken != null) {
 
             long accountId = securityService.getAccountIdAndVerifyToken(sToken);
-
-            try {
-                GetAccountRolesRequest dto = new GetAccountRolesRequest(accountId);
+            GetAccountRolesRequest dto = new GetAccountRolesRequest(accountId);
                 GetAccountRolesResponse rolesDto = handler.handle(dto);
+                if (rolesDto.getStatus() == GetAccountRolesStatus.STATUS_ACCOUNT_NOT_FOUND)
+                {
+                    throw new WebSecurityAccountNotFoundException(accountId);
+                }
+                
                 SgRestUser userPrincipal = new SgRestUser(accountId);
                 userPrincipal.setRoles(rolesDto.getRoles());
 
@@ -60,9 +63,6 @@ public class WebTokenProcessingFilter extends GenericFilterBean {
                         = new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } catch (SgAccountNotFoundException e) {
-                throw new WebSecurityAccountNotFoundException(e);
-            }
         }
 
         chain.doFilter(request, response);

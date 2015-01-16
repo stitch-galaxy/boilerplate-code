@@ -12,8 +12,8 @@ import com.sg.rest.http.CustomHeaders;
 import com.sg.rest.errorcodes.ErrorCodes;
 import com.sg.rest.spring.SpringServletContextConfiguration;
 import com.sg.rest.path.RequestPath;
-import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.handler.request.RequestHandler;
+import com.sg.dto.enumerations.GetAccountRolesStatus;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
 import com.sg.dto.request.response.GetAccountRolesResponse;
 import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
@@ -31,7 +31,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.FilterChainProxy;
@@ -160,7 +159,8 @@ public class SpringSecurityTest {
     public void testSecureResourceWithAuthTokenButForNonExistentAccount() throws IOException, Exception {
         String authToken = webSecurityService.generateToken(ACCOUNT_ID, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
         GetAccountRolesRequest request = new GetAccountRolesRequest(ACCOUNT_ID);
-        doThrow(new SgAccountNotFoundException(ACCOUNT_ID)).when(handler).handle(request);
+        
+        when(handler.handle(new GetAccountRolesRequest(ACCOUNT_ID))).thenReturn(new GetAccountRolesResponse(GetAccountRolesStatus.STATUS_ACCOUNT_NOT_FOUND));
 
         mockMvc.perform(get(RequestPath.TEST_SECURE_REQUEST).header(CustomHeaders.X_AUTH_TOKEN, authToken))
                 .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED))

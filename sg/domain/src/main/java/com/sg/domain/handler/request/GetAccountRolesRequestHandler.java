@@ -6,8 +6,8 @@
 package com.sg.domain.handler.request;
 
 import com.sg.domain.ar.Account;
-import com.sg.domain.exception.SgAccountNotFoundException;
 import com.sg.domain.repository.AccountRepository;
+import com.sg.dto.enumerations.GetAccountRolesStatus;
 import com.sg.dto.request.cqrs.GetAccountRolesRequest;
 import com.sg.dto.request.response.GetAccountRolesResponse;
 
@@ -16,20 +16,18 @@ import com.sg.dto.request.response.GetAccountRolesResponse;
  * @author tarasev
  */
 public class GetAccountRolesRequestHandler implements RequestHandler<GetAccountRolesResponse, GetAccountRolesRequest> {
-    
+
     private final AccountRepository accountRepository;
-    
-    public GetAccountRolesRequestHandler(AccountRepository accountRepository)
-    {
+
+    public GetAccountRolesRequestHandler(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
-    
+
     @Override
-    public GetAccountRolesResponse handle(GetAccountRolesRequest dto) throws SgAccountNotFoundException
-    {
+    public GetAccountRolesResponse handle(GetAccountRolesRequest dto) {
         Account account = accountRepository.findOne(dto.getAccountId());
         if (account == null) {
-            throw new SgAccountNotFoundException(dto.getAccountId());
+            return new GetAccountRolesResponse(GetAccountRolesStatus.STATUS_ACCOUNT_NOT_FOUND);
         }
         GetAccountRolesResponse response = new GetAccountRolesResponse(account.getPermissions().getRoles());
         return response;

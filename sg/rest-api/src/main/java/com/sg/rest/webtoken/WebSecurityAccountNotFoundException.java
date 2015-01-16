@@ -11,8 +11,8 @@ package com.sg.rest.webtoken;
  */
 public class WebSecurityAccountNotFoundException extends WebSecurityBaseAuthenticationException {
 
-    public WebSecurityAccountNotFoundException(Throwable t) {
-        super("Account not found", t);
+    public WebSecurityAccountNotFoundException(long accountId) {
+        super("Account not found" + String.valueOf(accountId));
     }
 
 }

@@ -6,6 +6,7 @@
 package com.sg.dto.request.response;
 
 import com.sg.domain.enumerations.Role;
+import com.sg.dto.enumerations.GetAccountRolesStatus;
 import java.util.Set;
 
 /**
@@ -15,12 +16,24 @@ import java.util.Set;
 public class GetAccountRolesResponse implements RequestResponse {
  
     private final Set<Role> roles;
+    private final GetAccountRolesStatus status;
 
     public GetAccountRolesResponse(Set<Role> roles) {
         if (roles == null) {
             throw new IllegalArgumentException();
         }
         this.roles = roles;
+        this.status = GetAccountRolesStatus.STATUS_SUCCESS;
+    }
+    
+    public GetAccountRolesResponse(GetAccountRolesStatus status)
+    {
+        if (status != GetAccountRolesStatus.STATUS_ACCOUNT_NOT_FOUND)
+        {
+            throw new IllegalArgumentException();
+        }
+        this.status = status;
+        this.roles = null;
     }
 
     /**
@@ -28,5 +41,12 @@ public class GetAccountRolesResponse implements RequestResponse {
      */
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    /**
+     * @return the status
+     */
+    public GetAccountRolesStatus getStatus() {
+        return status;
     }
 }

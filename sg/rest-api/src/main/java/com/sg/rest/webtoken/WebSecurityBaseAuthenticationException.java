@@ -16,5 +16,9 @@ public class WebSecurityBaseAuthenticationException extends AuthenticationExcept
     public WebSecurityBaseAuthenticationException(String message, Throwable t) {
         super(message, t);
     }
+    
+    public WebSecurityBaseAuthenticationException(String message) {
+        super(message);
+    }
 
 }
