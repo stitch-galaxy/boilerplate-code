@@ -1,0 +1,67 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RC_MICEX_Feed", "RC_MICEX_Feed.vcproj", "{9B1FFEF8-3119-404B-B176-BC2C90C50588}"
+	ProjectSection(ProjectDependencies) = postProject
+		{89D736A2-0228-4BD1-8B0B-D708D16113AE} = {89D736A2-0228-4BD1-8B0B-D708D16113AE}
+		{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC} = {B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RC_ConfigInt", "..\RC_ConfigInt\RC_ConfigInt.vcproj", "{E69217D1-CE22-4E30-B5BF-0D956E31E776}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RT_SSL_Link", "..\RT_SSL_Link\RT_SSL_Link.vcproj", "{89D736A2-0228-4BD1-8B0B-D708D16113AE}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RT_RDV_Link", "..\RT_RDV_Link\RT_RDV_Link.vcproj", "{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug_MICEX = Debug_MICEX
+		Debug_PFTS = Debug_PFTS
+		Release_MICEX = Release_MICEX
+		Release_PFTS = Release_PFTS
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{9B1FFEF8-3119-404B-B176-BC2C90C50588}.Debug_MICEX.ActiveCfg = Debug|Win32
+		{9B1FFEF8-3119-404B-B176-BC2C90C50588}.Debug_MICEX.Build.0 = Debug|Win32
+		{9B1FFEF8-3119-404B-B176-BC2C90C50588}.Debug_PFTS.ActiveCfg = Debug_PFTS|Win32
+		{9B1FFEF8-3119-404B-B176-BC2C90C50588}.Debug_PFTS.Build.0 = Debug_PFTS|Win32
+		{9B1FFEF8-3119-404B-B176-BC2C90C50588}.Release_MICEX.ActiveCfg = Release|Win32
+		{9B1FFEF8-3119-404B-B176-BC2C90C50588}.Release_MICEX.Build.0 = Release|Win32
+		{9B1FFEF8-3119-404B-B176-BC2C90C50588}.Release_PFTS.ActiveCfg = Release_PFTS|Win32
+		{9B1FFEF8-3119-404B-B176-BC2C90C50588}.Release_PFTS.Build.0 = Release_PFTS|Win32
+		{E69217D1-CE22-4E30-B5BF-0D956E31E776}.Debug_MICEX.ActiveCfg = Debug|Win32
+		{E69217D1-CE22-4E30-B5BF-0D956E31E776}.Debug_MICEX.Build.0 = Debug|Win32
+		{E69217D1-CE22-4E30-B5BF-0D956E31E776}.Debug_PFTS.ActiveCfg = Debug|Win32
+		{E69217D1-CE22-4E30-B5BF-0D956E31E776}.Debug_PFTS.Build.0 = Debug|Win32
+		{E69217D1-CE22-4E30-B5BF-0D956E31E776}.Release_MICEX.ActiveCfg = Release|Win32
+		{E69217D1-CE22-4E30-B5BF-0D956E31E776}.Release_MICEX.Build.0 = Release|Win32
+		{E69217D1-CE22-4E30-B5BF-0D956E31E776}.Release_PFTS.ActiveCfg = Release|Win32
+		{E69217D1-CE22-4E30-B5BF-0D956E31E776}.Release_PFTS.Build.0 = Release|Win32
+		{89D736A2-0228-4BD1-8B0B-D708D16113AE}.Debug_MICEX.ActiveCfg = Debug|Win32
+		{89D736A2-0228-4BD1-8B0B-D708D16113AE}.Debug_MICEX.Build.0 = Debug|Win32
+		{89D736A2-0228-4BD1-8B0B-D708D16113AE}.Debug_PFTS.ActiveCfg = Debug|Win32
+		{89D736A2-0228-4BD1-8B0B-D708D16113AE}.Debug_PFTS.Build.0 = Debug|Win32
+		{89D736A2-0228-4BD1-8B0B-D708D16113AE}.Release_MICEX.ActiveCfg = Release|Win32
+		{89D736A2-0228-4BD1-8B0B-D708D16113AE}.Release_MICEX.Build.0 = Release|Win32
+		{89D736A2-0228-4BD1-8B0B-D708D16113AE}.Release_PFTS.ActiveCfg = Release|Win32
+		{89D736A2-0228-4BD1-8B0B-D708D16113AE}.Release_PFTS.Build.0 = Release|Win32
+		{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}.Debug_MICEX.ActiveCfg = Debug|Win32
+		{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}.Debug_MICEX.Build.0 = Debug|Win32
+		{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}.Debug_PFTS.ActiveCfg = Debug|Win32
+		{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}.Debug_PFTS.Build.0 = Debug|Win32
+		{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}.Release_MICEX.ActiveCfg = Release|Win32
+		{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}.Release_MICEX.Build.0 = Release|Win32
+		{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}.Release_PFTS.ActiveCfg = Release|Win32
+		{B3B980F2-A7C4-4468-BC8D-0FAF0AC8F8AC}.Release_PFTS.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

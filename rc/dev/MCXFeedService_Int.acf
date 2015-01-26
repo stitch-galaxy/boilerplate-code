@@ -1,0 +1,6 @@
+[
+    implicit_handle (handle_t MCXFeedService_IfHandle)
+] 
+interface MCXFeedService_Int
+{
+}
