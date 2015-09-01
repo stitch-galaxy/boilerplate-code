@@ -144,3 +144,4 @@ Podfile.lock
 .project
 .settings
 /0/stitchgalaxy-war/target/
+/rest/domain/target/
