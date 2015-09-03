@@ -46,6 +46,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sg.rest</groupId>
+            <artifactId>authtoken</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.api;
+package com.sg.rest.api.security;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
  */
 @Configuration
 @EnableWebMvcSecurity
+@ComponentScan
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static void configureStatelessSecurityWithoutCsrfProtection(HttpSecurity http) throws Exception {
