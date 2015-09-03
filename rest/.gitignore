@@ -4,6 +4,7 @@ build/
 datanucleus.log
 .DS_Store
 out
+log
 *.iml
 *.ipr
 *.iws
