@@ -11,14 +11,14 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class AccountId extends UuidId {
+public class EmailAccountId extends UuidId {
 
-    public static AccountId create()
+    public static EmailAccountId create()
     {
-        return new AccountId(UUID.randomUUID());
+        return new EmailAccountId(UUID.randomUUID());
     }
     
-    public AccountId(UUID id) {
+    public EmailAccountId(UUID id) {
         super(id);
     }
 }

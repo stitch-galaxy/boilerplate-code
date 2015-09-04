@@ -5,20 +5,22 @@
  */
 package com.sg.domain.vo;
 
-import java.util.UUID;
-
 /**
  *
  * @author Admin
  */
-public class AccountId extends UuidId {
+public class PasswordHash {
 
-    public static AccountId create()
-    {
-        return new AccountId(UUID.randomUUID());
+    private final String hash;
+
+    public PasswordHash(String hash) {
+        this.hash = hash;
     }
-    
-    public AccountId(UUID id) {
-        super(id);
+
+    /**
+     * @return the hash
+     */
+    public String getHash() {
+        return hash;
     }
 }

@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.vo;
+package com.sg.domain.ar;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
+import com.sg.domain.vo.Email;
+import com.sg.domain.vo.EmailAccountId;
+import com.sg.domain.vo.PasswordHash;
 
 /**
  *
@@ -16,17 +15,20 @@ import java.util.Base64;
  */
 public class EmailAccount {
 
+    private final EmailAccountId id;
     private final Email email;
-    private final Password password;
-    private final boolean verified;
+    private PasswordHash passwordHash;
+    private boolean verified;
 
     public EmailAccount(
+            EmailAccountId id,
             Email email,
-            Password password,
+            PasswordHash passwordHash,
             boolean verified
     ) {
+        this.id = id;
         this.email = email;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.verified = verified;
     }
 }

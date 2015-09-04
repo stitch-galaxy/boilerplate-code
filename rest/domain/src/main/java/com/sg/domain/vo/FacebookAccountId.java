@@ -11,14 +11,13 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class AccountId extends UuidId {
+public class FacebookAccountId extends UuidId {
 
-    public static AccountId create()
-    {
-        return new AccountId(UUID.randomUUID());
+    public static FacebookAccountId create() {
+        return new FacebookAccountId(UUID.randomUUID());
     }
-    
-    public AccountId(UUID id) {
+
+    public FacebookAccountId(UUID id) {
         super(id);
     }
 }

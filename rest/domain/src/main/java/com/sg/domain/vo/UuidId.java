@@ -11,14 +11,18 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class AccountId extends UuidId {
+public class UuidId {
 
-    public static AccountId create()
-    {
-        return new AccountId(UUID.randomUUID());
+    private final UUID id;
+
+    public UuidId(UUID id) {
+        this.id = id;
     }
-    
-    public AccountId(UUID id) {
-        super(id);
+
+    /**
+     * @return the id
+     */
+    public UUID getId() {
+        return id;
     }
 }
