@@ -33,7 +33,7 @@
             </dependency>
             <dependency>
                 <groupId>com.sg.rest</groupId>
-                <artifactId>authtoken</artifactId>
+                <artifactId>infrastructure</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
@@ -42,6 +42,6 @@
     <modules>
         <module>domain</module>
         <module>api</module>
-        <module>authtoken</module>
+        <module>infrastructure</module>
     </modules>
 </project>

@@ -9,12 +9,12 @@ import com.sg.rest.api.security.exceptions.AppSecurityAccountNotFoundException;
 import com.sg.rest.api.security.exceptions.AppSecurityBadTokenException;
 import com.sg.rest.api.security.exceptions.AppSecurityNoTokenException;
 import com.sg.rest.api.security.exceptions.AppSecurityTokenExpiredException;
-import com.sg.rest.authtoken.AuthTokenComponent;
-import com.sg.rest.authtoken.BadTokenException;
-import com.sg.rest.authtoken.Token;
-import com.sg.rest.authtoken.TokenExpiredException;
-import com.sg.rest.authtoken.enumerations.TokenExpirationStandardDurations;
-import com.sg.rest.authtoken.jwt.JwtAuthTokenComponent;
+import com.sg.domain.authtoken.AuthTokenService;
+import com.sg.domain.authtoken.BadTokenException;
+import com.sg.domain.authtoken.Token;
+import com.sg.domain.authtoken.TokenExpiredException;
+import com.sg.domain.authtoken.TokenExpirationStandardDurations;
+import com.sg.domain.authtoken.jwt.JwtAuthTokenComponent;
 import java.util.Date;
 import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class AppSecurityServiceImpl implements AppSecurityService {
 
     private static final String ACCOUNT_NOT_FOUND_MESSAGE_TEMPLATE = "Account %s not found";
     
-    private final AuthTokenComponent authTokenComponent;
+    private final AuthTokenService authTokenComponent;
 
     @Autowired
     public AppSecurityServiceImpl(@Value("${com.sg.security.key}") String symmetricKey) {

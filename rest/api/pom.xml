@@ -48,7 +48,11 @@
         </dependency>
         <dependency>
             <groupId>com.sg.rest</groupId>
-            <artifactId>authtoken</artifactId>
+            <artifactId>domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sg.rest</groupId>
+            <artifactId>infrastructure</artifactId>
         </dependency>
     </dependencies>
     <build>

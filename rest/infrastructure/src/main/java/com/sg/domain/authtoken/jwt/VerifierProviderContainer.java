@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.authtoken.jwt;
+package com.sg.domain.authtoken.jwt;
 
 import com.google.common.collect.Lists;
 import java.util.List;

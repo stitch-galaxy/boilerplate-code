@@ -7,13 +7,17 @@
         <groupId>com.sg.rest</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>authtoken</artifactId>
-    <name>com.sg.rest.authtoken</name>
+    <artifactId>infrastructure</artifactId>
+    <name>com.sg.rest.infrastructure</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.sg.rest</groupId>
+            <artifactId>domain</artifactId>
+        </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
