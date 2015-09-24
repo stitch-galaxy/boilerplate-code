@@ -5,6 +5,8 @@
  */
 package com.sg.domain.vo;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+
 /**
  *
  * @author Admin
@@ -22,5 +24,20 @@ public class PasswordHash {
      */
     public String getHash() {
         return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        PasswordHash other = (PasswordHash) obj;
+        return new EqualsBuilder().
+                append(this.hash, other.hash).
+                isEquals();
     }
 }

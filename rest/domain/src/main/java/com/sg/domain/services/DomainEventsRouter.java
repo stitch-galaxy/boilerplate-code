@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.ar;
+package com.sg.domain.services;
 
 /**
  *
  * @author Admin
  */
-public class FacebookAccount {
-
-    public FacebookAccount() {
-    }
+public class DomainEventsRouter {
+    public void routeEvent(DomainEvent event)
 }

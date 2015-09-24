@@ -5,9 +5,10 @@
  */
 package com.sg.domain.services;
 
-import com.sg.domain.vo.Token;
 import com.sg.domain.exceptions.BadTokenException;
 import com.sg.domain.exceptions.TokenExpiredException;
+import com.sg.domain.vo.Token;
+import com.sg.domain.vo.TokenSignature;
 
 /**
  *
@@ -15,6 +16,6 @@ import com.sg.domain.exceptions.TokenExpiredException;
  */
 public interface AuthTokenService {
     
-    public String signToken(Token token);
+    public TokenSignature signToken(Token token);
     public Token verifyToken(String signedToken) throws BadTokenException, TokenExpiredException;
 }

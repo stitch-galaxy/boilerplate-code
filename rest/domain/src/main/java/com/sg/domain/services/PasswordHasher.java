@@ -5,11 +5,13 @@
  */
 package com.sg.domain.services;
 
+import com.sg.domain.vo.PasswordHash;
+
 /**
  *
  * @author Admin
  */
 public interface PasswordHasher {
-    public String getHash(String password);
+    public PasswordHash getHash(String password);
     
 }

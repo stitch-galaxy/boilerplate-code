@@ -5,6 +5,7 @@
  */
 package com.sg.rest.api.security;
 
+import com.sg.rest.api.LoginController;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -35,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http = http.antMatcher("/oauth/token");
+            http = http.antMatcher(LoginController.URI);
             configureStatelessSecurityWithoutCsrfProtection(http);
 
             http.authorizeRequests().antMatchers("/**").permitAll()

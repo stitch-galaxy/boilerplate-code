@@ -22,7 +22,8 @@ public class TokenAuthentificationFailed {
         NO_TOKEN,
         BAD_TOKEN,
         TOKEN_EXPIRED,
-        ACCOUNT_NOT_FOUND;
+        ACCOUNT_NOT_FOUND,
+        NO_CREDENTIALS;
     }
     
     private final Reason reason;

@@ -6,7 +6,6 @@
 package com.sg.domain.ar;
 
 import com.sg.domain.vo.Email;
-import com.sg.domain.vo.EmailAccountId;
 import com.sg.domain.vo.PasswordHash;
 
 /**
@@ -15,20 +14,28 @@ import com.sg.domain.vo.PasswordHash;
  */
 public class EmailAccount {
 
-    private final EmailAccountId id;
     private final Email email;
     private PasswordHash passwordHash;
     private boolean verified;
 
     public EmailAccount(
-            EmailAccountId id,
             Email email,
             PasswordHash passwordHash,
             boolean verified
     ) {
-        this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
         this.verified = verified;
+    }
+
+    /**
+     * @return the verified
+     */
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public boolean checkPassword(PasswordHash hash) {
+        return passwordHash.equals(hash);
     }
 }

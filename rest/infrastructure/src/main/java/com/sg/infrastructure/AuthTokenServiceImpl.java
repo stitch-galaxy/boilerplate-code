@@ -5,14 +5,15 @@
  */
 package com.sg.infrastructure;
 
-import com.sg.domain.services.AuthTokenService;
-import com.sg.domain.exceptions.BadTokenException;
-import com.sg.domain.vo.Token;
-import com.sg.domain.exceptions.TokenExpiredException;
-import com.sg.domain.vo.TokenType;
 import com.sg.domain.authtoken.jwt.JwtAuthTokenService;
 import com.sg.domain.authtoken.jwt.JwtToken;
+import com.sg.domain.exceptions.BadTokenException;
+import com.sg.domain.exceptions.TokenExpiredException;
+import com.sg.domain.services.AuthTokenService;
 import com.sg.domain.vo.AccountId;
+import com.sg.domain.vo.Token;
+import com.sg.domain.vo.TokenSignature;
+import com.sg.domain.vo.TokenType;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,11 +34,12 @@ public class AuthTokenServiceImpl implements AuthTokenService {
     }
     
     @Override
-    public String signToken(Token token) {
+    public TokenSignature signToken(Token token) {
         JwtToken jwtToken = new JwtToken(token.getAccountId().getId(), token.getTokenType().getId());
         Instant now = Instant.now();
         Instant expiresAt = now.plus(getDurationForTokenType(token.getTokenType()));
-        return jwtAuthTokenService.signToken(jwtToken, now, expiresAt);
+        java.time.Instant javaExpiresAt = java.time.Instant.ofEpochMilli(expiresAt.getMillis());
+        return new TokenSignature(jwtAuthTokenService.signToken(jwtToken, now, expiresAt), javaExpiresAt);
     }
     
     @Override

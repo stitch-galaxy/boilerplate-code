@@ -6,8 +6,8 @@
 package com.sg.domain.ar;
 
 import com.sg.domain.vo.AccountId;
-import com.sg.domain.vo.EmailAccountId;
-import com.sg.domain.vo.FacebookAccountId;
+import com.sg.domain.vo.Email;
+import com.sg.domain.vo.PasswordHash;
 
 /**
  *
@@ -16,15 +16,36 @@ import com.sg.domain.vo.FacebookAccountId;
 public class Account {
 
     private final AccountId accountId;
-    private EmailAccountId emailAccountId;
-    private FacebookAccountId facebookAccountId;
+    private EmailAccount emailAccount;
+    private FacebookAccount facebookAccount;
 
-    Account(AccountId accountId,
-            EmailAccountId emailAccountId,
-            FacebookAccountId facebookAccountId) {
+    private Account(AccountId accountId,
+            EmailAccount emailAccount,
+            FacebookAccount facebookAccount) {
         this.accountId = accountId;
-        this.emailAccountId = emailAccountId;
-        this.facebookAccountId = facebookAccountId;
+        this.emailAccount = emailAccount;
+        this.facebookAccount = facebookAccount;
 
+    }
+
+    /**
+     * @return the emailAccount
+     */
+    public EmailAccount getEmailAccount() {
+        return emailAccount;
+    }
+
+    /**
+     * @return the accountId
+     */
+    public AccountId getAccountId() {
+        return accountId;
+    }
+    
+    public static Account registerEmailAccount(Email email, PasswordHash passwordHash)
+    {
+        AccountId accountId = AccountId.create();
+        EmailAccount emailAccount = new EmailAccount(email, passwordHash, false);
+        return new Account(accountId, emailAccount, null);
     }
 }

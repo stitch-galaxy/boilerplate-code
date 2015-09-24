@@ -9,44 +9,45 @@ package com.sg.rest.api;
  *
  * @author Admin
  */
-import javax.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.PagedList;
-import org.springframework.social.facebook.api.Post;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import com.sg.domain.exceptions.EmailInvalidException;
+import com.sg.domain.exceptions.EmailIsNotUniqueException;
+import com.sg.domain.exceptions.PasswordInvalidException;
+import com.sg.domain.services.AccountRegistrationService;
+import com.sg.rest.api.dto.SignupStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/signup")
+@RestController
 public class SignupController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SignupController.class);
+    public static final String URI = "/signup";
+    public static final String EMAIL_PARAMETER = "email";
+    public static final String PASSWORD_PARAMETER = "password";
 
-    private Facebook facebook;
+    @Autowired
+    private AccountRegistrationService accountRegistrationService;
 
-    @Inject
-    public SignupController(Facebook facebook) {
-        this.facebook = facebook;
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public String helloFacebook(Model model) {
-        try {
-            if (!facebook.isAuthorized()) {
-                return "redirect:/connect/facebook";
-            }
-
-            model.addAttribute("email", facebook.userOperations().getUserProfile().getFirstName());
-        } catch (Throwable e) {
-            LOGGER.error("", e);
+    @RequestMapping(value = URI, method = RequestMethod.POST)
+    public SignupStatus signup(
+            @RequestParam(value = EMAIL_PARAMETER) String email,
+            @RequestParam(value = PASSWORD_PARAMETER) String password) {
+        if (email == null || password == null) {
+            throw new IllegalArgumentException();
         }
+        try {
+            accountRegistrationService.registerEmailAccount(email, password);
+            return SignupStatus.fromStatus(SignupStatus.Status.SUCCESS);
 
-        return "hello";
+        } catch (EmailIsNotUniqueException ex) {
+            return SignupStatus.fromStatus(SignupStatus.Status.EMAIL_ALREADY_REGISTERED);
+        } catch (EmailInvalidException ex) {
+            return SignupStatus.fromStatus(SignupStatus.Status.EMAIL_INVALID);
+        } catch (PasswordInvalidException ex) {
+            return SignupStatus.fromStatus(SignupStatus.Status.PASSWORD_INVALID);
+        }
     }
 
 }

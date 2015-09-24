@@ -7,6 +7,7 @@ package com.sg.domain.repositories;
 
 import com.sg.domain.ar.Account;
 import com.sg.domain.vo.AccountId;
+import com.sg.domain.vo.Email;
 
 /**
  *
@@ -14,4 +15,6 @@ import com.sg.domain.vo.AccountId;
  */
 public interface AccountRepository {
     public Account getAccountByAccountId(AccountId accountId);
+    public Account getAccountByEmail(Email email);
+    public void create(Account account);
 }

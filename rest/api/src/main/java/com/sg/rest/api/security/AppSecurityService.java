@@ -6,8 +6,7 @@
 package com.sg.rest.api.security;
 
 import com.sg.domain.ar.Account;
-import com.sg.domain.vo.AccountId;
-import com.sg.domain.vo.TokenType;
+import com.sg.rest.api.dto.LoginStatus;
 
 /**
  *
@@ -16,7 +15,7 @@ import com.sg.domain.vo.TokenType;
 public interface AppSecurityService {
 
     public Account getTokenAccount(String sToken);
-
-    public String generateWebToken(AccountId accountId,
-                                   TokenType tokenType);
+    
+    public LoginStatus login(String email, String password);
 }
+
