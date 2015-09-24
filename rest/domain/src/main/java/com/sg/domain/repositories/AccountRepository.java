@@ -6,11 +6,12 @@
 package com.sg.domain.repositories;
 
 import com.sg.domain.ar.Account;
+import com.sg.domain.vo.AccountId;
 
 /**
  *
  * @author Admin
  */
 public interface AccountRepository {
-    public Account getAccountByUid(String uid);
+    public Account getAccountByAccountId(AccountId accountId);
 }

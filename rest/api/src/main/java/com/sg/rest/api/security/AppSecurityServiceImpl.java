@@ -5,20 +5,19 @@
  */
 package com.sg.rest.api.security;
 
+import com.sg.domain.ar.Account;
+import com.sg.domain.exceptions.BadTokenException;
+import com.sg.domain.exceptions.TokenExpiredException;
+import com.sg.domain.repositories.AccountRepository;
+import com.sg.domain.services.AuthTokenService;
+import com.sg.domain.vo.AccountId;
+import com.sg.domain.vo.Token;
+import com.sg.domain.vo.TokenType;
 import com.sg.rest.api.security.exceptions.AppSecurityAccountNotFoundException;
 import com.sg.rest.api.security.exceptions.AppSecurityBadTokenException;
 import com.sg.rest.api.security.exceptions.AppSecurityNoTokenException;
 import com.sg.rest.api.security.exceptions.AppSecurityTokenExpiredException;
-import com.sg.domain.authtoken.AuthTokenService;
-import com.sg.domain.authtoken.BadTokenException;
-import com.sg.domain.authtoken.Token;
-import com.sg.domain.authtoken.TokenExpiredException;
-import com.sg.domain.authtoken.TokenExpirationStandardDurations;
-import com.sg.domain.authtoken.jwt.JwtAuthTokenComponent;
-import java.util.Date;
-import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,42 +27,43 @@ import org.springframework.stereotype.Service;
 @Service
 public class AppSecurityServiceImpl implements AppSecurityService {
 
-    private static final String ACCOUNT_NOT_FOUND_MESSAGE_TEMPLATE = "Account %s not found";
+
+    private final AuthTokenService authTokenService;
     
-    private final AuthTokenService authTokenComponent;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public AppSecurityServiceImpl(@Value("${com.sg.security.key}") String symmetricKey) {
-        this.authTokenComponent = new JwtAuthTokenComponent(symmetricKey);
+    public AppSecurityServiceImpl(AuthTokenService authTokenService,
+                                  AccountRepository accountRepository) {
+        this.authTokenService = authTokenService;
+        this.accountRepository = accountRepository;
     }
 
     @Override
-    public void verifyToken(String sToken) {
+    public Account getTokenAccount(String sToken) {
         try {
             if (sToken == null || sToken.isEmpty()) {
                 throw new AppSecurityNoTokenException();
             }
-            Token token = authTokenComponent.verifySignatureAndExtractToken(sToken);
-            String uid = token.getUid();
-            Date account = null;
-            if (account == null)
-            {
-                throw new AppSecurityAccountNotFoundException(String.format(ACCOUNT_NOT_FOUND_MESSAGE_TEMPLATE, uid));
+            Token token = authTokenService.verifyToken(sToken);
+            
+            Account account = accountRepository.getAccountByAccountId(token.getAccountId());
+            if (account == null) {
+                throw new AppSecurityAccountNotFoundException();
             }
+            return account;
         } catch (BadTokenException e) {
             throw new AppSecurityBadTokenException(e);
         } catch (TokenExpiredException e) {
             throw new AppSecurityTokenExpiredException(e);
         }
     }
-    
 
     @Override
-    public String generateWebToken(String uid) {
-        Token token = new Token();
-        token.setUid(uid);
-        return authTokenComponent.signToken(token, Instant.now(), TokenExpirationStandardDurations.WEB_SESSION_TOKEN_EXPIRATION_DURATION);
-
+    public String generateWebToken(AccountId accountId,
+                                   TokenType tokenType) {
+        Token token = new Token(accountId, tokenType);
+        return authTokenService.signToken(token);
     }
 
 }

@@ -5,14 +5,18 @@
  */
 package com.sg.rest.api.security;
 
-import com.sg.rest.api.security.exceptions.AppSecurityBadTokenException;
-import com.sg.rest.api.security.exceptions.AppSecurityTokenExpiredException;
+import com.sg.domain.ar.Account;
+import com.sg.domain.vo.AccountId;
+import com.sg.domain.vo.TokenType;
 
 /**
  *
  * @author Admin
  */
 public interface AppSecurityService {
-    public void verifyToken(String sToken) throws AppSecurityBadTokenException, AppSecurityTokenExpiredException;
-    public String generateWebToken(String uid);
+
+    public Account getTokenAccount(String sToken);
+
+    public String generateWebToken(AccountId accountId,
+                                   TokenType tokenType);
 }

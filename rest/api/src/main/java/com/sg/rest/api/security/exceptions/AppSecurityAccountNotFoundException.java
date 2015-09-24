@@ -11,7 +11,7 @@ package com.sg.rest.api.security.exceptions;
  */
 public class AppSecurityAccountNotFoundException extends AppSecurityException {
 
-    public AppSecurityAccountNotFoundException(String uid) {
-        super(uid);
+    public AppSecurityAccountNotFoundException() {
+        super();
     }
 }

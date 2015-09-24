@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.authtoken;
+package com.sg.domain.authtoken.jwt;
 
-import com.sg.domain.authtoken.Token;
-import com.sg.domain.authtoken.TokenExpiredException;
-import com.sg.domain.authtoken.AuthTokenService;
-import com.sg.domain.authtoken.BadTokenException;
-import com.sg.domain.authtoken.jwt.JwtAuthTokenComponent;
+import com.sg.domain.exceptions.BadTokenException;
+import com.sg.domain.exceptions.TokenExpiredException;
+import java.util.UUID;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.junit.Assert;
@@ -22,47 +20,45 @@ import org.junit.Test;
 public class JwtAuthTokenServiceTest {
 
     private static final String SECURITY_KEY = "kjdhasdkjhaskdjhaskdjhaskdjh";
-    private static final String UID = "tarasov.e.a@gmail.com";
+    private static final UUID UID = UUID.randomUUID();
+    private static final int TYPE = 1;
     private static final long ACCEPTABLE_CLOCK_SKEW_MINUTES = 2;
 
-    private final AuthTokenService jwtComponent = new JwtAuthTokenComponent(SECURITY_KEY, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
+    private final JwtAuthTokenService jwtComponent = new JwtAuthTokenService(SECURITY_KEY, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
 
     @Test
     public void testValidToken() throws BadTokenException, TokenExpiredException {
-        Token toSign = new Token();
-        toSign.setUid(UID);
+        JwtToken toSign = new JwtToken(UID, TYPE);
         Instant now = Instant.now();
         String signedToken = jwtComponent.signToken(toSign, now, now.plus(Duration.standardHours(1)));
 
-        Token parsed = jwtComponent.verifySignatureAndExtractToken(signedToken);
-        Assert.assertEquals(UID, parsed.getUid());
+        JwtToken parsed = jwtComponent.verifySignatureAndExtractToken(signedToken);
+        Assert.assertEquals(toSign, parsed);
     }
 
     @Test
     public void testValidClocksShift() throws BadTokenException, TokenExpiredException {
-        Token toSign = new Token();
-        toSign.setUid(UID);
+        JwtToken toSign = new JwtToken(UID, TYPE);
         Instant now = Instant.now();
         Instant nowMinusAcceptableSkewPlusOneMinute = now.minus(Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES)).plus(Duration.standardMinutes(1));
         Instant oneHourAgo = now.minus(Duration.standardHours(1));
 
         String signedToken = jwtComponent.signToken(toSign, oneHourAgo, nowMinusAcceptableSkewPlusOneMinute);
 
-        Token parsed = jwtComponent.verifySignatureAndExtractToken(signedToken);
-        Assert.assertEquals(UID, parsed.getUid());
+        JwtToken parsed = jwtComponent.verifySignatureAndExtractToken(signedToken);
+        Assert.assertEquals(toSign, parsed);
     }
 
     @Test
     public void testInvalidClocksShift() throws BadTokenException, TokenExpiredException {
-        Token toSign = new Token();
-        toSign.setUid(UID);
+        JwtToken toSign = new JwtToken(UID, TYPE);
         Instant now = Instant.now();
         Instant nowMinusAcceptableSkew = now.minus(Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
         Instant oneHourAgo = now.minus(Duration.standardHours(1));
 
         String signedToken = jwtComponent.signToken(toSign, oneHourAgo, nowMinusAcceptableSkew);
         try {
-            Token parsed = jwtComponent.verifySignatureAndExtractToken(signedToken);
+            JwtToken parsed = jwtComponent.verifySignatureAndExtractToken(signedToken);
             Assert.fail("Expected " + TokenExpiredException.class.getSimpleName());
         } catch (TokenExpiredException e) {
         }
@@ -70,8 +66,7 @@ public class JwtAuthTokenServiceTest {
 
     @Test
     public void testExpiredToken() throws BadTokenException {
-        Token toSign = new Token();
-        toSign.setUid(UID);
+        JwtToken toSign = new JwtToken(UID, TYPE);
         Instant oneHourAgo = Instant.now().minus(Duration.standardHours(1));
         Instant thirtyMinutesAgo = oneHourAgo.plus(Duration.standardMinutes(30));
         String signedToken = jwtComponent.signToken(toSign, oneHourAgo, thirtyMinutesAgo);
@@ -96,8 +91,7 @@ public class JwtAuthTokenServiceTest {
 
     @Test
     public void testTokenWithInvalidSignature() throws BadTokenException, TokenExpiredException {
-        Token toSign = new Token();
-        toSign.setUid(UID);
+        JwtToken toSign = new JwtToken(UID, TYPE);
         Instant now = Instant.now();
         String signedToken = jwtComponent.signToken(toSign, now, now.plus(Duration.standardHours(1)));
         int idx = signedToken.lastIndexOf(".");
@@ -113,8 +107,7 @@ public class JwtAuthTokenServiceTest {
 
     @Test
     public void testTokenWithBadIatEat() throws BadTokenException, TokenExpiredException {
-        Token toSign = new Token();
-        toSign.setUid(UID);
+        JwtToken toSign = new JwtToken(UID, TYPE);
         Instant now = Instant.now();
         Instant oneHourAgo = now.minus(Duration.standardHours(1));
         String signedToken = jwtComponent.signToken(toSign, now, oneHourAgo);
@@ -129,7 +122,7 @@ public class JwtAuthTokenServiceTest {
     @Test
     public void testInvlidJwtAuthTokenService() {
         try {
-            JwtAuthTokenComponent jwtAuthTokenService = new JwtAuthTokenComponent(null, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
+            JwtAuthTokenService jwtAuthTokenService = new JwtAuthTokenService(null, Duration.standardMinutes(ACCEPTABLE_CLOCK_SKEW_MINUTES));
             Assert.fail("Expected " + RuntimeException.class.getSimpleName());
         } catch (RuntimeException e) {
         }

@@ -9,13 +9,11 @@ package com.sg.domain.authtoken.jwt;
  *
  * @author tarasev
  */
-import com.sg.domain.authtoken.AuthTokenService;
-import com.sg.domain.authtoken.BadTokenException;
-import com.sg.domain.authtoken.Token;
-import com.sg.domain.authtoken.TokenExpirationStandardDurations;
-import com.sg.domain.authtoken.TokenExpiredException;
+import com.sg.domain.exceptions.BadTokenException;
+import com.sg.domain.exceptions.TokenExpiredException;
 import java.security.InvalidKeyException;
 import java.security.SignatureException;
+import java.util.UUID;
 import net.oauth.jsontoken.Clock;
 import net.oauth.jsontoken.JsonToken;
 import net.oauth.jsontoken.JsonTokenParser;
@@ -30,7 +28,7 @@ import net.oauth.signatures.SignedTokenAudienceChecker;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 
-public class JwtAuthTokenComponent implements AuthTokenService {
+public class JwtAuthTokenService {
 
     private final byte[] symmetricKey;
     private final Clock clock;
@@ -40,14 +38,13 @@ public class JwtAuthTokenComponent implements AuthTokenService {
     private final VerifierProviders verifierProviders;
 
     private static final String DOMAIN_URI = "http://sg.com";
-    private static final String UID_PARAM = "uid";
+    private static final String ACCOUNT_ID_PARAM = "accountId";
+    private static final String TOKEN_TYPE_PARAM = "tokenType";
     private static final String KEY_NAME = "symmetric_key";
+    
 
-    public JwtAuthTokenComponent(String sSymmetricKey) {
-        this(sSymmetricKey, Duration.standardMinutes(1l));
-    }
-
-    public JwtAuthTokenComponent(String sSymmetricKey, Duration acceptableClockSkew) {
+    public JwtAuthTokenService(String sSymmetricKey,
+                               Duration acceptableClockSkew) {
         symmetricKey = sSymmetricKey.getBytes();
         clock = new SystemClock(acceptableClockSkew);
 
@@ -65,10 +62,12 @@ public class JwtAuthTokenComponent implements AuthTokenService {
         tokenParser = new JsonTokenParser(verifierProviders, new SignedTokenAudienceChecker(DOMAIN_URI));
     }
 
-    @Override
-    public String signToken(Token token, Instant issuedAt, Instant expireAt) {
+    public String signToken(JwtToken token,
+                            Instant issuedAt,
+                            Instant expireAt) {
         JsonToken jsonWebToken = new JsonToken(signer, clock);
-        jsonWebToken.setParam(UID_PARAM, token.getUid());
+        jsonWebToken.setParam(ACCOUNT_ID_PARAM, token.getAccountId().toString());
+        jsonWebToken.setParam(TOKEN_TYPE_PARAM, token.getTokenType());
         jsonWebToken.setIssuedAt(issuedAt);
         jsonWebToken.setExpiration(expireAt);
         jsonWebToken.setAudience(DOMAIN_URI);
@@ -80,14 +79,7 @@ public class JwtAuthTokenComponent implements AuthTokenService {
         }
     }
 
-    @Override
-    public String signToken(Token token, Instant issuedAt, TokenExpirationStandardDurations validDuration) {
-        Instant expireAt = issuedAt.plus(validDuration.getDuration());
-        return signToken(token, issuedAt, expireAt);
-    }
-
-    @Override
-    public Token verifySignatureAndExtractToken(String signedToken) throws BadTokenException, TokenExpiredException {
+    public JwtToken verifySignatureAndExtractToken(String signedToken) throws BadTokenException, TokenExpiredException {
         JsonToken jsonWebToken;
         try {
             jsonWebToken = tokenParser.deserialize(signedToken);
@@ -97,9 +89,9 @@ public class JwtAuthTokenComponent implements AuthTokenService {
         try {
             tokenParser.verify(jsonWebToken);
 
-            Token token = new Token();
-            token.setUid(jsonWebToken.getParamAsPrimitive(UID_PARAM).getAsString());
-            return token;
+            return new JwtToken(UUID.fromString(jsonWebToken.getParamAsPrimitive(ACCOUNT_ID_PARAM).getAsString()),
+                    jsonWebToken.getParamAsPrimitive(TOKEN_TYPE_PARAM).getAsInt()
+            );
         } catch (SignatureException e) {
             throw new BadTokenException(e);
         } catch (IllegalStateException e) {

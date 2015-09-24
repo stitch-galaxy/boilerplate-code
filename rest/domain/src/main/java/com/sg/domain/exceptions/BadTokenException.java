@@ -1,4 +1,4 @@
-package com.sg.domain.authtoken;
+package com.sg.domain.exceptions;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,9 +9,9 @@ package com.sg.domain.authtoken;
  *
  * @author tarasev
  */
-public abstract class BaseTokenException extends Exception {
+public class BadTokenException extends BaseTokenException {
 
-    public BaseTokenException(Throwable cause) {
+    public BadTokenException(Throwable cause) {
         super(cause);
     }
 }

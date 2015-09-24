@@ -1,17 +1,17 @@
+package com.sg.domain.exceptions;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.authtoken;
-
 /**
  *
  * @author tarasev
  */
-public class TokenExpiredException extends BaseTokenException {
+public abstract class BaseTokenException extends Exception {
 
-    public TokenExpiredException(Throwable cause) {
+    public BaseTokenException(Throwable cause) {
         super(cause);
     }
 }
