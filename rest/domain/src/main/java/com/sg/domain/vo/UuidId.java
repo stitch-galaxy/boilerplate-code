@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class UuidId {
 
-    private final UUID id;
+    protected final UUID id;
 
     public UuidId(UUID id) {
         this.id = id;

@@ -16,6 +16,7 @@ import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.channel.MessageChannels;
+import org.springframework.integration.router.PayloadTypeRouter;
 
 /**
  *
@@ -28,9 +29,23 @@ public class DomainEventsRoutingConfig {
     @Autowired
     private AccountRegisteredEventHandler accountRegisteredEventHandler;
 
+    @Bean PayloadTypeRouter payloadTypeRouter()
+    {
+        PayloadTypeRouter router = new PayloadTypeRouter();
+        router.setChannelMapping(AccountRegisteredEvent.class.getName(), AccountRegisteredEventHandler.class.getName());
+        return router;
+    }
+    
     @Bean
     public IntegrationFlow myFlow() {
-        return IntegrationFlows.from(DomainEventsRouterService.INPUT_CHANNEL_NAME).route(AccountRegisteredEvent.class, p -> p).channel(MessageChannels.publishSubscribe()).handle(m -> accountRegisteredEventHandler.processEvent((AccountRegisteredEvent) m.getPayload())).get();
+        
+        //return IntegrationFlows.from(DomainEventsRouterService.INPUT_CHANNEL_NAME).route(AccountRegisteredEvent.class, p -> p).channel(MessageChannels.publishSubscribe()).handle(m -> accountRegisteredEventHandler.processEvent((AccountRegisteredEvent) m.getPayload())).get();
+        return IntegrationFlows.from(DomainEventsRouterService.INPUT_CHANNEL_NAME).route(payloadTypeRouter()).get();
+    }
+    
+    @Bean
+    public IntegrationFlow AccountRegisteredEventHandlerFlow() {
+        return IntegrationFlows.from(AccountRegisteredEventHandler.class.getName()).channel(MessageChannels.publishSubscribe()).handle(m -> accountRegisteredEventHandler.processEvent((AccountRegisteredEvent) m.getPayload())).get();
     }
     
 }
