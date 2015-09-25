@@ -9,10 +9,17 @@ package com.sg.rest.api;
  *
  * @author Admin
  */
+import com.sg.domain.spring.DomainConfig;
+import com.sg.infrastructure.spring.InfrastructureConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
+@Import(value = {
+    DomainConfig.class,
+    InfrastructureConfig.class
+})
 public class Application {
 
     public static void main(String[] args) {

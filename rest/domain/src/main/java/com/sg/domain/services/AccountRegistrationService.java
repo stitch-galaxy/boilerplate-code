@@ -15,6 +15,7 @@ import com.sg.domain.specs.EmailIsValidSpecification;
 import com.sg.domain.specs.PasswordIsValidSpecification;
 import com.sg.domain.vo.Email;
 import com.sg.domain.vo.PasswordHash;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,6 +31,7 @@ public class AccountRegistrationService {
     private final PasswordHasher passwordHasher;
     private final AccountRepository accountRepository;
 
+    @Autowired
     public AccountRegistrationService(
             EmailIsValidSpecification emailIsValidSpecification,
             PasswordIsValidSpecification passwordIsValidSpecification,

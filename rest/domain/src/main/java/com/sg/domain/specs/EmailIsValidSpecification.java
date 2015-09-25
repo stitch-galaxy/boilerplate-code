@@ -7,11 +7,13 @@ package com.sg.domain.specs;
 
 import com.sg.domain.vo.Email;
 import org.apache.commons.validator.EmailValidator;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Admin
  */
+@Service
 public class EmailIsValidSpecification {
 
     private static final EmailValidator emailValidator = EmailValidator.getInstance();

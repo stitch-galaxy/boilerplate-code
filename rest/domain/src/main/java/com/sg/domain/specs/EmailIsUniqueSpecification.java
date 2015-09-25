@@ -7,15 +7,19 @@ package com.sg.domain.specs;
 
 import com.sg.domain.repositories.AccountRepository;
 import com.sg.domain.vo.Email;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Admin
  */
+@Service
 public class EmailIsUniqueSpecification {
 
     private final AccountRepository accountRepository;
 
+    @Autowired
     public EmailIsUniqueSpecification(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }

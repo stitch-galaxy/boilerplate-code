@@ -13,11 +13,13 @@ import org.passay.PasswordData;
 import org.passay.PasswordValidator;
 import org.passay.RuleResult;
 import org.passay.WhitespaceRule;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Admin
  */
+@Service
 public class PasswordIsValidSpecification {
 
     private final PasswordValidator validator;

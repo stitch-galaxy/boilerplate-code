@@ -5,13 +5,10 @@
  */
 package com.sg.domain.services;
 
-import com.sg.domain.events.DomainEvent;
-
 /**
  *
  * @author Admin
  */
-public interface DomainEventsRouter {
-
-    public void routeEvent(DomainEvent event);
+public class DomainServicesNoOp {
+    
 }

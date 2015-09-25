@@ -6,13 +6,13 @@
 package com.sg.domain.events.handlers;
 
 import com.sg.domain.events.AccountRegisteredEvent;
-import org.springframework.integration.annotation.MessageEndpoint;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Admin
  */
-@MessageEndpoint
+@Service
 public class AccountRegisteredEventHandler {
 
     public void processEvent(AccountRegisteredEvent event) {

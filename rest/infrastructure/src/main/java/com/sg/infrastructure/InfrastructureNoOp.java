@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.domain.services;
-
-import com.sg.domain.events.DomainEvent;
+package com.sg.infrastructure;
 
 /**
  *
  * @author Admin
  */
-public interface DomainEventsRouter {
-
-    public void routeEvent(DomainEvent event);
+public class InfrastructureNoOp {
+    
 }
