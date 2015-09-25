@@ -15,11 +15,13 @@ import com.sg.domain.specs.EmailIsValidSpecification;
 import com.sg.domain.specs.PasswordIsValidSpecification;
 import com.sg.domain.vo.Email;
 import com.sg.domain.vo.PasswordHash;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Admin
  */
+@Service
 public class AccountRegistrationService {
 
     private final EmailIsValidSpecification emailIsValidSpecification;

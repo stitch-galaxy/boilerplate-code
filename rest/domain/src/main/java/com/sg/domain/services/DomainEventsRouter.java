@@ -5,10 +5,19 @@
  */
 package com.sg.domain.services;
 
+import com.sg.domain.events.DomainEvent;
+import org.springframework.integration.annotation.Gateway;
+import org.springframework.integration.annotation.MessagingGateway;
+
 /**
  *
  * @author Admin
  */
-public class DomainEventsRouter {
-    public void routeEvent(DomainEvent event)
+@MessagingGateway
+public interface DomainEventsRouter {
+
+    public static final String INPUT_CHANNEL_NAME = "events.input";
+    
+    @Gateway(requestChannel = INPUT_CHANNEL_NAME)
+    public void routeEvent(DomainEvent event);
 }
