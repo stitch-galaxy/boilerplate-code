@@ -11,7 +11,7 @@ import com.sg.domain.vo.PasswordHash;
  *
  * @author Admin
  */
-public interface PasswordHasher {
+public interface PasswordHashService {
     public PasswordHash getHash(String password);
     
 }

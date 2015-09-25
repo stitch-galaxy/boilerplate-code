@@ -29,7 +29,7 @@ public class AccountRegistrationService {
     private final EmailIsValidSpecification emailIsValidSpecification;
     private final PasswordIsValidSpecification passwordIsValidSpecification;
     private final EmailIsUniqueSpecification emailIsUniqueSpecification;
-    private final PasswordHasher passwordHasher;
+    private final PasswordHashService passwordHasher;
     private final AccountRepository accountRepository;
     private final DomainEventsRouter eventsRouter;
     
@@ -38,7 +38,7 @@ public class AccountRegistrationService {
             EmailIsValidSpecification emailIsValidSpecification,
             PasswordIsValidSpecification passwordIsValidSpecification,
             EmailIsUniqueSpecification emailIsUniqueSpecification,
-            PasswordHasher passwordHasher,
+            PasswordHashService passwordHasher,
             AccountRepository accountRepository,
             DomainEventsRouter eventsRouter) {
         this.emailIsValidSpecification = emailIsValidSpecification;

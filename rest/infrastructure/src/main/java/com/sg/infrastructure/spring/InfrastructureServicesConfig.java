@@ -5,17 +5,16 @@
  */
 package com.sg.infrastructure.spring;
 
+import com.sg.infrastructure.InfrastructureNoOp;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 /**
  *
  * @author Admin
  */
 @Configuration
-@Import(value = {
-    DomainEventsRoutingConfig.class,
-    InfrastructureServicesConfig.class})
-public class InfrastructureConfig {
-
+@ComponentScan(basePackageClasses = {InfrastructureNoOp.class})
+public class InfrastructureServicesConfig {
+    
 }

@@ -16,6 +16,7 @@ import com.sg.domain.vo.TokenSignature;
 import com.sg.domain.vo.TokenType;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class AuthTokenServiceImpl implements AuthTokenService {
     
     private final JwtAuthTokenService jwtAuthTokenService;
     
+    @Autowired
     public AuthTokenServiceImpl(
             @Value("${com.sg.security.key}") String symmetricKey) {
         this.jwtAuthTokenService = new JwtAuthTokenService(symmetricKey, Duration.standardMinutes(1l));

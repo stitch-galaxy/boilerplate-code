@@ -33,12 +33,12 @@ public class TokenBasedSecurityService {
 
     private final AuthTokenService authTokenService;
     private final AccountRepository accountRepository;
-    private final PasswordHasher passwordHasher;
+    private final PasswordHashService passwordHasher;
 
     @Autowired
     public TokenBasedSecurityService(AuthTokenService authTokenService,
                                      AccountRepository accountRepository,
-                                     PasswordHasher passwordHasher) {
+                                     PasswordHashService passwordHasher) {
         this.authTokenService = authTokenService;
         this.accountRepository = accountRepository;
         this.passwordHasher = passwordHasher;
