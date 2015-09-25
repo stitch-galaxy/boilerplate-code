@@ -11,6 +11,20 @@ package com.sg.rest.api.dto;
  */
 public class SignupStatus {
 
+    /**
+     * @return the status
+     */
+    public Status getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public enum Status {
 
         PASSWORD_INVALID,
@@ -19,14 +33,9 @@ public class SignupStatus {
         SUCCESS;
     }
 
-    private final Status status;
+    private Status status;
 
-    private SignupStatus(Status status) {
+    public SignupStatus(Status status) {
         this.status = status;
     }
-
-    public static SignupStatus fromStatus(Status status) {
-        return new SignupStatus(status);
-    }
-
 }

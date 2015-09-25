@@ -46,6 +46,11 @@
             <version>${commons-validator.version}</version>
         </dependency>
         <dependency>
+            <groupId>oro</groupId>
+            <artifactId>oro</artifactId>
+            <version>${oro.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.passay</groupId>
             <artifactId>passay</artifactId>
             <version>${passay.version}</version>

@@ -6,6 +6,7 @@
 package com.sg.rest.api.security;
 
 import com.sg.rest.api.LoginController;
+import com.sg.rest.api.SignupController;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -23,7 +24,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @ComponentScan
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static void configureStatelessSecurityWithoutCsrfProtection(HttpSecurity http) throws Exception {
+    private static void configureStatelessSecurityWithoutCsrfProtection(
+            HttpSecurity http) throws Exception {
         //Stateless
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //No csrf
@@ -36,7 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http = http.antMatcher(LoginController.URI);
+            http = http
+                    .antMatcher(LoginController.URI)
+                    .antMatcher(SignupController.URI);
             configureStatelessSecurityWithoutCsrfProtection(http);
 
             http.authorizeRequests().antMatchers("/**").permitAll()

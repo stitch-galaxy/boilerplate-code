@@ -30,7 +30,7 @@ public class SignupController {
     @Autowired
     private AccountRegistrationService accountRegistrationService;
 
-    @RequestMapping(value = URI, method = RequestMethod.POST)
+    @RequestMapping(value = URI, method = RequestMethod.GET)
     public SignupStatus signup(
             @RequestParam(value = EMAIL_PARAMETER) String email,
             @RequestParam(value = PASSWORD_PARAMETER) String password) {
@@ -39,14 +39,14 @@ public class SignupController {
         }
         try {
             accountRegistrationService.registerEmailAccount(email, password);
-            return SignupStatus.fromStatus(SignupStatus.Status.SUCCESS);
+            return new SignupStatus(SignupStatus.Status.SUCCESS);
 
         } catch (EmailIsNotUniqueException ex) {
-            return SignupStatus.fromStatus(SignupStatus.Status.EMAIL_ALREADY_REGISTERED);
+            return new SignupStatus(SignupStatus.Status.EMAIL_ALREADY_REGISTERED);
         } catch (EmailInvalidException ex) {
-            return SignupStatus.fromStatus(SignupStatus.Status.EMAIL_INVALID);
+            return new SignupStatus(SignupStatus.Status.EMAIL_INVALID);
         } catch (PasswordInvalidException ex) {
-            return SignupStatus.fromStatus(SignupStatus.Status.PASSWORD_INVALID);
+            return new SignupStatus(SignupStatus.Status.PASSWORD_INVALID);
         }
     }
 
