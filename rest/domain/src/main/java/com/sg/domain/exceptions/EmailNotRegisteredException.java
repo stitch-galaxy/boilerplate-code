@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.rest.api.security.exceptions;
+package com.sg.domain.exceptions;
 
 /**
  *
  * @author Admin
  */
-public class AppSecurityBadTokenException extends AppSecurityException {
-
-    public AppSecurityBadTokenException(Exception cause) {
-        super(cause);
-    }
+public class EmailNotRegisteredException extends BaseDomainException {
+    
 }

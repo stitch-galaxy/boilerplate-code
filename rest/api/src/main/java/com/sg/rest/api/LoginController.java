@@ -5,8 +5,13 @@
  */
 package com.sg.rest.api;
 
+import com.sg.domain.exceptions.EmailNotRegisteredException;
+import com.sg.domain.exceptions.EmailNotVerifiedException;
+import com.sg.domain.exceptions.PasswordDoNotMatchException;
+import com.sg.domain.services.TokenBasedSecurityService;
+import com.sg.domain.vo.TokenSignature;
 import com.sg.rest.api.dto.LoginStatus;
-import com.sg.rest.api.security.AppSecurityService;
+import com.sg.rest.api.dto.TokenInfo;
 import java.nio.charset.Charset;
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +31,7 @@ public class LoginController {
     public static final String URI = "/oauth/token";
 
     @Autowired
-    private AppSecurityService security;
+    private TokenBasedSecurityService security;
 
     @RequestMapping(value = URI, method = RequestMethod.GET)
     public LoginStatus login(
@@ -43,6 +48,16 @@ public class LoginController {
             throw new IllegalArgumentException();
         }
 
-        return security.login(values[0], values[1]);
+        TokenSignature signature;
+        try {
+            signature = security.login(values[0], values[1]);
+        } catch (EmailNotRegisteredException ex) {
+            return LoginStatus.getErrorLoginStatus(LoginStatus.Status.EMAIL_NOT_REGISTERED);
+        } catch (EmailNotVerifiedException ex) {
+            return LoginStatus.getErrorLoginStatus(LoginStatus.Status.EMAIL_NOT_VERIFIED);
+        } catch (PasswordDoNotMatchException ex) {
+            return LoginStatus.getErrorLoginStatus(LoginStatus.Status.PASSWORD_INCORRECT);
+        }
+        return LoginStatus.getSuccessLoginStatus(new TokenInfo(signature.getToken(), signature.getExpiresAt().toEpochMilli()));
     }
 }
