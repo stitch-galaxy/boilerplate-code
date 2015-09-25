@@ -38,4 +38,11 @@ public class EmailAccount {
     public boolean checkPassword(PasswordHash hash) {
         return passwordHash.equals(hash);
     }
+
+    /**
+     * @return the email
+     */
+    public Email getEmail() {
+        return email;
+    }
 }

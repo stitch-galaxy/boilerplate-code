@@ -6,6 +6,7 @@
 package com.sg.domain.services;
 
 import com.sg.domain.ar.Account;
+import com.sg.domain.events.AccountRegisteredEvent;
 import com.sg.domain.exceptions.EmailInvalidException;
 import com.sg.domain.exceptions.EmailIsNotUniqueException;
 import com.sg.domain.exceptions.PasswordInvalidException;
@@ -24,36 +25,37 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountRegistrationService {
-
+    
     private final EmailIsValidSpecification emailIsValidSpecification;
     private final PasswordIsValidSpecification passwordIsValidSpecification;
     private final EmailIsUniqueSpecification emailIsUniqueSpecification;
     private final PasswordHasher passwordHasher;
     private final AccountRepository accountRepository;
-
+    private final DomainEventsRouter eventsRouter;
+    
     @Autowired
     public AccountRegistrationService(
             EmailIsValidSpecification emailIsValidSpecification,
             PasswordIsValidSpecification passwordIsValidSpecification,
             EmailIsUniqueSpecification emailIsUniqueSpecification,
             PasswordHasher passwordHasher,
-            AccountRepository accountRepository) {
+            AccountRepository accountRepository,
+            DomainEventsRouter eventsRouter) {
         this.emailIsValidSpecification = emailIsValidSpecification;
         this.passwordIsValidSpecification = passwordIsValidSpecification;
         this.emailIsUniqueSpecification = emailIsUniqueSpecification;
         this.passwordHasher = passwordHasher;
         this.accountRepository = accountRepository;
+        this.eventsRouter = eventsRouter;
     }
-
+    
     public void registerEmailAccount(String sEmail,
                                      String password) throws EmailIsNotUniqueException, EmailInvalidException, PasswordInvalidException {
         Email email = new Email(sEmail);
-        if (!emailIsValidSpecification.isSatisfiedBy(email))
-        {
+        if (!emailIsValidSpecification.isSatisfiedBy(email)) {
             throw new EmailInvalidException();
         }
-        if (!passwordIsValidSpecification.isSatisfiedBy(password))
-        {
+        if (!passwordIsValidSpecification.isSatisfiedBy(password)) {
             throw new PasswordInvalidException();
         }
         if (!emailIsUniqueSpecification.isSatisfiedBy(email)) {
@@ -62,5 +64,7 @@ public class AccountRegistrationService {
         PasswordHash hash = passwordHasher.getHash(password);
         Account account = Account.registerEmailAccount(email, hash);
         accountRepository.create(account);
+        AccountRegisteredEvent event = new AccountRegisteredEvent(account.getAccountId());
+        eventsRouter.routeEvent(event);
     }
 }
