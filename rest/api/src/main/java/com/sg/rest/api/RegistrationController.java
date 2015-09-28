@@ -12,7 +12,7 @@ package com.sg.rest.api;
 import com.sg.domain.exceptions.EmailInvalidException;
 import com.sg.domain.exceptions.EmailIsNotUniqueException;
 import com.sg.domain.exceptions.PasswordInvalidException;
-import com.sg.domain.services.AccountRegistrationService;
+import com.sg.domain.services.AccountManagementService;
 import com.sg.rest.api.dto.RegistrationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +28,7 @@ public class RegistrationController {
     public static final String PASSWORD_PARAMETER = "password";
 
     @Autowired
-    private AccountRegistrationService accountRegistrationService;
+    private AccountManagementService accountManagementService;
 
     @RequestMapping(value = URI, method = RequestMethod.GET)
     public RegistrationStatus signup(
@@ -38,7 +38,7 @@ public class RegistrationController {
             throw new IllegalArgumentException();
         }
         try {
-            accountRegistrationService.registerEmailAccount(email, password);
+            accountManagementService.registerEmailAccount(email, password);
             return new RegistrationStatus(RegistrationStatus.Status.SUCCESS);
 
         } catch (EmailIsNotUniqueException ex) {

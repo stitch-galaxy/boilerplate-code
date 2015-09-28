@@ -5,11 +5,12 @@
  */
 package com.sg.rest.api.security;
 
-import com.sg.rest.api.dto.TokenAuthentificationFailed;
 import com.sg.domain.exceptions.TokenBasedSecurityAccountNotFoundException;
 import com.sg.domain.exceptions.TokenBasedSecurityBadTokenException;
 import com.sg.domain.exceptions.TokenBasedSecurityNoTokenException;
+import com.sg.domain.exceptions.TokenBasedSecurityNotAcceptableTokenTypeException;
 import com.sg.domain.exceptions.TokenBasedSecurityTokenExpiredException;
+import com.sg.rest.api.dto.TokenAuthentificationFailed;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,29 +27,41 @@ public class SecurityExceptionHandler {
     @ExceptionHandler(TokenBasedSecurityBadTokenException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
-    public TokenAuthentificationFailed processAppSecurityBadTokenException(Exception ex) throws Exception {
+    public TokenAuthentificationFailed processTokenBasedSecurityBadTokenException(
+            Exception ex) throws Exception {
         return new TokenAuthentificationFailed(TokenAuthentificationFailed.Reason.BAD_TOKEN);
     }
 
     @ExceptionHandler(TokenBasedSecurityTokenExpiredException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
-    public TokenAuthentificationFailed processAppSecurityTokenExpiredException(Exception ex) throws Exception {
+    public TokenAuthentificationFailed processTokenBasedSecurityTokenExpiredException(
+            Exception ex) throws Exception {
         return new TokenAuthentificationFailed(TokenAuthentificationFailed.Reason.TOKEN_EXPIRED);
     }
 
     @ExceptionHandler(TokenBasedSecurityNoTokenException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
-    public TokenAuthentificationFailed processAppSecurityNoTokenException(Exception ex) throws Exception {
+    public TokenAuthentificationFailed processTokenBasedSecurityNoTokenException(
+            Exception ex) throws Exception {
         return new TokenAuthentificationFailed(TokenAuthentificationFailed.Reason.NO_TOKEN);
     }
 
     @ExceptionHandler(TokenBasedSecurityAccountNotFoundException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
-    public TokenAuthentificationFailed processAppSecurityAccountNotFoundException(Exception ex) throws Exception {
+    public TokenAuthentificationFailed processTokenBasedSecurityAccountNotFoundException(
+            Exception ex) throws Exception {
         return new TokenAuthentificationFailed(TokenAuthentificationFailed.Reason.ACCOUNT_NOT_FOUND);
+    }
+
+    @ExceptionHandler(TokenBasedSecurityNotAcceptableTokenTypeException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public TokenAuthentificationFailed processTokenBasedSecurityNotAcceptableTokenTypeException(
+            Exception ex) throws Exception {
+        return new TokenAuthentificationFailed(TokenAuthentificationFailed.Reason.NOT_ACCEPTABLE_TOKEN_TYPE);
     }
 
 }

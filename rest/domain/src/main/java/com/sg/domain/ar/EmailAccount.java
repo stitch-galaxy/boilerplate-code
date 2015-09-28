@@ -16,7 +16,7 @@ public class EmailAccount {
 
     private final Email email;
     private PasswordHash passwordHash;
-    private boolean verified;
+    private boolean registrationConfirmed;
 
     public EmailAccount(
             Email email,
@@ -25,14 +25,14 @@ public class EmailAccount {
     ) {
         this.email = email;
         this.passwordHash = passwordHash;
-        this.verified = verified;
+        this.registrationConfirmed = verified;
     }
 
     /**
-     * @return the verified
+     * @return the registrationConfirmed
      */
-    public boolean isVerified() {
-        return verified;
+    public boolean isRegistrationConfirmed() {
+        return registrationConfirmed;
     }
 
     public boolean checkPassword(PasswordHash hash) {
@@ -47,6 +47,10 @@ public class EmailAccount {
     }
 
     public void verify() {
-        verified = true;
+        registrationConfirmed = true;
+    }
+
+    public void resetPassword(PasswordHash hash) {
+        passwordHash = hash;
     }
 }

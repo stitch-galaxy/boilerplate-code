@@ -8,11 +8,12 @@ package com.sg.domain.services;
 import com.sg.domain.ar.Account;
 import com.sg.domain.events.AccountRegistrationEvent;
 import com.sg.domain.events.ResendRegistrationConfirmationEmailEvent;
-import com.sg.domain.exceptions.NonEmailAccountException;
+import com.sg.domain.events.SendResetPasswordLinkEvent;
 import com.sg.domain.exceptions.EmailAlreadyVerifiedException;
 import com.sg.domain.exceptions.EmailInvalidException;
 import com.sg.domain.exceptions.EmailIsNotUniqueException;
 import com.sg.domain.exceptions.EmailNotRegisteredException;
+import com.sg.domain.exceptions.NonEmailAccountException;
 import com.sg.domain.exceptions.PasswordInvalidException;
 import com.sg.domain.repositories.AccountRepository;
 import com.sg.domain.specs.EmailIsUniqueSpecification;
@@ -28,7 +29,7 @@ import org.springframework.stereotype.Service;
  * @author Admin
  */
 @Service
-public class AccountRegistrationService {
+public class AccountManagementService {
     
     private final EmailIsValidSpecification emailIsValidSpecification;
     private final PasswordIsValidSpecification passwordIsValidSpecification;
@@ -38,7 +39,7 @@ public class AccountRegistrationService {
     private final DomainEventsRouter eventsRouter;
     
     @Autowired
-    public AccountRegistrationService(
+    public AccountManagementService(
             EmailIsValidSpecification emailIsValidSpecification,
             PasswordIsValidSpecification passwordIsValidSpecification,
             EmailIsUniqueSpecification emailIsUniqueSpecification,
@@ -72,7 +73,7 @@ public class AccountRegistrationService {
         eventsRouter.routeEvent(event);
     }
     
-    public void resendVerificationEmail(String sEmail) throws EmailNotRegisteredException, EmailAlreadyVerifiedException
+    public void resendRegistrationConfirmationEmail(String sEmail) throws EmailNotRegisteredException, EmailAlreadyVerifiedException
     {
         Email email = new Email(sEmail);
         Account account = accountRepository.getAccountByEmail(email);
@@ -80,24 +81,49 @@ public class AccountRegistrationService {
         {
             throw new EmailNotRegisteredException();
         }
-        if (account.getEmailAccount().isVerified())
+        if (account.getEmailAccount().isRegistrationConfirmed())
         {
             throw new EmailAlreadyVerifiedException();
         }
         ResendRegistrationConfirmationEmailEvent event = new ResendRegistrationConfirmationEmailEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
     }
+    
+    public void sendPasswordResetLink(String sEmail) throws EmailNotRegisteredException
+    {
+        Email email = new Email(sEmail);
+        Account account = accountRepository.getAccountByEmail(email);
+        if (account == null)
+        {
+            throw new EmailNotRegisteredException();
+        }
+        SendResetPasswordLinkEvent event = new SendResetPasswordLinkEvent(account.getAccountId());
+        eventsRouter.routeEvent(event);
+    }
 
-    public void verify(Account account) throws NonEmailAccountException, EmailAlreadyVerifiedException {
+    public void confirmRegistration(Account account) throws NonEmailAccountException, EmailAlreadyVerifiedException {
         if (account.getEmailAccount() == null)
         {
             throw new NonEmailAccountException();
         }
-        if (account.getEmailAccount().isVerified())
+        if (account.getEmailAccount().isRegistrationConfirmed())
         {
             throw new EmailAlreadyVerifiedException();
         }
         account.getEmailAccount().verify();
+        accountRepository.update(account);
+    }
+    
+    public void resetPassword(Account account, String password) throws NonEmailAccountException, PasswordInvalidException {
+        if (account.getEmailAccount() == null)
+        {
+            throw new NonEmailAccountException();
+        }
+        if (!passwordIsValidSpecification.isSatisfiedBy(password)) {
+            throw new PasswordInvalidException();
+        }
+        PasswordHash hash = passwordHasher.getHash(password);
+        account.getEmailAccount().resetPassword(hash);
         accountRepository.update(account);
     }
 }

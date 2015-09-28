@@ -47,28 +47,48 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendEmailVerificationMessage(Email email,
-                                             TokenSignature signature) {
+    public void sendRegistrationConfirmationEmail(Email email,
+                                                  TokenSignature signature) {
 
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+        MimeMessagePreparator preparator = (MimeMessage mimeMessage) -> {
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+            
+            message.setTo(email.getEmail());
+            message.setFrom(siteNotificationEmail);
+            message.setSubject("Registration confirmation");
+            Map model = new HashMap();
+            model.put("link", StringEscapeUtils.escapeHtml(String.format("https://%s/registration-confirmation.html?token=%s", siteUrl, signature.getToken())));
+            String text = VelocityEngineUtils.mergeTemplateIntoString(
+                    velocityEngine,
+                    "registration-confirmation.vm",
+                    "UTF-8",
+                    model);
+            message.setText(text, true);
+        };
 
-            @Override
-            public void prepare(MimeMessage mimeMessage) throws Exception {
+        try {
+            this.mailSender.send(preparator);
+        } catch (MailException ex) {
+        }
+    }
 
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-
-                message.setTo(email.getEmail());
-                message.setFrom(siteNotificationEmail);
-                message.setSubject("Registration confirmation");
-                Map model = new HashMap();
-                model.put("link", StringEscapeUtils.escapeHtml(String.format("https://%s/registration-confirmation.html?token=%s", siteUrl, signature.getToken())));
-                String text = VelocityEngineUtils.mergeTemplateIntoString(
-                        velocityEngine,
-                        "registration-confirmation.vm",
-                        "UTF-8",
-                        model);
-                message.setText(text, true);
-            }
+    @Override
+    public void sendResetPasswordLink(Email email,
+                                      TokenSignature signature) {
+        MimeMessagePreparator preparator = (MimeMessage mimeMessage) -> {
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+            
+            message.setTo(email.getEmail());
+            message.setFrom(siteNotificationEmail);
+            message.setSubject("Password reset");
+            Map model = new HashMap();
+            model.put("link", StringEscapeUtils.escapeHtml(String.format("https://%s/password-reset.html?token=%s", siteUrl, signature.getToken())));
+            String text = VelocityEngineUtils.mergeTemplateIntoString(
+                    velocityEngine,
+                    "password-reset.vm",
+                    "UTF-8",
+                    model);
+            message.setText(text, true);
         };
 
         try {

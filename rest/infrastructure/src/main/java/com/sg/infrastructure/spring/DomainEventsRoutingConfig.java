@@ -7,7 +7,7 @@ package com.sg.infrastructure.spring;
 
 import com.sg.domain.events.AccountRegistrationEvent;
 import com.sg.domain.events.ResendRegistrationConfirmationEmailEvent;
-import com.sg.domain.events.handlers.AccountRegistrationEventsHandler;
+import com.sg.domain.events.handlers.AccountRelatedEventsHandler;
 import com.sg.infrastructure.DomainEventsRouterService;
 import com.sg.infrastructure.InfrastructureNoOp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import org.springframework.integration.router.PayloadTypeRouter;
 public class DomainEventsRoutingConfig {
     
     @Autowired
-    private AccountRegistrationEventsHandler accountRegistrationEventsHandler;
+    private AccountRelatedEventsHandler accountRelatedEventsHandler;
 
     @Bean PayloadTypeRouter payloadTypeRouter()
     {
@@ -46,12 +46,12 @@ public class DomainEventsRoutingConfig {
     
     @Bean
     public IntegrationFlow AccountRegistrationEventFlow() {
-        return IntegrationFlows.from(MessageChannels.publishSubscribe(AccountRegistrationEvent.class.getName())).handle(m -> accountRegistrationEventsHandler.processEvent((AccountRegistrationEvent) m.getPayload())).get();
+        return IntegrationFlows.from(MessageChannels.publishSubscribe(AccountRegistrationEvent.class.getName())).handle(m -> accountRelatedEventsHandler.processEvent((AccountRegistrationEvent) m.getPayload())).get();
     }
     
     @Bean
     public IntegrationFlow ResendRegistrationConfirmationEmailEventFlow() {
-        return IntegrationFlows.from(MessageChannels.publishSubscribe(ResendRegistrationConfirmationEmailEvent.class.getName())).handle(m -> accountRegistrationEventsHandler.processEvent((ResendRegistrationConfirmationEmailEvent) m.getPayload())).get();
+        return IntegrationFlows.from(MessageChannels.publishSubscribe(ResendRegistrationConfirmationEmailEvent.class.getName())).handle(m -> accountRelatedEventsHandler.processEvent((ResendRegistrationConfirmationEmailEvent) m.getPayload())).get();
     }
     
 }

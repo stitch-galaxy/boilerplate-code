@@ -14,7 +14,10 @@ import com.sg.domain.vo.TokenSignature;
  */
 public interface MailService {
 
-    public void sendEmailVerificationMessage(Email email,
+    public void sendRegistrationConfirmationEmail(Email email,
+                                             TokenSignature signature);
+    
+    public void sendResetPasswordLink(Email email,
                                              TokenSignature signature);
 
 }

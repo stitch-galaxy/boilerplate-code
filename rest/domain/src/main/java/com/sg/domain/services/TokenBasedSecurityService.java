@@ -6,14 +6,15 @@
 package com.sg.domain.services;
 
 import com.sg.domain.ar.Account;
-import com.sg.domain.exceptions.TokenBasedSecurityAccountNotFoundException;
-import com.sg.domain.exceptions.TokenBasedSecurityBadTokenException;
-import com.sg.domain.exceptions.TokenBasedSecurityNoTokenException;
-import com.sg.domain.exceptions.TokenBasedSecurityTokenExpiredException;
 import com.sg.domain.exceptions.BadTokenException;
 import com.sg.domain.exceptions.EmailNotRegisteredException;
 import com.sg.domain.exceptions.EmailNotVerifiedException;
 import com.sg.domain.exceptions.PasswordDoNotMatchException;
+import com.sg.domain.exceptions.TokenBasedSecurityAccountNotFoundException;
+import com.sg.domain.exceptions.TokenBasedSecurityBadTokenException;
+import com.sg.domain.exceptions.TokenBasedSecurityNoTokenException;
+import com.sg.domain.exceptions.TokenBasedSecurityNotAcceptableTokenTypeException;
+import com.sg.domain.exceptions.TokenBasedSecurityTokenExpiredException;
 import com.sg.domain.exceptions.TokenExpiredException;
 import com.sg.domain.repositories.AccountRepository;
 import com.sg.domain.vo.Email;
@@ -21,6 +22,8 @@ import com.sg.domain.vo.PasswordHash;
 import com.sg.domain.vo.Token;
 import com.sg.domain.vo.TokenSignature;
 import com.sg.domain.vo.TokenType;
+import java.util.EnumSet;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,10 @@ public class TokenBasedSecurityService {
     private final AuthTokenService authTokenService;
     private final AccountRepository accountRepository;
     private final PasswordHashService passwordHasher;
+    
+    public final static Set<TokenType> APP_TOKEN = EnumSet.of(TokenType.WEB_SESSION_TOKEN);
+    public static final Set<TokenType> REGISTRATION_CONFIRMATION_TOKEN = EnumSet.of(TokenType.REGISTRATION_CONFIRMATION_TOKEN);
+    public final static Set<TokenType> PASWORD_RESET_TOKEN = EnumSet.of(TokenType.PASWORD_RESET_TOKEN);
 
     @Autowired
     public TokenBasedSecurityService(AuthTokenService authTokenService,
@@ -44,23 +51,28 @@ public class TokenBasedSecurityService {
         this.passwordHasher = passwordHasher;
     }
 
-    public Account getTokenAccount(String sToken) {
+    private Token parseToken(String sToken) {
         try {
             if (sToken == null || sToken.isEmpty()) {
                 throw new TokenBasedSecurityNoTokenException();
             }
-            Token token = authTokenService.verifyToken(sToken);
-
-            Account account = accountRepository.getAccountByAccountId(token.getAccountId());
-            if (account == null) {
-                throw new TokenBasedSecurityAccountNotFoundException();
-            }
-            return account;
+            return authTokenService.verifyToken(sToken);
         } catch (BadTokenException e) {
             throw new TokenBasedSecurityBadTokenException(e);
         } catch (TokenExpiredException e) {
             throw new TokenBasedSecurityTokenExpiredException(e);
         }
+    }
+
+    public Account getAccount(String sToken, Set<TokenType> acceptableTokenTypes) {
+        Token token = parseToken(sToken);
+        if (!acceptableTokenTypes.contains(token.getTokenType()))
+            throw new TokenBasedSecurityNotAcceptableTokenTypeException();
+        Account account = accountRepository.getAccountByAccountId(token.getAccountId());
+        if (account == null) {
+            throw new TokenBasedSecurityAccountNotFoundException();
+        }
+        return account;
     }
 
     public TokenSignature login(String email,
@@ -69,7 +81,7 @@ public class TokenBasedSecurityService {
         if (account == null) {
             throw new EmailNotRegisteredException();
         }
-        if (!account.getEmailAccount().isVerified()) {
+        if (!account.getEmailAccount().isRegistrationConfirmed()) {
             throw new EmailNotVerifiedException();
         }
         PasswordHash hash = passwordHasher.getHash(password);

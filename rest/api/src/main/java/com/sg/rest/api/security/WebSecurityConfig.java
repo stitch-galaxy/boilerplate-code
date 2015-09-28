@@ -6,8 +6,9 @@
 package com.sg.rest.api.security;
 
 import com.sg.rest.api.LoginController;
-import com.sg.rest.api.ResendRegistrationConfirmationEmailController;
+import com.sg.rest.api.RegistrationConfirmationController;
 import com.sg.rest.api.RegistrationController;
+import com.sg.rest.api.ResendRegistrationConfirmationEmailController;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -42,7 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http = http
                     .antMatcher(LoginController.URI)
                     .antMatcher(RegistrationController.URI)
-                    .antMatcher(ResendRegistrationConfirmationEmailController.URI);
+                    .antMatcher(ResendRegistrationConfirmationEmailController.URI)
+                    .antMatcher(RegistrationConfirmationController.URI);
             configureStatelessSecurityWithoutCsrfProtection(http);
 
             http.authorizeRequests().antMatchers("/**").permitAll()

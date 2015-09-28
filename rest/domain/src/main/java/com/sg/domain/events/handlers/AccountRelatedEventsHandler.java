@@ -8,6 +8,7 @@ package com.sg.domain.events.handlers;
 import com.sg.domain.ar.Account;
 import com.sg.domain.events.AccountRegistrationEvent;
 import com.sg.domain.events.ResendRegistrationConfirmationEmailEvent;
+import com.sg.domain.events.SendResetPasswordLinkEvent;
 import com.sg.domain.repositories.AccountRepository;
 import com.sg.domain.services.AuthTokenService;
 import com.sg.domain.services.MailService;
@@ -23,14 +24,14 @@ import org.springframework.stereotype.Service;
  * @author Admin
  */
 @Service
-public class AccountRegistrationEventsHandler {
+public class AccountRelatedEventsHandler {
 
     private final AccountRepository accountRepository;
     private final MailService mailService;
     private final AuthTokenService authTokenService;
 
     @Autowired
-    public AccountRegistrationEventsHandler(AccountRepository accountRepository,
+    public AccountRelatedEventsHandler(AccountRepository accountRepository,
                                             MailService mailService,
                                             AuthTokenService authTokenService) {
         this.accountRepository = accountRepository;
@@ -42,8 +43,8 @@ public class AccountRegistrationEventsHandler {
         Account account = accountRepository.getAccountByAccountId(accountId);
         if (account != null) {
             if (account.getEmailAccount() != null) {
-                TokenSignature signature = authTokenService.signToken(new Token(accountId, TokenType.EMAIL_VERIFICATION_TOKEN));
-                mailService.sendEmailVerificationMessage(account.getEmailAccount().getEmail(), signature);
+                TokenSignature signature = authTokenService.signToken(new Token(accountId, TokenType.REGISTRATION_CONFIRMATION_TOKEN));
+                mailService.sendRegistrationConfirmationEmail(account.getEmailAccount().getEmail(), signature);
             }
         }
     }
@@ -55,5 +56,17 @@ public class AccountRegistrationEventsHandler {
     public void processEvent(ResendRegistrationConfirmationEmailEvent event) {
         sendVerificationEmail(event.getAccountId());
     }
+    
+    
+    public void processEvent(SendResetPasswordLinkEvent event) {
+        Account account = accountRepository.getAccountByAccountId(event.getAccountId());
+        if (account != null) {
+            if (account.getEmailAccount() != null) {
+                TokenSignature signature = authTokenService.signToken(new Token(event.getAccountId(), TokenType.PASWORD_RESET_TOKEN));
+                mailService.sendResetPasswordLink(account.getEmailAccount().getEmail(), signature);
+            }
+        }
+    }
+    
 
 }

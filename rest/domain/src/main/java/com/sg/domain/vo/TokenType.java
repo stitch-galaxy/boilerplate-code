@@ -12,7 +12,7 @@ package com.sg.domain.vo;
 public enum TokenType {
 
     WEB_SESSION_TOKEN(1),
-    EMAIL_VERIFICATION_TOKEN(2),
+    REGISTRATION_CONFIRMATION_TOKEN(2),
     PASWORD_RESET_TOKEN(3);
 
     private final int id;

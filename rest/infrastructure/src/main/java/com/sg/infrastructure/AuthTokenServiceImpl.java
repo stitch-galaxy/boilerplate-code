@@ -54,7 +54,7 @@ public class AuthTokenServiceImpl implements AuthTokenService {
         switch (type) {
             case WEB_SESSION_TOKEN:
                 return Duration.standardHours(1l);
-            case EMAIL_VERIFICATION_TOKEN:
+            case REGISTRATION_CONFIRMATION_TOKEN:
                 return Duration.standardDays(60l);
             case PASWORD_RESET_TOKEN:
                 return Duration.standardDays(1l);

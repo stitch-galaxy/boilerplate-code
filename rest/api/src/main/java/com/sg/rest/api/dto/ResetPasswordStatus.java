@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.sg.rest.api.dto;
+
+/**
+ *
+ * @author Admin
+ */
+public class ResetPasswordStatus {
+
+    /**
+     * @return the status
+     */
+    public Status getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public enum Status {
+        INVALID_PASSWORD,
+        INVALID_TOKEN,
+        SUCCESS;
+    }
+
+    private Status status;
+
+    public ResetPasswordStatus(Status status) {
+        this.status = status;
+    }
+}

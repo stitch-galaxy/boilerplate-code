@@ -23,6 +23,7 @@ public class TokenAuthentificationFailed {
         BAD_TOKEN,
         TOKEN_EXPIRED,
         ACCOUNT_NOT_FOUND,
+        NOT_ACCEPTABLE_TOKEN_TYPE,
         NO_CREDENTIALS;
     }
     
