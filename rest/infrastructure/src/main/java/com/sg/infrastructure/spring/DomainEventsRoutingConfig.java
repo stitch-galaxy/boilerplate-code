@@ -7,9 +7,11 @@ package com.sg.infrastructure.spring;
 
 import com.sg.domain.events.AccountRegistrationEvent;
 import com.sg.domain.events.ResendRegistrationConfirmationEmailEvent;
+import com.sg.domain.events.SendResetPasswordLinkEvent;
 import com.sg.domain.events.handlers.AccountRelatedEventsHandler;
 import com.sg.infrastructure.DomainEventsRouterService;
 import com.sg.infrastructure.InfrastructureNoOp;
+import java.util.concurrent.Executors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.IntegrationComponentScan;
@@ -35,13 +37,14 @@ public class DomainEventsRoutingConfig {
         PayloadTypeRouter router = new PayloadTypeRouter();
         router.setChannelMapping(AccountRegistrationEvent.class.getName(), AccountRegistrationEvent.class.getName());
         router.setChannelMapping(ResendRegistrationConfirmationEmailEvent.class.getName(), ResendRegistrationConfirmationEmailEvent.class.getName());
+        router.setChannelMapping(SendResetPasswordLinkEvent.class.getName(), SendResetPasswordLinkEvent.class.getName());
         return router;
     }
     
     @Bean
     public IntegrationFlow myFlow() {
         
-        return IntegrationFlows.from(DomainEventsRouterService.INPUT_CHANNEL_NAME).route(payloadTypeRouter()).get();
+        return IntegrationFlows.from(DomainEventsRouterService.INPUT_CHANNEL_NAME).channel(MessageChannels.executor(Executors.newFixedThreadPool(5))).route(payloadTypeRouter()).get();
     }
     
     @Bean
@@ -52,6 +55,11 @@ public class DomainEventsRoutingConfig {
     @Bean
     public IntegrationFlow ResendRegistrationConfirmationEmailEventFlow() {
         return IntegrationFlows.from(MessageChannels.publishSubscribe(ResendRegistrationConfirmationEmailEvent.class.getName())).handle(m -> accountRelatedEventsHandler.processEvent((ResendRegistrationConfirmationEmailEvent) m.getPayload())).get();
+    }
+    
+    @Bean
+    public IntegrationFlow SendResetPasswordLinkEventFlow() {
+        return IntegrationFlows.from(MessageChannels.publishSubscribe(SendResetPasswordLinkEvent.class.getName())).handle(m -> accountRelatedEventsHandler.processEvent((SendResetPasswordLinkEvent) m.getPayload())).get();
     }
     
 }

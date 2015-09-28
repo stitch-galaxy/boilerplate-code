@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    public static final String URI = "/oauth/token";
+    public static final String URI = "/account/login";
 
     @Autowired
     private TokenBasedSecurityService security;
