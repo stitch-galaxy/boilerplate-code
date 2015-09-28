@@ -7,8 +7,11 @@ package com.sg.domain.services;
 
 import com.sg.domain.ar.Account;
 import com.sg.domain.events.AccountRegisteredEvent;
+import com.sg.domain.events.ResendVerificationEmailEvent;
+import com.sg.domain.exceptions.EmailAlreadyVerifiedException;
 import com.sg.domain.exceptions.EmailInvalidException;
 import com.sg.domain.exceptions.EmailIsNotUniqueException;
+import com.sg.domain.exceptions.EmailNotRegisteredException;
 import com.sg.domain.exceptions.PasswordInvalidException;
 import com.sg.domain.repositories.AccountRepository;
 import com.sg.domain.specs.EmailIsUniqueSpecification;
@@ -65,6 +68,22 @@ public class AccountRegistrationService {
         Account account = Account.registerEmailAccount(email, hash);
         accountRepository.create(account);
         AccountRegisteredEvent event = new AccountRegisteredEvent(account.getAccountId());
+        eventsRouter.routeEvent(event);
+    }
+    
+    public void resendVerificationEmail(String sEmail) throws EmailNotRegisteredException, EmailAlreadyVerifiedException
+    {
+        Email email = new Email(sEmail);
+        Account account = accountRepository.getAccountByEmail(email);
+        if (account == null)
+        {
+            throw new EmailNotRegisteredException();
+        }
+        if (account.getEmailAccount().isVerified())
+        {
+            throw new EmailAlreadyVerifiedException();
+        }
+        ResendVerificationEmailEvent event = new ResendVerificationEmailEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
     }
 }

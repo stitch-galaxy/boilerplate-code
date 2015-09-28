@@ -8,14 +8,19 @@ package com.sg.infrastructure;
 import com.sg.domain.services.MailService;
 import com.sg.domain.vo.Email;
 import com.sg.domain.vo.TokenSignature;
-import javax.mail.Message;
-import javax.mail.internet.InternetAddress;
+import java.util.HashMap;
+import java.util.Map;
 import javax.mail.internet.MimeMessage;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
  *
@@ -25,49 +30,44 @@ import org.springframework.stereotype.Service;
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
-//    private final VelocityEngine velocityEngine;
+    private final VelocityEngine velocityEngine;
+
+    @Value("${site.url}")
+    private String siteUrl;
+
+    @Value("${site.notification.email}")
+    private String siteNotificationEmail;
 
     @Autowired
-    public MailServiceImpl(JavaMailSender mailSender
-    //,VelocityEngine velocityEngine
+    public MailServiceImpl(JavaMailSender mailSender,
+                           VelocityEngine velocityEngine
     ) {
         this.mailSender = mailSender;
-//        this.velocityEngine = velocityEngine;
+        this.velocityEngine = velocityEngine;
     }
 
     @Override
     public void sendEmailVerificationMessage(Email email,
                                              TokenSignature signature) {
-//        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-//
-//            @Override
-//            public void prepare(MimeMessage mimeMessage) throws Exception {
-//                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-//                message.setTo(email.getEmail());
-//                message.setFrom("webmaster@csonth.gov.uk"); // could be parameterized...
-//                Map model = new HashMap();
-//                model.put("email", email.getEmail());
-//                model.put("token", signature.getToken());
-//
-//                String text = VelocityEngineUtils.mergeTemplateIntoString(
-//                        velocityEngine,
-//                        "com/dns/registration-confirmation.vm",
-//                        "UTF-8",
-//                        model);
-//                message.setText(text, true);
-//            }
-//        };
-//        this.mailSender.send(preparator);
-//        
 
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
 
+            @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
 
-                mimeMessage.setRecipient(Message.RecipientType.TO,
-                        new InternetAddress(email.getEmail()));
-                mimeMessage.setFrom(new InternetAddress("mail@mycompany.com"));
-                mimeMessage.setText("Hello world!");
+                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+
+                message.setTo(email.getEmail());
+                message.setFrom(siteNotificationEmail);
+                message.setSubject("Registration confirmation");
+                Map model = new HashMap();
+                model.put("link", StringEscapeUtils.escapeHtml(String.format("https://%s/registration-confirmation.html?token=%s", siteUrl, signature.getToken())));
+                String text = VelocityEngineUtils.mergeTemplateIntoString(
+                        velocityEngine,
+                        "registration-confirmation.vm",
+                        "UTF-8",
+                        model);
+                message.setText(text, true);
             }
         };
 

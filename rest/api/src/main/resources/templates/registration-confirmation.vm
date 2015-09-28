@@ -1,0 +1,9 @@
+<html>
+    <body>
+        <h3>Welcome!</h3>
+
+        <div>
+            To complete registration please follow this <a href="${link}">link</a>.
+        </div>
+    </body>
+</html>

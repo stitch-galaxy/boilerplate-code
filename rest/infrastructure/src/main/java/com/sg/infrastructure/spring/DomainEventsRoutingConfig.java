@@ -6,7 +6,8 @@
 package com.sg.infrastructure.spring;
 
 import com.sg.domain.events.AccountRegisteredEvent;
-import com.sg.domain.events.handlers.AccountRegisteredEventHandler;
+import com.sg.domain.events.ResendVerificationEmailEvent;
+import com.sg.domain.events.handlers.AccountRegistrationEventsHandler;
 import com.sg.infrastructure.DomainEventsRouterService;
 import com.sg.infrastructure.InfrastructureNoOp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,13 @@ import org.springframework.integration.router.PayloadTypeRouter;
 public class DomainEventsRoutingConfig {
     
     @Autowired
-    private AccountRegisteredEventHandler accountRegisteredEventHandler;
+    private AccountRegistrationEventsHandler accountRegistrationEventsHandler;
 
     @Bean PayloadTypeRouter payloadTypeRouter()
     {
         PayloadTypeRouter router = new PayloadTypeRouter();
         router.setChannelMapping(AccountRegisteredEvent.class.getName(), AccountRegisteredEvent.class.getName());
+        router.setChannelMapping(ResendVerificationEmailEvent.class.getName(), ResendVerificationEmailEvent.class.getName());
         return router;
     }
     
@@ -43,8 +45,13 @@ public class DomainEventsRoutingConfig {
     }
     
     @Bean
-    public IntegrationFlow AccountRegisteredEventHandlerFlow() {
-        return IntegrationFlows.from(MessageChannels.publishSubscribe(AccountRegisteredEvent.class.getName())).handle(m -> accountRegisteredEventHandler.processEvent((AccountRegisteredEvent) m.getPayload())).get();
+    public IntegrationFlow accountRegisteredEventFlow() {
+        return IntegrationFlows.from(MessageChannels.publishSubscribe(AccountRegisteredEvent.class.getName())).handle(m -> accountRegistrationEventsHandler.processEvent((AccountRegisteredEvent) m.getPayload())).get();
+    }
+    
+    @Bean
+    public IntegrationFlow resendVerificationEmailEventFlow() {
+        return IntegrationFlows.from(MessageChannels.publishSubscribe(ResendVerificationEmailEvent.class.getName())).handle(m -> accountRegistrationEventsHandler.processEvent((ResendVerificationEmailEvent) m.getPayload())).get();
     }
     
 }
