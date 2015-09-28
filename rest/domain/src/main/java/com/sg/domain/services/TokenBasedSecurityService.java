@@ -80,7 +80,7 @@ public class TokenBasedSecurityService {
         {
             throw new TokenBasedSecurityTokenTypeNotAvailiableException();
         }
-        if (tokenIdentity.equals(token.getTokenIdentity()))
+        if (!tokenIdentity.equals(token.getTokenIdentity()))
             throw new TokenBasedSecurityTokenRevokedException();
         return account;
     }

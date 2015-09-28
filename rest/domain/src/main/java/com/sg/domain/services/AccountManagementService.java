@@ -32,14 +32,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountManagementService {
-
+    
     private final EmailIsValidSpecification emailIsValidSpecification;
     private final PasswordIsValidSpecification passwordIsValidSpecification;
     private final EmailIsUniqueSpecification emailIsUniqueSpecification;
     private final PasswordHashService passwordHasher;
     private final AccountRepository accountRepository;
     private final DomainEventsRouter eventsRouter;
-
+    
     @Autowired
     public AccountManagementService(
             EmailIsValidSpecification emailIsValidSpecification,
@@ -55,7 +55,7 @@ public class AccountManagementService {
         this.accountRepository = accountRepository;
         this.eventsRouter = eventsRouter;
     }
-
+    
     public void registerEmailAccount(String sEmail,
                                      String password) throws EmailIsNotUniqueException, EmailInvalidException, PasswordInvalidException {
         Email email = new Email(sEmail);
@@ -70,12 +70,12 @@ public class AccountManagementService {
         }
         PasswordHash hash = passwordHasher.getHash(password);
         Account account = Account.registerEmailAccount(email, hash);
-        account.registerToken(TokenType.REGISTRATION_CONFIRMATION_TOKEN);
+        account.registerTokenType(TokenType.REGISTRATION_CONFIRMATION_TOKEN);
         accountRepository.create(account);
         AccountRegistrationEvent event = new AccountRegistrationEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
     }
-
+    
     public void resendRegistrationConfirmationEmail(String sEmail) throws EmailNotRegisteredException, EmailAlreadyVerifiedException {
         Email email = new Email(sEmail);
         Account account = accountRepository.getAccountByEmail(email);
@@ -85,24 +85,29 @@ public class AccountManagementService {
         if (account.getEmailAccount().isRegistrationConfirmed()) {
             throw new EmailAlreadyVerifiedException();
         }
-        account.resendRegistrationConfirmationEmail();
+        account.revokeToken(TokenType.REGISTRATION_CONFIRMATION_TOKEN);
+        
         ResendRegistrationConfirmationEmailEvent event = new ResendRegistrationConfirmationEmailEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
     }
-
+    
     public void sendPasswordResetLink(String sEmail) throws EmailNotRegisteredException {
         Email email = new Email(sEmail);
         Account account = accountRepository.getAccountByEmail(email);
         if (account == null) {
             throw new EmailNotRegisteredException();
         }
-        account.sendResetPasswordLink();
+        if (account.isTokenTypeRegistered(TokenType.PASWORD_RESET_TOKEN)) {
+            account.revokeToken(TokenType.PASWORD_RESET_TOKEN);
+        } else {
+            account.registerTokenType(TokenType.PASWORD_RESET_TOKEN);
+        }
         
         accountRepository.update(account);
         SendResetPasswordLinkEvent event = new SendResetPasswordLinkEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
     }
-
+    
     public void confirmRegistration(Account account) throws NonEmailAccountException, EmailAlreadyVerifiedException {
         if (account.getEmailAccount() == null) {
             throw new NonEmailAccountException();
@@ -111,10 +116,11 @@ public class AccountManagementService {
             throw new EmailAlreadyVerifiedException();
         }
         account.getEmailAccount().verify();
-        account.registerToken(TokenType.WEB_SESSION_TOKEN);
+        //account.unregisterTokenType(TokenType.REGISTRATION_CONFIRMATION_TOKEN);
+        account.registerTokenType(TokenType.WEB_SESSION_TOKEN);
         accountRepository.update(account);
     }
-
+    
     public void resetPassword(Account account,
                               String password) throws NonEmailAccountException, PasswordInvalidException {
         if (account.getEmailAccount() == null) {
@@ -125,13 +131,14 @@ public class AccountManagementService {
         }
         PasswordHash hash = passwordHasher.getHash(password);
         account.getEmailAccount().resetPassword(hash);
+        account.unregisterTokenType(TokenType.PASWORD_RESET_TOKEN);
         accountRepository.update(account);
     }
-
+    
     public void changePassword(Account account,
                                String oldPassword,
                                String newPassword) throws NonEmailAccountException, PasswordDoNotMatchException, PasswordInvalidException {
-
+        
         if (account.getEmailAccount() == null) {
             throw new NonEmailAccountException();
         }

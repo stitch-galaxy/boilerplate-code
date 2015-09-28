@@ -71,7 +71,7 @@ public class Account {
         return tokenIdentites.containsKey(tokenType);
     }
     
-    public void registerToken(TokenType tokenType) {
+    public void registerTokenType(TokenType tokenType) {
         TokenIdentity identity = tokenIdentites.get(tokenType);
         if (identity == null) {
             identity = TokenIdentity.create();
@@ -79,6 +79,11 @@ public class Account {
         } else {
             throw new IllegalStateException();
         }
+    }
+    
+    public void unregisterTokenType(TokenType tokenType)
+    {
+        tokenIdentites.remove(tokenType);
     }
     
     public void revokeToken(TokenType tokenType) {
@@ -92,15 +97,4 @@ public class Account {
         }
     }
     
-    public void resendRegistrationConfirmationEmail() {
-        revokeToken(TokenType.REGISTRATION_CONFIRMATION_TOKEN);
-    }
-    
-    public void sendResetPasswordLink() {
-        if (isTokenTypeRegistered(TokenType.PASWORD_RESET_TOKEN)) {
-            revokeToken(TokenType.PASWORD_RESET_TOKEN);
-        } else {
-            registerToken(TokenType.PASWORD_RESET_TOKEN);
-        }
-    }
 }
