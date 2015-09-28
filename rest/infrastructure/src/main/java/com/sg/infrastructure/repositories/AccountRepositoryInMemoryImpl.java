@@ -9,6 +9,7 @@ import com.sg.domain.ar.Account;
 import com.sg.domain.repositories.AccountRepository;
 import com.sg.domain.vo.AccountId;
 import com.sg.domain.vo.Email;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -46,6 +47,19 @@ public class AccountRepositoryInMemoryImpl implements AccountRepository {
 
     @Override
     public void create(Account account) {
+        accounts.add(account);
+    }
+
+    @Override
+    public void update(Account account) {
+        Iterator<Account> iterator = accounts.iterator();
+        while (iterator.hasNext()) {
+            Account a = iterator.next();
+            if (a.getAccountId().equals(account.getAccountId())) {
+                iterator.remove();
+                break;
+            }
+        }
         accounts.add(account);
     }
 

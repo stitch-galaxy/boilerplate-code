@@ -13,7 +13,7 @@ import com.sg.domain.exceptions.EmailInvalidException;
 import com.sg.domain.exceptions.EmailIsNotUniqueException;
 import com.sg.domain.exceptions.PasswordInvalidException;
 import com.sg.domain.services.AccountRegistrationService;
-import com.sg.rest.api.dto.SignupStatus;
+import com.sg.rest.api.dto.RegistrationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class SignupController {
+public class RegistrationController {
 
-    public static final String URI = "/signup";
+    public static final String URI = "/account/create";
     public static final String EMAIL_PARAMETER = "email";
     public static final String PASSWORD_PARAMETER = "password";
 
@@ -31,7 +31,7 @@ public class SignupController {
     private AccountRegistrationService accountRegistrationService;
 
     @RequestMapping(value = URI, method = RequestMethod.GET)
-    public SignupStatus signup(
+    public RegistrationStatus signup(
             @RequestParam(value = EMAIL_PARAMETER) String email,
             @RequestParam(value = PASSWORD_PARAMETER) String password) {
         if (email == null || password == null) {
@@ -39,14 +39,14 @@ public class SignupController {
         }
         try {
             accountRegistrationService.registerEmailAccount(email, password);
-            return new SignupStatus(SignupStatus.Status.SUCCESS);
+            return new RegistrationStatus(RegistrationStatus.Status.SUCCESS);
 
         } catch (EmailIsNotUniqueException ex) {
-            return new SignupStatus(SignupStatus.Status.EMAIL_ALREADY_REGISTERED);
+            return new RegistrationStatus(RegistrationStatus.Status.EMAIL_ALREADY_REGISTERED);
         } catch (EmailInvalidException ex) {
-            return new SignupStatus(SignupStatus.Status.EMAIL_INVALID);
+            return new RegistrationStatus(RegistrationStatus.Status.EMAIL_INVALID);
         } catch (PasswordInvalidException ex) {
-            return new SignupStatus(SignupStatus.Status.PASSWORD_INVALID);
+            return new RegistrationStatus(RegistrationStatus.Status.PASSWORD_INVALID);
         }
     }
 

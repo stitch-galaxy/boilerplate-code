@@ -6,8 +6,9 @@
 package com.sg.domain.services;
 
 import com.sg.domain.ar.Account;
-import com.sg.domain.events.AccountRegisteredEvent;
-import com.sg.domain.events.ResendVerificationEmailEvent;
+import com.sg.domain.events.AccountRegistrationEvent;
+import com.sg.domain.events.ResendRegistrationConfirmationEmailEvent;
+import com.sg.domain.exceptions.NonEmailAccountException;
 import com.sg.domain.exceptions.EmailAlreadyVerifiedException;
 import com.sg.domain.exceptions.EmailInvalidException;
 import com.sg.domain.exceptions.EmailIsNotUniqueException;
@@ -67,7 +68,7 @@ public class AccountRegistrationService {
         PasswordHash hash = passwordHasher.getHash(password);
         Account account = Account.registerEmailAccount(email, hash);
         accountRepository.create(account);
-        AccountRegisteredEvent event = new AccountRegisteredEvent(account.getAccountId());
+        AccountRegistrationEvent event = new AccountRegistrationEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
     }
     
@@ -83,7 +84,20 @@ public class AccountRegistrationService {
         {
             throw new EmailAlreadyVerifiedException();
         }
-        ResendVerificationEmailEvent event = new ResendVerificationEmailEvent(account.getAccountId());
+        ResendRegistrationConfirmationEmailEvent event = new ResendRegistrationConfirmationEmailEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
+    }
+
+    public void verify(Account account) throws NonEmailAccountException, EmailAlreadyVerifiedException {
+        if (account.getEmailAccount() == null)
+        {
+            throw new NonEmailAccountException();
+        }
+        if (account.getEmailAccount().isVerified())
+        {
+            throw new EmailAlreadyVerifiedException();
+        }
+        account.getEmailAccount().verify();
+        accountRepository.update(account);
     }
 }

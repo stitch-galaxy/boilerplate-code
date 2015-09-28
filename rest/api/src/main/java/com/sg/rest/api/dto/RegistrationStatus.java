@@ -9,7 +9,7 @@ package com.sg.rest.api.dto;
  *
  * @author Admin
  */
-public class SignupStatus {
+public class RegistrationStatus {
 
     /**
      * @return the status
@@ -35,7 +35,7 @@ public class SignupStatus {
 
     private Status status;
 
-    public SignupStatus(Status status) {
+    public RegistrationStatus(Status status) {
         this.status = status;
     }
 }

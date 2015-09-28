@@ -9,7 +9,7 @@ package com.sg.rest.api.dto;
  *
  * @author Admin
  */
-public class ResendVerificationEmailStatus {
+public class RegistrationConfirmationStatus {
 
     /**
      * @return the status
@@ -26,15 +26,14 @@ public class ResendVerificationEmailStatus {
     }
 
     public enum Status {
-
-        EMAIL_NOT_REGISTERED,
         EMAIL_ALREADY_VERIFIED,
+        INVALID_TOKEN,
         SUCCESS;
     }
 
     private Status status;
 
-    public ResendVerificationEmailStatus(Status status) {
+    public RegistrationConfirmationStatus(Status status) {
         this.status = status;
     }
 }

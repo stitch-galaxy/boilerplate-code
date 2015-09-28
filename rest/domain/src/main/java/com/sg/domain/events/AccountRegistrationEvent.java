@@ -11,11 +11,11 @@ import com.sg.domain.vo.AccountId;
  *
  * @author Admin
  */
-public class ResendVerificationEmailEvent implements DomainEvent {
+public class AccountRegistrationEvent implements DomainEvent {
 
     private final AccountId accountId;
 
-    public ResendVerificationEmailEvent(AccountId accountId) {
+    public AccountRegistrationEvent(AccountId accountId) {
         this.accountId = accountId;
     }
 

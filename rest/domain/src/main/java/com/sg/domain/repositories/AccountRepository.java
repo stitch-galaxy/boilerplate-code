@@ -17,4 +17,5 @@ public interface AccountRepository {
     public Account getAccountByAccountId(AccountId accountId);
     public Account getAccountByEmail(Email email);
     public void create(Account account);
+    public void update(Account account);
 }

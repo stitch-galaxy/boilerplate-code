@@ -6,8 +6,8 @@
 package com.sg.domain.events.handlers;
 
 import com.sg.domain.ar.Account;
-import com.sg.domain.events.AccountRegisteredEvent;
-import com.sg.domain.events.ResendVerificationEmailEvent;
+import com.sg.domain.events.AccountRegistrationEvent;
+import com.sg.domain.events.ResendRegistrationConfirmationEmailEvent;
 import com.sg.domain.repositories.AccountRepository;
 import com.sg.domain.services.AuthTokenService;
 import com.sg.domain.services.MailService;
@@ -48,11 +48,11 @@ public class AccountRegistrationEventsHandler {
         }
     }
 
-    public void processEvent(AccountRegisteredEvent event) {
+    public void processEvent(AccountRegistrationEvent event) {
         sendVerificationEmail(event.getAccountId());
     }
 
-    public void processEvent(ResendVerificationEmailEvent event) {
+    public void processEvent(ResendRegistrationConfirmationEmailEvent event) {
         sendVerificationEmail(event.getAccountId());
     }
 

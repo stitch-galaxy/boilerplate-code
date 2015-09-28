@@ -5,8 +5,8 @@
  */
 package com.sg.infrastructure.spring;
 
-import com.sg.domain.events.AccountRegisteredEvent;
-import com.sg.domain.events.ResendVerificationEmailEvent;
+import com.sg.domain.events.AccountRegistrationEvent;
+import com.sg.domain.events.ResendRegistrationConfirmationEmailEvent;
 import com.sg.domain.events.handlers.AccountRegistrationEventsHandler;
 import com.sg.infrastructure.DomainEventsRouterService;
 import com.sg.infrastructure.InfrastructureNoOp;
@@ -33,8 +33,8 @@ public class DomainEventsRoutingConfig {
     @Bean PayloadTypeRouter payloadTypeRouter()
     {
         PayloadTypeRouter router = new PayloadTypeRouter();
-        router.setChannelMapping(AccountRegisteredEvent.class.getName(), AccountRegisteredEvent.class.getName());
-        router.setChannelMapping(ResendVerificationEmailEvent.class.getName(), ResendVerificationEmailEvent.class.getName());
+        router.setChannelMapping(AccountRegistrationEvent.class.getName(), AccountRegistrationEvent.class.getName());
+        router.setChannelMapping(ResendRegistrationConfirmationEmailEvent.class.getName(), ResendRegistrationConfirmationEmailEvent.class.getName());
         return router;
     }
     
@@ -45,13 +45,13 @@ public class DomainEventsRoutingConfig {
     }
     
     @Bean
-    public IntegrationFlow accountRegisteredEventFlow() {
-        return IntegrationFlows.from(MessageChannels.publishSubscribe(AccountRegisteredEvent.class.getName())).handle(m -> accountRegistrationEventsHandler.processEvent((AccountRegisteredEvent) m.getPayload())).get();
+    public IntegrationFlow AccountRegistrationEventFlow() {
+        return IntegrationFlows.from(MessageChannels.publishSubscribe(AccountRegistrationEvent.class.getName())).handle(m -> accountRegistrationEventsHandler.processEvent((AccountRegistrationEvent) m.getPayload())).get();
     }
     
     @Bean
-    public IntegrationFlow resendVerificationEmailEventFlow() {
-        return IntegrationFlows.from(MessageChannels.publishSubscribe(ResendVerificationEmailEvent.class.getName())).handle(m -> accountRegistrationEventsHandler.processEvent((ResendVerificationEmailEvent) m.getPayload())).get();
+    public IntegrationFlow ResendRegistrationConfirmationEmailEventFlow() {
+        return IntegrationFlows.from(MessageChannels.publishSubscribe(ResendRegistrationConfirmationEmailEvent.class.getName())).handle(m -> accountRegistrationEventsHandler.processEvent((ResendRegistrationConfirmationEmailEvent) m.getPayload())).get();
     }
     
 }

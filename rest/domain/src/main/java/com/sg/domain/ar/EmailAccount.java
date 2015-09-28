@@ -45,4 +45,8 @@ public class EmailAccount {
     public Email getEmail() {
         return email;
     }
+
+    public void verify() {
+        verified = true;
+    }
 }
