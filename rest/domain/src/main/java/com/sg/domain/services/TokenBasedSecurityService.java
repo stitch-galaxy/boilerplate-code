@@ -15,11 +15,14 @@ import com.sg.domain.exceptions.TokenBasedSecurityBadTokenException;
 import com.sg.domain.exceptions.TokenBasedSecurityNoTokenException;
 import com.sg.domain.exceptions.TokenBasedSecurityNotAcceptableTokenTypeException;
 import com.sg.domain.exceptions.TokenBasedSecurityTokenExpiredException;
+import com.sg.domain.exceptions.TokenBasedSecurityTokenRevokedException;
+import com.sg.domain.exceptions.TokenBasedSecurityTokenTypeNotAvailiableException;
 import com.sg.domain.exceptions.TokenExpiredException;
 import com.sg.domain.repositories.AccountRepository;
 import com.sg.domain.vo.Email;
 import com.sg.domain.vo.PasswordHash;
 import com.sg.domain.vo.Token;
+import com.sg.domain.vo.TokenIdentity;
 import com.sg.domain.vo.TokenSignature;
 import com.sg.domain.vo.TokenType;
 import java.util.EnumSet;
@@ -72,6 +75,13 @@ public class TokenBasedSecurityService {
         if (account == null) {
             throw new TokenBasedSecurityAccountNotFoundException();
         }
+        TokenIdentity tokenIdentity = account.getTokenIdentity(token.getTokenType());
+        if (tokenIdentity == null)
+        {
+            throw new TokenBasedSecurityTokenTypeNotAvailiableException();
+        }
+        if (tokenIdentity.equals(token.getTokenIdentity()))
+            throw new TokenBasedSecurityTokenRevokedException();
         return account;
     }
 
@@ -88,6 +98,6 @@ public class TokenBasedSecurityService {
         if (!account.getEmailAccount().checkPassword(hash)) {
             throw new PasswordDoNotMatchException();
         }
-        return authTokenService.signToken(new Token(account.getAccountId(), TokenType.WEB_SESSION_TOKEN));
+        return authTokenService.signToken(new Token(account.getAccountId(), TokenType.WEB_SESSION_TOKEN, account.getTokenIdentity(TokenType.WEB_SESSION_TOKEN)));
     }
 }

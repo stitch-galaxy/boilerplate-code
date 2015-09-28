@@ -5,8 +5,6 @@
  */
 package com.sg.domain.vo;
 
-import com.sg.domain.vo.AccountId;
-
 /**
  *
  * @author tarasev
@@ -29,14 +27,24 @@ public class Token {
 
     private final AccountId accountId;
     private final TokenType tokenType;
+    private final TokenIdentity tokenIdentity;
 
     public Token(AccountId accountId,
-                 TokenType tokenType) {
-        if (accountId == null || tokenType == null) {
+                 TokenType tokenType,
+                 TokenIdentity tokenIdentity) {
+        if (accountId == null || tokenType == null || tokenIdentity == null) {
             throw new IllegalArgumentException();
         }
         this.accountId = accountId;
         this.tokenType = tokenType;
+        this.tokenIdentity = tokenIdentity;
+    }
+
+    /**
+     * @return the tokenIdentity
+     */
+    public TokenIdentity getTokenIdentity() {
+        return tokenIdentity;
     }
 
 }

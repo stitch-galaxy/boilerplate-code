@@ -22,6 +22,7 @@ import com.sg.domain.specs.EmailIsValidSpecification;
 import com.sg.domain.specs.PasswordIsValidSpecification;
 import com.sg.domain.vo.Email;
 import com.sg.domain.vo.PasswordHash;
+import com.sg.domain.vo.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +70,7 @@ public class AccountManagementService {
         }
         PasswordHash hash = passwordHasher.getHash(password);
         Account account = Account.registerEmailAccount(email, hash);
+        account.registerToken(TokenType.REGISTRATION_CONFIRMATION_TOKEN);
         accountRepository.create(account);
         AccountRegistrationEvent event = new AccountRegistrationEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
@@ -83,6 +85,7 @@ public class AccountManagementService {
         if (account.getEmailAccount().isRegistrationConfirmed()) {
             throw new EmailAlreadyVerifiedException();
         }
+        account.resendRegistrationConfirmationEmail();
         ResendRegistrationConfirmationEmailEvent event = new ResendRegistrationConfirmationEmailEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
     }
@@ -93,6 +96,9 @@ public class AccountManagementService {
         if (account == null) {
             throw new EmailNotRegisteredException();
         }
+        account.sendResetPasswordLink();
+        
+        accountRepository.update(account);
         SendResetPasswordLinkEvent event = new SendResetPasswordLinkEvent(account.getAccountId());
         eventsRouter.routeEvent(event);
     }
@@ -105,6 +111,7 @@ public class AccountManagementService {
             throw new EmailAlreadyVerifiedException();
         }
         account.getEmailAccount().verify();
+        account.registerToken(TokenType.WEB_SESSION_TOKEN);
         accountRepository.update(account);
     }
 

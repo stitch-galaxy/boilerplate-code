@@ -40,6 +40,7 @@ public class JwtAuthTokenService {
     private static final String DOMAIN_URI = "http://sg.com";
     private static final String ACCOUNT_ID_PARAM = "accountId";
     private static final String TOKEN_TYPE_PARAM = "tokenType";
+    private static final String TOKEN_IDENTITY_PARAM = "tokenIdentity";
     private static final String KEY_NAME = "symmetric_key";
     
 
@@ -68,6 +69,7 @@ public class JwtAuthTokenService {
         JsonToken jsonWebToken = new JsonToken(signer, clock);
         jsonWebToken.setParam(ACCOUNT_ID_PARAM, token.getAccountId().toString());
         jsonWebToken.setParam(TOKEN_TYPE_PARAM, token.getTokenType());
+        jsonWebToken.setParam(TOKEN_IDENTITY_PARAM, token.getTokenIdentity().toString());
         jsonWebToken.setIssuedAt(issuedAt);
         jsonWebToken.setExpiration(expireAt);
         jsonWebToken.setAudience(DOMAIN_URI);
@@ -89,8 +91,10 @@ public class JwtAuthTokenService {
         try {
             tokenParser.verify(jsonWebToken);
 
-            return new JwtToken(UUID.fromString(jsonWebToken.getParamAsPrimitive(ACCOUNT_ID_PARAM).getAsString()),
-                    jsonWebToken.getParamAsPrimitive(TOKEN_TYPE_PARAM).getAsInt()
+            return new JwtToken(
+                    UUID.fromString(jsonWebToken.getParamAsPrimitive(ACCOUNT_ID_PARAM).getAsString()),
+                    jsonWebToken.getParamAsPrimitive(TOKEN_TYPE_PARAM).getAsInt(),
+                    UUID.fromString(jsonWebToken.getParamAsPrimitive(TOKEN_IDENTITY_PARAM).getAsString())
             );
         } catch (SignatureException e) {
             throw new BadTokenException(e);

@@ -18,12 +18,12 @@ import java.util.Map;
  * @author Admin
  */
 public class Account {
-
+    
     private final AccountId accountId;
     private EmailAccount emailAccount;
     private FacebookAccount facebookAccount;
     private final Map<TokenType, TokenIdentity> tokenIdentites = new EnumMap<>(TokenType.class);
-
+    
     private Account(AccountId accountId,
                     EmailAccount emailAccount,
                     FacebookAccount facebookAccount,
@@ -34,7 +34,7 @@ public class Account {
         if (tokenIdentites != null) {
             this.tokenIdentites.putAll(tokenIdentites);
         }
-
+        
     }
 
     /**
@@ -50,14 +50,14 @@ public class Account {
     public AccountId getAccountId() {
         return accountId;
     }
-
+    
     public static Account registerEmailAccount(Email email,
                                                PasswordHash passwordHash) {
         AccountId accountId = AccountId.create();
         EmailAccount emailAccount = new EmailAccount(email, passwordHash, false);
         return new Account(accountId, emailAccount, null, null);
     }
-
+    
     public TokenIdentity getTokenIdentity(TokenType tokenType) {
         TokenIdentity identity = tokenIdentites.get(tokenType);
         if (identity == null) {
@@ -66,15 +66,41 @@ public class Account {
         }
         return identity;
     }
-
+    
+    public boolean isTokenTypeRegistered(TokenType tokenType) {
+        return tokenIdentites.containsKey(tokenType);
+    }
+    
+    public void registerToken(TokenType tokenType) {
+        TokenIdentity identity = tokenIdentites.get(tokenType);
+        if (identity == null) {
+            identity = TokenIdentity.create();
+            tokenIdentites.put(tokenType, identity);
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+    
     public void revokeToken(TokenType tokenType) {
         TokenIdentity identity = TokenIdentity.create();
         tokenIdentites.put(tokenType, identity);
     }
-
+    
     public void revokeAllTokens() {
         for (TokenType tokenType : tokenIdentites.keySet()) {
             tokenIdentites.put(tokenType, TokenIdentity.create());
+        }
+    }
+    
+    public void resendRegistrationConfirmationEmail() {
+        revokeToken(TokenType.REGISTRATION_CONFIRMATION_TOKEN);
+    }
+    
+    public void sendResetPasswordLink() {
+        if (isTokenTypeRegistered(TokenType.PASWORD_RESET_TOKEN)) {
+            revokeToken(TokenType.PASWORD_RESET_TOKEN);
+        } else {
+            registerToken(TokenType.PASWORD_RESET_TOKEN);
         }
     }
 }

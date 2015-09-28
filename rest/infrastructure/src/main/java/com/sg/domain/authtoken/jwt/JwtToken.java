@@ -18,14 +18,17 @@ public class JwtToken {
 
     private final UUID accountId;
     private final int tokenType;
+    private final UUID tokenIdentity;
 
     public JwtToken(UUID uid,
-                    int type) {
-        if (uid == null) {
+                    int type,
+                    UUID tokenIdentity) {
+        if (uid == null || tokenIdentity == null) {
             throw new IllegalArgumentException();
         }
         this.accountId = uid;
         this.tokenType = type;
+        this.tokenIdentity = tokenIdentity;
     }
 
     /**
@@ -55,17 +58,25 @@ public class JwtToken {
         return new EqualsBuilder().
                 append(this.accountId, other.accountId).
                 append(this.tokenType, other.tokenType).
+                append(this.tokenIdentity, other.tokenIdentity).
                 isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(accountId).append(tokenType).hashCode();
+        return new HashCodeBuilder().append(accountId).append(tokenType).append(tokenIdentity).hashCode();
     }
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    /**
+     * @return the tokenIdentity
+     */
+    public UUID getTokenIdentity() {
+        return tokenIdentity;
     }
 
 }

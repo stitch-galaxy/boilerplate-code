@@ -10,6 +10,8 @@ import com.sg.domain.exceptions.TokenBasedSecurityBadTokenException;
 import com.sg.domain.exceptions.TokenBasedSecurityNoTokenException;
 import com.sg.domain.exceptions.TokenBasedSecurityNotAcceptableTokenTypeException;
 import com.sg.domain.exceptions.TokenBasedSecurityTokenExpiredException;
+import com.sg.domain.exceptions.TokenBasedSecurityTokenRevokedException;
+import com.sg.domain.exceptions.TokenBasedSecurityTokenTypeNotAvailiableException;
 import com.sg.rest.api.dto.TokenAuthentificationFailed;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -62,6 +64,22 @@ public class SecurityExceptionHandler {
     public TokenAuthentificationFailed processTokenBasedSecurityNotAcceptableTokenTypeException(
             Exception ex) throws Exception {
         return new TokenAuthentificationFailed(TokenAuthentificationFailed.Reason.NOT_ACCEPTABLE_TOKEN_TYPE);
+    }
+
+    @ExceptionHandler(TokenBasedSecurityTokenRevokedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public TokenAuthentificationFailed processTokenBasedSecurityTokenRevokedException(
+            Exception ex) throws Exception {
+        return new TokenAuthentificationFailed(TokenAuthentificationFailed.Reason.TOKEN_REVOKED);
+    }
+
+    @ExceptionHandler(TokenBasedSecurityTokenTypeNotAvailiableException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public TokenAuthentificationFailed processTokenBasedSecurityTokenTypeNotAvailiableException(
+            Exception ex) throws Exception {
+        return new TokenAuthentificationFailed(TokenAuthentificationFailed.Reason.TOKEN_TYPE_NOT_AVAILIABLE);
     }
 
 }

@@ -24,6 +24,8 @@ public class TokenAuthentificationFailed {
         TOKEN_EXPIRED,
         ACCOUNT_NOT_FOUND,
         NOT_ACCEPTABLE_TOKEN_TYPE,
+        TOKEN_REVOKED,
+        TOKEN_TYPE_NOT_AVAILIABLE,
         NO_CREDENTIALS;
     }
     

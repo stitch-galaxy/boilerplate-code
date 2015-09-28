@@ -12,6 +12,7 @@ import com.sg.domain.exceptions.TokenExpiredException;
 import com.sg.domain.services.AuthTokenService;
 import com.sg.domain.vo.AccountId;
 import com.sg.domain.vo.Token;
+import com.sg.domain.vo.TokenIdentity;
 import com.sg.domain.vo.TokenSignature;
 import com.sg.domain.vo.TokenType;
 import org.joda.time.Duration;
@@ -26,30 +27,38 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AuthTokenServiceImpl implements AuthTokenService {
-    
+
     private final JwtAuthTokenService jwtAuthTokenService;
-    
+
     @Autowired
     public AuthTokenServiceImpl(
             @Value("${com.sg.security.key}") String symmetricKey) {
         this.jwtAuthTokenService = new JwtAuthTokenService(symmetricKey, Duration.standardMinutes(1l));
     }
-    
+
     @Override
     public TokenSignature signToken(Token token) {
-        JwtToken jwtToken = new JwtToken(token.getAccountId().getId(), token.getTokenType().getId());
+        JwtToken jwtToken = new JwtToken(
+                token.getAccountId().getId(),
+                token.getTokenType().getId(),
+                token.getTokenIdentity().getId()
+        );
         Instant now = Instant.now();
         Instant expiresAt = now.plus(getDurationForTokenType(token.getTokenType()));
         java.time.Instant javaExpiresAt = java.time.Instant.ofEpochMilli(expiresAt.getMillis());
         return new TokenSignature(jwtAuthTokenService.signToken(jwtToken, now, expiresAt), javaExpiresAt);
     }
-    
+
     @Override
     public Token verifyToken(String signedToken) throws BadTokenException, TokenExpiredException {
         JwtToken jwtToken = jwtAuthTokenService.verifySignatureAndExtractToken(signedToken);
-        return new Token(new AccountId(jwtToken.getAccountId()), TokenType.parse(jwtToken.getTokenType()));
+        return new Token(
+                new AccountId(jwtToken.getAccountId()),
+                TokenType.parse(jwtToken.getTokenType()),
+                new TokenIdentity(jwtToken.getTokenIdentity())
+        );
     }
-    
+
     private Duration getDurationForTokenType(TokenType type) {
         switch (type) {
             case WEB_SESSION_TOKEN:
