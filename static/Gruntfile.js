@@ -2,9 +2,22 @@
 
 module.exports = function(grunt) {
 
+    //Used to load grunt tasks automatically
+    require('load-grunt-tasks')(grunt);
+
+    //Used to measure how long grunt tasks run
+    require('time-grunt')(grunt);
 
     grunt.initConfig({
-        sg: appConfig,
+        //Used to install bower dependencies
+        bower: {
+            install: {
+                options: {
+                    targetDir: 'app/bower_components'
+                }
+            }
+        },
+        // Used to check javascript syntax
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
@@ -12,44 +25,105 @@ module.exports = function(grunt) {
             src: {
                 src: [
                     'Gruntfile.js',
-                    '<%= sg.src %>/<%= sg.components %>/**/*.js',
-                    '<%= sg.test %>/**/*.js'
+                    'app/components/**/*.js'
                 ]
             }
         },
+        //Used to wire bower dependencies
+        //Place following code to your html files you want to inject bower dependencies
+        //<!-- bower:css -->
+        //<!-- endbower -->
+        //<!-- bower:js -->
+        //<!-- endbower -->
         wiredep: {
             src: {
-                src: '<%= sg.src %>/*.html'
+                src: 'app/*.html'
             }
         },
+        //Used to compile sass code
         compass: {
             src: {
                 options: {
-                    sassDir: '<%= sg.src %>/<%= sg.sass %>',
-                    cssDir: '<%= sg.src %>/<%= sg.css %>'
+                    sassDir: 'app/sass',
+                    cssDir: 'app/css'
                 }
             }
         },
+        //Used to add vendor specific prefixes to css files
         autoprefixer: {
             options: {
                 browsers: ['last 1 version']
             },
             src: {
-                src: '<%= sg.src %>/<%= sg.css %>/*.css'
+                src: 'app/css/**/*.css'
             }
         },
+        //Used to spawn connect web server
+        connect: {
+            options: {
+                port: 9000,
+                // Change this to '0.0.0.0' to access the server from outside.
+                hostname: 'localhost',
+                livereload: 35729
+            },
+            src: {
+                options: {
+                    open: true,
+                    base: 'src'
+                }
+            },
+            dist: {
+                options: {
+                    open: true,
+                    base: 'dist',
+                    keepalive: true
+                }
+            }
+        },
+        //Used to clean temporary files
         clean: {
             dist: {
-                src: '<%= sg.dist %>'
+                src: 'dist'
             },
             useminCache: {
-                src: '<%= sg.useminCache %>'
+                src: '.tmp'
             },
             sassCache: {
-                src: '<%= sg.sassCache %>'
+                src: '.sass-cache'
             },
             generatedCss: {
-                src: '<%= sg.src %>/<%= sg.css %>'
+                src: 'app/css'
+            }
+        },
+        //Used to spawn other grunt tasks when files changed
+        watch: {
+            //spawn bower install and wire dependencies
+            bower: {
+                files: ['bower.json'],
+                tasks: ['bower', 'wiredep']
+            },
+            //spawn js checks when sources changed
+            js: {
+                files: ['app/components/**/*.js'],
+                tasks: ['newer:jshint']
+            },
+            //compile sass code whe sources changed
+            sass: {
+                files: ['app/sass/**/*.{scss,sass}'],
+                tasks: ['clean:sassCache', 'clean:generatedCss', 'compass', 'autoprefixer']
+            },
+            //reload web page when files changed
+            files: {
+                options: {
+                    livereload: '<%= connect.options.livereload %>'
+                },
+                files: [
+                    'app/*.html', //html
+                    'app/partials/**/*.html', //partials
+                    'app/css/**/*.css', //css styles
+                    'app/images/**/*', //images
+                    'app/components/**/*.js'//scripts
+                ]
             }
         },
         copy: {
@@ -127,76 +201,6 @@ module.exports = function(grunt) {
                 assetsDirs: ['<%= sg.dist %>']
             }
         },
-        connect: {
-            options: {
-                port: 9000,
-                // Change this to '0.0.0.0' to access the server from outside.
-                hostname: 'localhost',
-                livereload: 35729
-            },
-            src: {
-                options: {
-                    open: true,
-                    base: '<%= sg.src %>'
-                }
-            },
-            test: {
-                options: {
-                    port: 9999,
-                    base: '<%= sg.src %>'
-                }
-            },
-            dist: {
-                options: {
-                    open: true,
-                    base: '<%= sg.dist %>',
-                    keepalive: true
-                }
-            },
-            coverage: {
-                options: {
-                    open: true,
-                    base: '<%= sg.coverage %>',
-                    port: 5555,
-                    keepalive: true
-                }
-            }
-
-        },
-        watch: {
-            bower: {
-                files: ['bower.json'],
-                tasks: ['bower', 'wiredep']
-            },
-            js: {
-                files: ['<%= sg.src %>/<%= sg.components %>/**/*.js',
-                    '<%= sg.test %>/**/*.js'],
-                tasks: ['newer:jshint']
-            },
-            sass: {
-                files: ['<%= sg.src %>/<%= sg.sass %>/**/*.{scss,sass}'],
-                tasks: ['compass', 'autoprefixer']
-            },
-            gruntfile: {
-                files: ['Gruntfile.js']
-            },
-            files: {
-                options: {
-                    livereload: '<%= connect.options.livereload %>'
-                },
-                files: [
-                    '<%= sg.src %>/*.html', //html
-                    '<%= sg.src %>/<%= sg.partials %>/**/*.html', //partials
-                    '<%= sg.src %>/<%= sg.css %>/*.css', //css styles
-                    '<%= sg.dist %>/<%= sg.images %>/**/*', //images
-                    '<%= sg.src %>/<%= sg.components %>/**/*.js'//scripts
-                ]
-            },
-            e2e: {
-                files: ['<%= sg.test %>/e2e/**/*.js'],
-                tasks: ['protractor:auto']
-            }
-        },
         htmlmin: {
             dist: {
                 options: {
@@ -213,62 +217,20 @@ module.exports = function(grunt) {
                         dest: '<%= sg.dist %>'
                     }]
             }
-        },
-        //unit test tasks
-        karma: {
-            unit: {
-                configFile: '<%= sg.test %>/karma-unit.conf.js',
-                autoWatch: false,
-                singleRun: true
-            },
-            unitAuto: {
-                configFile: '<%= sg.test %>/karma-unit.conf.js',
-                autoWatch: true,
-                singleRun: false
-            },
-            unitCoverage: {
-                configFile: '<%= sg.test %>/karma-unit.conf.js',
-                autoWatch: false,
-                singleRun: true,
-                reporters: ['progress', 'coverage'],
-                preprocessors: {
-                    'app/components/**/*.js': ['coverage']
-                },
-                coverageReporter: {
-                    type: 'html',
-                    dir: 'coverage/'
-                }
-            }
-        },
-        //e2e tests
-        shell: {
-            options: {
-                stdout: true
-            },
-            protractorInstall: {
-                command: 'node ./node_modules/protractor/bin/webdriver-manager update'
-            }
-        },
-        protractor: {
-            options: {
-                keepAlive: true,
-                configFile: '<%= sg.test %>/protractor.conf.js'
-            },
-            singlerun: {},
-            auto: {}
         }
-
     });
 
     //add watch commands to compass and autoprefixer
 
     //build process
     grunt.registerTask('build', [
-        'bower',
-        'wiredep',
         'jshint',
+        'clean:sassCache',
+        'clean:generatedCss',
         'compass',
-        'autoprefixer'
+        'autoprefixer',
+        'bower',
+        'wiredep'
     ]);
 
     //dist process: take html, concat js'es and css'es, cssmin css'es, uglify js'es, 
@@ -297,19 +259,5 @@ module.exports = function(grunt) {
         }
         grunt.log.warn('Please specify dist or src target!');
     });
-
-
-    //single run tests
-    grunt.registerTask('test', ['test:unit', 'test:e2e']);
-    grunt.registerTask('test:unit', ['karma:unit']);
-    grunt.registerTask('test:e2e', ['shell:protractorInstall', 'connect:test', 'protractor:singlerun']);
-
-    //autotest and watch tests
-    grunt.registerTask('autotest', ['karma:unitAuto']);
-    grunt.registerTask('autotest:unit', ['karma:unitAuto']);
-    grunt.registerTask('autotest:e2e', ['shell:protractorInstall', 'connect:test', 'protractor:auto', 'watch:e2e']);
-
-    //unit tests coverage
-    grunt.registerTask('coverage', ['karma:unitCoverage', 'connect:coverage']);
 
 };

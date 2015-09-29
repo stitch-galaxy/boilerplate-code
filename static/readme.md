@@ -23,6 +23,10 @@ $ bower install
 ```sh
 $ npm init
 ```
+ - To initialize bower project and create **bower.json** file
+```sh
+$ bower init
+```
  - To install npm dependency and add it to **package.json**
 ```sh
 $ npm install grunt --save-dev
@@ -41,17 +45,3 @@ $ npm-check-updates
 ```sh
 $ npm-check-updates -u
 ```
-# Grunt tasks
- - load-grunt-tasks
-```
-    // Load grunt tasks automatically
-    require('load-grunt-tasks')(grunt);
-```
- - time-grunt
-```
-    // Time how long tasks take. Can help when optimizing build times
-    require('time-grunt')(grunt);
-```
- - grunt-contrib-jshint
-
- - grunt-contrib-concat
