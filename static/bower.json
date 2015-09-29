@@ -1,0 +1,6 @@
+{
+  "name": "stitchgalaxy",
+  "dependencies": {
+    "bootstrap": "3.3.5"
+  }
+}

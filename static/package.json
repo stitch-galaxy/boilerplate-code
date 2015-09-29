@@ -1,0 +1,13 @@
+{
+  "name": "stitchgalaxy",
+  "version": "1.0.0",
+  "description": "Stitch galaxy node module",
+  "main": "Gruntfile.js",
+  "author": "Evgeny Tarasov",
+  "devDependencies": {
+    "grunt": "0.4.5",
+    "grunt-contrib-concat": "0.5.1",
+    "load-grunt-tasks": "3.3.0",
+    "time-grunt": "^1.2.1"
+  }
+}
