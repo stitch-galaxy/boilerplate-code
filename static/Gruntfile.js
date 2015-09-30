@@ -196,11 +196,16 @@ module.exports = function(grunt) {
             options: {
                 singleQuotes: true
             },
+            //http://stackoverflow.com/questions/25403113/grunt-usemin-transform-path-to-assets
             dist: {
-                src: '.tmp/concat/scripts/*.js'
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/concat/scripts',
+                    src: '*.js',
+                    dest: '.tmp/concat/scripts'
+                }]
             }
-        },
-        //Used to add hash to file name
+        },        //Used to add hash to file name
         filerev: {
             options: {
                 encoding: 'utf8',
