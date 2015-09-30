@@ -1,11 +1,20 @@
 # Dev tools
- - git
- - npm
- - grunt-cli
+
+## Nodejs and it's dependencies
+ - [npm](https://nodejs.org/en/)
+ - [git](https://git-scm.com/downloads)
+## Sass processing
+ - [ruby](https://www.ruby-lang.org/en/downloads/)
+ - [sass](http://sass-lang.com/guide)
+ - [compass](http://compass-style.org/install/)
+ - Add **bin** folder from Ruby installation folder to **PATH** environment variable
+## Grunt task runner
+ - [grunt-cli](http://gruntjs.com/getting-started)
 ```sh
 $ npm install -g grunt-cli
 ```
- - bower
+## Bower dependecy management tool
+ - [bower](http://bower.io/)
 ```sh
 $ npm install -g bower
 ```
@@ -17,6 +26,17 @@ $ npm install
  - Install bower packages
 ```sh
 $ bower install
+```
+ - Run grunt tasks
+```sh
+$ # To build dev version
+$ grunt build
+$ # To build prod version
+$ grunt dist
+$ # To build dev version and run web page
+$ grunt serve:src
+$ # To build prod version and run web page
+$ grunt serve:dist
 ```
 # Usefull commands
  - To initialize npm project and create **package.json** file 
@@ -41,7 +61,12 @@ $ bower install bootstrap -S
 ```sh
 $ npm-check-updates
 ``` 
-- To check if new versions of node dependencies exists and update **package.json**
+ - To check if new versions of node dependencies exists and update **package.json**
 ```sh
 $ npm-check-updates -u
+```
+ - Windows long file names [solution](https://coderwall.com/p/alhoww/solving-the-source-path-too-long-ntfs-issue) when trying to delete **node_modules** folder
+```sh
+$ npm i -g rimraf
+$ rimraf node_modules
 ```

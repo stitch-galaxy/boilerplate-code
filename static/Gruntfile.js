@@ -69,7 +69,7 @@ module.exports = function(grunt) {
             src: {
                 options: {
                     open: true,
-                    base: 'src'
+                    base: 'app'
                 }
             },
             dist: {
@@ -126,56 +126,81 @@ module.exports = function(grunt) {
                 ]
             }
         },
+        //Used to copy html to dist folder
         copy: {
             dist: {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= sg.src %>',
+                        cwd: 'app',
                         src: [
-                            '<%= sg.images %>/**/*',
                             '*.html',
-                            '<%= sg.partials %>/**/*.html'
+                            'partials/**/*.html'
                         ],
-                        dest: '<%= sg.dist %>'
+                        dest: 'dist'
                     }
                 ]
             }
         },
+        //Used to minify images
         imagemin: {
             dist: {
                 files: [{
                         expand: true,
-                        cwd: '<%= sg.src %>/<%= sg.images %>',
+                        cwd: 'app/images',
                         src: '**/*.{png,jpg,jpeg,gif}',
-                        dest: '<%= sg.dist %>/<%= sg.images %>'
+                        dest: 'dist/images'
                     }]
             }
         },
-        useminPrepare: {
-            src: '<%= sg.src %>/*.html',
+        //Another way to minify images
+        tinypng: {
             options: {
-                dest: '<%= sg.dist %>'
+                apiKey: '5ONpTI7XzsNT3gnLsVtorTgyIb1X54xy',
+                checkSigs: true,
+                sigFile: 'app/images_sigs.json',
+                summarize: true,
+                showProgress: true,
+                stopOnImageError: true
+            },
+            compress: {
+                expand: true, 
+                src: 'app/images/**/*.{png,jpeg,jpg}', 
+                dest: 'dist/'
             }
         },
+        //Preparation task for minification process
+        useminPrepare: {
+            src: 'app/*.html',
+            options: {
+                dest: 'dist'
+            }
+        },
+        //Used to concatenate js, css
         concat: {
             options: {
                 separator: ';'
             }
         },
+        //Used to uglify js
         uglify: {
             options: {
                 sourceMap: true
             }
         },
+        //Used to minify css
+        cssmin : {
+        },
+        //Used to prepare AngularJS dependency injection for minification
         ngAnnotate: {
             options: {
                 singleQuotes: true
             },
             dist: {
-                src: '<%= sg.useminCache %>/concat/<%= sg.javascript %>/*.js'
+                src: '.tmp/concat/scripts/*.js'
             }
         },
+        //Used to add hash to file name
         filerev: {
             options: {
                 encoding: 'utf8',
@@ -187,20 +212,22 @@ module.exports = function(grunt) {
                         exapand: true,
                         //cwd: '<%= sg.dist %>', //not working with filerev
                         src: [
-                            '<%= sg.dist %>/<%= sg.images %>/**/*',
-                            '<%= sg.dist %>/<%= sg.javascript %>/*.js',
-                            '<%= sg.dist %>/<%= sg.css %>/*.css'
+                            'dist/images/**/*',
+                            'dist/scripts/*.js',
+                            'dist/css/*.css'
                         ]
                     }]
             }
         },
+        //Used to complete minification process and replace all url in html
         usemin: {
-            html: '<%= sg.dist %>/*.html',
-            css: '<%= sg.dist %>/<%= sg.css %>/**/*.css',
+            html: 'dist/*.html',
+            css: 'dist/css/**/*.css',
             options: {
-                assetsDirs: ['<%= sg.dist %>']
+                assetsDirs: ['dist']
             }
         },
+        //Used to minify html
         htmlmin: {
             dist: {
                 options: {
@@ -212,15 +239,13 @@ module.exports = function(grunt) {
                 },
                 files: [{
                         expand: true,
-                        cwd: '<%= sg.dist %>',
-                        src: ['*.html', '<%= sg.partials %>/**/*.html'],
-                        dest: '<%= sg.dist %>'
+                        cwd: 'dist',
+                        src: ['*.html', 'partials/**/*.html'],
+                        dest: 'dist'
                     }]
             }
         }
     });
-
-    //add watch commands to compass and autoprefixer
 
     //build process
     grunt.registerTask('build', [
