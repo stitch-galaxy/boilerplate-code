@@ -37,7 +37,11 @@ module.exports = function(grunt) {
         //<!-- endbower -->
         wiredep: {
             src: {
-                src: 'app/*.html'
+                src: [
+                    'app/*.html',
+                    'app/templates/*.html'
+                ]
+               
             }
         },
         //Used to compile sass code
@@ -122,7 +126,8 @@ module.exports = function(grunt) {
                     'app/partials/**/*.html', //partials
                     'app/css/**/*.css', //css styles
                     'app/images/**/*', //images
-                    'app/components/**/*.js'//scripts
+                    'app/components/**/*.js',//scripts
+                    'app/templates/**/*.html'//templates
                 ]
             }
         },
