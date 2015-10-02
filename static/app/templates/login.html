@@ -8,6 +8,7 @@
         <!-- build:css(app) css/vendor.css -->
         <!-- bower:css -->
         <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="../bower_components/components-font-awesome/css/font-awesome.css" />
         <!-- endbower -->
         <!-- endbuild -->
         <!-- build:css(app) css/site.css -->
@@ -18,7 +19,7 @@
         <!--[if lt IE 10]>
           <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -61,6 +62,38 @@
             </div><!-- /.container-fluid -->
         </nav>
         <div class="container-fluid">
+            <div class="login-container">
+
+                <div class="row">
+                    <div class="col-xs-12"><h4>Log in to Stitch Galaxy with</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="#" class="provider-link" id="login-facebook">
+                            <i class="fa fa-facebook provider-icon"></i>
+                            <span class="provider-name">Facebook</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="#" class="provider-link" id="login-google">
+                            <i class="fa fa-google provider-icon"></i>
+                            <span class="provider-name">Google</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row explanation">
+                    <div class="col-xs-12"><span>We'll <strong>never</strong> post without your permission.</span></div>
+
+                </div>
+                <div class="row"><h5><strong>or</strong></h5></div>
+                <div class="row">
+                    <div class="col-xs-12"><h4>Log in to your Stitch Galaxy account</h4></div>
+                </div>
+            </div>
+
             <h1>H</h1>
             <h1>H</h1>
             <h1>H</h1>
@@ -115,9 +148,9 @@
 
                         <ul class="list-unstyled">
                             <li class="heading"><strong>Social</strong></li>
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Google+</a></li>
+                            <li><a href="#"><i class="fa fa-facebook"></i><span> Facebook</span></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i> Twitter</a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i> Google+</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-3">

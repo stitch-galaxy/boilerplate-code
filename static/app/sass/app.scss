@@ -5,6 +5,19 @@ body {
         color: #999;
         font-size: 11px;
         //background-color: gold;
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        a:active {
+            text-decoration: none;
+        }
+
         background-color: #fdfdfd;
         li {
             padding-right: 8px;
@@ -30,6 +43,46 @@ body {
             }
         }
     }
+    .login-container #login-facebook {
+        background-color: #1a60a2;
+    }
+
+    .login-container #login-google {
+        background-color: #bf4434;
+    }
+
+    .login-container {
+
+        margin: 0 auto;
+        padding: 14px 0;
+        text-align: center;
+        max-width: 300px;
+
+        .provider-link {
+            text-decoration: none;
+            border-radius: 20px;
+            color: white;
+            display: block;
+            font-size: 16px;
+            height: 40px;
+            line-height: 40px;
+            position: relative;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px;
+
+            .provider-icon {
+                position: absolute;
+                left: 20px;
+                line-height: 40px;
+            }
+        }
+
+        .explanation {
+            color: #999;
+        }
+    }
+
 }
 
 hr.hr-unstyled {
