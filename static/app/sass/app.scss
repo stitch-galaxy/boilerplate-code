@@ -50,6 +50,10 @@ body {
     .login-container #login-google {
         background-color: #bf4434;
     }
+    
+    .login-container #login-button {
+        background-color: yellowgreen;
+    }
 
     .login-container {
 
@@ -77,6 +81,11 @@ body {
                 line-height: 40px;
             }
         }
+
+        .login-button {
+            @extend .provider-link;
+        }
+
 
         .explanation {
             color: #999;
