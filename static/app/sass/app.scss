@@ -50,9 +50,16 @@ body {
     .login-container #login-google {
         background-color: #bf4434;
     }
-    
+
     .login-container #login-button {
         background-color: yellowgreen;
+    }
+
+    .notification-container {
+        margin: 0 auto;
+        padding: 14px 0;
+        text-align: center;
+        max-width: 500px;
     }
 
     .login-container {
@@ -89,6 +96,23 @@ body {
 
         .explanation {
             color: #999;
+        }
+
+        .login-addons {
+            a {
+                text-decoration: underline;
+            }
+        }
+
+        .tos-area {
+            color: #444;
+            font-size: 10px;
+            color: #999;
+            line-height: 16px;
+
+            a {
+                text-decoration: underline;
+            }
         }
     }
 
