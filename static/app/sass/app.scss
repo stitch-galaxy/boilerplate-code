@@ -2,3 +2,37 @@ body {
     //background-image: url(/images/test.png);
     //background-color: red;
 }
+
+footer {
+    color: #999;
+    font-size: 11px;
+    //background-color: gold;
+    background-color: #fdfdfd;
+}
+
+footer li {
+    padding-right: 8px;
+    padding-bottom: 8px;
+}
+
+footer .heading {
+    text-transform: uppercase;
+    color: #2c3747;
+}
+
+footer .links {
+    padding: 12px 0 24px;
+}
+
+footer .extra-links {
+    padding: 12px 0 24px;
+}
+
+footer .extra-links .legal {
+    float: left;
+    margin-right: 30px;
+}
+
+hr {
+    margin: 0px !important;
+}

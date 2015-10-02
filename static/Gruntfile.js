@@ -114,7 +114,7 @@ module.exports = function(grunt) {
             //compile sass code whe sources changed
             sass: {
                 files: ['app/sass/**/*.{scss,sass}'],
-                tasks: ['clean:sassCache', 'clean:generatedCss', 'compass', 'autoprefixer']
+                tasks: [/*'clean:sassCache', 'clean:generatedCss', */'compass', 'autoprefixer']
             },
             //reload web page when files changed
             files: {
