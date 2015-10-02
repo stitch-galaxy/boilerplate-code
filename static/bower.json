@@ -4,6 +4,7 @@
     "bootstrap": "3.3.4",
     "angular": "1.4.7",
     "angular-route": "1.4.7",
-    "components-font-awesome": "~4.4.0"
+    "components-font-awesome": "4.4.0",
+    "angular-translate": "2.8.1"
   }
 }
