@@ -74,6 +74,13 @@ body {
     .login-container #login-button {
         background-color: yellowgreen;
     }
+    
+    .settings-container {
+        margin: 0 auto;
+        padding: 14px 0;
+        text-align: left;
+        max-width: 500px;
+    }
 
     .notification-container {
         margin: 0 auto;
@@ -140,4 +147,5 @@ body {
 
 hr.hr-unstyled {
     margin: 0px;
+    border-color: #dddddd;
 }
