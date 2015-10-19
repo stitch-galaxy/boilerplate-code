@@ -82,7 +82,7 @@ gulp.task('css', function () {
     .pipe(sourcemaps.init())
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(autoprefixer(autoPrefixerOptions))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./app/css'))
     .pipe(connect.reload());
 });
