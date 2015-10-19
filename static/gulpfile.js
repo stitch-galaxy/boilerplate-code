@@ -22,6 +22,7 @@ var minifyCss = require('gulp-minify-css');
 var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-collector');
 var minifyHtml = require('gulp-minify-html');
+var ngAnnotate = require('gulp-ng-annotate');
 
 
 gulp.task('lintGulpfile', function() {
@@ -160,8 +161,8 @@ gulp.task('usemin', function() {
       css: [ sourcemaps.init({loadMaps: true, debug: true}), 'concat', minifyCss(), rev , sourcemaps.write('./') ],
       vendorcss : [ sourcemaps.init({loadMaps: true, debug: true}), 'concat', minifyCss(), rev , sourcemaps.write('./') ],
       html: [ function () {return minifyHtml({ empty: true });} ],
-      vendorjs: [ sourcemaps.init({loadMaps: true, debug: true}), uglify, rev, sourcemaps.write('./') ],
-      js: [ sourcemaps.init({loadMaps: true, debug: true}), uglify, rev, sourcemaps.write('./') ]
+      vendorjs: [ sourcemaps.init({loadMaps: true, debug: true}), ngAnnotate, uglify, rev, sourcemaps.write('./') ],
+      js: [ sourcemaps.init({loadMaps: true, debug: true}), ngAnnotate, uglify, rev, sourcemaps.write('./') ]
     }))
     .pipe(gulp.dest('./dist/'));
 });
