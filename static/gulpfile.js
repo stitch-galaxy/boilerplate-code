@@ -78,7 +78,7 @@ gulp.task('css', function () {
     browsers: ['last 2 versions']
   };
 
-  gulp.src('./app/sass/**/*.scss')
+  gulp.src('./app/sass/main.scss')
     .pipe(sourcemaps.init())
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(autoprefixer(autoPrefixerOptions))
@@ -157,9 +157,11 @@ gulp.task('index', function() {
 gulp.task('usemin', function() {
   return gulp.src('./app/index.html')
     .pipe(usemin({
-      css: [ sourcemaps.init({loadMaps: true}), 'concat', rev , sourcemaps.write('./')],
+      css: [ sourcemaps.init({loadMaps: true, debug: true}), 'concat', minifyCss(), rev , sourcemaps.write('./') ],
+      vendorcss : [ sourcemaps.init({loadMaps: true, debug: true}), 'concat', minifyCss(), rev , sourcemaps.write('./') ],
       html: [ function () {return minifyHtml({ empty: true });} ],
-      js: [ uglify, rev ]
+      vendorjs: [ sourcemaps.init({loadMaps: true, debug: true}), uglify, rev, sourcemaps.write('./') ],
+      js: [ sourcemaps.init({loadMaps: true, debug: true}), uglify, rev, sourcemaps.write('./') ]
     }))
     .pipe(gulp.dest('./dist/'));
 });
