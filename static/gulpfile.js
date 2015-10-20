@@ -29,6 +29,7 @@ var concat = require('gulp-concat');
 var concatCss = require('gulp-concat-css');
 var rename = require('gulp-rename');
 var rev = require('gulp-rev');
+var revCollector = require('gulp-rev-collector');
 var copy = require('gulp-copy');
 //usemin
 var usemin = require('gulp-usemin');
@@ -59,9 +60,12 @@ gulp.task('js', function () {
 	.pipe(concat('site.js'))
         .pipe(ngAnnotate())
 	.pipe(rename({suffix: '.min'}))
+        .pipe(rev())
 	.pipe(uglify())	
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./build/assets/js'));
+    .pipe(gulp.dest('./build/assets/js'))
+    .pipe(rev.manifest('./rev-manifest-js.json'))
+    .pipe(gulp.dest('./manfiests'));
 });
 
 gulp.task('vendorjs', ['dependencies'], function () {
@@ -69,9 +73,13 @@ gulp.task('vendorjs', ['dependencies'], function () {
     .pipe(sourcemaps.init({loadMaps: true}))
 	.pipe(concat('vendor.js'))
 	.pipe(rename({suffix: '.min'}))
+        .pipe(rev())
 	.pipe(uglify())	
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./build/assets/js'));
+    .pipe(gulp.dest('./build/assets/js'))
+    .pipe(rev.manifest('./rev-manifest-vendorjs.json'))
+    .pipe(gulp.dest('./manfiests'));
+
 });
 
 gulp.task('css', function () {
@@ -85,12 +93,15 @@ gulp.task('css', function () {
   return gulp.src('./sass/main.scss')
     .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(concat('site.css'))
-        .pipe(rename({suffix: '.min'}))
         .pipe(sass(sassOptions).on('error', sass.logError))
         .pipe(autoprefixer(autoPrefixerOptions))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(rev())
         .pipe(minifyCss())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./build/assets/css'));
+    .pipe(gulp.dest('./build/assets/css'))
+    .pipe(rev.manifest('./rev-manifest-css.json'))
+    .pipe(gulp.dest('./manfiests'));
 });
 
 gulp.task('vendorcss', ['dependencies'], function () {
@@ -98,9 +109,12 @@ gulp.task('vendorcss', ['dependencies'], function () {
     .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(concat('vendor.css'))
         .pipe(rename({suffix: '.min'}))
+        .pipe(rev())
         .pipe(minifyCss())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./build/assets/css'));
+    .pipe(gulp.dest('./build/assets/css'))
+    .pipe(rev.manifest('./rev-manifest-vendorcss.json'))
+    .pipe(gulp.dest('./manfiests'));
 });
 
 gulp.task('images', function () {
@@ -125,7 +139,11 @@ gulp.task('html', ['js', 'vendorjs', 'css', 'vendorcss', 'images'], function () 
                            quotes : true,
                            loose : true
                        };
-  return gulp.src(['./index.html', './styles.html'])
+  var revCollectorOptions = {
+                                replaceReved: true
+                            };
+  return gulp.src(['./manfiests/**/*.json', './*.html'])
+    .pipe(revCollector(revCollectorOptions))
     .pipe(minifyHtml(minifyHtmlOpts))
     .pipe(gulp.dest('./build'));
 });
