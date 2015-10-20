@@ -3,7 +3,7 @@
 var gulp = require('gulp');
 //bower
 var bower = require('gulp-bower');
-var wiredep = require('wiredep').stream;
+var wiredep = require('wiredep');
 //linting
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
@@ -20,15 +20,25 @@ var ngAnnotate = require('gulp-ng-annotate');
 var minifyHtml = require('gulp-minify-html');
 //images
 var imagemin = require('gulp-imagemin');
+var cache = require('gulp-cache');
 //web server
 var connect = require('gulp-connect');
 //dist tasks
 var del = require('del');
+var concat = require('gulp-concat');
+var concatCss = require('gulp-concat-css');
+var rename = require('gulp-rename');
 var rev = require('gulp-rev');
 var copy = require('gulp-copy');
 //usemin
 var usemin = require('gulp-usemin');
 
+//clean task other tasks depends on
+gulp.task('clean', function () {
+  return del('build/**/*');
+});
+
+//linting
 gulp.task('lintGulpfile', function() {
   return gulp.src('./gulpfile.js')
     .pipe(jshint())
@@ -36,43 +46,32 @@ gulp.task('lintGulpfile', function() {
     .pipe(jshint.reporter('fail'));
 });
 
-
-gulp.task('lint', function() {
-  return gulp.src('./app/components/**/*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(jshint.reporter('fail'));
-});
-
-gulp.task('bower', function() {
+gulp.task('dependencies', function() {
   return bower();
 });
 
-gulp.task('connect', function() {
-  connect.server({
-    root: './app',
-    livereload: true
-  });
-});
-
-gulp.task('connectDist', function() {
-  connect.server({
-    root: './dist',
-    livereload: true
-  });
-});
-
-
-gulp.task('html', function () {
-  gulp.src('./app/index.html')
-    .pipe(wiredep())
-    .pipe(gulp.dest('./app'))
-    .pipe(connect.reload());
-});
-
 gulp.task('js', function () {
-  gulp.src('./app/components/**/*.js')
-    .pipe(connect.reload());
+  return gulp.src('./components/**/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'))
+    .pipe(sourcemaps.init({loadMaps: true}))
+	.pipe(concat('site.js'))
+        .pipe(ngAnnotate())
+	.pipe(rename({suffix: '.min'}))
+	.pipe(uglify())	
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./build/assets/js'));
+});
+
+gulp.task('vendorjs', ['dependencies'], function () {
+  return gulp.src(wiredep().js)
+    .pipe(sourcemaps.init({loadMaps: true}))
+	.pipe(concat('vendor.js'))
+	.pipe(rename({suffix: '.min'}))
+	.pipe(uglify())	
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./build/assets/js'));
 });
 
 gulp.task('css', function () {
@@ -83,13 +82,78 @@ gulp.task('css', function () {
     browsers: ['last 2 versions']
   };
 
-  gulp.src('./app/sass/main.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass(sassOptions).on('error', sass.logError))
-    .pipe(autoprefixer(autoPrefixerOptions))
+  return gulp.src('./sass/main.scss')
+    .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(concat('site.css'))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(sass(sassOptions).on('error', sass.logError))
+        .pipe(autoprefixer(autoPrefixerOptions))
+        .pipe(minifyCss())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./app/css'))
-    .pipe(connect.reload());
+    .pipe(gulp.dest('./build/assets/css'));
+});
+
+gulp.task('vendorcss', ['dependencies'], function () {
+  return gulp.src(wiredep().css)
+    .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(concat('vendor.css'))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(minifyCss())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./build/assets/css'));
+});
+
+gulp.task('images', function () {
+  var imageminOptions = {
+                          //progressive: true,
+                          //optimizationLevel: 7,
+                          //interlaced: true,
+                          //multipass: true
+                        };
+  return gulp.src('./images/**/*.{png,jpg,jpeg,gif}')
+    .pipe(cache(imagemin(imageminOptions)))
+    .pipe(gulp.dest('./build/assets/img'));
+});
+
+gulp.task('html', ['js', 'vendorjs', 'css', 'vendorcss', 'images'], function () {
+  var minifyHtmlOpts = { 
+                           empty : true,
+                           cdata : true,
+                           comments : true,
+                           conditionals : true,
+                           spare : true,
+                           quotes : true,
+                           loose : true
+                       };
+  return gulp.src(['./index.html', './styles.html'])
+    .pipe(minifyHtml(minifyHtmlOpts))
+    .pipe(gulp.dest('./build'));
+});
+
+gulp.task('copyFaviconsAndRobotsTxt', function () {
+  return gulp.src(['./favicon.ico', './apple-touch-icon.png', './robots.txt'])
+    .pipe(copy('./build/'));
+});
+
+gulp.task('copyFonts', function () {
+  return gulp.src('./fonts/**/*')
+    .pipe(copy('./build/assets'));
+});
+
+gulp.task('copyPartials', function () {
+  return gulp.src('./partials/**/*')
+    .pipe(copy('./build'));
+});
+
+gulp.task('copy', ['copyFonts', 'copyPartials', 'copyFaviconsAndRobotsTxt']);
+
+gulp.task('build', ['lintGulpfile', 'html', 'images', 'copy']);
+
+gulp.task('connect', ['build'], function() {
+  connect.server({
+    root: './build',
+    livereload: true
+  });
 });
 
 gulp.task('watch', function () {
@@ -98,49 +162,6 @@ gulp.task('watch', function () {
   gulp.watch('./app/components/**/*.js', ['lint', 'js']);
 });
 
-gulp.task('clean', function () {
-  return del('dist/**/*');
-});
-
-gulp.task('copy', function () {
-  var toCopy = [
-                 //'./app/index.html',
-                 './app/partials/**/*.html'
-               ];
-  return gulp.src(toCopy)
-    .pipe(copy('./dist', {prefix: 1}));
-});
-
-gulp.task('imagemin', function () {
-  var imageminOptions = {
-                          //progressive: true,
-                          //optimizationLevel: 7,
-                          //interlaced: true,
-                          //multipass: true
-                        };
-  return gulp.src('./app/images/**/*.{png,jpg,jpeg,gif}')
-    .pipe(imagemin(imageminOptions))
-    .pipe(gulp.dest('./dist/images'));
-});
-
-gulp.task('usemin', function() {
-  return gulp.src('./app/index.html')
-    .pipe(usemin({
-      css: [ sourcemaps.init({loadMaps: true, debug: true}), 'concat', minifyCss(), rev , sourcemaps.write('./') ],
-      vendorcss : [ sourcemaps.init({loadMaps: true, debug: true}), 'concat', minifyCss(), rev , sourcemaps.write('./') ],
-      html: [ function () {return minifyHtml({ empty: true });} ],
-      vendorjs: [ sourcemaps.init({loadMaps: true, debug: true}), ngAnnotate, uglify, rev, sourcemaps.write('./') ],
-      js: [ sourcemaps.init({loadMaps: true, debug: true}), ngAnnotate, uglify, rev, sourcemaps.write('./') ]
-    }))
-    .pipe(gulp.dest('./dist/'));
-});
-
-gulp.task('build', ['lintGulpfile', 'bower', 'lint', 'html', 'js', 'css']);
-
-gulp.task('debug', ['build', 'connect', 'watch']);
-
-gulp.task('dist', ['build', 'clean', 'copy', 'imagemin', 'usemin', 'connectDist']);
-
-gulp.task('default', ['debug']);
+gulp.task('default', ['connect']);
 
 
