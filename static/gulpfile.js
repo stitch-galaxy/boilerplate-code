@@ -1,29 +1,33 @@
 'use strict';
 
 var gulp = require('gulp');
+//bower
 var bower = require('gulp-bower');
+var wiredep = require('wiredep').stream;
+//linting
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
-var wiredep = require('wiredep').stream;
+//sourcemaps
 var sourcemaps = require('gulp-sourcemaps');
+//css
 var sass = require('gulp-sass');
-var connect = require('gulp-connect');
 var autoprefixer = require('gulp-autoprefixer');
-var copy = require('gulp-copy');
-var imagemin = require('gulp-imagemin');
-var del = require('del');
-
-var usemin = require('gulp-usemin');
-var useref = require('gulp-useref');
-var gulpif = require('gulp-if');
-var filter = require('gulp-filter');
-var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
-var rev = require('gulp-rev');
-var revReplace = require('gulp-rev-collector');
-var minifyHtml = require('gulp-minify-html');
+//js
+var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
-
+//html
+var minifyHtml = require('gulp-minify-html');
+//images
+var imagemin = require('gulp-imagemin');
+//web server
+var connect = require('gulp-connect');
+//dist tasks
+var del = require('del');
+var rev = require('gulp-rev');
+var copy = require('gulp-copy');
+//usemin
+var usemin = require('gulp-usemin');
 
 gulp.task('lintGulpfile', function() {
   return gulp.src('./gulpfile.js')
@@ -119,42 +123,6 @@ gulp.task('imagemin', function () {
     .pipe(gulp.dest('./dist/images'));
 });
 
-gulp.task('index', function() {
-  var assets = useref.assets();
-
-  return gulp.src('./app/index.html')
-    .pipe(assets)
-    .pipe(gulpif('*.js', uglify()))
-    .pipe(gulpif('*.css', minifyCss()))
-    .pipe(assets.restore())
-    .pipe(useref())
-    .pipe(gulp.dest('./dist'));
-});
-
-
-//gulp.task('indexNew', function() {
-//    return gulp.src('./app/index.html')
-//        .pipe(usemin({
-            //js: [
-                //sourcemaps.init({
-                //    loadMaps: true
-                //}),
-                //'concat',
-                //uglify()//,
-                //sourcemaps.write('./')
-            //]//,
-            //css: [
-            //    sourcemaps.init({
-            //        loadMaps: true
-            //    }),
-            //   'concat',
-            //    minifyCss(),
-            //    sourcemaps.write('./')
-            //]
-//        }))
-//        .pipe(gulp.dest('./dist/'));
-//});
-
 gulp.task('usemin', function() {
   return gulp.src('./app/index.html')
     .pipe(usemin({
@@ -167,31 +135,11 @@ gulp.task('usemin', function() {
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('renameFiles', function () {
-    return gulp.src('./dist/images/**/*.{png,jpg,jpeg,gif}')
-        .pipe(rev())
-        .pipe(gulp.dest('./dist/images'))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest('./manifests/'));
-});
-
-gulp.task('replaceFileNames', function () {
-  var revReplaceOptions = {
-    //replaceReved: true
-  };
-  return gulp.src(['./manifests/*.json', './dist/**/*.html'])
-    .pipe(revReplace(revReplaceOptions))
-    .pipe(gulp.dest('./dist'));
-});
-
-
 gulp.task('build', ['lintGulpfile', 'bower', 'lint', 'html', 'js', 'css']);
 
 gulp.task('debug', ['build', 'connect', 'watch']);
 
-//gulp.task('dist', ['build', 'clean', 'copy', 'imagemin', 'renameFiles', 'replaceFileNames']);
 gulp.task('dist', ['build', 'clean', 'copy', 'imagemin', 'usemin', 'connectDist']);
-//gulp.task('dist', ['build', 'clean', 'copy', 'imagemin', 'index', 'connectDist']);
 
 gulp.task('default', ['debug']);
 
