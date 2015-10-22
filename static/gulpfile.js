@@ -31,6 +31,7 @@ var rename = require('gulp-rename');
 var rev = require('gulp-rev');
 var revCollector = require('gulp-rev-collector');
 var angularTemplateCache = require('gulp-angular-templatecache');
+var addStream = require('add-stream');
 
 var paths = {
   dirs: {
@@ -68,12 +69,33 @@ gulp.task('lintGulpfile', function() {
     .pipe(jshint.reporter('fail'));
 });
 
+gulp.task('templates:cache', function () {
+  var angularTemplateCacheOptions = {
+    root : 'partials'
+  };
+  return gulp.src(paths.partials)
+    .pipe(angularTemplateCache(angularTemplateCacheOptions))
+    //.pipe(gulp.dest('./components'));
+    .pipe(gulp.dest(paths.dirs.build.dev + '/assets/js'));
+});
+
+function prepareTemplates() {
+  var angularTemplateCacheOptions = {
+    root : 'partials'
+  };
+
+  return gulp.src(paths.partials)
+    //.pipe(minify and preprocess the template html here)
+    .pipe(angularTemplateCache(angularTemplateCacheOptions));
+}
+
 //js
 gulp.task('js:prod', function () {
   return gulp.src(paths.js)
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'))
+    .pipe(addStream.obj(prepareTemplates()))
     .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(concat('site.js'))
       .pipe(ngAnnotate())
@@ -91,6 +113,7 @@ gulp.task('js:dev', function () {
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'))
+    .pipe(addStream.obj(prepareTemplates()))
     .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(concat('site.js'))
       .pipe(rename({suffix: '.min'}))
@@ -317,6 +340,7 @@ gulp.task('build:dev', function(callback) {
   runSequence('lintGulpfile',
               'clean:dev',
               ['images:dev', 'favicon:dev', 'robots:dev', 'fonts:dev', 'vendorfonts:dev', 'partials:dev', 'htmlAndJsAndCss:dev'],
+              //['images:dev', 'favicon:dev', 'robots:dev', 'fonts:dev', 'vendorfonts:dev', 'partials:dev', 'htmlAndJsAndCss:dev', 'templates:cache'],
               callback);
 });
 

@@ -1,8 +1,11 @@
 'use strict';
 
 (function() {
+    angular.module('templates', []);
+
     angular.module('stitchGalaxy', [
-        'ngRoute'
+        'ngRoute',
+        'templates'
     ]);
 
     //Search controller

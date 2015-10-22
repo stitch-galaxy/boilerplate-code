@@ -1,6 +1,7 @@
 {
   "name": "stitchgalaxy",
   "devDependencies": {
+    "add-stream": "1.0.0",
     "bower": "1.6.3",
     "del": "2.0.2",
     "gulp": "3.9.0",
