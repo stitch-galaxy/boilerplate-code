@@ -24,19 +24,40 @@ var cache = require('gulp-cache');
 //web server
 var connect = require('gulp-connect');
 //dist tasks
+var runSequence = require('run-sequence');
 var del = require('del');
 var concat = require('gulp-concat');
-var concatCss = require('gulp-concat-css');
 var rename = require('gulp-rename');
 var rev = require('gulp-rev');
 var revCollector = require('gulp-rev-collector');
-var copy = require('gulp-copy');
-//usemin
-var usemin = require('gulp-usemin');
+var angularTemplateCache = require('gulp-angular-templatecache');
 
-//clean task other tasks depends on
-gulp.task('clean', function () {
-  return del('build/**/*');
+var paths = {
+  dirs: {
+    build: {
+      dev : './build',
+      prod : './dist'     
+    },
+    manifests: './manifests'
+  },
+  js : './components/**/*.js',
+  sass : './sass/main.scss',
+  images : './images/**/*.{png,jpg,jpeg,gif}',
+  html : './*.html',
+  favicons : ['./favicon.ico', './apple-touch-icon.png'],
+  robots : './robots.txt',
+  fonts : ['./fonts/**/*'],
+  vendorFonts : ['./bower_components/bootstrap-sass/assets/fonts/**/*', './bower_components/components-font-awesome/fonts/**/*'],
+  partials : './partials/**/*'
+};
+
+//clean
+gulp.task('clean:prod', function () {
+  return del([paths.dirs.build.prod, paths.dirs.manifests]);
+});
+
+gulp.task('clean:dev', function () {
+  return del(paths.dirs.build.dev);
 });
 
 //linting
@@ -47,42 +68,39 @@ gulp.task('lintGulpfile', function() {
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('dependencies', function() {
-  return bower();
-});
-
-gulp.task('js', function () {
-  return gulp.src('./components/**/*.js')
+//js
+gulp.task('js:prod', function () {
+  return gulp.src(paths.js)
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'))
     .pipe(sourcemaps.init({loadMaps: true}))
-	.pipe(concat('site.js'))
-        .pipe(ngAnnotate())
-	.pipe(rename({suffix: '.min'}))
-        .pipe(rev())
-	.pipe(uglify())	
+      .pipe(concat('site.js'))
+      .pipe(ngAnnotate())
+      .pipe(rename({suffix: '.min'}))
+      .pipe(rev())
+      .pipe(uglify())	
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./build/assets/js'))
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/js'))
     .pipe(rev.manifest('./rev-manifest-js.json'))
-    .pipe(gulp.dest('./manfiests'));
+    .pipe(gulp.dest(paths.dirs.manifests));
 });
 
-gulp.task('vendorjs', ['dependencies'], function () {
-  return gulp.src(wiredep().js)
+gulp.task('js:dev', function () {
+  return gulp.src(paths.js)
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'))
     .pipe(sourcemaps.init({loadMaps: true}))
-	.pipe(concat('vendor.js'))
-	.pipe(rename({suffix: '.min'}))
-        .pipe(rev())
-	.pipe(uglify())	
+      .pipe(concat('site.js'))
+      .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./build/assets/js'))
-    .pipe(rev.manifest('./rev-manifest-vendorjs.json'))
-    .pipe(gulp.dest('./manfiests'));
-
+    .pipe(gulp.dest(paths.dirs.build.dev + '/assets/js'))
+    .pipe(connect.reload());
 });
 
-gulp.task('css', function () {
+//css
+gulp.task('css:prod', function () {
   var sassOptions = {
   //  outputStyle: 'compressed'
   };
@@ -90,21 +108,70 @@ gulp.task('css', function () {
     browsers: ['last 2 versions']
   };
 
-  return gulp.src('./sass/main.scss')
+  return gulp.src(paths.sass)
     .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(concat('site.css'))
-        .pipe(sass(sassOptions).on('error', sass.logError))
-        .pipe(autoprefixer(autoPrefixerOptions))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(rev())
-        .pipe(minifyCss())
+      .pipe(concat('site.css'))
+      .pipe(sass(sassOptions).on('error', sass.logError))
+      .pipe(autoprefixer(autoPrefixerOptions))
+      .pipe(rename({suffix: '.min'}))
+      .pipe(rev())
+      .pipe(minifyCss())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./build/assets/css'))
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/css'))
     .pipe(rev.manifest('./rev-manifest-css.json'))
-    .pipe(gulp.dest('./manfiests'));
+    .pipe(gulp.dest(paths.dirs.manifests));
 });
 
-gulp.task('vendorcss', ['dependencies'], function () {
+gulp.task('css:dev', function () {
+  var sassOptions = {
+  //  outputStyle: 'compressed'
+  };
+  var autoPrefixerOptions = {
+    browsers: ['last 2 versions']
+  };
+
+  return gulp.src(paths.sass)
+    .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(concat('site.css'))
+      .pipe(sass(sassOptions).on('error', sass.logError))
+      .pipe(autoprefixer(autoPrefixerOptions))
+      .pipe(rename({suffix: '.min'}))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(paths.dirs.build.dev + '/assets/css'))
+    .pipe(connect.reload());
+});
+
+//bower dependencies
+gulp.task('dependencies', function() {
+  return bower();
+});
+
+//vendorjs
+gulp.task('vendorjs:prod', function () {
+  return gulp.src(wiredep().js)
+    .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(concat('vendor.js'))
+      .pipe(rename({suffix: '.min'}))
+      .pipe(rev())
+      .pipe(uglify())	
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/js'))
+    .pipe(rev.manifest('./rev-manifest-vendorjs.json'))
+    .pipe(gulp.dest(paths.dirs.manifests));
+
+});
+
+gulp.task('vendorjs:dev', function () {
+  return gulp.src(wiredep().js)
+    .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(concat('vendor.js'))
+      .pipe(rename({suffix: '.min'}))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(paths.dirs.build.dev + '/assets/js'));
+});
+
+//vendorcss
+gulp.task('vendorcss:prod', function () {
   return gulp.src(wiredep().css)
     .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(concat('vendor.css'))
@@ -112,24 +179,22 @@ gulp.task('vendorcss', ['dependencies'], function () {
         .pipe(rev())
         .pipe(minifyCss())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./build/assets/css'))
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/css'))
     .pipe(rev.manifest('./rev-manifest-vendorcss.json'))
-    .pipe(gulp.dest('./manfiests'));
+    .pipe(gulp.dest(paths.dirs.manifests));
 });
 
-gulp.task('images', function () {
-  var imageminOptions = {
-                          //progressive: true,
-                          //optimizationLevel: 7,
-                          //interlaced: true,
-                          //multipass: true
-                        };
-  return gulp.src('./images/**/*.{png,jpg,jpeg,gif}')
-    .pipe(cache(imagemin(imageminOptions)))
-    .pipe(gulp.dest('./build/assets/img'));
+gulp.task('vendorcss:dev', function () {
+  return gulp.src(wiredep().css)
+    .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(concat('vendor.css'))
+        .pipe(rename({suffix: '.min'}))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(paths.dirs.build.dev + '/assets/css'));
 });
 
-gulp.task('html', ['js', 'vendorjs', 'css', 'vendorcss', 'images'], function () {
+//html
+gulp.task('html:prod', function () {
   var minifyHtmlOpts = { 
                            empty : true,
                            cdata : true,
@@ -142,44 +207,141 @@ gulp.task('html', ['js', 'vendorjs', 'css', 'vendorcss', 'images'], function () 
   var revCollectorOptions = {
                                 replaceReved: true
                             };
-  return gulp.src(['./manfiests/**/*.json', './*.html'])
+  return gulp.src([paths.dirs.manifests + '/**/*.json', paths.html])
     .pipe(revCollector(revCollectorOptions))
     .pipe(minifyHtml(minifyHtmlOpts))
-    .pipe(gulp.dest('./build'));
+    .pipe(gulp.dest(paths.dirs.build.prod));
 });
 
-gulp.task('copyFaviconsAndRobotsTxt', function () {
-  return gulp.src(['./favicon.ico', './apple-touch-icon.png', './robots.txt'])
-    .pipe(copy('./build/'));
+gulp.task('html:dev', function () {
+  return gulp.src(paths.html)
+    .pipe(gulp.dest(paths.dirs.build.dev))
+    .pipe(connect.reload());
 });
 
-gulp.task('copyFonts', function () {
-  return gulp.src('./fonts/**/*')
-    .pipe(copy('./build/assets'));
+gulp.task('htmlAndJsAndCss:prod', function(callback) {
+  runSequence('dependencies',
+              ['js:prod', 'vendorjs:prod', 'css:prod', 'vendorcss:prod'],
+              'html:prod',
+              callback);
 });
 
-gulp.task('copyPartials', function () {
-  return gulp.src('./partials/**/*')
-    .pipe(copy('./build'));
+gulp.task('htmlAndJsAndCss:dev', function(callback) {
+  runSequence('dependencies',
+              ['js:dev', 'vendorjs:dev', 'css:dev', 'vendorcss:dev', 'html:dev'],
+              callback);
 });
 
-gulp.task('copy', ['copyFonts', 'copyPartials', 'copyFaviconsAndRobotsTxt']);
+//images
+gulp.task('images:prod', function () {
+  var imageminOptions = {
+                          //progressive: true,
+                          //optimizationLevel: 7,
+                          //interlaced: true,
+                          //multipass: true
+                        };
+  return gulp.src(paths.images)
+    .pipe(cache(imagemin(imageminOptions)))
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/img'));
+});
 
-gulp.task('build', ['lintGulpfile', 'html', 'images', 'copy']);
+gulp.task('images:dev', function () {
+  return gulp.src(paths.images)
+    .pipe(gulp.dest(paths.dirs.build.dev + '/assets/img'));
+});
 
-gulp.task('connect', ['build'], function() {
+//favicon
+gulp.task('favicon:prod', function () {
+  return gulp.src(paths.favicons)
+    .pipe(gulp.dest(paths.dirs.build.prod));
+});
+
+gulp.task('favicon:dev', function () {
+  return gulp.src(paths.favicons)
+    .pipe(gulp.dest(paths.dirs.build.dev));
+});
+
+//robots
+gulp.task('robots:prod', function () {
+  return gulp.src(paths.robots)
+    .pipe(gulp.dest(paths.dirs.build.prod));
+});
+
+gulp.task('robots:dev', function () {
+  return gulp.src(paths.robots)
+    .pipe(gulp.dest(paths.dirs.build.dev));
+});
+
+//fonts
+gulp.task('fonts:prod', function () {
+  return gulp.src(paths.fonts)
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/fonts'));
+});
+
+gulp.task('fonts:dev', function () {
+  return gulp.src(paths.fonts)
+    .pipe(gulp.dest(paths.dirs.build.dev + '/assets/fonts'));
+});
+
+//vendorfonts
+gulp.task('vendorfonts:prod', function () {
+  return gulp.src(paths.vendorFonts)
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/fonts'));
+});
+
+gulp.task('vendorfonts:dev', function () {
+  return gulp.src(paths.vendorFonts)
+    .pipe(gulp.dest(paths.dirs.build.dev + '/assets/fonts'));
+});
+
+//partials
+gulp.task('partials:prod', function () {
+  return gulp.src(paths.partials)
+    .pipe(gulp.dest(paths.dirs.build.prod + '/partials'));
+});
+
+gulp.task('partials:dev', function () {
+  return gulp.src(paths.partials)
+    .pipe(gulp.dest(paths.dirs.build.dev + '/partials'))
+    .pipe(connect.reload());
+});
+
+gulp.task('build:prod', function(callback) {
+  runSequence('lintGulpfile',
+              'clean:prod',
+              ['images:prod', 'favicon:prod', 'robots:prod', 'fonts:prod', 'vendorfonts:prod', 'partials:prod', 'htmlAndJsAndCss:prod'],
+              callback);
+});
+
+gulp.task('build:dev', function(callback) {
+  runSequence('lintGulpfile',
+              'clean:dev',
+              ['images:dev', 'favicon:dev', 'robots:dev', 'fonts:dev', 'vendorfonts:dev', 'partials:dev', 'htmlAndJsAndCss:dev'],
+              callback);
+});
+
+gulp.task('connect:prod', function() {
   connect.server({
-    root: './build',
+    root: paths.dirs.build.prod,
     livereload: true
   });
 });
 
-gulp.task('watch', function () {
-  gulp.watch('./app/index.html', ['html']);
-  gulp.watch('./app/sass/**/*.scss', ['css']);
-  gulp.watch('./app/components/**/*.js', ['lint', 'js']);
+gulp.task('connect:dev', function() {
+  connect.server({
+    root: paths.dirs.build.dev,
+    livereload: true
+  });
 });
 
-gulp.task('default', ['connect']);
+gulp.task('watch:dev', function () {
+  gulp.watch(paths.html, ['html:dev']);
+  gulp.watch(paths.sass, ['css:dev']);
+  gulp.watch(paths.js, ['js:dev']);
+  gulp.watch(paths.partials, ['partials:dev']);
+});
 
+gulp.task('dev', ['build:dev', 'connect:dev', 'watch:dev']);
+gulp.task('prod', ['build:prod', 'connect:prod']);
 
+gulp.task('default', ['dev']);
