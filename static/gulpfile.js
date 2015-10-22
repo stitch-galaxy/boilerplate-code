@@ -78,12 +78,12 @@ gulp.task('js:prod', function () {
       .pipe(concat('site.js'))
       .pipe(ngAnnotate())
       .pipe(rename({suffix: '.min'}))
-      .pipe(rev())
+      //.pipe(rev())
       .pipe(uglify())	
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/js'))
-    .pipe(rev.manifest('./rev-manifest-js.json'))
-    .pipe(gulp.dest(paths.dirs.manifests));
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/js'));
+    //.pipe(rev.manifest('./rev-manifest-js.json'))
+    //.pipe(gulp.dest(paths.dirs.manifests));
 });
 
 gulp.task('js:dev', function () {
@@ -110,16 +110,16 @@ gulp.task('css:prod', function () {
 
   return gulp.src(paths.sass)
     .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(concat('site.css'))
       .pipe(sass(sassOptions).on('error', sass.logError))
+      .pipe(concat('site.css'))
       .pipe(autoprefixer(autoPrefixerOptions))
       .pipe(rename({suffix: '.min'}))
-      .pipe(rev())
+      //.pipe(rev())
       .pipe(minifyCss())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/css'))
-    .pipe(rev.manifest('./rev-manifest-css.json'))
-    .pipe(gulp.dest(paths.dirs.manifests));
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/css'));
+    //.pipe(rev.manifest('./rev-manifest-css.json'))
+    //.pipe(gulp.dest(paths.dirs.manifests));
 });
 
 gulp.task('css:dev', function () {
@@ -152,12 +152,12 @@ gulp.task('vendorjs:prod', function () {
     .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(concat('vendor.js'))
       .pipe(rename({suffix: '.min'}))
-      .pipe(rev())
+      //.pipe(rev())
       .pipe(uglify())	
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/js'))
-    .pipe(rev.manifest('./rev-manifest-vendorjs.json'))
-    .pipe(gulp.dest(paths.dirs.manifests));
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/js'));
+    //.pipe(rev.manifest('./rev-manifest-vendorjs.json'))
+    //.pipe(gulp.dest(paths.dirs.manifests));
 
 });
 
@@ -176,12 +176,12 @@ gulp.task('vendorcss:prod', function () {
     .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(concat('vendor.css'))
         .pipe(rename({suffix: '.min'}))
-        .pipe(rev())
+        //.pipe(rev())
         .pipe(minifyCss())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/css'))
-    .pipe(rev.manifest('./rev-manifest-vendorcss.json'))
-    .pipe(gulp.dest(paths.dirs.manifests));
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/css'));
+    //.pipe(rev.manifest('./rev-manifest-vendorcss.json'))
+    //.pipe(gulp.dest(paths.dirs.manifests));
 });
 
 gulp.task('vendorcss:dev', function () {
@@ -208,7 +208,7 @@ gulp.task('html:prod', function () {
                                 replaceReved: true
                             };
   return gulp.src([paths.dirs.manifests + '/**/*.json', paths.html])
-    .pipe(revCollector(revCollectorOptions))
+    //.pipe(revCollector(revCollectorOptions))
     .pipe(minifyHtml(minifyHtmlOpts))
     .pipe(gulp.dest(paths.dirs.build.prod));
 });
