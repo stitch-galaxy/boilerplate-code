@@ -42,7 +42,7 @@ var paths = {
     manifests: './manifests'
   },
   js : './components/**/*.js',
-  sass : './sass/main.scss',
+  sass : './sass/**/*.scss',
   images : './images/**/*.{png,jpg,jpeg,gif}',
   html : './*.html',
   favicons : ['./favicon.ico', './apple-touch-icon.png'],
