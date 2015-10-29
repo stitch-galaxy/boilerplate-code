@@ -1,0 +1,34 @@
+$module: 'style-foundation';
+
+.#{$module} {
+    display: block;
+    @include bem-block_add-vertical-margin-to-preserve-rhytm();
+    @include bem-block_set-font();
+    padding-left: 3em;
+    padding-right: 3em;
+    
+    &__header {
+        display: block;
+        @include bem-element_set-font-size($h1-font-scale);
+        @include bem-element_add-vertical-margin-to-preserve-rhytm($h1-font-scale);
+        font-weight: bold;
+    }
+    
+    &__sub-header {
+        display: block;
+        @include bem-element_set-font-size($h2-font-scale);
+        @include bem-element_add-vertical-margin-to-preserve-rhytm($h2-font-scale);
+        font-weight: bold;
+    }
+    
+    &__bd {
+        display: block;
+        @include bem-element_set-font-size(1.0);
+        @include bem-element_add-vertical-margin-to-preserve-rhytm(1.0);
+    }
+    
+    &__bottom-splitter{
+        display: block;
+        @include bem-element_add-vertical-margin-to-preserve-rhytm(1.0);
+    }
+}

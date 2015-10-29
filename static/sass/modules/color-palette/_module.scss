@@ -1,0 +1,39 @@
+$module: 'color-palette';
+
+.#{$module} {
+    display: block;
+    @include bem-block_add-vertical-margin-to-preserve-rhytm();
+    @include bem-block_set-font();
+    padding-left: 1em;
+    padding-right: 1em;
+    
+    &__line {
+        display: flex;
+        @include bem-element_set-font-size(1.0);
+        @include bem-element_add-vertical-margin-to-preserve-rhytm(1.0);
+        min-height: 1.5em;
+        
+        
+        &_color_pistachio {
+            background-color: $color-pistachio;
+        }
+    }
+    
+    &__square {
+        flex: 1;
+        height: 0.5em;
+        
+        &_color_blue {
+            background-color: $color-blue;
+        }
+    }
+    
+    &__text {
+        flex: 1;
+        height: 0.5em;
+        
+        &_color_blue {
+            color: $color-blue;
+        }
+    }
+}
