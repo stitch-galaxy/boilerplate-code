@@ -45,6 +45,7 @@ var paths = {
   sass : './sass/**/*.scss',
   images : './images/**/*.{png,jpg,jpeg,gif}',
   html : './*.html',
+  styleGuideHtml : './style/**/*.html',
   favicons : ['./favicon.ico', './apple-touch-icon.png'],
   robots : './robots.txt',
   fonts : ['./fonts/**/*'],
@@ -237,7 +238,7 @@ gulp.task('html:prod', function () {
 });
 
 gulp.task('html:dev', function () {
-  return gulp.src(paths.html)
+  return gulp.src([paths.html, paths.styleGuideHtml])
     .pipe(gulp.dest(paths.dirs.build.dev))
     .pipe(connect.reload());
 });
@@ -359,7 +360,7 @@ gulp.task('connect:dev', function() {
 });
 
 gulp.task('watch:dev', function () {
-  gulp.watch(paths.html, ['html:dev']);
+  gulp.watch([paths.html, paths.styleGuideHtml], ['html:dev']);
   gulp.watch(paths.sass, ['css:dev']);
   gulp.watch(paths.js, ['js:dev']);
   gulp.watch(paths.partials, ['partials:dev']);

@@ -1,0 +1,29 @@
+//
+// Utils
+//
+
+@mixin bem-block_add-vertical-margin-to-preserve-rhytm()
+{
+    $margin: $site-base-line-height * 1rem;
+    margin-top: $margin;
+    margin-bottom: $margin;
+}
+
+@mixin bem-block_set-font()
+{
+    font-size: $site-base-font-size-rem;
+    line-height: $site-base-line-height;
+}
+
+@mixin bem-element_set-font-size($elementFontScale)
+{
+    font-size: $elementFontScale * 1em;
+    line-height: $site-base-line-height / $elementFontScale * 1em;
+}
+
+@mixin bem-element_add-vertical-margin-to-preserve-rhytm($elementFontScale)
+{
+    $margin: $site-base-line-height / $elementFontScale * 1em;
+    margin-top: $margin;
+    margin-bottom: $margin;
+}

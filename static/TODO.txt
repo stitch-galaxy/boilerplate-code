@@ -1,0 +1,9 @@
+ - Warn if browser outdated: modernizr browsehappy.com
+ - Nav
+ - Footer
+ - Register
+ - Login
+ - Logout
+ - Settings
+ - Gallery
+ - Useability social site: why follow, what to share, comments - source from FB, twitter, G+, etc, ratings

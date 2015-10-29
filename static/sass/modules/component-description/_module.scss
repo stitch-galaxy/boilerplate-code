@@ -1,0 +1,48 @@
+$module: 'component-description';
+
+.#{$module} {
+    display: block;
+    @include bem-block_add-vertical-margin-to-preserve-rhytm();
+    @include bem-block_set-font();
+    padding-left: 3em;
+    padding-right: 3em;
+    
+    &__header {
+        display: block;
+        @include bem-element_set-font-size($h2-font-scale);
+        @include bem-element_add-vertical-margin-to-preserve-rhytm($h2-font-scale);
+        font-weight: normal;
+    }
+    
+    &__link {
+        @include bem-element_set-font-size(1.0);
+    }
+    
+    &__bd {
+        display: block;
+        @include bem-element_set-font-size(1.0);
+        @include bem-element_add-vertical-margin-to-preserve-rhytm(1.0);
+    }
+    
+    &__code {
+        display: block;
+        @include bem-element_set-font-size(1.0);
+        @include bem-element_add-vertical-margin-to-preserve-rhytm(1.0);
+        border-style: dashed;
+        border-radius: 2em;
+        padding: 2em;
+    }
+    
+    &__bottom-splitter{
+        display: block;
+        @include bem-element_add-vertical-margin-to-preserve-rhytm(1.0);
+    }
+    
+    &__block-name{
+        font-weight: bold;
+    }
+    
+    &__element-name{
+        font-weight: bold;
+    }
+}

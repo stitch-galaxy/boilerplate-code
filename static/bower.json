@@ -8,6 +8,7 @@
     "jquery": "2.1.4"
   },
   "devDependencies": {
-    "jquery": "~2.1.4"
+    "bourbon": "4.2.6",
+    "compass-breakpoint": "breakpoint-sass#~2.6.1"
   }
 }

@@ -1,0 +1,11 @@
+$module: 'site';
+
+.#{$module} {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    
+    &__content {
+        flex: 1;
+    }
+}
