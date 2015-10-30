@@ -7,19 +7,28 @@
     line-height: $site-base-line-height;
 }
 
-
-
 @mixin bem-element_set-font-size($sizeIndex)
 {
-    font-size: $sizeIndex * 1em;
-    line-height: $site-base-line-height / $sizeIndex * 1em;
+    font-size: ms($sizeIndex);
+    //??? do we need to get rid of em dimension(/ 1em)?
+    line-height: ms($sizeIndex) * $site-base-line-height;
 }
+
 
 @mixin bem-element_add-vertical-margin-to-preserve-rhytm($sizeIndex)
 {
-    $margin: $site-base-line-height / $sizeIndex * 1em;
-    margin-top: $margin;
-    margin-bottom: $margin;
+    $baseRhytm: ms(0) * $site-base-line-height;
+    $rhytm: $baseRhytm;
+    $fontSize: ms($sizeIndex);
+    //Possibly we need to modify condition to add minimum treshold
+    @while $fontSize > $rhytm{
+        $rhytm: $rhytm + $baseRhytm
+    }
+    
+    $totalMargin: $rhytm - $fontSize;
+    
+    margin-top: $totalMargin / 2;
+    margin-bottom: $totalMargin / 2;
 }
 
 
