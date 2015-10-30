@@ -1,4 +1,5 @@
- - Warn if browser outdated: modernizr browsehappy.com
+ - Warn if browser outdated: modernizr browsehappy.com & test page
+ - Typography
  - Nav
  - Footer
  - Register

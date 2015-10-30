@@ -1,29 +1,32 @@
 //
 // Utils
 //
-
-@mixin bem-block_add-vertical-margin-to-preserve-rhytm()
+@mixin bem-block_set-font()
 {
-    $margin: $site-base-line-height * 1rem;
+    font-size: $site-base-font-size-em / 1em * 1rem;
+    line-height: $site-base-line-height;
+}
+
+
+
+@mixin bem-element_set-font-size($sizeIndex)
+{
+    font-size: $sizeIndex * 1em;
+    line-height: $site-base-line-height / $sizeIndex * 1em;
+}
+
+@mixin bem-element_add-vertical-margin-to-preserve-rhytm($sizeIndex)
+{
+    $margin: $site-base-line-height / $sizeIndex * 1em;
     margin-top: $margin;
     margin-bottom: $margin;
 }
 
-@mixin bem-block_set-font()
-{
-    font-size: $site-base-font-size-rem;
-    line-height: $site-base-line-height;
-}
 
-@mixin bem-element_set-font-size($elementFontScale)
+//Should be avoided: if you nest bem components - put nested component as element(bem mix) and add vertical margin to element!
+@mixin bem-block_add-vertical-margin-to-preserve-rhytm()
 {
-    font-size: $elementFontScale * 1em;
-    line-height: $site-base-line-height / $elementFontScale * 1em;
-}
-
-@mixin bem-element_add-vertical-margin-to-preserve-rhytm($elementFontScale)
-{
-    $margin: $site-base-line-height / $elementFontScale * 1em;
+    $margin: $site-base-line-height * 1rem;
     margin-top: $margin;
     margin-bottom: $margin;
 }

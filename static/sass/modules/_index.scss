@@ -2,8 +2,9 @@
 // Index
 //
 
-@import "modules/site/module";
+@import "modules/site/site";
 
 //modules for stlye guide
-@import "modules/component-description/module";
-@import "modules/style-foundation/module";
+@import "modules/component-description/component-description";
+@import "modules/style-foundation/style-foundation";
+@import "modules/color-palette/color-palette";

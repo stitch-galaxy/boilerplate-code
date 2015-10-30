@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "bourbon": "4.2.6",
-    "compass-breakpoint": "breakpoint-sass#~2.6.1"
+    "compass-breakpoint": "breakpoint-sass#~2.6.1",
+    "modular-scale": "~2.1.1"
   }
 }
