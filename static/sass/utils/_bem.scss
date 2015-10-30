@@ -9,9 +9,15 @@
 
 @mixin bem-element_set-font-size($sizeIndex)
 {
-    font-size: ms($sizeIndex);
-    //??? do we need to get rid of em dimension(/ 1em)?
-    line-height: ms($sizeIndex) * $site-base-line-height;
+    $baseRhytm: ms(0) * $site-base-line-height;
+    $rhytm: $baseRhytm;
+    $fontSize: ms($sizeIndex);
+    @while $fontSize > $rhytm{
+        $rhytm: $rhytm + $baseRhytm
+    }
+    
+    font-size: $fontSize;
+    line-height: $rhytm / $fontSize;
 }
 
 
