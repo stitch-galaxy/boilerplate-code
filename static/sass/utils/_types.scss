@@ -1,0 +1,38 @@
+//
+// Utils
+//
+@mixin type-settings($level: 0) {
+    $type-settings: map-get($base-type-settings, $level);
+    $font-size: map-get($type-settings, 'font-size');
+    $line-height: map-get($type-settings, 'line-height');
+    
+    //Initial value
+    //Get first scale from $types-range and set default font-size, line-height according to that scale
+    $scaleParams: nth($types-range, 1);
+    $scale: nth($scaleParams, 1);
+    
+    font-size: $font-size * $scale;
+    line-height: $line-height * $scale;
+    
+    @for $i from 1 through (length($types-range) - 1) {
+      $scaleParams: nth($types-range, $i);
+      $scale: nth($scaleParams, 1);
+      $viewPortMinWidth: nth($scaleParams, 2);
+      $viewPortMaxWidth: nth(nth($types-range, $i + 1), 2);
+      
+      @media (min-width: $viewPortMinWidth) and (max-width: $viewPortMaxWidth) {
+        font-size: $font-size * $scale;
+        line-height: $line-height * $scale;
+      }
+    }
+    
+    //Final value
+    //Get last scale from $types-range and set font-size, line-height according to that scale for all devices have larger viewport
+    $scaleParams: nth($types-range, length($types-range));
+    $scale: nth($scaleParams, 1);
+    $viewPortMinWidth: nth($scaleParams, 2);
+    @media (min-width: $viewPortMinWidth) {
+        font-size: $font-size * $scale;
+        line-height: $line-height * $scale;
+    }
+}

@@ -2,39 +2,40 @@ $module: 'component-description';
 
 .#{$module} {
     display: block;
-    @include bem-block_set-font();
+    @include type-settings();
     padding-left: 3em;
     padding-right: 3em;
 
     &__header {
         display: block;
-        @include bem-element_set-font-size(1);
-        @include bem-element_add-vertical-margin-to-preserve-rhytm(1);
+        margin: 0;
+        padding: 0;
+        border: 0;
+        vertical-align: baseline;
+        @include type-settings(1);
         font-weight: normal;
     }
 
     &__link {
-        @include bem-element_set-font-size(0);
+        @include type-settings();
     }
 
     &__bd {
         display: block;
-        @include ms-respond(font-size, 0);
-        //@include bem-element_set-font-size(0);
-        //@include bem-element_add-vertical-margin-to-preserve-rhytm(0);
+        @include type-settings();
+        @include vrhythm();
         padding-left: 1em;
         padding-right: 1em;
     }
 
     &__elements {
         display: block;
-        @include bem-element_set-font-size(0);
-        @include bem-element_add-vertical-margin-to-preserve-rhytm(0);
+        @include type-settings();
+        @include vrhythm('margin-top');
     }
 
     &__bottom-splitter{
         display: block;
-        @include bem-element_add-vertical-margin-to-preserve-rhytm(0);
     }
 
     &__block-name{

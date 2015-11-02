@@ -2,7 +2,7 @@ $module: 'color-palette';
 
 .#{$module} {
     display: block;
-    @include bem-block_set-font();
+    @include type-settings();
     padding-left: 1em;
     padding-right: 1em;
 
@@ -10,12 +10,12 @@ $module: 'color-palette';
         display: flex;
         justify-content: space-around;
         align-items: center;
-        @include bem-element_set-font-size(0);
-        @include bem-element_add-vertical-margin-to-preserve-rhytm(0);
-        min-height: 1.5em;
+        @include type-settings();
+        @include vrhythm('margin-bottom');
+        @include vrhythm('min-height');
         
         &_width_double {
-            min-height: 3em;
+            @include vrhythm('min-height', 2);
         }
         
         &_color {
@@ -63,8 +63,8 @@ $module: 'color-palette';
     }
 
     &__square {
-        height: 1.5em;
-        min-width: 1.5em;
+        @include vrhythm('height');
+        @include vrhythm('min-width');
         flex: 0 1 auto;
 
         &_color {

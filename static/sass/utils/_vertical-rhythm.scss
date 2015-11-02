@@ -1,0 +1,29 @@
+//
+// Utils
+//
+
+@mixin vrhythm($property: 'margin-bottom', $numLines: 1) {
+    //Initial value
+    $scaleParams: nth($types-range, 1);
+    $scale: nth($scaleParams, 1);
+    #{$property}: $base-line-height * $scale * $numLines;
+    
+    @for $i from 1 through (length($types-range) - 1) {
+      $scaleParams: nth($types-range, $i);
+      $scale: nth($scaleParams, 1);
+      $viewPortMinWidth: nth($scaleParams, 2);
+      $viewPortMaxWidth: nth(nth($types-range, $i + 1), 2);
+      
+      @media (min-width: $viewPortMinWidth) and (max-width: $viewPortMaxWidth) {
+        #{$property}: $base-line-height * $scale * $numLines;
+      }
+      
+      //Final value
+      $scaleParams: nth($types-range, length($types-range));
+      $scale: nth($scaleParams, 1);
+      $viewPortMinWidth: nth($scaleParams, 2);
+      @media (min-width: $viewPortMinWidth) {
+        #{$property}: $base-line-height * $scale * $numLines;
+      }
+    }
+}

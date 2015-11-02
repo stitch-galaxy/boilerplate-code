@@ -2,34 +2,33 @@ $module: 'style-foundation';
 
 .#{$module} {
     display: block;
-    @include bem-block_set-font();
+    @include type-settings();
     padding-left: 3em;
     padding-right: 3em;
     
     &__header {
         display: block;
-        @include bem-element_set-font-size(2);
-        @include bem-element_add-vertical-margin-to-preserve-rhytm(2);
+        margin: 0;
+        @include type-settings(2);
         font-weight: bold;
     }
     
     &__sub-header {
         display: block;
-        @include bem-element_set-font-size(1);
-        @include bem-element_add-vertical-margin-to-preserve-rhytm(1);
+        margin: 0;
+        @include type-settings(1);
         font-weight: bold;
     }
     
     &__bd {
         display: block;
-        @include bem-element_set-font-size(0);
-        @include bem-element_add-vertical-margin-to-preserve-rhytm(0);
+        @include type-settings();
+        @include vrhythm();
         padding-left: 1em;
         padding-right: 1em;
     }
     
     &__bottom-splitter{
         display: block;
-        @include bem-element_add-vertical-margin-to-preserve-rhytm(0);
     }
 }

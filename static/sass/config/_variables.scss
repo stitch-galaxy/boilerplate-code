@@ -40,6 +40,8 @@ $ms-range:
 1.1 20em,
 1.6 60em;
 
+//http://prgssr.ru/development/estetichnyj-sass-chast-3-tipografika-i-vertikalnyj-ritm.html
+//https://scotch.io/tutorials/aesthetic-sass-3-typography-and-vertical-rhythm
 $base-line-height: 1.5rem;
 
 //http://www.modularscale.com/?1,1.1&em&1.618&sass&text
@@ -64,7 +66,7 @@ $base-type-settings: (
     line-height: $base-line-height
   ),
   1: (
-    font-size: $font-size-normal,
+    font-size: $font-size-lrg,
     line-height: $base-line-height
   ),
   2: (
@@ -78,42 +80,9 @@ $base-type-settings: (
 );
 
 $types-range:
-1.0 20em,
-1.1 40em,
-1.2 60em;
+0.8 20em,
+0.85 30em,
+0.9 40em,
+0.95 50em,
+1.0 60em;
 
-@mixin type-settings($level: 0) {
-    $type-settings: map-get($base-type-settings, $level);
-    $font-size: map-get($type-settings, 'font-size');
-    $line-height: map-get($type-settings, 'line-height');
-    
-    //Initial value
-    //Get first scale from $types-range and set default font-size, line-height according to that scale
-    $scaleParams: nth($types-range, 1);
-    $scale: nth($scaleParams, 1);
-    
-    font-size: $font-size * $scale;
-    line-height: $line-height * $scale;
-    
-    @for $i from 1 through (length($types-range) - 1) {
-      $scaleParams: nth($types-range, $i);
-      $scale: nth($scaleParams, 1);
-      $viewPortMinWidth: nth($scaleParams, 2);
-      $viewPortMaxWidth: nth(nth($types-range, $i + 1), 2);
-      
-      @media (min-width: $viewPortMinWidth) and (max-width: $viewPortMaxWidth) {
-        font-size: $font-size * $scale;
-        line-height: $line-height * $scale;
-      }
-    }
-    
-    //Final value
-    //Get last scale from $types-range and set font-size, line-height according to that scale for all devices have larger viewport
-    $scaleParams: nth($types-range, length($types-range));
-    $scale: nth($scaleParams, 1);
-    $viewPortMinWidth: nth($scaleParams, 2);
-    @media (min-width: $viewPortMinWidth) {
-        font-size: $font-size * $scale;
-        line-height: $line-height * $scale;
-    }
-}
