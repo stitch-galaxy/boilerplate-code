@@ -1,13 +1,13 @@
 # Dev tools
 
-## Nodejs and it's dependencies
- - [npm](https://nodejs.org/en/)
+## Git
  - [git](https://git-scm.com/downloads)
-## Sass processing
+## Nodejs
+ - [npm](https://nodejs.org/en/)
+## Ruby
  - [ruby](https://www.ruby-lang.org/en/downloads/)
- - [sass](http://sass-lang.com/guide)
- - [compass](http://compass-style.org/install/)
  - Add **bin** folder from Ruby installation folder to **PATH** environment variable
+ - [bundler](http://bundler.io/)
 ## Gulp task runner
  - [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
 ```sh
@@ -22,6 +22,10 @@ $ npm install -g bower
  - Install node modules
 ```sh
 $ npm install
+```
+ - Install ruby gems
+```sh
+$ bundle install
 ```
  - Install bower packages
 ```sh
