@@ -10,6 +10,8 @@ var stylish = require('jshint-stylish');
 //sourcemaps
 var sourcemaps = require('gulp-sourcemaps');
 //css
+var compass = require('gulp-compass');
+
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var minifyCss = require('gulp-minify-css');
@@ -146,6 +148,20 @@ gulp.task('css:prod', function () {
     .pipe(gulp.dest(paths.dirs.manifests));
 });
 
+/*
+gulp.task('sass:dev', function () {
+  var compassOptions = {
+    config_file: 'config.rb',
+    css: 'css',
+    sass: 'sass'
+  };
+
+  return gulp.src(paths.sass)
+    .pipe(compass(compassOptions))
+    .pipe(gulp.dest('./css'));
+});
+*/
+
 gulp.task('css:dev', function () {
   var sassOptions = {
   //  outputStyle: 'compressed'
@@ -156,8 +172,8 @@ gulp.task('css:dev', function () {
 
   return gulp.src(paths.sass)
     .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(concat('site.css'))
       .pipe(sass(sassOptions).on('error', sass.logError))
+      .pipe(concat('site.css'))
       .pipe(autoprefixer(autoPrefixerOptions))
       .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write('./'))
