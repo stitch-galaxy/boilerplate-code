@@ -41,10 +41,12 @@ var paths = {
       dev : './build',
       prod : './dist'     
     },
-    manifests: './manifests'
+    manifests: './manifests',
+    css: './css'
   },
   js : './components/**/*.js',
   sass : './sass/**/*.scss',
+  css : './css/**/*.css',
   images : './images/**/*.{png,jpg,jpeg,gif}',
   html : './*.html',
   styleGuideHtml : './style/**/*.html',
@@ -57,11 +59,11 @@ var paths = {
 
 //clean
 gulp.task('clean:prod', function () {
-  return del([paths.dirs.build.prod, paths.dirs.manifests]);
+  return del([paths.dirs.build.prod, paths.dirs.css, paths.dirs.manifests]);
 });
 
 gulp.task('clean:dev', function () {
-  return del(paths.dirs.build.dev);
+  return del(paths.dirs.build.dev, paths.dirs.css);
 });
 
 //linting
@@ -126,7 +128,20 @@ gulp.task('js:dev', function () {
 });
 
 //css
-gulp.task('css:prod', function () {
+gulp.task('sass', function () {
+  var compassOptions = {
+    config_file: 'config.rb',
+    css: 'css',
+    sass: 'sass'
+  };
+
+  return gulp.src(paths.sass)
+    .pipe(compass(compassOptions))
+    .pipe(gulp.dest('./css'));
+});
+
+
+gulp.task('css:prod', ['sass'], function () {
   var sassOptions = {
   //  outputStyle: 'compressed'
   };
@@ -134,9 +149,8 @@ gulp.task('css:prod', function () {
     browsers: ['last 2 versions']
   };
 
-  return gulp.src(paths.sass)
+  return gulp.src(paths.css)
     .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(sass(sassOptions).on('error', sass.logError))
       .pipe(concat('site.css'))
       .pipe(autoprefixer(autoPrefixerOptions))
       .pipe(rename({suffix: '.min'}))
@@ -148,21 +162,7 @@ gulp.task('css:prod', function () {
     .pipe(gulp.dest(paths.dirs.manifests));
 });
 
-/*
-gulp.task('sass:dev', function () {
-  var compassOptions = {
-    config_file: 'config.rb',
-    css: 'css',
-    sass: 'sass'
-  };
-
-  return gulp.src(paths.sass)
-    .pipe(compass(compassOptions))
-    .pipe(gulp.dest('./css'));
-});
-*/
-
-gulp.task('css:dev', function () {
+gulp.task('css:dev', ['sass'], function () {
   var sassOptions = {
   //  outputStyle: 'compressed'
   };
@@ -170,9 +170,10 @@ gulp.task('css:dev', function () {
     browsers: ['last 2 versions']
   };
 
-  return gulp.src(paths.sass)
+  //return gulp.src(paths.sass)
+  return gulp.src(paths.css)
     .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(sass(sassOptions).on('error', sass.logError))
+      //.pipe(sass(sassOptions).on('error', sass.logError))
       .pipe(concat('site.css'))
       .pipe(autoprefixer(autoPrefixerOptions))
       .pipe(rename({suffix: '.min'}))
@@ -376,12 +377,15 @@ gulp.task('connect:dev', function() {
 });
 
 gulp.task('watch:dev', function () {
-  gulp.watch([paths.html, paths.styleGuideHtml], ['html:dev']);
+  //Some strange cycling if no build directory yet and next line uncommented
+  //gulp.watch(paths.html, ['html:dev']);
+  gulp.watch(paths.styleGuideHtml, ['html:dev']);
   gulp.watch(paths.sass, ['css:dev']);
   gulp.watch(paths.js, ['js:dev']);
   gulp.watch(paths.partials, ['partials:dev']);
 });
 
+//gulp.task('dev', ['build:dev', 'connect:dev']);
 gulp.task('dev', ['build:dev', 'connect:dev', 'watch:dev']);
 gulp.task('prod', ['build:prod', 'connect:prod']);
 
