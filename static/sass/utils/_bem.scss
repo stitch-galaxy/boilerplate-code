@@ -3,8 +3,9 @@
 //
 @mixin bem-block_set-font()
 {
-    font-size: $site-base-font-size-em / 1em * 1rem;
-    line-height: $site-base-line-height;
+    @include type-settings(0);
+    //font-size: $site-base-font-size-em / 1em * 1rem;
+    //line-height: $site-base-line-height;
 }
 
 @mixin bem-element_set-font-size($sizeIndex)
@@ -35,13 +36,4 @@
     
     margin-top: $totalMargin / 2;
     margin-bottom: $totalMargin / 2;
-}
-
-
-//Should be avoided: if you nest bem components - put nested component as element(bem mix) and add vertical margin to element!
-@mixin bem-block_add-vertical-margin-to-preserve-rhytm()
-{
-    $margin: $site-base-line-height * 1rem;
-    margin-top: $margin;
-    margin-bottom: $margin;
 }

@@ -2,7 +2,6 @@ $module: 'component-description';
 
 .#{$module} {
     display: block;
-    //@include bem-block_add-vertical-margin-to-preserve-rhytm();
     @include bem-block_set-font();
     padding-left: 3em;
     padding-right: 3em;
@@ -20,8 +19,9 @@ $module: 'component-description';
 
     &__bd {
         display: block;
-        @include bem-element_set-font-size(0);
-        @include bem-element_add-vertical-margin-to-preserve-rhytm(0);
+        @include ms-respond(font-size, 0);
+        //@include bem-element_set-font-size(0);
+        //@include bem-element_add-vertical-margin-to-preserve-rhytm(0);
         padding-left: 1em;
         padding-right: 1em;
     }

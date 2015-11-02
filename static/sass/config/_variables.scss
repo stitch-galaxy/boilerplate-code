@@ -34,17 +34,86 @@ $site-base-font-size-em: 1em;
 $site-base-line-height: 1.5;
 
 $ms-base: 1em;
-$ms-ratio: $golden, $fourth, $fifth;
+$ms-ratio: $golden;
 
 $ms-range:
-  1.1 20em,
-  1.6 60em;
+1.1 20em,
+1.6 60em;
 
-//$ms-fluid: false;
+$base-line-height: 1.5rem;
 
-/*$ms-range:
-  1.2 20em,
-  1.3 30em,
-  1.4 40em,
-  1.5 50em,
-  1.6 60em;*/
+//http://www.modularscale.com/?1,1.1&em&1.618&sass&text
+$font-size-xs: 0.618rem;
+$font-size-sm: 0.68rem;
+$font-size-normal: 1rem;
+$font-size-lrg: 1.1rem;
+$font-size-xlrg: 1.618rem;
+$font-size-xxlrg: 1.78rem;
+
+$base-type-settings: (
+  -2: (
+    font-size: $font-size-xs,
+    line-height: $base-line-height
+  ),
+  -1: (
+    font-size: $font-size-sm,
+    line-height: $base-line-height
+  ),
+  0: (
+    font-size: $font-size-normal,
+    line-height: $base-line-height
+  ),
+  1: (
+    font-size: $font-size-normal,
+    line-height: $base-line-height
+  ),
+  2: (
+    font-size: $font-size-xlrg,
+    line-height: $base-line-height * 2
+  ),
+  3: (
+    font-size: $font-size-xxlrg,
+    line-height: $base-line-height * 2
+  )
+);
+
+$types-range:
+1.0 20em,
+1.1 40em,
+1.2 60em;
+
+@mixin type-settings($level: 0) {
+    $type-settings: map-get($base-type-settings, $level);
+    $font-size: map-get($type-settings, 'font-size');
+    $line-height: map-get($type-settings, 'line-height');
+    
+    //Initial value
+    //Get first scale from $types-range and set default font-size, line-height according to that scale
+    $scaleParams: nth($types-range, 1);
+    $scale: nth($scaleParams, 1);
+    
+    font-size: $font-size * $scale;
+    line-height: $line-height * $scale;
+    
+    @for $i from 1 through (length($types-range) - 1) {
+      $scaleParams: nth($types-range, $i);
+      $scale: nth($scaleParams, 1);
+      $viewPortMinWidth: nth($scaleParams, 2);
+      $viewPortMaxWidth: nth(nth($types-range, $i + 1), 2);
+      
+      @media (min-width: $viewPortMinWidth) and (max-width: $viewPortMaxWidth) {
+        font-size: $font-size * $scale;
+        line-height: $line-height * $scale;
+      }
+    }
+    
+    //Final value
+    //Get last scale from $types-range and set font-size, line-height according to that scale for all devices have larger viewport
+    $scaleParams: nth($types-range, length($types-range));
+    $scale: nth($scaleParams, 1);
+    $viewPortMinWidth: nth($scaleParams, 2);
+    @media (min-width: $viewPortMinWidth) {
+        font-size: $font-size * $scale;
+        line-height: $line-height * $scale;
+    }
+}

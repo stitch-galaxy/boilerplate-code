@@ -8,7 +8,6 @@
     "jquery": "2.1.4"
   },
   "devDependencies": {
-    "bourbon": "4.2.6",
-    "modular-scale": "2.1.1"
+    "bourbon": "4.2.6"
   }
 }

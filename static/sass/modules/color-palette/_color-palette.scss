@@ -2,7 +2,6 @@ $module: 'color-palette';
 
 .#{$module} {
     display: block;
-    //@include bem-block_add-vertical-margin-to-preserve-rhytm();
     @include bem-block_set-font();
     padding-left: 1em;
     padding-right: 1em;
