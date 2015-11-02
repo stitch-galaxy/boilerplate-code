@@ -8,10 +8,10 @@
  - [sass](http://sass-lang.com/guide)
  - [compass](http://compass-style.org/install/)
  - Add **bin** folder from Ruby installation folder to **PATH** environment variable
-## Grunt task runner
- - [grunt-cli](http://gruntjs.com/getting-started)
+## Gulp task runner
+ - [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
 ```sh
-$ npm install -g grunt-cli
+$ npm install -g gulp
 ```
 ## Bower dependecy management tool
  - [bower](http://bower.io/)
@@ -27,16 +27,16 @@ $ npm install
 ```sh
 $ bower install
 ```
- - Run grunt tasks
+ - Run gulp tasks
 ```sh
 $ # To build dev version
-$ grunt build
+$ gulp build:dev
 $ # To build prod version
-$ grunt dist
+$ gulp build:prod
 $ # To build dev version and run web page
-$ grunt serve:src
+$ gulp dev
 $ # To build prod version and run web page
-$ grunt serve:dist
+$ gulp prod
 ```
 # Usefull commands
  - To initialize npm project and create **package.json** file 
@@ -49,12 +49,12 @@ $ bower init
 ```
  - To install npm dependency and add it to **package.json**
 ```sh
-$ npm install grunt --save-dev
+$ npm install gulp-compass --save-dev
 ```
 > I recomend to use exact versions to avoid problems in production - final binary should not be changed unexpectedly
  - To install bower dependency and add it to **bower.json**
 ```sh
-$ bower install bootstrap -S
+$ bower install angular-route --save-dev
 ```
 > I recomend to use exact versions to avoid problems in production - final binary should not be changed unexpectedly
  - To check if new versions of node dependencies exists
