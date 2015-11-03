@@ -1,15 +1,23 @@
 $module: 'language-menu';
 
+
+//We have one problem if all languages does not fit into viewport
+//We have to change position: fixed->absolute
+//And then enable scrolling via language-menu only, but it's not so simple task
+//https://css-tricks.com/forums/topic/prevent-body-scrolling-when-the-user-scrolls-on-fixed-position-div/
+
 .#{$module} {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
-    align-content: space-around;
+    justify-content: space-around;
+    align-content: flex-start;
     margin: 0;
     padding: 0;
     width: 100vw;
     min-height: 100vh;
-    position:absolute;
+    position: fixed;
+    overflow: auto;
     top: 0;
     left: 0;
     background-color: get-site-color('wall');
@@ -21,19 +29,20 @@ $module: 'language-menu';
     }
     
     &__item {
+        display: block;
         color: get-site-color('blue');
-        flex: 0 1 auto;
+        //TOBE ALLIGNED WITH MEDIA QUERY
+        flex: 0 0 30%;
+        padding: 0.5rem 0;
         @include type-settings(1);
         @include font-regular();
-        align-self: center;
-        //TOBE ALLIGNED WITH MEDIA QUERY
-        padding: 0 3em;
         text-align: center;
         @include vrhythm('padding-top');
         @include vrhythm('padding-bottom');
         
         &:hover {
             border-bottom: 0.5rem inset get-site-color('blue');
+            padding-bottom: 0;
         }
         
         &_selected {
