@@ -1,0 +1,43 @@
+$module: 'language-menu';
+
+.#{$module} {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh;
+    position:absolute;
+    top: 0;
+    left: 0;
+    background-color: get-site-color('wall');
+    list-style: none;
+    @include set-z-index('language-menu');
+    
+    &_hidden {
+        display: none;
+    }
+    
+    &__item {
+        color: get-site-color('blue');
+        flex: 0 1 auto;
+        @include type-settings(1);
+        @include font-regular();
+        align-self: center;
+        //TOBE ALLIGNED WITH MEDIA QUERY
+        padding: 0 3em;
+        text-align: center;
+        @include vrhythm('padding-top');
+        @include vrhythm('padding-bottom');
+        
+        &:hover {
+            border-bottom: 0.5rem inset get-site-color('blue');
+        }
+        
+        &_selected {
+            color: get-site-color('green');
+        }
+    }
+}
