@@ -5,6 +5,23 @@ $module: 'color-palette';
     @include type-settings();
     padding-left: 1em;
     padding-right: 1em;
+    
+    &__header {
+        @include type-settings(2);
+        @include font-header();
+        margin: 0;
+    }
+    
+    &__sub-header {
+        @include type-settings(1);
+        @include font-header();
+        margin: 0;
+    }
+    
+    &__bd {
+        @include type-settings(0);
+        @include font-regular();
+    }
 
     &__line {
         display: flex;
@@ -113,6 +130,7 @@ $module: 'color-palette';
 
     &__text {
         flex: 0 1 auto;
+        @include font-regular();
 
         &_color {
             //Main

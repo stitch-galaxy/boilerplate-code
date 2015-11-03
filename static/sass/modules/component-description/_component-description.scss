@@ -13,16 +13,19 @@ $module: 'component-description';
         border: 0;
         vertical-align: baseline;
         @include type-settings(1);
+        @include font-header();
         font-weight: normal;
     }
 
     &__link {
         @include type-settings();
+        @include font-regular();
     }
 
     &__bd {
         display: block;
         @include type-settings();
+        @include font-regular();
         @include vrhythm();
         padding-left: 1em;
         padding-right: 1em;

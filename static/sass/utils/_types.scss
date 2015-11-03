@@ -36,3 +36,13 @@
         line-height: $line-height * $scale;
     }
 }
+
+@mixin font-regular()
+{
+    font-family: $font-family-regular;
+}
+
+@mixin font-header()
+{
+    font-family: $font-family-header;
+}

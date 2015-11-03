@@ -10,6 +10,7 @@ $module: 'style-foundation';
         display: block;
         margin: 0;
         @include type-settings(2);
+        @include font-header();
         font-weight: bold;
     }
     
@@ -17,6 +18,7 @@ $module: 'style-foundation';
         display: block;
         margin: 0;
         @include type-settings(1);
+        @include font-header();
         font-weight: bold;
     }
     
@@ -24,6 +26,7 @@ $module: 'style-foundation';
         display: block;
         @include type-settings();
         @include vrhythm();
+        @include font-regular();
         padding-left: 1em;
         padding-right: 1em;
     }
