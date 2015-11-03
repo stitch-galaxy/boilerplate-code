@@ -1,0 +1,40 @@
+$module: 'typography';
+
+.#{$module} {
+    display: block;
+    @include type-settings();
+    padding-left: 5em;
+    background-color: get-site-color('wall');
+    
+    &__t{
+        margin: 0;
+        color: get-site-color('black');
+        &_-2{
+            @include type-settings(-2);
+            @include font-regular();
+            color: tint(get-site-color('black'), 70%);
+        }
+        &_-1{
+            @include type-settings(-1);
+            @include font-regular();
+            color: tint(get-site-color('black'), 70%);
+            
+        }
+        &_0{
+            @include type-settings(0);
+            @include font-regular();
+        }
+        &_1{
+            @include type-settings(1);
+            @include font-header();
+        }
+        &_2{
+            @include type-settings(2);
+            @include font-header();
+        }
+        &_3{
+            @include type-settings(3);
+            @include font-header();
+        }
+    }
+}

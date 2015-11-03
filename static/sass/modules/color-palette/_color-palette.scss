@@ -38,43 +38,43 @@ $module: 'color-palette';
         &_color {
             //Main
             &_pistachio {
-                background-color: $color-pistachio;
+                background-color: get-site-color('pistachio');
             }
             &_turquoise {
-                background-color: $color-turquoise;
+                background-color: get-site-color('turquoise');
             }
             &_wall {
-                background-color: $color-wall;
+                background-color: get-site-color('wall');
             }
             //Informational
             &_red {
-                background-color: $color-red;
+                background-color: get-site-color('red');
             }
             &_green {
-                background-color: $color-green;
+                background-color: get-site-color('green');
             }
             &_blue {
-                background-color: $color-blue;
+                background-color: get-site-color('blue');
             }
             &_yellow {
-                background-color: $color-yellow;
+                background-color: get-site-color('yellow');
             }
             //Supplementary
             &_brown {
-                background-color: $color-brown;
+                background-color: get-site-color('brown');
             }
             &_grey {
-                background-color: $color-grey;
+                background-color: get-site-color('grey');
             }
             &_orange {
-                background-color: $color-orange;
+                background-color: get-site-color('orange');
             }
             //Plain
             &_white {
-                background-color: $color-white;
+                background-color: get-site-color('white');
             }
             &_black {
-                background-color: $color-black;
+                background-color: get-site-color('black');
             }
         }
     }
@@ -87,43 +87,43 @@ $module: 'color-palette';
         &_color {
             //Main
             &_pistachio {
-                background-color: $color-pistachio;
+                background-color: get-site-color('pistachio');
             }
             &_turquoise {
-                background-color: $color-turquoise;
+                background-color: get-site-color('turquoise');
             }
             &_wall {
-                background-color: $color-wall;
+                background-color: get-site-color('wall');
             }
             //Informational
             &_red {
-                background-color: $color-red;
+                background-color: get-site-color('red');
             }
             &_green {
-                background-color: $color-green;
+                background-color: get-site-color('green');
             }
             &_blue {
-                background-color: $color-blue;
+                background-color: get-site-color('blue');
             }
             &_yellow {
-                background-color: $color-yellow;
+                background-color: get-site-color('yellow');
             }
             //Supplementary
             &_brown {
-                background-color: $color-brown;
+                background-color: get-site-color('brown');
             }
             &_grey {
-                background-color: $color-grey;
+                background-color: get-site-color('grey');
             }
             &_orange {
-                background-color: $color-orange;
+                background-color: get-site-color('orange');
             }
             //Plain
             &_white {
-                background-color: $color-white;
+                background-color: get-site-color('white');
             }
             &_black {
-                background-color: $color-black;
+                background-color: get-site-color('black');
             }
         }
     }
@@ -135,43 +135,43 @@ $module: 'color-palette';
         &_color {
             //Main
             &_pistachio {
-                color: $color-pistachio;
+                color: get-site-color('pistachio');
             }
             &_turquoise {
-                color: $color-turquoise;
+                color: get-site-color('turquoise');
             }
             &_wall {
-                color: $color-wall;
+                color: get-site-color('wall');
             }
             //Informational
             &_red {
-                color: $color-red;
+                color: get-site-color('red');
             }
             &_green {
-                color: $color-green;
+                color: get-site-color('green');
             }
             &_blue {
-                color: $color-blue;
+                color: get-site-color('blue');
             }
             &_yellow {
-                color: $color-yellow;
+                color: get-site-color('yellow');
             }
             //Supplementary
             &_brown {
-                color: $color-brown;
+                color: get-site-color('brown');
             }
             &_grey {
-                color: $color-grey;
+                color: get-site-color('grey');
             }
             &_orange {
-                color: $color-orange;
+                color: get-site-color('orange');
             }
             //Plain
             &_white {
-                color: $color-white;
+                color: get-site-color('white');
             }
             &_black {
-                color: $color-black;
+                color: get-site-color('black');
             }
         }
     }

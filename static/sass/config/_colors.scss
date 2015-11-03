@@ -1,0 +1,44 @@
+//
+// Project variables
+//
+
+//Colors
+$site-colors: (
+    //Primary colors - background, blocks, etc
+    'pistachio': #99CC33,
+    'turquoise': #99FFFF,
+    'wall': #F8F8FF,
+
+    //Informational
+    'red': #CC3300,
+    'green': #669900,
+    'blue': #0066CC,
+    'yellow': #FFFF66,
+
+    //Supplementary colors
+    'brown': #996600,
+    'grey': #C0C0C0,
+    'orange': #FF9933,
+
+    //Plain colors
+    'white': #FFFFFF,
+    'black': #000000
+);
+
+$site-opacity-levels: (
+    'light': 0.8, // opacity used with lighter colors
+    'dark': 0.4   // opacity used with darker colors
+);
+
+//Color lighten-darken interval
+$color-interval: 10% !global;
+
+
+@function get-site-color($color-name) {
+  @return map-get($site-colors, $color-name);
+}
+
+@function get-opacity-level($color-type)
+{
+    @return map-get($site-opacity-levels, $color-type);
+}
