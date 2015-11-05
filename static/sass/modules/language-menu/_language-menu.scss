@@ -7,6 +7,7 @@ $module: 'language-menu';
 //https://css-tricks.com/forums/topic/prevent-body-scrolling-when-the-user-scrolls-on-fixed-position-div/
 
 .#{$module} {
+    display: none;
     overflow: auto;
     width: 100vw;
     min-height: 100vh;
@@ -18,8 +19,8 @@ $module: 'language-menu';
 
     @include set-z-index('language-menu');
 
-    &_hidden {
-        display: none;
+    &_visible {
+        display: block;
     }
 
     &__list {
