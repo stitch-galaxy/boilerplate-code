@@ -7,7 +7,3 @@ $site-z-indexes: (
     'body': 0,
     'language-menu': 100
 );
-
-@mixin set-z-index($index-name) {
-  z-index: map-get($site-z-indexes, $index-name);
-}
