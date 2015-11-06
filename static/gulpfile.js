@@ -44,6 +44,7 @@ var paths = {
     manifests: './manifests',
     css: './css'
   },
+  emptyCss : './empty.css',
   js : './components/**/*.js',
   sass : './sass/**/*.scss',
   css : './css/**/*.css',

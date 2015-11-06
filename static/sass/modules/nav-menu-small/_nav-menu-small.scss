@@ -1,50 +1,35 @@
-$module: 'language-menu';
-
-
-//We have one problem if all languages does not fit into viewport
-//We have to change position: fixed->absolute
-//And then enable scrolling via language-menu only, but it's not so simple task
-//https://css-tricks.com/forums/topic/prevent-body-scrolling-when-the-user-scrolls-on-fixed-position-div/
+$module: 'nav-menu-small';
 
 .#{$module} {
-    display: none;
-    overflow: auto;
+    display: block;
     width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: get-site-color('wall');
+    background-color: get-site-color('pistachio');
 
-    @include set-z-index('language-menu');
 
-    &_visible {
-        display: block;
-    }
 
     &__list {
+        display: none;
         list-style: none;
         margin: 0;
         padding: 0;
-        //@include vrhythm('padding-top', 2);
+
+        &_visible {
+            display: block;
+        }
     }
-    
+
     &__close-button
     {
         color: get-site-color('blue');
         position: fixed;
         top: 0;
         right: 0;
+        @include type-settings(3);
         text-align: right;
+        //padding-top: 1rem;
         padding-right: 2rem;
     }
-    
-    &__close-button-icon
-    {
-        @include type-settings(3);
-        @include fa-icon($fa-var-times);
-    }
-    
+
 
     &__item {
         display: block;
@@ -55,11 +40,11 @@ $module: 'language-menu';
         @include font-regular();
         text-align: center;
     }
-    
+
     &__item-text {
         display: inline-block;
         color: get-site-color('blue');
-        
+
         @include type-settings(1);
         @include font-regular();
         text-align: center;
