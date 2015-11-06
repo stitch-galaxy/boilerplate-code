@@ -31,7 +31,6 @@
             <div class="component-description">
                 <h2 class="component-description__header"><span class="component-description__block-name">language-menu</span> component</h2>
                 <div class="component-description__bd">
-                    <input type="checkbox" ng-model="popupVisible">
                     <a class="component-description__link" href="#" ng-click="popupVisible = !popupVisible">Select language</a>
                     <div class="language-menu" ng-class="{'language-menu_visible': popupVisible}">
                         <div class="language-menu__close-button" ng-click="popupVisible = !popupVisible"><i class="language-menu__close-button-icon"></i></div>
@@ -44,6 +43,29 @@
                             <li class="language-menu__item"><span class="language-menu__item-text">Portugal - Português</span></li>
                             <li class="language-menu__item"><span class="language-menu__item-text">Deutsch - Deutsch</span></li>
                             <li class="language-menu__item"><span class="language-menu__item-text">Turkish - Türkçe</span></li>
+                        </ul>
+                    </div>
+
+
+                    <br/>
+                    <dl class="component-description__elements">
+                        <dt>Elements:</dt>
+                        <dd class="component-description__element-name">language-menu__item</dd>
+                    </dl>
+                </div>
+
+                <hr class="component-description__bottom-splitter"/>
+            </div>
+            
+            <div class="component-description">
+                <h2 class="component-description__header"><span class="component-description__block-name">nav-menu-small</span> component</h2>
+                <div class="component-description__bd">
+                    <div class="nav-menu-small">
+                        <div class="nav-menu-small__toggle-area"><i class="nav-menu-small__toggle-area-icon"></i></div>
+                        <ul class="nav-menu-small__list nav-menu-small__list_visible">
+                            <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_gallery"></i><span class="nav-menu-small__item-text nav-menu-small__item-text_selected">Gallery</span></li>
+                            <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_how-it-works"></i><span class="nav-menu-small__item-text">How it works</span></li>
+                            <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_globe"></i><span class="nav-menu-small__item-text">Language</span></li>
                         </ul>
                     </div>
 

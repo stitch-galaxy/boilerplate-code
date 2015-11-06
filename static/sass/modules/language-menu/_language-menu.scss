@@ -41,8 +41,8 @@ $module: 'language-menu';
     
     &__close-button-icon
     {
-        @include type-settings(3);
         @include fa-icon($fa-var-times);
+        @include type-settings(2);
     }
     
 

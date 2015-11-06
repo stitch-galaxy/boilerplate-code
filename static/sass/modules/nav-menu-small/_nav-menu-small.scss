@@ -2,32 +2,35 @@ $module: 'nav-menu-small';
 
 .#{$module} {
     display: block;
-    width: 100vw;
     background-color: get-site-color('pistachio');
-
-
 
     &__list {
         display: none;
         list-style: none;
         margin: 0;
         padding: 0;
+        @include vrhythm('padding-bottom');
+        
+        display: table;
+        margin: 0 auto;
+         width: 50%;
 
         &_visible {
             display: block;
         }
     }
 
-    &__close-button
+    &__toggle-area
     {
-        color: get-site-color('blue');
-        position: fixed;
-        top: 0;
-        right: 0;
-        @include type-settings(3);
+        @include type-settings(2);
+        color: get-site-color('wall');
         text-align: right;
-        //padding-top: 1rem;
         padding-right: 2rem;
+    }
+    
+    &__toggle-area-icon
+    {
+        @include fa-icon($fa-var-bars);
     }
 
 
@@ -36,26 +39,44 @@ $module: 'nav-menu-small';
         margin: 0;
         padding: 0;
         color: get-site-color('blue');
-        @include type-settings(2);
         @include font-regular();
-        text-align: center;
+        @include type-settings(2);
+        text-align: left;
     }
-
+    
+    &__item-icon {
+        color: get-site-color('brown');
+        text-align: center;
+        margin-right: 1rem;
+        
+        &_gallery{
+            @include fa-icon($fa-var-th-large);
+        }
+        
+        &_how-it-works{
+            @include fa-icon($fa-var-cogs);
+        }
+        
+        &_globe{
+            @include fa-icon($fa-var-globe);
+        }
+    }
+    
     &__item-text {
         display: inline-block;
         color: get-site-color('blue');
-
-        @include type-settings(1);
+        
+        
         @include font-regular();
         text-align: center;
-        padding: 0.5rem 1rem;
+/*        padding: 0.5rem 1rem;
         &:hover {
             border-bottom: 0.5rem inset get-site-color('blue');
             padding-bottom: 0;
-        }
+        }*/
 
         &_selected {
-            color: get-site-color('green');
+            color: get-site-color('wall');
         }
     }
 }
