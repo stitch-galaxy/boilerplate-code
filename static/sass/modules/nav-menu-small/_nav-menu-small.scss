@@ -3,6 +3,7 @@ $module: 'nav-menu-small';
 .#{$module} {
     display: block;
     background-color: get-site-color('pistachio');
+    text-align: center;
 
     &__list {
         display: none;
@@ -10,13 +11,9 @@ $module: 'nav-menu-small';
         margin: 0;
         padding: 0;
         @include vrhythm('padding-bottom');
-        
-        display: table;
-        margin: 0 auto;
-         width: 50%;
 
         &_visible {
-            display: block;
+            display: inline-block;
         }
     }
 
