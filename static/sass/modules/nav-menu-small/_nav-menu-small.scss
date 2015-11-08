@@ -37,7 +37,7 @@ $module: 'nav-menu-small';
         padding: 0;
         color: get-site-color('blue');
         @include font-regular();
-        @include type-settings(2);
+        @include type-settings(1);
         text-align: left;
     }
     
