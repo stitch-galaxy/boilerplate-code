@@ -1,0 +1,86 @@
+$module: 'nav-menu-large';
+
+.#{$module} {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    
+    &__fixed-container {
+        border-radius: 0.5rem;
+        display: inline-block;
+        margin: 0 auto;
+        background-color: get-site-color('pistachio');
+        width: 80rem;
+        max-width: 80rem;
+    }
+
+    &__list {
+        display: inline-block;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        @include vrhythm('padding-top');
+        @include vrhythm('padding-bottom');
+    }
+
+    &__item {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        color: get-site-color('blue');
+        @include font-header();
+        @include type-settings(1);
+        text-align: left;
+    }
+
+    &__item-icon {
+        color: get-site-color('brown');
+        
+        text-align: center;
+        margin-right: 1rem;
+
+        &_gallery{
+            @include fa-icon($fa-var-th-large);
+        }
+
+        &_how-it-works{
+            @include fa-icon($fa-var-cogs);
+        }
+
+        &_globe{
+            @include fa-icon($fa-var-globe);
+            color: get-site-color('blue');
+        }
+
+        &_workspace{
+            @include fa-icon($fa-var-play);
+        }
+
+        &_settings{
+            @include fa-icon($fa-var-cog);
+        }
+
+        &_signout{
+            @include fa-icon($fa-var-sign-out);
+            color: get-site-color('red');
+        }
+
+        &_signin{
+            @include fa-icon($fa-var-sign-in);
+            color: get-site-color('blue');
+        }
+    }
+
+    &__item-text {
+        display: inline-block;
+        color: get-site-color('wall');
+
+
+        @include font-regular();
+        text-align: center;
+
+        &_selected {
+            color: get-site-color('blue');
+        }
+    }
+}

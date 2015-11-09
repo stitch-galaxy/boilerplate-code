@@ -14,7 +14,7 @@ $module: 'language-menu';
     position: fixed;
     top: 0;
     left: 0;
-    background-color: get-site-color('wall');
+    background-color: get-site-color('white');
 
     @include set-z-index('language-menu');
 
@@ -51,7 +51,7 @@ $module: 'language-menu';
         margin: 0;
         padding: 0;
         color: get-site-color('blue');
-        @include type-settings(2);
+        @include type-settings(1);
         @include font-regular();
         text-align: center;
     }
@@ -65,7 +65,7 @@ $module: 'language-menu';
         text-align: center;
         padding: 0.5rem 1rem;
         &:hover {
-            border-bottom: 0.5rem inset get-site-color('blue');
+            border-bottom: 0.5rem inset get-site-color('pistachio');
             padding-bottom: 0;
         }
 
