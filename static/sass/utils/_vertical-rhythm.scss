@@ -14,7 +14,7 @@
       $viewPortMinWidth: nth($scaleParams, 2);
       $viewPortMaxWidth: nth(nth($types-range, $i + 1), 2);
       
-      @breakpoint($viewPortMinWidth $viewPortMaxWidth) {
+      @include breakpoint($viewPortMinWidth $viewPortMaxWidth) {
         #{$property}: $base-line-height * $scale * $numLines;
       }
       
@@ -22,7 +22,7 @@
       $scaleParams: nth($types-range, length($types-range));
       $scale: nth($scaleParams, 1);
       $viewPortMinWidth: nth($scaleParams, 2);
-      @breakpoint($viewPortMinWidth) {
+      @include breakpoint($viewPortMinWidth) {
         #{$property}: $base-line-height * $scale * $numLines;
       }
     }

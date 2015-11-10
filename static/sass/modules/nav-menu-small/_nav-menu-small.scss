@@ -2,15 +2,50 @@ $module: 'nav-menu-small';
 
 .#{$module} {
     display: block;
-    background-color: get-site-color('pistachio');
+
     text-align: center;
 
     &__list {
+        
+        //some problems with very low viewport height - hide menu content
+        //@include vrhythm('padding-bottom');
+        &-terminator{
+            @include vrhythm('height');
+        }
+        
         display: none;
         list-style: none;
         margin: 0;
         padding: 0;
-        @include vrhythm('padding-bottom');
+        
+
+        &-wrapper{
+            
+            &-wrapper{
+                overflow: hidden;
+            }
+
+            &_visible {
+                @keyframes test {
+                    0% {
+                        max-height: 0vh;
+                        transform: translateY(-100%);
+                        opacity: 0; 
+                        background-color: opacify(get-site-color('pistachio'), 0);
+                    }
+                    100% { 
+                        max-height: 100vh;
+                        transform: translateY(0%);
+                        opacity: 1.0; 
+                        background-color: opacify(get-site-color('pistachio'), 1);
+                    }
+                }
+                
+                //background-color: get-site-color('pistachio');
+                animation: test 1s forwards;
+                overflow: hidden;
+            }
+        }
 
         &_visible {
 
@@ -34,10 +69,9 @@ $module: 'nav-menu-small';
     &__toggle-area
     {
         @include type-settings(2);
+        background-color: get-site-color('pistachio');
         color: get-site-color('wall');
         right: 0; text-align: center;
-        //text-align: right;
-        //padding-right: 2rem;
 
         &-left-container{
             display: inline-block;

@@ -12,9 +12,11 @@ $module: 'language-menu';
     width: 100vw;
     height: 100vh;
     position: fixed;
-    top: 0;
+    //top: 0;
+    @include vrhythm('top', 2);
     left: 0;
     background-color: get-site-color('white');
+    //transform: translateY(3rem);
 
     @include set-z-index('language-menu');
 
@@ -27,13 +29,19 @@ $module: 'language-menu';
         margin: 0;
         padding: 0;
         //@include vrhythm('padding-top', 2);
+        
+        &-terminator{
+            //+2 because position fixed combined with top - vrhytm(2)
+            @include vrhythm('height', 1 + 2);
+        }
     }
     
     &__close-button
     {
         color: get-site-color('blue');
         position: fixed;
-        top: 0;
+        //top: 0;
+        @include vrhythm('top', 2);
         right: 0;
         text-align: right;
         padding-right: 2rem;
