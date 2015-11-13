@@ -1,0 +1,5 @@
+CSS stacking without z index
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Stacking_without_z-index
+1. Background and bordes of root element
+2. Descendant blocks in normal flow, in order of appearance in html
+3. Descendant positioned elements in order of appearance in html

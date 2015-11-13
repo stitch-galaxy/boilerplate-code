@@ -1,12 +1,14 @@
  - Warn if browser outdated: modernizr browsehappy.com & test page
  - Nav
- - Footer
- - Register
- - Login
+ - Language
+ - Login + Register
  - Logout
  - Settings
  - Gallery
+ - Item description
  - Useability social site: why follow, what to share, comments - source from FB, twitter, G+, etc, ratings
+ - Footer
+
 
 Navigation:
 1. Sort items according to relevance
@@ -22,6 +24,10 @@ http://laak.fi/category/usability/
 
 Postulates:
 Navigation is not a ui-router state - navigation depends on page we are observing, it can be absolutelly different
+I.e. we insert navigation as views with it's own controllers
+
 Login/Logout is not a ui-router state too - navigation as well as other elements on page can depend on login/logout status - i.e. it's service
+
 Login/Signup is a ui-router state, it's not a popup - expirience can be quite complex
+
 Language selection dialog is no a ui-router state, it's close to popup... Just a way to show ui - so user can select language
