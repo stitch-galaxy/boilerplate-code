@@ -1,14 +1,13 @@
  - Warn if browser outdated: modernizr browsehappy.com & test page
  - Nav
  - Language
- - Login + Register
+ - Login + Signup
  - Logout
- - Settings
  - Gallery
  - Item description
+ - Settings
  - Useability social site: why follow, what to share, comments - source from FB, twitter, G+, etc, ratings
  - Footer
-
 
 Navigation:
 1. Sort items according to relevance
