@@ -1,4 +1,4 @@
-$module: 'nav-menu-large';
+$module: 'nav-menu-desktop';
 
 .#{$module} {
     @media (max-width: 48em) {
@@ -87,11 +87,11 @@ $module: 'nav-menu-large';
             border-bottom-color: get-site-color('purple');
             @include vrhythm('padding-bottom', 0.25);
 
-            .nav-menu-large__item-icon{
+            .nav-menu-desktop__item-icon{
                 color: get-site-color('purple');
             }
 
-            .nav-menu-large__item-text{
+            .nav-menu-desktop__item-text{
                 color: get-site-color('purple');
             }
         }

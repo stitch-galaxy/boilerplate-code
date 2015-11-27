@@ -1,0 +1,35 @@
+            <div class="component-description">
+                <h2 class="component-description__header"><span class="component-description__block-name">nav-menu-small</span> component</h2>
+                <div class="component-description__bd">
+                    <div class="nav-menu-small">
+
+                        <div class="nav-menu-small__toggle-area">
+                            <div class="nav-menu-small__toggle-area-left-container">
+                                <i class="nav-menu-small__toggle-area-left-container-icon"></i>
+                            </div>
+                            <div class="nav-menu-small__toggle-area-center-container">
+                                <i class="nav-menu-small__toggle-area-center-container-icon" ng-click="popupVisible = !popupVisible"></i>
+                            </div>
+                            <div ng-click="smallMenuVisible = !smallMenuVisible" class="nav-menu-small__toggle-area-right-container">
+                                <i class="nav-menu-small__toggle-area-right-container-icon"></i>
+                            </div>
+                            <div class="nav-menu-small__toggle-area-clear"></div>
+                        </div>
+                        <div class="nav-menu-small__list-wrapper-wrapper">
+                            <div class="nav-menu-small__list-wrapper" ng-class="{'nav-menu-small__list-wrapper_visible': smallMenuVisible}">
+                                <ul class="nav-menu-small__list" ng-class="{'nav-menu-small__list_visible': smallMenuVisible}">
+                                    <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_gallery"></i><span class="nav-menu-small__item-text nav-menu-small__item-text_selected">Gallery</span></li>
+                                    <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_how-it-works"></i><span class="nav-menu-small__item-text">How it works</span></li>
+                                    <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_workspace"></i><span class="nav-menu-small__item-text">Workspace</span></li>
+                                    <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_globe"></i><span class="nav-menu-small__item-text">Language</span></li>
+                                    <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_settings"></i><span class="nav-menu-small__item-text">Settings</span></li>
+                                    <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_signout"></i><span class="nav-menu-small__item-text">Log out</span></li>
+                                    <li class="nav-menu-small__item"><i class="nav-menu-small__item-icon nav-menu-small__item-icon_signin"></i><span class="nav-menu-small__item-text">Log in</span></li>
+                                </ul>
+                                <div class="nav-menu-small__list-terminator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="component-description__bottom-splitter"/>
+            </div>
