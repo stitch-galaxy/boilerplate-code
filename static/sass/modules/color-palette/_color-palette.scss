@@ -60,6 +60,9 @@ $module: 'color-palette';
                 background-color: get-site-color('yellow');
             }
             //Supplementary
+            &_purple {
+                background-color: get-site-color('purple');
+            }
             &_brown {
                 background-color: get-site-color('brown');
             }
@@ -109,6 +112,9 @@ $module: 'color-palette';
                 background-color: get-site-color('yellow');
             }
             //Supplementary
+            &_purple {
+                background-color: get-site-color('purple');
+            }
             &_brown {
                 background-color: get-site-color('brown');
             }
@@ -157,6 +163,9 @@ $module: 'color-palette';
                 color: get-site-color('yellow');
             }
             //Supplementary
+            &_purple {
+                color: get-site-color('purple');
+            }
             &_brown {
                 color: get-site-color('brown');
             }

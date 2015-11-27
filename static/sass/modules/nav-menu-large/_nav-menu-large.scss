@@ -1,86 +1,136 @@
 $module: 'nav-menu-large';
 
 .#{$module} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     text-align: center;
     margin: 0;
     padding: 0;
-    
+    background-color: get-site-color('pistachio');
+
     &__fixed-container {
-        border-radius: 0.5rem;
+        //border-radius: 0.5rem;
         display: inline-block;
         margin: 0 auto;
-        background-color: get-site-color('pistachio');
-        width: 80rem;
-        max-width: 80rem;
+        width: 48rem;
     }
 
     &__list {
-        display: inline-block;
+        display: flex;
+        flex-flow: row nowrap;
         list-style: none;
         margin: 0;
         padding: 0;
-        @include vrhythm('padding-top');
-        @include vrhythm('padding-bottom');
+    }
+
+    &__splitter
+    {
+        flex-grow:2;
+    }
+
+    &__login
+    {
+        position: relative;
+        padding: 0rem 0.7rem;
+        @include font-header();
+        @include type-settings(0);
+        @include vrhythm('padding-top', 0.5);
+        @include vrhythm('padding-bottom', 0.5);
+        
+        &-text {
+            @include font-regular();
+            color: get-site-color('wall');
+        }
+
+        &:hover {
+            background-color: darken(get-site-color('pistachio'), 5%);
+        }
     }
 
     &__item {
-        display: inline-block;
-        margin: 0;
-        padding: 0;
-        color: get-site-color('blue');
+        position: relative;
+        padding: 0rem 0.7rem;
         @include font-header();
-        @include type-settings(1);
+        @include type-settings(0);
         text-align: left;
-    }
+        @include vrhythm('padding-top', 0.5);
+        @include vrhythm('padding-bottom', 0.5);
 
-    &__item-icon {
-        color: get-site-color('brown');
-        
-        text-align: center;
-        margin-right: 1rem;
+        &_selected{
+            @include vrhythm('border-bottom-width', 0.25);
+            border-bottom-style: inset;
+            border-bottom-color: get-site-color('purple');
+            @include vrhythm('padding-bottom', 0.25);
 
-        &_gallery{
-            @include fa-icon($fa-var-th-large);
+            &:before {
+                content: "\25CF";
+                color: get-site-color('purple');
+                @include type-settings(0);
+                @include vrhythm('left', 0);
+                @include vrhythm('top', 0);
+                position: absolute;
+            }
         }
 
-        &_how-it-works{
-            @include fa-icon($fa-var-cogs);
+        &:hover {
+            @include vrhythm('border-bottom-width', 0.25);
+            border-bottom-style: inset;
+            border-bottom-color: get-site-color('purple');
+            @include vrhythm('padding-bottom', 0.25);
+
+            .nav-menu-large__item-icon{
+                color: get-site-color('purple');
+            }
+
+            .nav-menu-large__item-text{
+                color: get-site-color('purple');
+            }
         }
 
-        &_globe{
-            @include fa-icon($fa-var-globe);
-            color: get-site-color('blue');
+        &-icon {
+            display: none;
+            color: get-site-color('wall');
+
+            text-align: center;
+
+
+            &_gallery{
+                @include fa-icon($fa-var-th-large);
+            }
+
+            &_how-it-works{
+                @include fa-icon($fa-var-cogs);
+            }
+
+            &_globe{
+                @include fa-icon($fa-var-globe);
+            }
+
+            &_workspace{
+                @include fa-icon($fa-var-desktop);
+            }
+
+            &_settings{
+                @include fa-icon($fa-var-cog);
+            }
+
+            &_signout{
+                @include fa-icon($fa-var-sign-out);
+                color: get-site-color('red');
+            }
+
+            &_signin{
+                @include fa-icon($fa-var-sign-in);
+                color: get-site-color('blue');
+            }
         }
 
-        &_workspace{
-            @include fa-icon($fa-var-play);
-        }
-
-        &_settings{
-            @include fa-icon($fa-var-cog);
-        }
-
-        &_signout{
-            @include fa-icon($fa-var-sign-out);
-            color: get-site-color('red');
-        }
-
-        &_signin{
-            @include fa-icon($fa-var-sign-in);
-            color: get-site-color('blue');
-        }
-    }
-
-    &__item-text {
-        display: inline-block;
-        color: get-site-color('wall');
-
-
-        @include font-regular();
-        text-align: center;
-
-        &_selected {
-            color: get-site-color('blue');
+        &-text {
+            @include font-regular();
+            color: get-site-color('wall');
+            margin-left: 0.5rem;
         }
     }
 }
