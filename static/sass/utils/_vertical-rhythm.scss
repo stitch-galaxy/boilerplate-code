@@ -17,13 +17,13 @@
       @include breakpoint($viewPortMinWidth $viewPortMaxWidth) {
         #{$property}: $base-line-height * $scale * $numLines;
       }
-      
-      //Final value
-      $scaleParams: nth($types-range, length($types-range));
-      $scale: nth($scaleParams, 1);
-      $viewPortMinWidth: nth($scaleParams, 2);
-      @include breakpoint($viewPortMinWidth) {
+    }
+    
+    //Final value
+    $scaleParams: nth($types-range, length($types-range));
+    $scale: nth($scaleParams, 1);
+    $viewPortMinWidth: nth($scaleParams, 2);
+    @include breakpoint($viewPortMinWidth) {
         #{$property}: $base-line-height * $scale * $numLines;
-      }
     }
 }

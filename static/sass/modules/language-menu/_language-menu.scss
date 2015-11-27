@@ -36,6 +36,7 @@ $module: 'language-menu';
     {
         @include fa-icon($fa-var-times);
         @include type-settings(2);
+        line-height: 1 !important;
     }
 
     &__item {

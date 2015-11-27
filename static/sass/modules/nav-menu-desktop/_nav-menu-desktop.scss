@@ -7,17 +7,24 @@ $module: 'nav-menu-desktop';
     @media (min-width: 48em) {
         display: block;
     }
-    
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background-color: get-site-color('pistachio');
 
-    &__fixed-container {
+    &__stub{
+        @include vrhythm('height', 2);
+    }
+
+    &__container-fluid
+    {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        background-color: get-site-color('pistachio');
+    }
+
+    &__container-fixed-width {
         //border-radius: 0.5rem;
         display: inline-block;
         margin: 0 auto;
@@ -45,7 +52,7 @@ $module: 'nav-menu-desktop';
         @include type-settings(0);
         @include vrhythm('padding-top', 0.5);
         @include vrhythm('padding-bottom', 0.5);
-        
+
         &-text {
             @include font-regular();
             color: get-site-color('wall');
