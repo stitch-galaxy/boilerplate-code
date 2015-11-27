@@ -1,0 +1,55 @@
+$module: 'login';
+
+.#{$module} {
+    display: flex;
+    align-items: center;
+    &__container{
+        flex-grow: 0;
+        display: inline-flex;
+        margin: 0 auto;
+        flex-flow: column nowrap;
+        align-items: center;
+    }
+    &__button-provider{
+        //flex: 1 0 100%;
+        @include vrhythm('margin-bottom', 1);
+    }
+    &__header
+    {
+        text-align: center;
+        display: inline-block;
+        padding: 0rem 1rem;
+        margin: 0;
+        @include font-regular();
+        @include type-settings(0);
+        @include vrhythm('margin-bottom', 1);
+    }
+
+    &__post
+    {
+        text-align: center;
+        padding: 0rem 1rem;
+        @include type-settings(-1);
+        @include font-regular();
+        color: tint(get-site-color('black'), 70%);
+    }
+
+    &__horizontal-separator{
+        border-top: 1px solid #ccc;
+        display: inline-block;
+        height: 1px;
+        @include vrhythm('margin-top', 0.5);
+        @include vrhythm('margin-bottom', 0.5);
+        position: relative;
+        text-align: center;
+        width: 100%;
+    }
+    
+    &__horizontal-separator-text{
+        background-color: white;
+        text-transform: none;
+        padding: 0 1rem;
+        position: relative;
+        @include vrhythm('top', -0.5);
+    }
+}

@@ -1,0 +1,38 @@
+$module: 'button-provider';
+
+.#{$module} {
+    display: block;
+    position:relative;
+    text-align: center;
+    width:100%;
+    @include vrhythm('border-radius', 0.75);
+    @include vrhythm('padding-top', 0.25);
+    @include vrhythm('padding-bottom', 0.25);
+    @include type-settings(0);
+    color: get-site-color('white');
+    font-weight: bold;
+    
+    &_facebook{
+        background-color: #1a60a2;
+    }
+    &_google{
+        background-color: #bf4434;
+    }
+    
+    &__icon{
+        position: absolute;
+        @include vrhythm('left', 1);
+        
+        &_facebook
+        {
+            @include fa-icon($fa-var-facebook);
+        }
+        &_google
+        {
+            @include fa-icon($fa-var-google);
+        }
+    }
+    
+    &__text{
+    }
+}
