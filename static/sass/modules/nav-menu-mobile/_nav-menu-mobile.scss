@@ -1,66 +1,33 @@
-$module: 'nav-menu-large';
+$module: 'nav-menu-mobile';
 
 .#{$module} {
-    @media (max-width: 48em) {
+    @media (min-width: 48em) {
         display: none;
     }
-    @media (min-width: 48em) {
+    @media (max-width: 48em) {
         display: block;
     }
     
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    text-align: center;
     margin: 0;
     padding: 0;
     background-color: get-site-color('pistachio');
-
-    &__fixed-container {
-        //border-radius: 0.5rem;
-        display: inline-block;
-        margin: 0 auto;
-        width: 48rem;
-    }
 
     &__list {
         display: flex;
         flex-flow: row nowrap;
         list-style: none;
+        justify-content: space-around;
         margin: 0;
         padding: 0;
     }
 
-    &__splitter
-    {
-        flex-grow:2;
-    }
-
-    &__login
-    {
-        position: relative;
-        padding: 0rem 0.7rem;
-        @include font-header();
-        @include type-settings(0);
-        @include vrhythm('padding-top', 0.5);
-        @include vrhythm('padding-bottom', 0.5);
-        
-        &-text {
-            @include font-regular();
-            color: get-site-color('wall');
-        }
-
-        &:hover {
-            background-color: darken(get-site-color('pistachio'), 5%);
-        }
-    }
-
     &__item {
+        display: flex;
+        flex-flow: column nowrap;
         position: relative;
         padding: 0rem 0.7rem;
         @include font-header();
-        @include type-settings(0);
+        @include type-settings(1);
         text-align: left;
         @include vrhythm('padding-top', 0.5);
         @include vrhythm('padding-bottom', 0.5);
@@ -78,21 +45,6 @@ $module: 'nav-menu-large';
                 @include vrhythm('left', 0);
                 @include vrhythm('top', 0);
                 position: absolute;
-            }
-        }
-
-        &:hover {
-            @include vrhythm('border-bottom-width', 0.25);
-            border-bottom-style: inset;
-            border-bottom-color: get-site-color('purple');
-            @include vrhythm('padding-bottom', 0.25);
-
-            .nav-menu-large__item-icon{
-                color: get-site-color('purple');
-            }
-
-            .nav-menu-large__item-text{
-                color: get-site-color('purple');
             }
         }
 
@@ -118,12 +70,15 @@ $module: 'nav-menu-large';
             &_workspace{
                 @include fa-icon($fa-var-desktop);
             }
+            
+            &_man{
+                @include fa-icon($fa-var-user);
+            }
         }
 
         &-text {
             @include font-regular();
             color: get-site-color('wall');
-            margin-left: 0.5rem;
         }
     }
 }
