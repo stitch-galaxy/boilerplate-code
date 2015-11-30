@@ -1,0 +1,27 @@
+$module: 'button';
+
+.#{$module} {
+    display: block;
+    position:relative;
+    text-align: center;
+    width:100%;
+    border: 1px solid;
+    @include vrhythm('border-radius', 0.75);
+    @include vrhythm('padding-top', 0.25);
+    @include vrhythm('padding-bottom', 0.25);
+    @include type-settings(0);
+    text-decoration: none;
+
+    &_success{
+        border-color: get-site-color('green');
+        color: get-site-color('green');
+        &:hover{
+            background-color: transparentize(get-site-color('green'), 0.8);
+        }
+    }
+
+
+
+    &__text{
+    }
+}

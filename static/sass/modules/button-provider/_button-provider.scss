@@ -11,6 +11,7 @@ $module: 'button-provider';
     @include type-settings(0);
     color: get-site-color('white');
     font-weight: bold;
+    text-decoration: none;
     
     &_facebook{
         background-color: #1a60a2;
