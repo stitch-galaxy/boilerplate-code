@@ -18,15 +18,15 @@ $module: 'signup';
         margin: 0;
         @include font-regular();
         @include type-settings(0);
-        @include vrhythm('margin-bottom', 1);
     }
 
     &__button-provider{
-        @include vrhythm('margin-bottom', 1);
+        @include vrhythm('margin-top', 1);
     }
 
     &__fine-print
     {
+        @include vrhythm('margin-top', 1);
     }
 
     &__horizontal-separator{
@@ -36,6 +36,5 @@ $module: 'signup';
     {
         @include font-regular();
         @include type-settings(0);
-        @include vrhythm('margin-bottom', 1);
     }
 }
