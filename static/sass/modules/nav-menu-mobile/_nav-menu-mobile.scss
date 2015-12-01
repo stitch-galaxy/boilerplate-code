@@ -32,7 +32,7 @@ $module: 'nav-menu-mobile';
         @include vrhythm('padding-top', 0.5);
         @include vrhythm('padding-bottom', 0.5);
 
-        &_selected{
+        &_selected {
             @include vrhythm('border-bottom-width', 0.25);
             border-bottom-style: solid;
             border-bottom-color: get-site-color('purple');

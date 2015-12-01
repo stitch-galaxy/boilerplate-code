@@ -4,6 +4,8 @@ $module: 'site';
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    margin:0;
+    padding:0;    
     
     &__content {
         flex: 1;

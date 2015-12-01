@@ -1,0 +1,33 @@
+$module: 'footer';
+
+.#{$module} {
+    display: block;
+    width:100%;
+    background-color: get-site-color('turquoise');
+
+    &__container
+    {
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    }
+
+    &__copyrigths
+    {
+        @include type-settings(-1);
+        @include font-regular();
+        color: get-site-color('black');
+        //color: tint(get-site-color('black'), 70%);
+        margin: 0 1rem;
+        display: block;
+        
+        text-align: center;
+
+        @include breakpoint(48em) {
+            float: right;
+            text-align: right;
+        }
+    }
+}
