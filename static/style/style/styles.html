@@ -41,12 +41,14 @@
                 <h2 class="component-description__header"><span class="component-description__block-name">input</span> component</h2>
                 <div class="component-description__bd">
                     <div class="input">
-                        <span class="input__validation">Password required</span>
+                        <label class="input__label">Password</label>
                         <input class="input__input" placeholder="Password" type="password"/>
+                        <span class="input__validation">Password required</span>
                     </div>
                     <div class="input input_invalid">
-                        <span class="input__validation">E-mail required</span>
+                        <label class="input__label">E-mail</label>
                         <input class="input__input" placeholder="Email" type="email"/>
+                        <span class="input__validation">E-mail required</span>
                     </div>
 
                 </div>
@@ -133,13 +135,13 @@
                             </div>
                             <h1 class="login__header">Log in to your Stitch Galaxy account</h1>
                             <div class="login__input-group">
-                                <div class="login__input input">
-                                    <span class="input__validation">Email required</span>
+                                <div class="input">
                                     <input class="input__input" placeholder="Email" type="email"/>
+                                    <span class="input__validation">Email required</span>
                                 </div>
-                                <div class="login__input input input_invalid">
-                                    <span class="input__validation">Password required</span>
+                                <div class="input input_invalid">
                                     <input class="input__input" placeholder="Password" type="password"/>
+                                    <span class="input__validation">Password required</span>
                                 </div>
                             </div>
 
@@ -183,8 +185,36 @@
                                 <span class="horizontal-separator__text">or</span>
                             </div>
                             <a href="#" class="signup__create-new-account-link">Sign up using e-mail</a>
-
-
+                            <div class="signup__input-group">
+                                <div class="input">
+                                    <label class="input__label">First name</label>
+                                    <input class="input__input" placeholder="First name"/>
+                                    <span class="input__validation">First name required</span>
+                                </div>
+                                <div class="input">
+                                    <label class="input__label">Last name</label>
+                                    <input class="input__input" placeholder="Last name"/>
+                                    <span class="input__validation">Last name required</span>
+                                </div>
+                                <div class="input">
+                                    <label class="input__label">Email</label>
+                                    <input class="input__input" placeholder="Email" type="email"/>
+                                    <span class="input__validation">Email required</span>
+                                </div>
+                                <div class="input input_invalid">
+                                    <label class="input__label">Password</label>
+                                    <input class="input__input" placeholder="Password" type="password"/>
+                                    <span class="input__validation">Password required</span>
+                                </div>
+                                <div class="input input_invalid">
+                                    <label class="input__label">Repeat password</label>
+                                    <input class="input__input" placeholder="Password" type="password"/>
+                                    <span class="input__validation">Password do not match</span>
+                                </div>
+                            </div>
+                            <a href="#"  class="signup__button-submit button button_success">
+                                <span class="button__text">Sign up</span>
+                            </a>
 
                             <div class="signup__fine-print fine-print">By clicking button, you agree to our<a class="fine-print__link" href="#">Terms of service</a>and<a class="fine-print__link" href="#">Privacy Policy</a></div>
                         </div>

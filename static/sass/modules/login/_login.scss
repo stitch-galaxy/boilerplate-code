@@ -26,13 +26,11 @@ $module: 'login';
 
     &__input-group
     {
+        @include vrhythm('margin-top', 1);
         width: 100%;
     }
 
-    &__button-submit
-    {
-        @include vrhythm('margin-top', 1);
-    }
+    
 
     &__fine-print
     {
@@ -42,6 +40,11 @@ $module: 'login';
     &__horizontal-separator{
     }
 
+    &__button-submit
+    {
+        @include vrhythm('margin-top', 1);
+    }
+    
     &__additional-options
     {
         @include vrhythm('margin-top', 1);

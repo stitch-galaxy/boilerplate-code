@@ -1,13 +1,17 @@
 $module: 'input';
 
 .#{$module} {
-
-    //padding-left: 1rem;
-
+    
+    &__label{
+        @include font-regular();
+        @include type-settings(0);
+        font-weight: bold;
+        display: block;
+    }
 
     &__input
     {
-        @include vrhythm('margin-top', 1);
+        @include vrhythm('margin-bottom', 1);
         width: 100%;
         @include font-regular();
         @include type-settings(0);
@@ -34,7 +38,7 @@ $module: 'input';
         .#{$module} {
             &__input
             {
-                margin-top: 0;
+                margin-bottom: 0;
                 border-color: get-site-color('red');
                 &:focus{
                     box-shadow: 0 0 10px transparentize(get-site-color('red'), 0.2);
