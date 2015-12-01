@@ -1,13 +1,30 @@
 $module: 'site';
+//
+//http://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/
 
 .#{$module} {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-    margin:0;
-    padding:0;    
-    
+    height: 100%;
+
+    &__body{
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        margin:0;
+        padding:0;    
+    }
+
+
     &__content {
-        flex: 1;
+        flex: 1 0 auto;
+    }
+
+    &__footer {
+        flex: 0 0 auto;
+        //flex-shrink: 0;
+    }
+
+    &__header {
+        flex: 0 0 auto;
+        //flex-shrink: 0;
     }
 }
