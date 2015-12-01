@@ -25,7 +25,6 @@ $module: 'nav-menu-desktop';
     }
 
     &__container-fixed-width {
-        display: inline-block;
         margin: 0 auto;
         width: 48rem;
     }
@@ -71,7 +70,7 @@ $module: 'nav-menu-desktop';
         @include vrhythm('padding-top', 0.5);
         @include vrhythm('padding-bottom', 0.5);
 
-        &_selected{
+/*        &_selected{
             @include vrhythm('border-bottom-width', 0.25);
             border-bottom-style: solid;
             border-bottom-color: get-site-color('purple');
@@ -85,7 +84,7 @@ $module: 'nav-menu-desktop';
                 @include vrhythm('top', 0);
                 position: absolute;
             }
-        }
+        }*/
 
         &:hover {
             @include vrhythm('border-bottom-width', 0.25);
