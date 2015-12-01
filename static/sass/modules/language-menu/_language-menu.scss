@@ -62,7 +62,7 @@ $module: 'language-menu';
         &:hover {
             @include vrhythm('padding-bottom', 0.25);
             @include vrhythm('border-bottom-width', 0.25);
-            border-bottom-style: inset;
+            border-bottom-style: solid;
             border-bottom-color: get-site-color('green');
             
         }
