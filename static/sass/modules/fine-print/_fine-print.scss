@@ -1,0 +1,14 @@
+$module: 'fine-print';
+
+.#{$module} {
+    text-align: center;
+    padding: 0rem 1rem;
+    @include type-settings(-1);
+    @include font-regular();
+    color: tint(get-site-color('black'), 70%);
+    &__link
+    {
+        margin-left: 0.2rem;
+        margin-right: 0.2rem;
+    }
+}

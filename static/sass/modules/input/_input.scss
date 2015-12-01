@@ -1,0 +1,14 @@
+$module: 'input';
+
+.#{$module} {
+    width: 100%;
+    padding-left: 1rem;
+    
+    @include font-regular();
+    @include type-settings(0);
+    outline: 0;
+    border: 1px solid #ccc;
+    &:focus{
+        box-shadow: 0 0 10px transparentize(get-site-color('pistachio'), 0.2);
+    }
+}

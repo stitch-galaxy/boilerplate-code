@@ -1,4 +1,4 @@
-$module: 'login';
+$module: 'signup';
 
 .#{$module} {
     display: flex;
@@ -25,43 +25,17 @@ $module: 'login';
         @include vrhythm('margin-bottom', 1);
     }
 
-    &__input
-    {
-        @include vrhythm('margin-bottom', 1);
-    }
-
-    &__button-submit
-    {
-        @include vrhythm('margin-bottom', 1);
-    }
-
     &__fine-print
     {
     }
 
     &__horizontal-separator{
     }
-
-    &__additional-options
+    
+    &__create-new-account-link
     {
-        @include vrhythm('margin-bottom', 1);
-
-        width: 100%;
-        display:flex;
-        flex-flow: row nowrap;
-        justify-content: center;
         @include font-regular();
         @include type-settings(0);
-
-
-        &-inline-separator
-        {
-            margin-left: 0.5rem;
-            margin-right: 0.5rem;
-            border-left: 1px solid #ccc;
-        }
-        &-link{
-
-        }
+        @include vrhythm('margin-bottom', 1);
     }
 }

@@ -1,0 +1,20 @@
+$module: 'horizontal-separator';
+
+.#{$module} {
+    border-top: 1px solid #ccc;
+        display: inline-block;
+        height: 1px;
+        @include vrhythm('margin-top', 0.5);
+        @include vrhythm('margin-bottom', 0.5);
+        position: relative;
+        text-align: center;
+        width: 100%;
+
+    &__text{
+        background-color: white;
+        text-transform: none;
+        padding: 0 1rem;
+        position: relative;
+        @include vrhythm('top', -0.5);
+    }
+}
