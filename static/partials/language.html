@@ -3,9 +3,11 @@
     <div class="language-menu">
         <div class="language-menu__close-button"><i class="language-menu__close-button-icon"></i></div>
         <ul class="language-menu__list">
-            <li class="language-menu__item" ng-repeat="language in languages">
+            <a href ui-sref="app.language({lang: language.locale})" ng-repeat="language in languages">
+            <li class="language-menu__item">
                 <span class="language-menu__item-text" ng-class="{'language-menu__item-text_selected': language.locale === activeLang}">{{language.foreign}} - {{language.native}}</span>
             </li>
+            </a>
 <!--            <li class="language-menu__item"><span class="language-menu__item-text language-menu__item-text_selected">English - English</span></li>
             <li class="language-menu__item"><span class="language-menu__item-text">Russian - Русский</span></li>
             <li class="language-menu__item"><span class="language-menu__item-text">Italian - Italiano</span></li>
