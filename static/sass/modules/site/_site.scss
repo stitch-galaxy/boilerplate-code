@@ -4,6 +4,13 @@ $module: 'site';
 
 .#{$module} {
     height: 100%;
+    
+    &__container
+    {
+        height: 100%;
+        margin:0;
+        padding:0;
+    }
 
     &__body{
         display: flex;
@@ -19,12 +26,14 @@ $module: 'site';
     }
 
     &__footer {
+        margin:0;
+        padding:0;
         flex: 0 0 auto;
-        //flex-shrink: 0;
     }
 
     &__header {
+        margin:0;
+        padding:0;
         flex: 0 0 auto;
-        //flex-shrink: 0;
     }
 }

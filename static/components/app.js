@@ -75,7 +75,7 @@
                 .state('app', {
                     abstract: true,
                     url: '/{lang:(?:en|ru)}',
-                    template: '<ui-view/>',
+                    template: '<div ui-view class="site__body"></div>',
                     controller: 'AppCtrl',
                     controllerAs: 'app'
                 })
