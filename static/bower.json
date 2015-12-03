@@ -5,7 +5,8 @@
     "angular-route": "1.4.7",
     "angular-translate": "2.8.1",
     "jquery": "2.1.4",
-    "components-font-awesome": "4.4.0"
+    "components-font-awesome": "4.4.0",
+    "angular-ui-router": "ui-router#0.2.15"
   },
   "devDependencies": {
     "bourbon": "4.2.6"
