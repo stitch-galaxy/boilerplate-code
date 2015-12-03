@@ -5,7 +5,8 @@
 
     angular.module('stitchGalaxy', [
         'ui.router',
-        'templates'
+        'templates',
+        'pascalprecht.translate'
     ]);
 
     //Search controller
@@ -23,26 +24,39 @@
     angular
             .module('stitchGalaxy')
             .controller('LoginCtrl', LoginCtrl);
-    
-    
+
+
     //Login controller
-    function AppCtrl($rootScope, $stateParams) {
+    function AppCtrl($rootScope, $stateParams, $translate) {
         //https://github.com/angular-ui/ui-router/issues/1307
         $rootScope.activeLang = $stateParams.lang;
-        
+        $translate.use($rootScope.activeLang);
+
         $rootScope.$on('$stateChangeSuccess', function rootStateChangeSuccess(event, toState, toParams, fromState, fromParams) {
             if ($stateParams.lang !== undefined) {
-                $rootScope.activeLang = $stateParams.lang;
-                //$translate.use($stateParams.lang);
+                $rootScope.activeLang = toParams.lang;
+                $translate.use($rootScope.activeLang);
             }
         });
     }
 
     angular
             .module('stitchGalaxy')
-            .controller('AppCtrl', ['$rootScope', '$stateParams', AppCtrl]);
+            .controller('AppCtrl', ['$rootScope', '$stateParams', '$translate', AppCtrl]);
 
-    function config($stateProvider, $urlRouterProvider) {
+    function config($stateProvider, $urlRouterProvider, $translateProvider) {
+        var enTranslations = {
+            TEXT: 'English text'
+        };
+        var ruTranslations = {
+            TEXT: 'Russian text'
+        };
+
+        $translateProvider
+                .translations('en', enTranslations)
+                .translations('ru', ruTranslations)
+                .preferredLanguage('en');
+
         //
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise('/en/search');
@@ -65,10 +79,10 @@
                     url: '/login',
                     templateUrl: 'partials/login.html',
                     controller: 'LoginCtrl',
-                    controllerAs: 'login'});        
+                    controllerAs: 'login'});
     }
 
     angular
             .module('stitchGalaxy')
-            .config(['$stateProvider', '$urlRouterProvider', config]);
+            .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', config]);
 })();
