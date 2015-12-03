@@ -70,7 +70,7 @@ $module: 'nav-menu-desktop';
         @include vrhythm('padding-top', 0.5);
         @include vrhythm('padding-bottom', 0.5);
 
-/*        &_selected{
+        &_selected{
             @include vrhythm('border-bottom-width', 0.25);
             border-bottom-style: solid;
             border-bottom-color: get-site-color('purple');
@@ -80,11 +80,11 @@ $module: 'nav-menu-desktop';
                 content: "\25CF";
                 color: get-site-color('purple');
                 @include type-settings(0);
-                @include vrhythm('left', 0);
-                @include vrhythm('top', 0);
+                left: 0;
+                top: 0;
                 position: absolute;
             }
-        }*/
+        }
 
         &:hover {
             @include vrhythm('border-bottom-width', 0.25);
