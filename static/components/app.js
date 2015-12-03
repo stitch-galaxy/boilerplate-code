@@ -6,7 +6,8 @@
     angular.module('stitchGalaxy', [
         'ui.router',
         'templates',
-        'pascalprecht.translate'
+        'pascalprecht.translate',
+        'ngSanitize'
     ]);
 
     //Search controller
@@ -55,6 +56,7 @@
         $translateProvider
                 .translations('en', enTranslations)
                 .translations('ru', ruTranslations)
+                .useSanitizeValueStrategy('sanitize')
                 .preferredLanguage('en');
 
         //
