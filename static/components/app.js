@@ -25,9 +25,17 @@
     angular
             .module('stitchGalaxy')
             .controller('LoginCtrl', LoginCtrl);
+    
+    //Langage controller
+    function LanguageCtrl() {
+    }
+
+    angular
+            .module('stitchGalaxy')
+            .controller('LanguageCtrl', LanguageCtrl);
 
 
-    //Login controller
+    //App controller
     function AppCtrl($rootScope, $stateParams, $translate) {
         //https://github.com/angular-ui/ui-router/issues/1307
         $rootScope.activeLang = $stateParams.lang;
@@ -76,6 +84,12 @@
                     templateUrl: 'partials/search.html',
                     controller: 'SearchCtrl',
                     controllerAs: 'search'
+                })
+                .state('app.language', {
+                    url: '/language',
+                    templateUrl: 'partials/language.html',
+                    controller: 'LanguageCtrl',
+                    controllerAs: 'language'
                 })
                 .state('app.login', {
                     url: '/login',
