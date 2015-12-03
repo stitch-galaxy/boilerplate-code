@@ -54,6 +54,7 @@ var paths = {
   favicons : ['./favicon.ico', './apple-touch-icon.png'],
   robots : './robots.txt',
   fonts : ['./fonts/**/*'],
+  translations : ['./translations/**/*'],
   vendorFonts : ['./bower_components/bootstrap-sass/assets/fonts/**/*', './bower_components/components-font-awesome/fonts/**/*'],
   partials : './partials/**/*'
 };
@@ -314,6 +315,17 @@ gulp.task('robots:dev', function () {
     .pipe(gulp.dest(paths.dirs.build.dev));
 });
 
+//translations
+gulp.task('translations:prod', function () {
+  return gulp.src(paths.translations)
+    .pipe(gulp.dest(paths.dirs.build.prod + '/assets/translations'));
+});
+
+gulp.task('translations:dev', function () {
+  return gulp.src(paths.translations)
+    .pipe(gulp.dest(paths.dirs.build.dev + '/assets/translations'));
+});
+
 //fonts
 gulp.task('fonts:prod', function () {
   return gulp.src(paths.fonts)
@@ -351,14 +363,14 @@ gulp.task('partials:dev', function () {
 gulp.task('build:prod', function(callback) {
   runSequence('lintGulpfile',
               'clean:prod',
-              ['images:prod', 'favicon:prod', 'robots:prod', 'fonts:prod', 'vendorfonts:prod', 'partials:prod', 'htmlAndJsAndCss:prod'],
+              ['images:prod', 'favicon:prod', 'robots:prod', 'fonts:prod', 'translations:prod', 'vendorfonts:prod', 'partials:prod', 'htmlAndJsAndCss:prod'],
               callback);
 });
 
 gulp.task('build:dev', function(callback) {
   runSequence('lintGulpfile',
               'clean:dev',
-              ['images:dev', 'favicon:dev', 'robots:dev', 'fonts:dev', 'vendorfonts:dev', 'partials:dev', 'htmlAndJsAndCss:dev'],
+              ['images:dev', 'favicon:dev', 'robots:dev', 'fonts:dev', 'translations:dev', 'vendorfonts:dev', 'partials:dev', 'htmlAndJsAndCss:dev'],
               //['images:dev', 'favicon:dev', 'robots:dev', 'fonts:dev', 'vendorfonts:dev', 'partials:dev', 'htmlAndJsAndCss:dev', 'templates:cache'],
               callback);
 });
@@ -383,7 +395,8 @@ gulp.task('watch:dev', function () {
   gulp.watch(paths.styleGuideHtml, ['html:dev']);
   gulp.watch(paths.sass, ['css:dev']);
   gulp.watch(paths.js, ['js:dev']);
-  gulp.watch(paths.partials, ['partials:dev']);
+  gulp.watch(paths.partials, ['partials:dev', 'js:dev']);
+  gulp.watch(paths.translations, ['translations:dev']);
 });
 
 //gulp.task('dev', ['build:dev', 'connect:dev']);

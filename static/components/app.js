@@ -25,7 +25,7 @@
     angular
             .module('stitchGalaxy')
             .controller('LoginCtrl', LoginCtrl);
-    
+
     //Langage controller
     function LanguageCtrl() {
     }
@@ -54,17 +54,13 @@
             .controller('AppCtrl', ['$rootScope', '$stateParams', '$translate', AppCtrl]);
 
     function config($stateProvider, $urlRouterProvider, $translateProvider) {
-        var enTranslations = {
-            TEXT: 'English text'
-        };
-        var ruTranslations = {
-            TEXT: 'Russian text'
-        };
-
         $translateProvider
-                .translations('en', enTranslations)
-                .translations('ru', ruTranslations)
+                .useStaticFilesLoader({
+                    prefix: '/assets/translations/locale-',
+                    suffix: '.json'
+                })
                 .useSanitizeValueStrategy('sanitize')
+                .fallbackLanguage('en')
                 .preferredLanguage('en');
 
         //
