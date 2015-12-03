@@ -3,14 +3,17 @@
     <div class="language-menu">
         <div class="language-menu__close-button"><i class="language-menu__close-button-icon"></i></div>
         <ul class="language-menu__list">
-            <li class="language-menu__item"><span class="language-menu__item-text language-menu__item-text_selected">English - English</span></li>
+            <li class="language-menu__item" ng-repeat="language in languages">
+                <span class="language-menu__item-text">{{language.foreign}} - {{language.native}}</span>
+            </li>
+<!--            <li class="language-menu__item"><span class="language-menu__item-text language-menu__item-text_selected">English - English</span></li>
             <li class="language-menu__item"><span class="language-menu__item-text">Russian - Русский</span></li>
             <li class="language-menu__item"><span class="language-menu__item-text">Italian - Italiano</span></li>
             <li class="language-menu__item"><span class="language-menu__item-text">Spanish - Español</span></li>
             <li class="language-menu__item"><span class="language-menu__item-text">French - Français</span></li>
             <li class="language-menu__item"><span class="language-menu__item-text">Portugal - Português</span></li>
             <li class="language-menu__item"><span class="language-menu__item-text">Deutsch - Deutsch</span></li>
-            <li class="language-menu__item"><span class="language-menu__item-text">Turkish - Türkçe</span></li>
+            <li class="language-menu__item"><span class="language-menu__item-text">Turkish - Türkçe</span></li>-->
         </ul>
     </div>
 </div>

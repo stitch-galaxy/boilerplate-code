@@ -20,6 +20,7 @@
 
     //Login controller
     function LoginCtrl() {
+
     }
 
     angular
@@ -27,12 +28,25 @@
             .controller('LoginCtrl', LoginCtrl);
 
     //Langage controller
-    function LanguageCtrl() {
+    function LanguageCtrl($scope, $translate) {
+        $translate(['EN', 'RU']).then(function (translations) {
+            $scope.languages = [];
+            $scope.languages.push({locale: 'RU',
+                native: 'Русский',
+                foreign: translations.RU
+            });
+            $scope.languages.push({locale: 'EN',
+                native: 'English',
+                foreign: translations.EN
+            });
+            
+            $scope.languages.sort(function(a,b) {return (a.foreign > b.foreign) ? 1 : ((b.foreign > a.foreign) ? -1 : 0);});
+        });
     }
 
     angular
             .module('stitchGalaxy')
-            .controller('LanguageCtrl', LanguageCtrl);
+            .controller('LanguageCtrl', ['$scope', '$translate', LanguageCtrl]);
 
 
     //App controller
@@ -59,6 +73,7 @@
                     prefix: '/assets/translations/locale-',
                     suffix: '.json'
                 })
+                //http://stackoverflow.com/questions/31002499/angular-translate-sanitisation-fails-with-utf-characters
                 .useSanitizeValueStrategy('sanitize')
                 .fallbackLanguage('en')
                 .preferredLanguage('en');
