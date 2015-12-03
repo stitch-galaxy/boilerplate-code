@@ -31,11 +31,11 @@
     function LanguageCtrl($scope, $translate) {
         $translate(['EN', 'RU']).then(function (translations) {
             $scope.languages = [];
-            $scope.languages.push({locale: 'RU',
+            $scope.languages.push({locale: 'ru',
                 native: 'Русский',
                 foreign: translations.RU
             });
-            $scope.languages.push({locale: 'EN',
+            $scope.languages.push({locale: 'en',
                 native: 'English',
                 foreign: translations.EN
             });
