@@ -1,10 +1,10 @@
 'use strict';
 
-(function() {
+(function () {
     angular.module('templates', []);
 
     angular.module('stitchGalaxy', [
-        'ngRoute',
+        'ui.router',
         'templates'
     ]);
 
@@ -25,21 +25,26 @@
             .module('stitchGalaxy')
             .controller('LoginCtrl', LoginCtrl);
 
-    function config($routeProvider) {
-        $routeProvider
-                .when('/search', {
+    function config($stateProvider, $urlRouterProvider) {
+        //
+        // For any unmatched url, redirect to /state1
+        $urlRouterProvider.otherwise('/search');
+
+        $stateProvider
+                .state('search', {
+                    url: '/search',
                     templateUrl: 'partials/search.html',
                     controller: 'SearchCtrl',
                     controllerAs: 'search'
                 })
-                .when('/login', {
+                .state('login', {
+                    url: '/login',
                     templateUrl: 'partials/login.html',
                     controller: 'LoginCtrl',
-                    controllerAs: 'login'})
-                .otherwise({redirectTo: '/search'});
+                    controllerAs: 'login'});
     }
 
     angular
             .module('stitchGalaxy')
-            .config(['$routeProvider', config]);
+            .config(['$stateProvider', '$urlRouterProvider', config]);
 })();
