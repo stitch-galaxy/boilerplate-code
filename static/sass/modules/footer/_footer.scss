@@ -1,6 +1,8 @@
 $module: 'footer';
 
 .#{$module} {
+    //http://stackoverflow.com/questions/2062258/floating-stuff-within-a-div-floats-outside-of-div-why
+    overflow: hidden;
     display: block;
     width:100%;
     background-color: get-site-color('turquoise');
