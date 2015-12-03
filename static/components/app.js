@@ -28,16 +28,21 @@
     function config($stateProvider, $urlRouterProvider) {
         //
         // For any unmatched url, redirect to /state1
-        $urlRouterProvider.otherwise('/search');
+        $urlRouterProvider.otherwise('/en/search');
 
         $stateProvider
-                .state('search', {
+                .state('app', {
+                    abstract: true,
+                    url: '/{lang:(?:en|ru)}',
+                    template: '<ui-view/>'
+                })
+                .state('app.search', {
                     url: '/search',
                     templateUrl: 'partials/search.html',
                     controller: 'SearchCtrl',
                     controllerAs: 'search'
                 })
-                .state('login', {
+                .state('app.login', {
                     url: '/login',
                     templateUrl: 'partials/login.html',
                     controller: 'LoginCtrl',
