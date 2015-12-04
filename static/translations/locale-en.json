@@ -1,5 +1,17 @@
 {
     "TEXT": "English text",
-    "EN" : "English",
-    "RU" : "Russian"
+    "EN": "English",
+    "RU": "Russian",
+    "NAV_MENU_GALLERY": "Gallery",
+    "NAV_MENU_GALLERY_SHORT": "Gallery",
+    "NAV_MENU_HOW_IT_WORKS": "How it works",
+    "NAV_MENU_HOW_IT_WORKS_SHORT": "FAQ",
+    "NAV_MENU_STITCH": "Stitch",
+    "NAV_MENU_STITCH_SHORT": "Work",
+    "NAV_MENU_LANGUAGE": "Language",
+    "NAV_MENU_ME": "Me",
+    "NAV_MENU_LOGIN": "Log in",
+    "NAV_MENU_SIGNUP": "Sign up",
+    
+    "TRANSLATION_PLACEHOLDER" : "TRANSLATION_PLACEHOLDER"
 }

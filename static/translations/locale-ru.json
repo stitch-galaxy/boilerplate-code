@@ -1,6 +1,17 @@
 {
     "TEXT": "Русский текст",
-	"EN" : "Английский",
-    "RU" : "Русский"
-
+    "EN": "Английский",
+    "RU": "Русский",
+    "NAV_MENU_GALLERY": "Галлерея",
+    "NAV_MENU_GALLERY_SHORT": "Галлерея",
+    "NAV_MENU_HOW_IT_WORKS": "Как это работает",
+    "NAV_MENU_HOW_IT_WORKS_SHORT": "ЧАВО",
+    "NAV_MENU_STITCH": "Вышивать",
+    "NAV_MENU_STITCH_SHORT": "Шить",
+    "NAV_MENU_LANGUAGE": "Язык",
+    "NAV_MENU_ME": "Я",
+    "NAV_MENU_LOGIN": "Войти",
+    "NAV_MENU_SIGNUP": "Регистрация",
+    
+    "TRANSLATION_PLACEHOLDER" : "TRANSLATION_PLACEHOLDER"
 }

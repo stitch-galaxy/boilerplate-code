@@ -73,8 +73,8 @@
                     prefix: '/assets/translations/locale-',
                     suffix: '.json'
                 })
-                //http://stackoverflow.com/questions/31002499/angular-translate-sanitisation-fails-with-utf-characters
-                .useSanitizeValueStrategy('sanitize')
+                //https://github.com/angular-translate/angular-translate/issues/1101
+                .useSanitizeValueStrategy('sanitizeParameters')
                 .fallbackLanguage('en')
                 .preferredLanguage('en');
 
