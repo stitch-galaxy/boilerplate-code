@@ -1,0 +1,24 @@
+{
+  "name": "stitchgalaxy",
+  "version": "1.0.0",
+  "description": "Stitch galaxy web frontend",
+  "main": "./lib/bundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evgeny Tarasov",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "react-router": "^2.4.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-util": "^3.0.7",
+    "source-map-loader": "^0.1.5",
+    "ts-loader": "^0.8.2",
+    "typescript": "^1.8.10",
+    "webpack": "^1.13.0"
+  }
+}
