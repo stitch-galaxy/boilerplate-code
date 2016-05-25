@@ -9,7 +9,14 @@
     },
     "files": [
         "./typings/index.d.ts",
-        "./src/components/Hello.tsx",
+        "./src/components/App.tsx",
+        "./src/components/Gallery.tsx",
+        "./src/components/About.tsx",
+        "./src/components/InvalidUrl.tsx",
+        "./src/actions/actions.ts",
+        "./src/reducers/reducers.ts",
+        "./src/store/store.ts",
         "./src/index.tsx"
+        
     ]
 }
