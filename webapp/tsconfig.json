@@ -16,7 +16,7 @@
         "./src/actions/actions.ts",
         "./src/reducers/reducers.ts",
         "./src/store/store.ts",
-        "./src/index.tsx"
-        
+        "./src/index.tsx",
+        "./src/test.ts"
     ]
 }

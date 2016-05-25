@@ -1,4 +1,4 @@
-var webpack = require('webpack'); 
+var webpack = require('webpack');
 module.exports = {
     entry: "./src/index.tsx",
     output: {
@@ -11,12 +11,13 @@ module.exports = {
     devtool: "source-map",
 
     resolve: {
+        modulesDirectories: ['node_modules', 'src'],
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
     },
     // Add minification
     plugins: [
-      new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin()
     ],
     module: {
         loaders: [

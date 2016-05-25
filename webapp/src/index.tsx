@@ -16,15 +16,36 @@ import store from './store/store';
 
 import intl = require('intl');
 import intlRu = require('intl/locale-data/jsonp/ru.js');
+import test = require('./test');
 
 declare var Intl: any;
 
 addLocaleData([...ru]);
-
+//Polyfill:
+//http://formatjs.io/guides/runtime-environments/
+//https://github.com/andyearnshaw/Intl.js
+//Issue:
+//https://github.com/TypeStrong/ts-loader/issues/26
+//http://www.typescriptlang.org/docs/handbook/modules.html
+//Examples:
+//https://github.com/TypeStrong/ts-loader/tree/master/test/codeSplitting
+//https://github.com/webpack/webpack/tree/master/examples/code-splitting
+//Web pack feature description
+//http://webpack.github.io/docs/code-splitting.html
+//General notes on conditional module loading: conditional module loaders such as
+//http://yepnopejs.com/
+//deprecated and replaced with simple script and automated module bundlers
+//https://github.com/SlexAxton/yepnope.js#deprecation-notice
 if (Intl) {
-    require.ensure(['intl','intl/locale-data/jsonp/ru.js'], function(require) {
-       var intlModule = typeof require('intl');
-       var intlRuLocaleDataModule = typeof require('intl/locale-data/jsonp/ru.js');
+    require.ensure(['intl','intl/locale-data/jsonp/ru.js', './test'], function(require) {
+        //use this expressions to evaluate module
+        //or comment them to just make modules downloaded and availiable for require
+        var intlModule = typeof require('intl');
+        var intlRuLocaleDataModule = typeof require('intl/locale-data/jsonp/ru.js');
+        var testModule = typeof require('./test');
+        // var intlModule = typeof intl;
+        // var intlRuLocaleDataModule = typeof intlRu;
+        // var testModule = typeof test;
     });
     runMyApp();
 } else {
