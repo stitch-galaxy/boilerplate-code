@@ -38,6 +38,7 @@ module.exports = {
         "react-intl": "ReactIntl",
         "react-router": "ReactRouter",
         "react-intl/locale-data/ru": "ReactIntlLocaleData.ru",
-        "redux": "Redux"
+        "redux": "Redux",
+        "react-redux": "ReactRedux"
     },
 };
