@@ -9,6 +9,7 @@
   "author": "Evgeny Tarasov",
   "license": "ISC",
   "dependencies": {
+    "intl": "^1.2.3",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-intl": "^2.1.2",

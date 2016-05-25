@@ -2,7 +2,9 @@ var webpack = require('webpack');
 module.exports = {
     entry: "./src/index.tsx",
     output: {
-        filename: "./dist/bundle.js",
+        filename: "bundle.js",
+        path: "./dist",
+        //filename: "./dist/bundle.js",
     },
 
     // Enable sourcemaps for debugging webpack's output.
