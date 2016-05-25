@@ -14,9 +14,7 @@ import * as Redux from 'redux';
 
 import store from './store/store';
 
-import intl = require('intl');
-import intlRu = require('intl/locale-data/jsonp/ru.js');
-import test = require('./test');
+import intlPolyfill = require('./intlPolyfill');
 
 declare var Intl: any;
 
@@ -37,15 +35,12 @@ addLocaleData([...ru]);
 //deprecated and replaced with simple script and automated module bundlers
 //https://github.com/SlexAxton/yepnope.js#deprecation-notice
 if (Intl) {
-    require.ensure(['intl','intl/locale-data/jsonp/ru.js', './test'], function(require) {
+    require.ensure(['./intlPolyfill'], function (require) {
         //use this expressions to evaluate module
         //or comment them to just make modules downloaded and availiable for require
-        var intlModule = typeof require('intl');
-        var intlRuLocaleDataModule = typeof require('intl/locale-data/jsonp/ru.js');
-        var testModule = typeof require('./test');
-        // var intlModule = typeof intl;
-        // var intlRuLocaleDataModule = typeof intlRu;
-        // var testModule = typeof test;
+        var intlPolyfillModule = typeof require('./intlPolyfill');
+        //following line do not work: use tsc -p . to see what code typescript compiler generate
+        //var intlPolyfillModule = typeof intlPolyfill;
     });
     runMyApp();
 } else {

@@ -17,6 +17,6 @@
         "./src/reducers/reducers.ts",
         "./src/store/store.ts",
         "./src/index.tsx",
-        "./src/test.ts"
+        "./src/intlPolyfill.ts"
     ]
 }
