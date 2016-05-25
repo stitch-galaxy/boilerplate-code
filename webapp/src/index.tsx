@@ -34,7 +34,7 @@ addLocaleData([...ru]);
 //http://yepnopejs.com/
 //deprecated and replaced with simple script and automated module bundlers
 //https://github.com/SlexAxton/yepnope.js#deprecation-notice
-if (Intl) {
+if (!Intl) {
     require.ensure(['./intlPolyfill'], function (require) {
         //use this expressions to evaluate module
         //or comment them to just make modules downloaded and availiable for require
