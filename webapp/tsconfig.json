@@ -7,16 +7,7 @@
         "target": "es5",
         "jsx": "react"
     },
-    "files": [
-        "./typings/index.d.ts",
-        "./src/components/App.tsx",
-        "./src/components/Gallery.tsx",
-        "./src/components/About.tsx",
-        "./src/components/InvalidUrl.tsx",
-        "./src/actions/actions.ts",
-        "./src/reducers/reducers.ts",
-        "./src/store/store.ts",
-        "./src/index.tsx",
-        "./src/intlPolyfill.ts"
+    "exclude": [
+        "node_modules"
     ]
 }
