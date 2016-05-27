@@ -52,14 +52,8 @@ gulp.task("webpack", function (callback) {
   });
 });
 
-gulp.task('html:dev', function () {
-  return gulp.src(paths.html)
-    .pipe(gulp.dest(paths.dirs.build.dev));
-});
-
-
 gulp.task('build:dev', function(callback) {
   runSequence('clean:dev',
-              ['webpack', 'vendorjs:dev','html:dev'],
+              ['webpack', 'vendorjs:dev'],
               callback);
 });

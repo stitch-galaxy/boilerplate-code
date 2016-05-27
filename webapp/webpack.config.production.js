@@ -1,6 +1,4 @@
 var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-
 module.exports = {
     entry: "./src/index.tsx",
     output: {
@@ -18,16 +16,7 @@ module.exports = {
     },
     // Add minification
     plugins: [
-        new webpack.NoErrorsPlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('development')
-            },
-            '__DEVTOOLS__': true
-        }),
-        new HtmlWebpackPlugin({
-            template: 'src/index.html',
-        }),
+        new webpack.optimize.UglifyJsPlugin()
     ],
     module: {
         loaders: [
@@ -39,7 +28,7 @@ module.exports = {
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { test: /\.js$/, loader: "source-map-loader" }
         ]
-    },
+    }, 
 
     // When importing a module whose path matches one of the following, just
     // assume a corresponding global variable exists and use that instead.
