@@ -2,9 +2,12 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: {
+        app: "./src/index.tsx",
+        vendor: "./src/vendor.ts",
+    },
     output: {
-        filename: "bundle.js",
+        filename: "[name].js",
         path: "./build"
     },
 
@@ -24,6 +27,12 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('development')
             },
             '__DEVTOOLS__': true
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: [
+                'app',
+                'vendor',
+            ]
         }),
         new HtmlWebpackPlugin({
             template: 'src/index.html',
@@ -46,12 +55,12 @@ module.exports = {
     // This is important because it allows us to avoid bundling all of our
     // dependencies, which allows browsers to cache those libraries between builds.
     externals: {
-        "react": "React",
-        "react-dom": "ReactDOM",
-        "react-intl": "ReactIntl",
-        "react-router": "ReactRouter",
-        "react-intl/locale-data/ru": "ReactIntlLocaleData.ru",
-        "redux": "Redux",
-        "react-redux": "ReactRedux"
+        // "react": "React",
+        // "react-dom": "ReactDOM",
+        // "react-intl": "ReactIntl",
+        // "react-router": "ReactRouter",
+        // "react-intl/locale-data/ru": "ReactIntlLocaleData.ru",
+        // "redux": "Redux",
+        // "react-redux": "ReactRedux"
     },
 };
