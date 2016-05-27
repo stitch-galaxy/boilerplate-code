@@ -2,13 +2,9 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
 
-import { Router, Route, IndexRedirect, hashHistory } from 'react-router';
+import {Root} from './components/Root';
 
-import { App } from "./components/App";
-import { Gallery } from "./components/Gallery";
-import { About } from "./components/About";
-import { InvalidUrl } from "./components/InvalidUrl";
-import { IntlProvider, addLocaleData } from 'react-intl';
+import { addLocaleData } from 'react-intl';
 import * as ru from 'react-intl/locale-data/ru';
 import * as Redux from 'redux';
 
@@ -50,15 +46,7 @@ if (!Intl) {
 function runMyApp() {
     ReactDOM.render(
         <Provider store={store}>
-            <IntlProvider locale={navigator.language}>
-                <Router history={hashHistory}>
-                    <Route path="/" component={App}>
-                        <IndexRedirect to="/gallery" />
-                        <Route path="gallery" component={Gallery}/>
-                        <Route path="about" component={About}/>
-                    </Route>
-                </Router>
-            </IntlProvider>
+            <Root/>
         </Provider>
         ,
         document.getElementById("root")
