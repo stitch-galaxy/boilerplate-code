@@ -15,9 +15,12 @@
     "react-intl": "^2.1.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
+    "react-router-redux": "^4.0.4",
     "redux": "^3.5.2"
   },
   "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",

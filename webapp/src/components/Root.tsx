@@ -11,8 +11,12 @@ import { InvalidUrl } from "./InvalidUrl";
 import { IntlProvider, addLocaleData } from 'react-intl';
 import * as ru from 'react-intl/locale-data/ru';
 import * as Redux from 'redux';
+import { syncHistoryWithStore } from 'react-router-redux';
+import store from '../store/store';
 
 export interface RootProps { }
+
+const history = syncHistoryWithStore(hashHistory, store)
 
 export class Root extends React.Component<RootProps, {}> {
     render() {
@@ -27,8 +31,18 @@ export class Root extends React.Component<RootProps, {}> {
                         </Route>
                     </Router>
                 </IntlProvider>
-                {this.props.children}
+                { this.renderDevTools() }
             </div>
         );
+    }
+
+    renderDevTools() {
+        const rootChildren: any = [
+        ];
+        if (__DEVTOOLS__) {
+            const DevTools = require<ModuleInterface>("./DevTools").default;
+            rootChildren.push(<DevTools key="devtools" />);
+        }
+        return rootChildren;
     }
 }

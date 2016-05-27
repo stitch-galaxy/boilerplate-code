@@ -26,7 +26,7 @@ module.exports = {
             'process.env': {
                 'NODE_ENV': JSON.stringify('development')
             },
-            '__DEVTOOLS__': true
+             '__DEVTOOLS__': true,
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: [
@@ -41,7 +41,7 @@ module.exports = {
     module: {
         loaders: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
-            { test: /\.tsx?$/, loader: "ts-loader" }
+            { test: /\.tsx?$/, loader: "babel-loader!ts-loader" }
         ],
 
         preLoaders: [
