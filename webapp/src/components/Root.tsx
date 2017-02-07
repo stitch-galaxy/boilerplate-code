@@ -22,7 +22,7 @@ export class Root extends React.Component<RootProps, {}> {
     render() {
         return (
             <div>
-                <IntlProvider locale={navigator.language}>
+                <IntlProvider locale="ru">
                     <Router history={hashHistory}>
                         <Route path="/" component={App}>
                             <IndexRedirect to="/gallery" />

@@ -2,15 +2,27 @@ import { createStore, applyMiddleware, combineReducers, Store, compose } from 'r
 import reducers from '../reducers/reducers'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
+interface IntlState {
+    locale: string,
+    messages: any
+}
+
 interface SessionState {
     isLogged: boolean
 }
 
 export interface State {
+    intl: IntlState,
     session: SessionState
 }
 
 const initialState: State = {
+    intl: {
+        locale: "ru",
+        messages: {
+            'app.greeting': 'Привет!',
+        }
+    },
     session: {
         isLogged: false
     }

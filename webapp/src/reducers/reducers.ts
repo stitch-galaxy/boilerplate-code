@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 
 import { LOGON, LOGOUT } from "../actions/actions";
 
-import { routerReducer } from 'react-router-redux'
+import { routerReducer } from 'react-router-redux';
+
+import { intlReducer } from 'react-intl-redux';
 
 function sessionReducer(state = { isLogged: false }, action: any) {
     switch (action.type) {
@@ -18,6 +20,7 @@ const reducers = combineReducers(
     {
         session: sessionReducer,
         routing: routerReducer,
+        intl: intlReducer,
     }
 );
 
